@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Perfil | Raven Studio</title>
+    <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+    <meta name="description" content="Perfil do usuário - Raven Studio">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Teko:wght@400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <style>
+        /* Estilo para a imagem do artista nos agendamentos */
+.appointment-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Para versão mobile */
+@media (max-width: 767px) {
+    .appointment-icon {
+        width: 60px;
+        height: 60px;
+    }
+    .appointment-icon img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+/* Para versão desktop */
+@media (min-width: 768px) {
+    .appointment-icon {
+        width: 70px;
+        height: 70px;
+    }
+}
+        /* Estilos para o menu mobile */
+ /* Botão para voltar ao topo */
+        .back-to-top {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+        }
+    /* Reset e estilos globais */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        font-family: 'Orbitron', sans-serif;
+        background: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+        color: white;
+        min-height: 100vh;
+        overflow-x: hidden;
+        font-size: 14px;
+        line-height: 1.4;
+         padding-top: 80px;
+    }
+
+    /* Efeitos de fundo */
+    .profile-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+        z-index: -2;
+    }
+
+    .profile-particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.1;
+    }
+
+    /* Layout principal - Mobile First */
+    .profile-main {
+        min-height: 100vh;
+        padding: 70px 10px 20px;
+        position: relative;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .profile-content {
+        display: block;
+    }
+
+    /* Sidebar mobile */
+    .profile-sidebar {
+        background: rgba(15, 15, 15, 0.95);
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(5px);
+        margin-bottom: 15px;
+        width: 100%;
+        position: relative;
+        top: 0;
+    }
+
+    .sidebar-menu {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .sidebar-menu li {
+        flex: 1 1 calc(50% - 5px);
+        min-width: 0;
+    }
+
+    .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+        color: #d1d5db;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sidebar-menu a i {
+        font-size: 14px;
+    }
+
+    .sidebar-menu a:hover,
+    .sidebar-menu a.active {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+        border-left: 3px solid #3b82f6;
+    }
+
+    .logout-btn {
+        background: none;
+        border: none;
+        color: #d1d5db;
+        font-family: 'Orbitron', sans-serif;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        width: 100%;
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .logout-btn i {
+        font-size: 14px;
+    }
+
+    .logout-btn:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border-left: 3px solid #ef4444;
+    }
+
+    /* Conteúdo principal mobile */
+    .profile-main-content {
+        background: rgba(15, 15, 15, 0.95);
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(5px);
+        width: 100%;
+    }
+
+    .section {
+        display: none;
+    }
+
+    .section.active {
+        display: block;
+    }
+
+    .section-title {
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1.5rem;
+        color: #3b82f6;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+
+    /* Header do perfil mobile */
+    .profile-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 15px;
+        border-radius: 15px;
+        padding: 15px;
+        position: relative;
+        overflow: hidden;
+        background: rgba(15, 15, 15, 0.7);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        text-align: center;
+    }
+
+    /* Avatar mobile */
+    .profile-avatar-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: #000;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .avatar-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.2s ease;
+        color: white;
+        font-size: 1.2rem;
+    }
+
+    .profile-avatar:hover .avatar-overlay {
+        opacity: 1;
+    }
+
+    .avatar-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: linear-gradient(135deg, #f59e0b, #ef4444);
+        color: #000;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 10px rgba(245, 158, 11, 0.5);
+        z-index: 2;
+        border: 2px solid #000;
+    }
+
+    /* Informações do usuário mobile */
+    .profile-info {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .profile-info h1 {
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1.8rem;
+        color: #3b82f6;
+        text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    .user-contact-info {
+        border-radius: 10px;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        background: rgba(30, 30, 30, 0.5);
+    }
+
+    .user-contact-info p {
+        color: #d1d5db;
+        font-size: 12px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .user-contact-info i {
+        color: #3b82f6;
+        width: 16px;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .join-date {
+        color: #f59e0b;
+        font-size: 12px;
+    }
+
+    .join-date i {
+        color: #f59e0b;
+    }
+
+    .user-id-badge {
+        background: rgba(30, 30, 30, 0.8);
+        border-radius: 6px;
+        padding: 4px 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        font-size: 10px;
+        margin-top: 5px;
+    }
+
+    /* Estatísticas mobile */
+    .profile-stats-container {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .profile-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .stat-card {
+        background: rgba(30, 30, 30, 0.7);
+        border-radius: 8px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(to bottom, #3b82f6, #22c55e);
+    }
+
+    .stat-card.highlight::before {
+        background: linear-gradient(to bottom, #f59e0b, #ef4444);
+    }
+
+    .stat-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: rgba(59, 130, 246, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        color: #3b82f6;
+        flex-shrink: 0;
+    }
+
+    .stat-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stat-number {
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1.4rem;
+        color: #3b82f6;
+        line-height: 1;
+        margin-bottom: 2px;
+    }
+
+    .stat-card.highlight .stat-number {
+        color: #f59e0b;
+    }
+
+    .stat-label {
+        font-size: 10px;
+        color: #d1d5db;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Cards de pedidos e agendamentos mobile */
+    .order-card,
+    .appointment-card {
+        background: rgba(30, 30, 30, 0.8);
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 12px;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .order-header,
+    .appointment-header {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .order-id,
+    .appointment-id {
+        font-family: 'Teko', sans-serif;
+        font-size: 1rem;
+        color: white;
+    }
+
+    .order-status,
+    .appointment-status {
+        padding: 2px 8px;
+        border-radius: 15px;
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: fit-content;
+    }
+
+    .order-date,
+    .appointment-date {
+        font-size: 11px;
+        color: #d1d5db;
+        margin-bottom: 8px;
+    }
+
+    .order-items {
+        margin-bottom: 8px;
+    }
+
+    .order-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .order-item img {
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    .order-item-info {
+        flex-grow: 1;
+    }
+
+    .order-item-name {
+        font-family: 'Orbitron', sans-serif;
+        color: white;
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    .order-item-quantity,
+    .order-item-price {
+        font-size: 11px;
+        color: #d1d5db;
+    }
+
+    .order-total {
+        text-align: right;
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1.2rem;
+        color: #3b82f6;
+        margin-top: 5px;
+    }
+
+    /* Agendamentos mobile */
+    .appointment-details {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .appointment-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(59, 130, 246, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #3b82f6;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .appointment-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .appointment-artist {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 14px;
+        color: white;
+        margin-bottom: 3px;
+    }
+
+    .appointment-style {
+        font-size: 11px;
+        color: #d1d5db;
+        margin-bottom: 3px;
+    }
+
+    .appointment-budget {
+        font-family: 'Bebas Neue', cursive;
+        font-size: 14px;
+        color: #3b82f6;
+    }
+
+    .appointment-description {
+        color: #d1d5db;
+        font-size: 11px;
+        margin: 8px 0;
+        padding: 6px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 6px;
+        line-height: 1.4;
+    }
+
+    .appointment-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+    }
+
+    .btn-cancel-appointment {
+        padding: 4px 8px;
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+        border-radius: 5px;
+        font-size: 11px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    /* Lista de desejos mobile */
+    .wishlist-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .wishlist-item {
+        background: rgba(30, 30, 30, 0.8);
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .wishlist-item img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    .wishlist-item-info {
+        padding: 8px;
+    }
+
+    .wishlist-item-name {
+        color: white;
+        font-size: 12px;
+        margin-bottom: 5px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 2.4em;
+    }
+
+    .wishlist-item-price {
+        font-family: 'Bebas Neue', cursive;
+        color: #3b82f6;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    /* Botões mobile */
+    .btn-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+        color: #000;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        font-family: 'Bebas Neue', cursive;
+        font-size: 14px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-small {
+        padding: 4px 8px;
+        border: 1px solid rgba(59, 130, 246, 0.5);
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+        border-radius: 4px;
+        font-size: 11px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        width: 100%;
+    }
+
+    /* Detalhes do pedido mobile */
+    #order-details-section {
+        background: rgba(15, 15, 15, 0.95);
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(5px);
+    }
+
+    #order-details-section h3 {
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1.3rem;
+        color: #3b82f6;
+        margin-bottom: 12px;
+        text-align: center;
+    }
+
+    #order-details-section p {
+        color: #d1d5db;
+        margin-bottom: 8px;
+        font-size: 12px;
+    }
+
+    #order-details-section .order-detail-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        background: rgba(30, 30, 30, 0.7);
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    #order-details-section .order-detail-item img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    #order-details-section .order-detail-item-name {
+        font-family: 'Orbitron', sans-serif;
+        color: white;
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    #order-details-section .order-detail-item-quantity,
+    #order-details-section .order-detail-item-price {
+        font-size: 11px;
+        color: #d1d5db;
+    }
+
+    #order-details-section .order-detail-total {
+        text-align: right;
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1.5rem;
+        color: #3b82f6;
+        margin-top: 15px;
+    }
+
+    /* Modal de confirmação mobile */
+    .confirmation-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .confirmation-modal.active {
+        display: flex;
+    }
+
+    .confirmation-modal-content {
+        background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        border-radius: 10px;
+        width: 100%;
+        max-width: 320px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(239, 68, 68, 0.5);
+        animation: modalFadeIn 0.2s ease-out;
+    }
+
+    .confirmation-modal-icon {
+        font-size: 2rem;
+        color: #ef4444;
+        margin-bottom: 10px;
+    }
+
+    .confirmation-modal-title {
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1.3rem;
+        color: #ef4444;
+        margin-bottom: 10px;
+    }
+
+    .confirmation-modal-message {
+        color: #d1d5db;
+        font-size: 12px;
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+
+    .confirmation-modal-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .confirmation-modal-btn {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .confirmation-modal-btn-cancel {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+        border: 1px solid #3b82f6;
+    }
+
+    .confirmation-modal-btn-confirm {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+    }
+
+    /* Animações otimizadas para mobile */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes slideIn {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideOut {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(20px); opacity: 0; }
+    }
+
+    @keyframes modalFadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Melhorias específicas para telas muito pequenas */
+    @media (max-width: 360px) {
+        .sidebar-menu li {
+            flex: 1 1 100%;
+        }
+        
+        .profile-stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .wishlist-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .footer-links li {
+            flex: 1 1 100%;
+        }
+    }
+
+    /* ============================================= */
+    /* ESTILOS PARA DESKTOP (acima de 768px) */
+    /* ============================================= */
+    
+    @media (min-width: 768px) {
+        body {
+            font-size: 16px;
+        }
+        
+        .profile-main {
+            padding: 100px 20px 30px;
+            max-width: 1400px;
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 1.5rem;
+        }
+        
+        .profile-sidebar {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+            margin-bottom: 0;
+        }
+        
+        .sidebar-menu {
+            display: block;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+            flex: none;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            font-size: 0.95rem;
+        }
+        
+        .logout-btn {
+            padding: 0.8rem;
+            font-size: 0.95rem;
+        }
+        
+        .profile-main-content {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        /* Header do perfil desktop */
+        .profile-header {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: left;
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+        }
+        
+        /* Avatar desktop */
+        .profile-avatar-container {
+            margin-bottom: 0;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            font-size: 3rem;
+            box-shadow: 0 5px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .avatar-badge {
+            top: -8px;
+            right: -8px;
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+        }
+        
+        /* Informações do usuário desktop */
+        .profile-info h1 {
+            font-size: 2.2rem;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .profile-info h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, transparent);
+        }
+        
+        .user-contact-info {
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .user-contact-info p {
+            font-size: 0.9rem;
+            justify-content: flex-start;
+        }
+        
+        .user-contact-info i {
+            width: 18px;
+            font-size: 0.9rem;
+        }
+        
+        .join-date {
+            font-size: 0.9rem;
+        }
+        
+        /* Estatísticas desktop */
+        .profile-stats-container {
+            grid-column: 1 / -1;
+            margin-top: 1rem;
+        }
+        
+        .profile-stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stat-card {
+            border-radius: 10px;
+            padding: 1.2rem;
+            gap: 1rem;
+        }
+        
+        .stat-card::before {
+            width: 4px;
+        }
+        
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+        }
+        
+        /* Cards de pedidos e agendamentos desktop */
+        .order-card,
+        .appointment-card {
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .order-header,
+        .appointment-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+        }
+        
+        .order-id,
+        .appointment-id {
+            font-size: 1.1rem;
+        }
+        
+        .order-status,
+        .appointment-status {
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+        }
+        
+        .order-date,
+        .appointment-date {
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .order-items {
+            margin-bottom: 0.8rem;
+        }
+        
+        .order-item {
+            gap: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+        
+        .order-item img {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .order-item-name {
+            font-size: 0.9rem;
+        }
+        
+        .order-item-quantity,
+        .order-item-price {
+            font-size: 0.8rem;
+        }
+        
+        .order-total {
+            font-size: 1.3rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Agendamentos desktop */
+        .appointment-details {
+            display: grid;
+            grid-template-columns: 70px 1fr;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .appointment-icon {
+            width: 70px;
+            height: 70px;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        
+        .appointment-info {
+            text-align: left;
+        }
+        
+        .appointment-artist {
+            font-size: 1rem;
+        }
+        
+        .appointment-style {
+            font-size: 0.8rem;
+        }
+        
+        .appointment-budget {
+            font-size: 1rem;
+        }
+        
+        .appointment-description {
+            font-size: 0.8rem;
+            margin: 0.8rem 0;
+            padding: 0.6rem;
+        }
+        
+        .appointment-actions {
+            justify-content: flex-end;
+            margin-top: 0.8rem;
+        }
+        
+        .btn-cancel-appointment {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.7rem;
+        }
+        
+        /* Lista de desejos desktop */
+        .wishlist-grid {
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+        
+        .wishlist-item img {
+            height: 120px;
+        }
+        
+        .wishlist-item-name {
+            font-size: 0.9rem;
+        }
+        
+        .wishlist-item-price {
+            font-size: 1.1rem;
+        }
+        
+        /* Botões desktop */
+        .btn-primary {
+            padding: 0.7rem 1.2rem;
+            font-size: 1rem;
+            width: auto;
+        }
+        
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.7rem;
+            width: 100%;
+        }
+        
+        /* Detalhes do pedido desktop */
+        #order-details-section {
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+        
+        #order-details-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        #order-details-section p {
+            font-size: 0.9rem;
+            margin-bottom: 0.6rem;
+        }
+        
+        #order-details-section .order-detail-item {
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+        }
+        
+        #order-details-section .order-detail-item img {
+            width: 70px;
+            height: 70px;
+        }
+        
+        #order-details-section .order-detail-item-name {
+            font-size: 1rem;
+        }
+        
+        #order-details-section .order-detail-item-quantity,
+        #order-details-section .order-detail-item-price {
+            font-size: 0.85rem;
+        }
+        
+        #order-details-section .order-detail-total {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        /* Modal de confirmação desktop */
+        .confirmation-modal-content {
+            max-width: 400px;
+            padding: 1.5rem;
+        }
+        
+        .confirmation-modal-icon {
+            font-size: 2.5rem;
+        }
+        
+        .confirmation-modal-title {
+            font-size: 1.5rem;
+        }
+        
+        .confirmation-modal-message {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .confirmation-modal-buttons {
+            flex-direction: row;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        
+        .confirmation-modal-btn {
+            padding: 0.7rem 1.2rem;
+            font-size: 0.8rem;
+            width: auto;
+        }
+    }
+
+    /* Ajustes para telas muito grandes */
+    @media (min-width: 1200px) {
+        .profile-content {
+            grid-template-columns: 300px 1fr;
+        }
+    }
+    </style>
+</head>
+<body>
+ <header>
+        <a href="#content" class="skip-link">Pular para o conteúdo principal</a>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="nav-brand">
+                    <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                    <span class="brand-text">RAVEN</span>
+                </a>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="/pages/home.html" class="nav-link "><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="/pages/loja.html" class="nav-link"><i class="fas fa-store"></i> Loja</a></li>
+                    <li><a href="/pages/artists.html" class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                    <li><a href="/pages/contato.html" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+                    <li><a href="/pages/blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li><a href="/pages/game.html" class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                    <li>
+                        <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="nav-icons">
+                    <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
+                        <i class="fas fa-user-circle" id="nav-user-icon"></i>
+                        <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
+                    </a>
+                </div>
+
+                <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div id="particles-js" class="profile-particles"></div>
+    <div class="profile-bg"></div>
+
+<div class="profile-main">
+    <div class="profile-header">
+        <div class="profile-avatar-container">
+            <div class="profile-avatar" onclick="goToAvatarCreator()">
+                <img id="user-avatar" src="" alt="User Avatar" style="display: none;">
+                <i id="default-avatar-icon" class="fas fa-user"></i>
+                <div class="avatar-overlay">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            <div class="avatar-badge">
+                <i class="fas fa-crown"></i>
+            </div>
+        </div>
+        
+        <div class="profile-info">
+            <h1 id="user-name">Carregando...</h1>
+            <div class="user-contact-info">
+                <p id="user-email">
+                    <i class="fas fa-envelope"></i> <span class="contact-value">Carregando...</span>
+                </p>
+               
+                <p class="join-date">
+                    <i class="fas fa-calendar-star"></i> <span id="join-date">Membro desde: carregando...</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="profile-stats-container">
+            <div class="profile-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-number" id="total-orders">0</span>
+                        <span class="stat-label">Pedidos</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-number" id="appointments-count">0</span>
+                        <span class="stat-label">Agendamentos</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card highlight">
+                    <div class="stat-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-number" id="userPointsDisplay">0</span>
+                        <span class="stat-label">Pontos Raven</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-number" id="wishlist-count">0</span>
+                        <span class="stat-label">Favoritos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <nav class="profile-sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" class="menu-link active" data-section="orders">
+                    <i class="fas fa-shopping-bag"></i> Meus Pedidos
+                </a></li>
+                <li><a href="#" class="menu-link" data-section="wishlist">
+                    <i class="fas fa-heart"></i> Lista de Desejos
+                </a></li>
+                <li><a href="#" class="menu-link" data-section="appointments">
+                    <i class="fas fa-calendar-alt"></i> Meus Agendamentos
+                </a></li>
+                <li>
+                    <button class="menu-link logout-btn" onclick="userSession.logout()" style="width: 100%; text-align: left;">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="profile-main-content">
+            <section id="orders-section" class="section active">
+                <h2 class="section-title">Meus Pedidos</h2>
+                <div id="orders-container"></div>
+
+                <div id="order-details-section" class="section">
+                    <h3 class="section-title" id="order-detail-title">Detalhes do Pedido #ID</h3>
+                    <div id="order-details-content"></div>
+                    <button class="btn-primary" onclick="hideOrderDetails()" style="margin-top: 1rem;">
+                        <i class="fas fa-arrow-left"></i> Voltar aos Pedidos
+                    </button>
+                </div>
+            </section>
+
+            <section id="wishlist-section" class="section">
+                <h2 class="section-title">Lista de Desejos</h2>
+                <div id="wishlist-container" class="wishlist-grid"></div>
+            </section>
+            
+            <section id="appointments-section" class="section">
+                <h2 class="section-title">Meus Agendamentos</h2>
+                <div id="appointments-container"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-logo">
+                    <img src="/img/Logo.png" alt="Logo RAVEN" class="brand-logo" style="width: 40px; height: 40px;">
+                    <h3>RAVEN STUDIO</h3>
+                </div>
+                <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/raven_studio__" class="social-icon" aria-label="Instagram do Raven Studio">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>LINKS RÁPIDOS</h4>
+                <ul>
+                    <li><a href="/pages/artists.html">Artistas</a></li>
+                    <li><a href="/pages/agendamento.html">Agendamento</a></li>
+                    <li><a href="/pages/loja.html">Loja</a></li>
+                    <li><a href="/pages/blog.html">Blog</a></li>
+                    <li><a href="/pages/contato.html">Contato</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>CONTATO</h4>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <span>Rua das Artes, 123<br>Vila Madalena - São Paulo, SP</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone" aria-hidden="true"></i>
+                    <span>(11) 99999-9999</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <span>contato@ravenstudio.com</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-divider"></div>
+            <div class="footer-copyright">
+                <p>© 2024 Raven Studio. Todos os direitos reservados.</p>
+                <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="confirmation-modal" id="cancelAppointmentModal">
+    <div class="confirmation-modal-content">
+        <div class="confirmation-modal-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3 class="confirmation-modal-title">Cancelar Agendamento</h3>
+        <p class="confirmation-modal-message" id="cancelModalMessage">Tem certeza que deseja cancelar este agendamento? Esta ação não pode ser desfeita.</p>
+        <div class="confirmation-modal-buttons">
+            <button class="confirmation-modal-btn confirmation-modal-btn-cancel" id="cancelModalCancelBtn">
+                <i class="fas fa-times"></i> Voltar
+            </button>
+            <button class="confirmation-modal-btn confirmation-modal-btn-confirm" id="cancelModalConfirmBtn">
+                <i class="fas fa-check"></i> Confirmar
+            </button>
+        </div>
+    </div>
+</div>
+  </footer>    <button class="back-to-top" id="backToTop" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
+
+
+<script src="/js/user-session.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+   // Dados premium para o chatbot
+    const ravenFaqData = {
+        "precos": [
+            {
+                question: "Qual é o valor mínimo para uma tatuagem?",
+                answer: "Nosso valor mínimo é de R$ 300 para tatuagens pequenas (até 10cm).<br><br>" +
+                       "Tabela de referência:<br>" +
+                       "• Pequenas (até 10cm): R$ 300-600<br>" +
+                       "• Médias (10-20cm): R$ 600-1200<br>" +
+                       "• Grandes (acima de 20cm): A partir de R$ 1200<br><br>" +
+                       "Valores exatos são definidos após avaliação do desenho."
+            },
+            {
+                question: "Como é calculado o preço da tatuagem?",
+                answer: "Consideramos vários fatores:<br><br>" +
+                       "1. <strong>Tamanho</strong>: Área a ser tatuada<br>" +
+                       "2. <strong>Complexidade</strong>: Nível de detalhes e cores<br>" +
+                       "3. <strong>Tempo estimado</strong>: Horas de trabalho necessárias<br>" +
+                       "4. <strong>Local no corpo</strong>: Áreas mais difíceis podem ter ajuste<br>" +
+                       "5. <strong>Experiência do artista</strong>: Artistas sênior possuem valores diferenciados<br><br>" +
+                       "Oferecemos avaliação gratuita para orçamento preciso."
+            }
+        ],
+        "dor": [
+            {
+                question: "Quanto dói fazer uma tatuagem?",
+                answer: "A dor varia conforme a região do corpo:<br><br>" +
+                       "<strong>Baixa dor (1-3/10)</strong>:<br>" +
+                       "• Braços (parte externa)<br>" +
+                       "• Coxas<br>" +
+                       "• Costas<br><br>" +
+                       "<strong>Média dor (4-6/10)</strong>:<br>" +
+                       "• Panturrilhas<br>" +
+                       "• Peito<br>" +
+                       "• Ombros<br><br>" +
+                       "<strong>Alta dor (7-9/10)</strong>:<br>" +
+                       "• Costelas<br>" +
+                       "• Pés e mãos<br>" +
+                       "• Pescoço/Clavícula<br><br>" +
+                       "A maioria dos clientes descreve como uma queimadura constante."
+            },
+            {
+                question: "Qual a parte mais dolorosa para tatuar?",
+                answer: "As áreas mais dolorosas geralmente são:<br><br>" +
+                       "1. <strong>Costelas</strong>: Pele fina sobre osso<br>" +
+                       "2. <strong>Pés e mãos</strong>: Muitas terminações nervosas<br>" +
+                       "3. <strong>Axilas</strong>: Pele sensível e móvel<br>" +
+                       "4. <strong>Cotovelos e joelhos</strong>: Pele dura e articulações<br><br>" +
+                       "Dica: Sessões mais curtas ajudam nas áreas mais dolorosas."
+            }
+        ],
+        "procedimento": [
+            {
+                question: "Como é o processo de fazer uma tatuagem?",
+                answer: "Nosso processo premium:<br><br>" +
+                       "1. <strong>Consulta</strong>: Discussão do conceito e referências<br>" +
+                       "2. <strong>Agendamento</strong>: Reserva com sinal de 30%<br>" +
+                       "3. <strong>Desenho</strong>: Criação personalizada 48h antes<br>" +
+                       "4. <strong>Aprovação</strong>: Ajustes finais no studio<br>" +
+                       "5. <strong>Aplicação</strong>: Sessão com materiais esterilizados<br>" +
+                       "6. <strong>Cuidados</strong>: Orientações pós-tatuagem<br><br>" +
+                       "Todo material é descartável e de qualidade profissional."
+            },
+            {
+                question: "Preciso usar anestésico?",
+                answer: "Não recomendamos anestésicos tópicos porque:<br><br>" +
+                       "• Podem alterar a textura da pele<br>" +
+                       "• Afetam a absorção da tinta<br>" +
+                       "• O resultado final pode ser comprometido<br><br>" +
+                       "A dor é parte do processo, mas garantimos suporte durante toda a sessão."
+            }
+        ],
+        "cuidados": [
+            {
+                question: "Quais os cuidados após fazer a tatuagem?",
+                answer: "<strong>Primeiras 48 horas</strong>:<br>" +
+                       "• Manter o plástico por 2-4 horas<br>" +
+                       "• Lavar com sabonete antisséptico<br>" +
+                       "• Aplicar pomada específica<br><br>" +
+                       "<strong>Primeiras 2 semanas</strong>:<br>" +
+                       "• Lavar 3x ao dia<br>" +
+                       "• Manter hidratada<br>" +
+                       "• Evitar sol, piscina e mar<br>" +
+                       "• Não arrancar casquinhas<br><br>" +
+                       "<strong>Após cicatrização</strong>:<br>" +
+                       "• Usar protetor solar sempre"
+            },
+            {
+                question: "Quanto tempo leva para cicatrizar completamente?",
+                answer: "Cronograma de cicatrização:<br><br>" +
+                       "<strong>1-3 dias</strong>: Vermelhidão e inchaço<br>" +
+                       "<strong>3-7 dias</strong>: Pele começa a descamar<br>" +
+                       "<strong>2-3 semanas</strong>: Cicatrização superficial completa<br>" +
+                       "<strong>4-6 semanas</strong>: Cicatrização total das camadas profundas<br><br>" +
+                       "Tatuagens maiores podem levar mais tempo para cicatrizar completamente."
+            }
+        ],
+        "estilos": [
+            {
+                question: "Quais estilos de tatuagem vocês oferecem?",
+                answer: "Especialidades do nosso studio:<br><br>" +
+                       "• <strong>Tradicional/Old School</strong>: Cores vivas, traços grossos<br>" +
+                       "• <strong>Realismo</strong>: Retratos, animais, paisagens<br>" +
+                       "• <strong>Blackwork</strong>: Preenchimentos sólidos em preto<br>" +
+                       "• <strong>Aquarela</strong>: Efeito pintura com cores fluidas<br>" +
+                       "• <strong>Geométrico</strong>: Padrões simétricos e precisos<br>" +
+                       "• <strong>Pontilhismo</strong>: Imagens formadas por pontos<br>" +
+                       "• <strong>Minimalista</strong>: Traços finos e simplificados<br><br>" +
+                       "Cada artista tem seu estilo predominante."
+            },
+            {
+                question: "Qual estilo de tatuagem dura mais tempo?",
+                answer: "Durabilidade por estilo:<br><br>" +
+                       "<strong>Melhor duração</strong>:<br>" +
+                       "• Tradicional (traços grossos e cores sólidas)<br>" +
+                       "• Blackwork (grandes áreas de tinta preta)<br><br>" +
+                       "<strong>Requer mais manutenção</strong>:<br>" +
+                       "• Aquarela (cores claras e degradês)<br>" +
+                       "• Fine Line (traços muito finos)<br><br>" +
+                       "Independente do estilo, cuidados adequados prolongam a vida da tatuagem."
+            }
+        ],
+        "agendamento": [
+            {
+                question: "Como faço para agendar minha tatuagem?",
+                answer: "Processo de agendamento:<br><br>" +
+                       "1. Acesse nosso sistema online<br>" +
+                       "2. Selecione o artista desejado<br>" +
+                       "3. Escolha data/horário disponível<br>" +
+                       "4. Descreva sua ideia em detalhes<br>" +
+                       "5. Efetue o pagamento do sinal (30%)<br>" +
+                       "6. Receba confirmação por e-mail<br><br>" +
+                       "Cancelamentos devem ser feitos com 48h de antecedência."
+            },
+            {
+                question: "Preciso ter o desenho pronto antes de agendar?",
+                answer: "Não é necessário! Nossos artistas oferecem:<br><br>" +
+                       "• <strong>Consultoria criativa</strong>: Ajudamos a desenvolver sua ideia<br>" +
+                       "• <strong>Design personalizado</strong>: Criamos a arte exclusiva para você<br>" +
+                       "• <strong>Revisões gratuitas</strong>: Ajustes até você aprovar<br><br>" +
+                       "Basta trazer referências ou descrever sua visão que cuidamos do resto."
+            }
+        ]
+    };
+
+    // Variáveis de estado
+    let currentRavenCategory = null; // Armazena a categoria atualmente selecionada para o botão "Voltar"
+
+    // Função para formatar a hora (ex: 10:30 PM)
+    function formatTime(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // The hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        return hours + ':' + minutes + ' ' + ampm;
+    }
+
+    // Funções do Chatbot
+    function showRavenCategories() {
+        document.getElementById('ravenChatCategories').style.display = 'block';
+        document.getElementById('ravenChatQuestions').style.display = 'none';
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        currentRavenCategory = null; // Reseta a categoria atual
+
+        // Adiciona animação às categorias
+        const categories = document.querySelectorAll('.category-card');
+        categories.forEach((card, index) => {
+            card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
+            card.style.opacity = '0'; // Garante que começa invisível para a animação
+        });
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenCategory(category) {
+        currentRavenCategory = category;
+
+        const questionsContainer = document.getElementById('ravenQuestionsList');
+        const categoryData = ravenFaqData[category] || [];
+
+        questionsContainer.innerHTML = ''; // Limpa as perguntas anteriores
+
+        if (categoryData.length > 0) {
+            categoryData.forEach((faq, index) => {
+                const questionCard = document.createElement('button'); // Usar button para melhor acessibilidade
+                questionCard.className = 'question-card';
+                questionCard.setAttribute('role', 'listitem'); // Para leitores de tela
+                questionCard.setAttribute('aria-label', `Pergunta: ${faq.question}`);
+                questionCard.innerHTML = `<p>${faq.question}</p>`;
+                // Ao clicar, exibe a resposta para a pergunta específica
+                questionCard.onclick = () => showRavenAnswer(category, index);
+                questionCard.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
+                questionCard.style.opacity = '0';
+                questionsContainer.appendChild(questionCard);
+            });
+        } else {
+            questionsContainer.innerHTML = '<p style="color:#ddd; text-align:center;">Nenhuma pergunta disponível para esta categoria.</p>';
+        }
+
+        document.getElementById('ravenChatCategories').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'block';
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenAnswer(category, questionIndex) {
+        const faq = ravenFaqData[category][questionIndex];
+        const answerContent = document.getElementById('ravenAnswerContent');
+
+        answerContent.innerHTML = `
+            <div class="answer-container">
+                <h5>${faq.question}</h5>
+                <p>${faq.answer}</p>
+            </div>
+        `;
+
+        document.getElementById('ravenChatCategories').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'none';
+        document.getElementById('ravenChatAnswers').style.display = 'block';
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenQuestions() {
+        if (currentRavenCategory) {
+            showRavenCategory(currentRavenCategory); // Retorna para a categoria específica
+        } else {
+            showRavenCategories(); // Padrão: volta para as categorias
+        }
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'block'; // Garante que a seção de perguntas esteja visível
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+
+    // Inicialização do Chatbot
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatToggle = document.getElementById('ravenChatToggle');
+        const chatContainer = document.getElementById('ravenChatContainer');
+        const chatClose = document.getElementById('ravenChatClose');
+        const welcomeMessageTime = document.getElementById('welcomeMessageTime');
+        
+        // Botão de voltar ao topo
+        const backToTopButton = document.getElementById('backToTop');
+            
+        // Mostrar/ocultar botão de voltar ao topo
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+            
+        // Voltar ao topo
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Atualiza a hora da mensagem de boas-vindas
+        welcomeMessageTime.textContent = formatTime(new Date());
+
+        // Abrir/fechar chat
+        chatToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isActive = chatContainer.classList.toggle('active');
+            chatToggle.setAttribute('aria-expanded', isActive); // Acessibilidade: atualiza estado do botão
+            if (isActive) {
+                showRavenCategories(); // Garante que as categorias são mostradas ao abrir
+                chatContainer.focus(); // Foca no container para acessibilidade
+            }
+        });
+
+        chatClose.addEventListener('click', function() {
+            chatContainer.classList.remove('active');
+            chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
+            chatToggle.focus(); // Retorna o foco ao botão de toggle
+        });
+
+        // Fechar chat ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!chatContainer.contains(e.target) && !chatToggle.contains(e.target)) {
+                chatContainer.classList.remove('active');
+                chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
+            }
+        });
+
+        // Evitar fechar ao clicar dentro do chat
+        chatContainer.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Adiciona funcionalidade para fechar com a tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && chatContainer.classList.contains('active')) {
+                chatContainer.classList.remove('active');
+                chatToggle.setAttribute('aria-expanded', 'false');
+                chatToggle.focus();
+            }
+        });
+
+    });
+      
+    // Função para redirecionar para o criador de avatar
+    function goToAvatarCreator() {
+        localStorage.setItem('lastVisitedPage', window.location.pathname);
+        window.location.href = 'avatar.html';
+    }
+
+    // Inicializar partículas
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 40, density: { enable: true, value_area: 800 } },
+            color: { value: "#3b82f6" },
+            shape: { type: "circle" },
+            opacity: { value: 0.2, random: true },
+            size: { value: 2, random: true },
+            line_linked: { enable: true, distance: 120, color: "#3b82f6", opacity: 0.3, width: 1 },
+            move: { enable: true, speed: 1.5, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: { enable: true, mode: "repulse" },
+                onclick: { enable: false },
+                resize: true
+            },
+            modes: {
+                repulse: { distance: 80, duration: 0.3 }
+            }
+        },
+        retina_detect: true
+    });
+
+    // Função para formatar preço (de centavos para real)
+    function formatPrice(priceInCents) {
+        return (priceInCents / 100).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 2
+        });
+    }
+
+    // Função para obter detalhes do produto pelo ID
+    function getProductDetails(productId) {
+        productId = typeof productId === 'string' ? parseInt(productId) : productId;
+        
+        const productsData = [
+            { id: 1, name: 'Máquina Rotativa Pro', price: 750, image: '/img/products/maquina1.png' },
+            { id: 2, name: 'Tinta Preto Absoluto', price: 120, image: '/img/products/tinta1.png' },
+            { id: 3, name: 'Kit Agulhas Variadas', price: 80, image: '/img/products/agulhas1.png' },
+            { id: 4, name: 'Fonte de Alimentação Digital', price: 300, image: '/img/products/fonte1.png' },
+            { id: 5, name: 'Máquina Bobina Clássica', price: 600, image: '/img/products/bobina1.png'},
+            { id: 6, name: 'Tinta Vermelho Escarlate', price: 100, image: '/img/products/tintasumi2.png' },
+            { id: 7, name: 'Agulha Magnum Soft Edge', price: 15, image: '/img/products/agulhasoft1.png' },
+            { id: 8, name: 'Creme Pós-Tatuagem', price: 50, image: '/img/products/creme2.png' },
+            { id: 9, name: 'Máquina Pen Híbrida', price: 950, image: '/img/products/maquinapen1.png' },
+            { id: 10, name: 'Tinta Azul Oceano', price: 110, image: '/img/products/tintaazul1.png' },
+            { id: 11, name: 'Agulha Round Liner Fina', price: 12, image: '/img/products/agulhafina1.png' },
+            { id: 12, name: 'Bancada de Trabalho Portátil', price: 400, image: '/img/products/bancada1.png' }
+        ];
+        
+        return productsData.find(p => p.id === productId);
+    }
+
+    // Função para carregar detalhes do usuário
+    function loadUserDetails() {
+        const user = window.userSession.currentUser;
+        const userAvatarImg = document.getElementById('user-avatar');
+        const defaultAvatarIcon = document.getElementById('default-avatar-icon');
+
+        if (user) {
+            document.getElementById('user-name').textContent = user.name || 'Usuário Raven';
+            
+            const userEmail = user.email || 'N/A';
+            const userPhone = user.phone ? formatPhoneNumber(user.phone) : 'N/A';
+            
+            document.getElementById('user-email').innerHTML = `
+                <i class="fas fa-envelope"></i> ${userEmail}<br>
+                <i class="fas fa-phone"></i> ${userPhone}
+            `;
+            
+            const joinDate = user.joinDate ? new Date(user.joinDate).toLocaleDateString('pt-BR') : 'N/A';
+            document.getElementById('join-date').textContent = `Membro desde: ${joinDate}`;
+
+            document.getElementById('total-orders').textContent = user.orders ? user.orders.length : 0;
+            document.getElementById('appointments-count').textContent = user.appointments ? user.appointments.filter(a => a.status !== 'Cancelado' && a.status !== 'Concluído').length : 0;
+            document.getElementById('wishlist-count').textContent = user.wishlist ? user.wishlist.length : 0;
+            document.getElementById('userPointsDisplay').textContent = user.points || 0;
+
+            const avatarUrl = user.avatar || user.avatarUrl;
+            if (avatarUrl) {
+                userAvatarImg.src = avatarUrl;
+                userAvatarImg.style.display = 'block';
+                defaultAvatarIcon.style.display = 'none';
+            } else {
+                userAvatarImg.style.display = 'none';
+                defaultAvatarIcon.style.display = 'block';
+            }
+
+            // Atualizar avatar na navbar
+            const navUserIcon = document.getElementById('nav-user-icon');
+            const navUserAvatar = document.getElementById('nav-user-avatar');
+            if (avatarUrl) {
+                navUserAvatar.src = avatarUrl;
+                navUserAvatar.style.display = 'block';
+                navUserIcon.style.display = 'none';
+            } else {
+                navUserAvatar.style.display = 'none';
+                navUserIcon.style.display = 'block';
+            }
+        } else {
+            document.getElementById('user-name').textContent = 'Convidado';
+            document.getElementById('user-email').innerHTML = 'Faça login para ver detalhes';
+            document.getElementById('join-date').textContent = 'Membro desde: N/A';
+            userAvatarImg.style.display = 'none';
+            defaultAvatarIcon.style.display = 'block';
+        }
+    }
+
+    function formatPhoneNumber(phone) {
+        const cleaned = ('' + phone).replace(/\D/g, '');
+        const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
+        if (match) {
+            return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+        }
+        return phone;
+    }
+
+    // Função para renderizar pedidos
+    function renderOrders() {
+        const ordersContainer = document.getElementById('orders-container');
+        ordersContainer.innerHTML = '';
+        const user = window.userSession.currentUser;
+
+        if (user && user.orders && user.orders.length > 0) {
+            user.orders.forEach(order => {
+                const orderDate = new Date(order.date).toLocaleDateString('pt-BR');
+                const orderTotal = formatPrice(order.total); 
+                let itemsHtml = '';
+                order.items.forEach(item => {
+                    const product = getProductDetails(item.productId);
+                    if (product) {
+                        itemsHtml += `
+                            <div class="order-item">
+                                <img src="${product.image}" alt="${product.name}">
+                                <div class="order-item-info">
+                                    <p class="order-item-name">${product.name}</p>
+                                    <p class="order-item-quantity">Quantidade: ${item.quantity}</p>
+                                    <p class="order-item-price">${formatPrice(product.price * 100)} cada</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                ordersContainer.innerHTML += `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <span class="order-id">Pedido #${order.id}</span>
+                            <span class="order-status status-${order.status.toLowerCase()}">${order.status}</span>
+                        </div>
+                        <p class="order-date">Data: ${orderDate}</p>
+                        <div class="order-items">
+                            ${itemsHtml}
+                        </div>
+                        <div class="order-total">Total: ${orderTotal}</div>
+                        <div style="text-align: right; margin-top: 0.5rem;">
+                            <button class="btn-primary" onclick="showOrderDetails('${order.id}')">Ver Detalhes</button>
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            ordersContainer.innerHTML = '<p style="text-align: center; color: #d1d5db;">Você não possui nenhum pedido.</p>';
+        }
+    }
+
+    // Função para exibir detalhes de um pedido específico
+    function showOrderDetails(orderId) {
+        const ordersContainer = document.getElementById('orders-container');
+        const orderDetailsSection = document.getElementById('order-details-section');
+        const orderDetailTitle = document.getElementById('order-detail-title');
+        const orderDetailsContent = document.getElementById('order-details-content');
+        const user = window.userSession.currentUser;
+
+        const order = user?.orders?.find(o => o.id === orderId);
+
+        if (order) {
+            orderDetailTitle.textContent = `Detalhes do Pedido #${order.id}`;
+            
+            const paymentMethod = order.payment?.method || 'N/A';
+            const shippingAddress = order.address ? 
+                `${order.address.street}, ${order.address.number}${order.address.complement ? ', ' + order.address.complement : ''}, 
+                 ${order.address.neighborhood}, ${order.address.city} - ${order.address.state}, 
+                 CEP: ${order.address.cep}` : 'N/A';
+            const shippingCost = order.shipping || 0;
+            const discount = order.discount || 0;
+            const coupon = order.coupon ? ` (Cupom: ${order.coupon})` : '';
+
+            let itemsDetailHtml = `
+                <p><strong>Status:</strong> <span class="order-status status-${order.status.toLowerCase()}">${order.status}</span></p>
+                <p><strong>Data do Pedido:</strong> ${new Date(order.date).toLocaleDateString('pt-BR')}</p>
+                <p><strong>Forma de Pagamento:</strong> ${paymentMethod}</p>
+                <p><strong>Endereço de Entrega:</strong> ${shippingAddress}</p>
+                <p><strong>Frete:</strong> ${formatPrice(shippingCost)}</p>
+                <p><strong>Desconto:</strong> ${formatPrice(discount)}${coupon}</p>
+                <h4>Itens do Pedido:</h4>
+            `;
+
+            if (order.items && order.items.length > 0) {
+                order.items.forEach(item => {
+                    const product = getProductDetails(item.id || item.productId);
+                    if (product) {
+                        itemsDetailHtml += `
+                            <div class="order-detail-item">
+                                <img src="${product.image}" alt="${product.name}">
+                                <div class="order-detail-item-info">
+                                    <p class="order-detail-item-name">${product.name}</p>
+                                    <p class="order-detail-item-quantity">Quantidade: ${item.quantity}</p>
+                                    <p class="order-detail-item-price">Preço Unitário: ${formatPrice(item.price || product.price * 100)}</p>
+                                    <p class="order-detail-item-price">Subtotal: ${formatPrice((item.price || product.price * 100) * item.quantity)}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        itemsDetailHtml += `
+                            <div class="order-detail-item">
+                                <div class="order-detail-item-info">
+                                    <p style="color: #d1d5db;">Produto com ID ${item.id || item.productId} não encontrado.</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            } else {
+                itemsDetailHtml += `<p style="color: #d1d5db;">Nenhum item encontrado para este pedido.</p>`;
+            }
+
+            itemsDetailHtml += `<p class="order-detail-total">Total do Pedido: ${formatPrice(order.total)}</p>`;
+            orderDetailsContent.innerHTML = itemsDetailHtml;
+
+            ordersContainer.style.display = 'none';
+            orderDetailsSection.classList.add('active');
+        } else {
+            alert('Detalhes do pedido não encontrados ou usuário não logado.');
+        }
+    }
+
+    // Função para esconder detalhes do pedido e voltar à lista
+    function hideOrderDetails() {
+        document.getElementById('orders-container').style.display = 'block';
+        document.getElementById('order-details-section').classList.remove('active');
+    }
+
+    // Função para renderizar lista de desejos
+    function renderWishlist() {
+        const wishlistContainer = document.getElementById('wishlist-container');
+        wishlistContainer.innerHTML = '';
+        const user = window.userSession.currentUser;
+
+        if (user && user.wishlist && user.wishlist.length > 0) {
+            user.wishlist.forEach(productId => {
+                const product = getProductDetails(productId);
+                if (product) {
+                    wishlistContainer.innerHTML += `
+                        <div class="wishlist-item">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div class="wishlist-item-info">
+                                <h3 class="wishlist-item-name">${product.name}</h3>
+                                <p class="wishlist-item-price">${formatPrice(product.price * 100)}</p>
+                                <button class="btn-small" onclick="window.userSession.removeFromWishlist(${product.id}); renderWishlist();">
+                                    <i class="fas fa-trash"></i> Remover
+                                </button>
+                                <button class="btn-small btn-primary" style="margin-top: 0.3rem;" 
+                                        onclick="addToCartFromWishlist(${product.id})">
+                                    <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        } else {
+            wishlistContainer.innerHTML = `
+                <div style="text-align: center; padding: 1.5rem; color: #d1d5db; grid-column: 1 / -1;">
+                    <i class="fas fa-heart" style="font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
+                    <p>Sua lista de desejos está vazia.</p>
+                    <a href="/pages/loja.html" class="btn-primary" style="display: inline-block; margin-top: 0.8rem;">
+                        <i class="fas fa-store"></i> Explorar Loja
+                    </a>
+                </div>
+            `;
+        }
+    }
+
+    // Função para adicionar um produto ao carrinho a partir da lista de desejos
+    function addToCartFromWishlist(productId) {
+        const product = getProductDetails(productId);
+        if (!product) {
+            showNotification('Produto não encontrado!', 'error');
+            return;
+        }
+
+        let cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
+        const existingItem = cart.find(item => item.id === productId);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price * 100,
+                image: product.image,
+                quantity: 1
+            });
+        }
+        
+        localStorage.setItem('ravenStudioCart', JSON.stringify(cart));
+        updateCartCounter();
+        showNotification(`${product.name} adicionado ao carrinho!`);
+        
+        const cartIcon = document.querySelector('.cart-icon');
+        if (cartIcon) {
+            cartIcon.classList.add('added');
+            setTimeout(() => cartIcon.classList.remove('added'), 500);
+        }
+    }
+
+    // Função auxiliar para mostrar notificações
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: ${type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'linear-gradient(135deg, #3b82f6, #22c55e)'};
+            color: ${type === 'error' ? 'white' : 'black'};
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideIn 0.2s ease-out;
+            max-width: calc(100% - 30px);
+        `;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${message}
+        `;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.2s ease-out';
+            setTimeout(() => notification.remove(), 200);
+        }, 2500);
+    }
+
+    // Função para renderizar agendamentos
+    function renderAppointments() {
+        const appointmentsContainer = document.getElementById('appointments-container');
+        appointmentsContainer.innerHTML = '';
+        const user = window.userSession.currentUser;
+
+        if (user && user.appointments && user.appointments.length > 0) {
+            // Filtrar apenas agendamentos ativos (não cancelados e não concluídos)
+            const activeAppointments = user.appointments.filter(app => 
+                app.status !== 'Cancelado' && app.status !== 'Concluído');
+
+            if (activeAppointments.length > 0) {
+                activeAppointments.forEach(appointment => {
+                    const appDate = appointment.preferredDate1 
+                        ? new Date(appointment.preferredDate1).toLocaleDateString('pt-BR')
+                        : 'Data não definida';
+                    
+                    const appTime = appointment.preferredTime1 || 'Horário não definido';
+                    const status = appointment.status || 'Pendente';
+                    const statusClass = status.toLowerCase();
+                    
+                    const artistImageHtml = appointment.artistImage 
+                        ? `<img src="${appointment.artistImage}" alt="${appointment.artistName || 'Artista'}">`
+                        : `<i class="fas fa-user-circle"></i>`;
+
+                    appointmentsContainer.innerHTML += `
+                        <div class="appointment-card" data-appointment-id="${appointment.id}">
+                            <div class="appointment-header">
+                                <span class="appointment-id">Agendamento #${appointment.id || 'N/A'}</span>
+                                <span class="appointment-status status-${statusClass}">${status}</span>
+                            </div>
+                            <div class="appointment-details">
+                                <div class="appointment-icon">
+                                    ${artistImageHtml}
+                                </div>
+                                <div class="appointment-info">
+                                    <p class="appointment-artist">Artista: ${appointment.artistName || 'N/A'}</p>
+                                    <p class="appointment-style">Estilo: ${appointment.tattooStyle || 'N/A'}</p>
+                                    <p class="appointment-budget">Orçamento: ${formatPrice((appointment.budget || 0) * 100)}</p>
+                                </div>
+                            </div>
+                            <p class="appointment-date"><i class="fas fa-calendar-alt"></i> ${appDate} às ${appTime}</p>
+                            <p class="appointment-description">${appointment.tattooDescription || 'Sem descrição fornecida.'}</p>
+                            ${status === 'Pendente' || status === 'Confirmado' ? `
+                                <div class="appointment-actions">
+                                    <button class="btn-cancel-appointment" onclick="showCancelConfirmation('${appointment.id}')">
+                                        <i class="fas fa-times"></i> Cancelar Agendamento
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+            } else {
+                appointmentsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 1.5rem; color: #d1d5db;">
+                        <i class="fas fa-calendar-check" style="font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
+                        <p>Você não possui agendamentos ativos no momento.</p>
+                        <a href="/pages/agendamento.html" class="btn-primary" style="display: inline-block; margin-top: 0.8rem;">
+                            <i class="fas fa-plus"></i> Agendar Nova Sessão
+                        </a>
+                    </div>
+                `;
+            }
+        } else {
+            appointmentsContainer.innerHTML = `
+                <div style="text-align: center; padding: 1.5rem; color: #d1d5db;">
+                    <i class="fas fa-calendar-times" style="font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
+                    <p>Você não possui nenhum agendamento.</p>
+                    <a href="/pages/agendamento.html" class="btn-primary" style="display: inline-block; margin-top: 0.8rem;">
+                        <i class="fas fa-plus"></i> Agendar Nova Sessão
+                    </a>
+                </div>
+            `;
+        }
+    }
+
+    // Variável para armazenar o ID do agendamento a ser cancelado
+    let appointmentToCancel = null;
+
+    // Função para mostrar o modal de confirmação
+    function showCancelConfirmation(appointmentId) {
+        appointmentToCancel = appointmentId;
+        const modal = document.getElementById('cancelAppointmentModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Função para esconder o modal
+    function hideCancelConfirmation() {
+        const modal = document.getElementById('cancelAppointmentModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Função para cancelar o agendamento (confirmado)
+    function confirmCancelAppointment() {
+        if (!appointmentToCancel) return;
+        hideCancelConfirmation();
+        cancelAppointment(appointmentToCancel);
+        appointmentToCancel = null;
+    }
+
+    // Função para cancelar o agendamento
+  function cancelAppointment(appointmentId) {
+        const user = window.userSession.currentUser;
+        
+        if (!user || !user.appointments) {
+            console.error('Usuário não logado ou sem agendamentos');
+            return;
+        }
+
+        // Encontra o índice do agendamento
+        const appointmentIndex = user.appointments.findIndex(a => a.id === appointmentId);
+        
+        if (appointmentIndex === -1) {
+            console.error('Agendamento não encontrado');
+            return;
+        }
+
+        // Atualiza o status do agendamento para "Cancelado"
+        user.appointments[appointmentIndex].status = 'Cancelado';
+        
+        // Atualiza o usuário no localStorage
+        localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(user));
+        
+        // Atualiza também no array de usuários globais
+        const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
+        const userIndex = users.findIndex(u => u.email === user.email);
+        if (userIndex !== -1) {
+            const userAppointmentIndex = users[userIndex].appointments.findIndex(a => a.id === appointmentId);
+            if (userAppointmentIndex !== -1) {
+                users[userIndex].appointments[userAppointmentIndex].status = 'Cancelado';
+                localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
+            }
+        }
+        
+        // Atualiza o usuário na sessão atual
+        window.userSession.currentUser = user;
+        
+        // Recarrega a lista de agendamentos e atualiza a contagem
+        renderAppointments();
+        loadUserDetails();
+        showCancelSuccessNotification();
+    }
+
+
+    // Função para mostrar notificação de sucesso
+    function showCancelSuccessNotification() {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideIn 0.2s ease-out;
+            max-width: calc(100% - 30px);
+        `;
+        notification.innerHTML = `<i class="fas fa-check-circle"></i> Agendamento cancelado com sucesso!`;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.2s ease-out';
+            setTimeout(() => notification.remove(), 200);
+        }, 2500);
+    }
+
+    // Função para mostrar a seção correta e atualizar o menu
+    function showSection(sectionName) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionName + '-section').classList.add('active');
+
+        document.querySelectorAll('.menu-link').forEach(link => {
+            link.classList.remove('active');
+        });
+        document.querySelector(`.menu-link[data-section="${sectionName}"]`).classList.add('active');
+    }
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle do menu mobile
+        const navbar = document.querySelector('.navbar');
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        // Função para verificar scroll e adicionar classe scrolled
+        function handleScroll() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+        
+        // Adicionar evento de scroll
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Verificar estado inicial
+
+        // Event listener para o toggle do menu mobile
+        navToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            this.classList.toggle('active');
+            this.setAttribute('aria-expanded', navMenu.classList.contains('active'));
+        });
+
+        // Garante que UserSession é inicializado
+        if (typeof UserSession === 'undefined') {
+            console.error("UserSession class not found.");
+            return; 
+        }
+        window.userSession = new UserSession();
+        
+        // Add dummy data for demonstration if user has no existing data
+        if (window.userSession.currentUser) {
+            if (!window.userSession.currentUser.orders || window.userSession.currentUser.orders.length === 0) {
+                const calculateOrderSubtotalInCents = (items) => {
+                    let subtotal = 0;
+                    items.forEach(item => {
+                        const product = getProductDetails(item.productId);
+                        if (product) {
+                            subtotal += Math.round(product.price * 100) * item.quantity;
+                        }
+                    });
+                    return subtotal;
+                };
+
+                const order1Items = [
+                    { productId: 1, quantity: 1 },
+                    { productId: 9, quantity: 1 }
+                ];
+                const order1SubtotalInCents = calculateOrderSubtotalInCents(order1Items);
+                const order1ShippingCostInCents = Math.round(20.00 * 100);
+                const order1DiscountInCents = Math.round(0.00 * 100);
+                const order1TotalInCents = order1SubtotalInCents + order1ShippingCostInCents - order1DiscountInCents;
+
+                const order2Items = [
+                    { productId: 2, quantity: 1 }
+                ];
+                const order2SubtotalInCents = calculateOrderSubtotalInCents(order2Items);
+                const order2ShippingCostInCents = Math.round(0.00 * 100);
+                const order2DiscountInCents = Math.round(10.00 * 100);
+                const order2TotalInCents = order2SubtotalInCents + order2ShippingCostInCents - order2DiscountInCents;
+
+                window.userSession.currentUser.orders = [
+                    {
+                        id: '20240723-001',
+                        date: '2024-07-20T10:00:00Z',
+                        total: order1TotalInCents,
+                        status: 'Entregue',
+                        paymentMethod: 'Cartão de Crédito',
+                        shippingAddress: 'Rua das Flores, 123, Bairro Jardim, Cidade Nova - SP',
+                        items: order1Items,
+                        shippingCost: order1ShippingCostInCents,
+                        discount: order1DiscountInCents
+                    },
+                    {
+                        id: '20240723-002',
+                        date: '2024-07-22T14:30:00Z',
+                        total: order2TotalInCents,
+                        status: 'Processando',
+                        paymentMethod: 'Boleto Bancário',
+                        shippingAddress: 'Avenida do Sol, 456, Centro, Metrópolis - RJ',
+                        items: order2Items,
+                        shippingCost: order2ShippingCostInCents,
+                        discount: order2DiscountInCents
+                    }
+                ];
+            }
+
+            if (!window.userSession.currentUser.wishlist || window.userSession.currentUser.wishlist.length === 0) {
+                window.userSession.currentUser.wishlist = [5, 8];
+            }
+
+            if (!window.userSession.currentUser.appointments || window.userSession.currentUser.appointments.length === 0) {
+                window.userSession.currentUser.appointments = [
+                    {
+                        id: 'APP-001',
+                        preferredDate1: '2024-08-10',
+                        preferredTime1: '14:00',
+                        artistName: 'Augustos',
+                        artistImage: '/img/artistas/augusto.png',
+                        tattooStyle: 'Realismo Preto e Cinza',
+                        budget: 1500,
+                        status: 'Confirmado',
+                        tattooDescription: 'Tatuagem de leão no antebraço.',
+                        clientName: window.userSession.currentUser.name,
+                        clientEmail: window.userSession.currentUser.email,
+                        clientPhone: window.userSession.currentUser.phone
+                    },
+                    {
+                        id: 'APP-002',
+                        preferredDate1: '2024-08-25',
+                        preferredTime1: '10:30',
+                        artistName: 'Clara',
+                        artistImage: '/img/artistas/clara.png',
+                        tattooStyle: 'Geométrico',
+                        budget: 800,
+                        status: 'Pendente',
+                        tattooDescription: 'Design abstrato na coxa.',
+                        clientName: window.userSession.currentUser.name,
+                        clientEmail: window.userSession.currentUser.email,
+                        clientPhone: window.userSession.currentUser.phone
+                    }
+                ];
+                localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(window.userSession.currentUser));
+            }
+        }
+
+        loadUserDetails();
+        renderOrders();
+        renderWishlist();
+        renderAppointments();
+        
+        // Ativar a primeira seção por padrão (Meus Pedidos)
+        showSection('orders');
+
+        // Adicionar event listeners para os links do menu lateral
+        document.querySelectorAll('.sidebar-menu .menu-link').forEach(link => {
+            if (link.dataset.section) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    showSection(this.dataset.section);
+                });
+            }
+        });
+
+        // Event listeners para o modal de cancelamento
+        document.getElementById('cancelModalCancelBtn').addEventListener('click', hideCancelConfirmation);
+        document.getElementById('cancelModalConfirmBtn').addEventListener('click', confirmCancelAppointment);
+        
+        document.getElementById('cancelAppointmentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideCancelConfirmation();
+            }
+        });
+
+        // Atualizar contador do carrinho
+        function updateCartCounter() {
+            const cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+        
+        updateCartCounter();
+    });
+</script>
+</body>
+</html>

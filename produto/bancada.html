@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bancada de Trabalho Portátil | Raven Studio</title>
+    <meta name="description" content="Bancada portátil e ajustável para tatuadores - Compre agora no Raven Studio.">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/produtos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Bebas+Neue&family=Teko:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#000000">
+    <meta name="color-scheme" content="dark">
+</head>
+<style>
+    /* Botão para voltar ao topo */
+    .back-to-top {
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(45deg, #3b82f6, #22c55e);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        z-index: 999;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .back-to-top:hover {
+        transform: translateY(-5px);
+        background: linear-gradient(45deg, #22c55e, #3b82f6);
+    }
+    
+    .back-to-top.show {
+        display: flex;
+    }
+
+    /* Chat Widget Styles */
+    .chat-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .chat-toggle {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(45deg, #3b82f6, #22c55e);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        color: white;
+        font-size: 1.5rem;
+        border: none;
+    }
+
+    .chat-toggle:hover {
+        transform: scale(1.1);
+        background: linear-gradient(45deg, #22c55e, #3b82f6);
+    }
+
+    .chat-container {
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        width: 350px;
+        height: 450px;
+        background: #1a1a1a;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        display: none;
+        flex-direction: column;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+    }
+
+    .chat-container.active {
+        display: flex;
+    }
+
+    .chat-header {
+        padding: 1rem;
+        background: linear-gradient(45deg, #3b82f6, #22c55e);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .chat-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: white;
+    }
+
+    .chat-title i {
+        color: #fff;
+    }
+
+    .chat-title h4 {
+        font-size: 1rem;
+        margin: 0;
+        font-family: 'Teko', sans-serif;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    .chat-title span {
+        font-size: 0.8rem;
+        color: #ccc;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .chat-close {
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .chat-content {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        background-color: #121212;
+    }
+
+    .chat-categories p {
+        color: #ccc;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .category-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .category-btn {
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: left;
+        font-family: 'Teko', sans-serif;
+        font-size: 1.1rem;
+        border: none;
+    }
+
+    .category-btn:hover {
+        background: rgba(59, 130, 246, 0.3);
+    }
+
+    .back-button {
+        margin-bottom: 1rem;
+    }
+
+    .back-button button {
+        background: none;
+        border: none;
+        color: #3b82f6;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-family: 'Teko', sans-serif;
+        padding: 0;
+    }
+
+    .back-button button:hover {
+        text-decoration: underline;
+    }
+
+    .question-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: left;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        border: none;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .question-btn:hover {
+        background: rgba(59, 130, 246, 0.3);
+    }
+
+    .answer-content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        color: #ccc;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .answer-content h5 {
+        color: #3b82f6;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .answer-content p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .btn-primary {
+        width: 100%;
+        background: linear-gradient(45deg, #3b82f6, #22c55e);
+        color: white;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+        margin-top: 1rem;
+        font-family: 'Teko', sans-serif;
+        font-size: 1.1rem;
+    }
+
+    .btn-primary:hover {
+        transform: scale(1.02);
+        background: linear-gradient(45deg, #22c55e, #3b82f6);
+    }
+
+    #questions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    /* Estilo para remover o quick-view */
+    .quick-view {
+        display: none !important;
+    }
+
+    @media (max-width: 480px) {
+        .chat-container {
+            width: 280px;
+            right: -10px;
+        }
+        
+        .back-to-top {
+            left: 10px;
+            bottom: 10px;
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+    }
+</style>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <span class="loading-mascot">🐦‍⬛</span>
+                <h2>RAVEN STUDIO</h2>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p class="loading-text">Preparando sua experiência...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-mascot" aria-hidden="true">🐦‍⬛</span>
+                <span class="brand-text">RAVEN </span>
+            </div>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="/" role="menuitem" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
+                <li role="none"><a href="#featured" role="menuitem" class="nav-link"><i class="fas fa-star"></i> Destaques</a></li>
+                <li role="none"><a href="#machines" role="menuitem" class="nav-link"><i class="fas fa-bolt"></i> Máquinas</a></li>
+                <li role="none"><a href="#needles" role="menuitem" class="nav-link"><i class="fas fa-syringe"></i> Agulhas</a></li>
+                <li role="none"><a href="#care" role="menuitem" class="nav-link"><i class="fas fa-heart"></i> Cuidados</a></li>
+                <li role="none"><a href="#contact" role="menuitem" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+            </ul>
+            <div class="nav-cart">
+                <a href="/pages/carrinho.html" class="cart-link" aria-label="Carrinho de compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main" role="main">
+        <!-- Product Hero Section -->
+        <section class="product-hero" role="banner">
+            <div class="container">
+                <div class="product-hero-content">
+                    <div class="product-images">
+                        <div class="main-image">
+                            <img src="/img/products/bancada1.png" alt="Bancada de Trabalho Portátil" loading="lazy">
+                        </div>
+                        <div class="thumbnail-gallery">
+                            <div class="thumbnail active" tabindex="0" role="button" aria-label="Visualizar bancada">
+                                <img src="/img/products/bancada1.png" alt="Bancada de Trabalho Portátil - Vista frontal">
+                            </div>
+                            <div class="thumbnail" tabindex="0" role="button" aria-label="Visualizar detalhe">
+                                <img src="/img/products/bancada-detalhe1.png" alt="Bancada de Trabalho Portátil - Detalhe">
+                            </div>
+                            <div class="thumbnail" tabindex="0" role="button" aria-label="Visualizar ajustes">
+                                <img src="/img/products/bancada-ajuste1.png" alt="Bancada de Trabalho Portátil - Ajustes">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h1 class="product-title">BANCADA DE TRABALHO PORTÁTIL</h1>
+                        <div class="product-meta">
+                            <span class="product-sku">Código: RVN-BTP-001</span>
+                            <div class="product-rating">
+                                <div class="stars" aria-label="Avaliação 4.5 estrelas">
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                                </div>
+                                <span>(28 avaliações)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span class="price-amount">R$ 400,00</span>
+                            <span class="price-installment">ou 8x de R$ 50,00 sem juros</span>
+                            <span class="price-note">Frete grátis para compras acima de R$ 300,00</span>
+                        </div>
+                        
+                        <div class="product-variants">
+                            <div class="variant-option">
+                                <h3>COR:</h3>
+                                <div class="variant-selector">
+                                    <button class="variant-btn active" data-color="black">Preto</button>
+                                    <button class="variant-btn" data-color="gray">Cinza</button>
+                                    <button class="variant-btn" data-color="blue">Azul</button>
+                                </div>
+                            </div>
+                            
+                            <div class="variant-option">
+                                <h3>ACESSÓRIOS:</h3>
+                                <div class="variant-selector">
+                                    <button class="variant-btn" data-accessories="basic">Básico</button>
+                                    <button class="variant-btn active" data-accessories="full">Completo</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-stock">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Disponível em estoque (12 unidades)</span>
+                        </div>
+                        
+                        <div class="product-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus" aria-label="Reduzir quantidade">-</button>
+                                <input type="number" value="1" min="1" max="12" aria-label="Quantidade">
+                                <button class="quantity-btn plus" aria-label="Aumentar quantidade">+</button>
+                            </div>
+                            <button class="cta-button" id="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>ADICIONAR AO CARRINHO</span>
+                            </button>
+                            <button class="secondary-button" id="buy-now">
+                                <i class="fas fa-bolt"></i>
+                                <span>COMPRAR AGORA</span>
+                            </button>
+                        </div>
+                        
+                        <div class="product-payment-methods">
+                            <h3>FORMAS DE PAGAMENTO:</h3>
+                            <div class="payment-icons">
+                                <i class="fab fa-cc-visa" aria-label="Visa"></i>
+                                <i class="fab fa-cc-mastercard" aria-label="Mastercard"></i>
+                                <i class="fab fa-cc-amex" aria-label="American Express"></i>
+                                <i class="fab fa-cc-paypal" aria-label="PayPal"></i>
+                                <i class="fas fa-barcode" aria-label="Boleto"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="product-share">
+                            <h3>COMPARTILHE:</h3>
+                            <div class="share-buttons">
+                                <a href="#" class="social-share" aria-label="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-share" aria-label="Compartilhar no Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="social-share" aria-label="Compartilhar no Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-share" aria-label="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Tabs Section -->
+        <section class="product-tabs reveal-section">
+            <div class="container">
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="description">DESCRIÇÃO</button>
+                        <button class="tab-btn" data-tab="specs">ESPECIFICAÇÕES</button>
+                        <button class="tab-btn" data-tab="reviews">AVALIAÇÕES</button>
+                        <button class="tab-btn" data-tab="shipping">ENTREGA</button>
+                    </div>
+                    
+                    <div class="tabs-content">
+                        <!-- Description Tab -->
+                        <div class="tab-panel active" id="description">
+                            <h2>BANCADA DE TRABALHO PORTÁTIL</h2>
+                            <p>A Bancada de Trabalho Portátil Raven é a solução perfeita para tatuadores que precisam de um espaço de trabalho organizado e versátil, seja em estúdio, convenções ou atendimentos móveis. Com design ergonômico e materiais de alta qualidade, oferece conforto e praticidade para longas sessões de tatuagem.</p>
+                            
+                            <div class="features-grid">
+                                <div class="feature-item">
+                                    <i class="fas fa-suitcase"></i>
+                                    <h3>Portátil</h3>
+                                    <p>Leve e dobrável, fácil de transportar e armazenar</p>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-cogs"></i>
+                                    <h3>Ajustável</h3>
+                                    <p>Altura e inclinação personalizáveis para seu conforto</p>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-th"></i>
+                                    <h3>Organização</h3>
+                                    <p>Compartimentos específicos para todos os equipamentos</p>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <h3>Higiênico</h3>
+                                    <p>Superfície lisa e impermeável para fácil limpeza</p>
+                                </div>
+                            </div>
+                            
+                            <h3>CARACTERÍSTICAS PRINCIPAIS:</h3>
+                            <ul class="kit-includes">
+                                <li><i class="fas fa-check"></i> Estrutura em alumínio aeronáutico leve e resistente</li>
+                                <li><i class="fas fa-check"></i> Superfície de trabalho em aço inoxidável</li>
+                                <li><i class="fas fa-check"></i> Altura ajustável de 70cm a 110cm</li>
+                                <li><i class="fas fa-check"></i> Inclinação ajustável em 3 posições</li>
+                                <li><i class="fas fa-check"></i> 5 compartimentos organizadores com divisórias</li>
+                                <li><i class="fas fa-check"></i> Suporte integrado para máquina e fonte</li>
+                                <li><i class="fas fa-check"></i> Pés antiderrapantes e niveladores</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Specifications Tab -->
+                        <div class="tab-panel" id="specs">
+                            <div class="specs-grid">
+                                <div class="specs-column">
+                                    <h3>ESPECIFICAÇÕES TÉCNICAS</h3>
+                                    <table class="specs-table">
+                                        <tr>
+                                            <th>Modelo</th>
+                                            <td>Bancada Portátil Pro</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Material</th>
+                                            <td>Alumínio aeronáutico + aço inoxidável</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Dimensões</th>
+                                            <td>60cm (L) x 40cm (P) x 70-110cm (A)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Peso</th>
+                                            <td>5,2 kg</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Capacidade de Carga</th>
+                                            <td>15 kg</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Cor</th>
+                                            <td>Preto, Cinza ou Azul</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Garantia</th>
+                                            <td>24 meses</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                                <div class="specs-column">
+                                    <h3>KIT COMPLETO INCLUI:</h3>
+                                    <ul class="compatibility-list">
+                                        <li><i class="fas fa-check"></i> Bancada principal</li>
+                                        <li><i class="fas fa-check"></i> Suporte para máquina ajustável</li>
+                                        <li><i class="fas fa-check"></i> Organizador de agulhas e tubetes</li>
+                                        <li><i class="fas fa-check"></i> Compartimento para tintas</li>
+                                        <li><i class="fas fa-check"></i> Gaveta para descartáveis</li>
+                                        <li><i class="fas fa-check"></i> Bolsa de transporte resistente</li>
+                                        <li><i class="fas fa-check"></i> Ferramentas de montagem</li>
+                                    </ul>
+                                    
+                                    <h3>CERTIFICAÇÕES</h3>
+                                    <div class="certifications">
+                                        <img src="https://via.placeholder.com/80x40?text=CE" alt="Certificação CE" loading="lazy">
+                                        <img src="https://via.placeholder.com/80x40?text=ISO" alt="Certificação ISO 9001" loading="lazy">
+                                        <img src="https://via.placeholder.com/80x40?text=ANATEL" alt="Certificação ANATEL" loading="lazy">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Reviews Tab -->
+                        <div class="tab-panel" id="reviews">
+                            <div class="reviews-summary">
+                                <div class="rating-overview">
+                                    <div class="average-rating">
+                                        <span class="rating-value">4.5</span>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="rating-count">28 avaliações</span>
+                                    </div>
+                                    
+                                    <div class="rating-bars">
+                                        <div class="rating-bar">
+                                            <span class="star-count">5 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 65%"></div>
+                                            </div>
+                                            <span class="percentage">65%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span class="star-count">4 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 20%"></div>
+                                            </div>
+                                            <span class="percentage">20%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span class="star-count">3 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 10%"></div>
+                                            </div>
+                                            <span class="percentage">10%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span class="star-count">2 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 3%"></div>
+                                            </div>
+                                            <span class="percentage">3%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span class="star-count">1 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 2%"></div>
+                                            </div>
+                                            <span class="percentage">2%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button class="write-review-btn">ESCREVER AVALIAÇÃO</button>
+                            </div>
+                            
+                            <div class="reviews-list">
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="review-author">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Foto de Carlos" loading="lazy">
+                                            <div>
+                                                <h4>Carlos Mendes</h4>
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="review-date">22/06/2023</span>
+                                    </div>
+                                    <div class="review-content">
+                                        <h3>Perfeita para convenções!</h3>
+                                        <p>Comprei essa bancada para usar em convenções e não poderia estar mais satisfeito. É leve, fácil de montar e super resistente. Os compartimentos organizam tudo que preciso e o ajuste de altura é um diferencial enorme. Vale cada centavo!</p>
+                                        <div class="review-images">
+                                            <img src="/img/products/bancada1.png" alt="Foto da bancada em uso" loading="lazy">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="review-author">
+                                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="Foto de Ana" loading="lazy">
+                                            <div>
+                                                <h4>Ana Paula</h4>
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="review-date">15/05/2023</span>
+                                    </div>
+                                    <div class="review-content">
+                                        <h3>Ótima qualidade</h3>
+                                        <p>A bancada é muito bem feita e os materiais são de primeira. A única coisa que poderia melhorar é a bolsa de transporte, que poderia ser um pouco mais reforçada. Fora isso, perfeita!</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="review-author">
+                                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop" alt="Foto de Marina" loading="lazy">
+                                            <div>
+                                                <h4>Marina Costa</h4>
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="review-date">08/04/2023</span>
+                                    </div>
+                                    <div class="review-content">
+                                        <h3>Transformou meu trabalho</h3>
+                                        <p>Desde que comecei a usar essa bancada, minha produtividade aumentou muito. Tudo fica organizado e ao alcance das mãos. A superfície é fácil de limpar e o design é muito profissional. Recomendo!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="load-more-reviews">CARREGAR MAIS AVALIAÇÕES</button>
+                        </div>
+                        
+                        <!-- Shipping Tab -->
+                        <div class="tab-panel" id="shipping">
+                            <div class="shipping-info">
+                                <h3>POLÍTICA DE ENTREGA</h3>
+                                <div class="shipping-methods">
+                                    <div class="shipping-method">
+                                        <i class="fas fa-truck"></i>
+                                        <div>
+                                            <h4>Entrega Padrão</h4>
+                                            <p>3-5 dias úteis - R$ 25,00</p>
+                                            <p class="free-shipping">Frete grátis para compras acima de R$ 300,00</p>
+                                        </div>
+                                    </div>
+                                    <div class="shipping-method">
+                                        <i class="fas fa-rocket"></i>
+                                        <div>
+                                            <h4>Entrega Expressa</h4>
+                                            <p>1-2 dias úteis - R$ 45,00</p>
+                                        </div>
+                                    </div>
+                                    <div class="shipping-method">
+                                        <i class="fas fa-store"></i>
+                                        <div>
+                                            <h4>Retirada no Estúdio</h4>
+                                            <p>Disponível em 1 hora - Grátis</p>
+                                            <p>Rua das Artes, 123 - Vila Madalena, São Paulo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h3>POLÍTICA DE TROCAS E DEVOLUÇÕES</h3>
+                                <p>Oferecemos 7 dias para trocas ou devoluções a partir da data de recebimento do produto. O produto deve estar na embalagem original, sem indícios de uso e acompanhado da nota fiscal.</p>
+                                
+                                <div class="return-policy">
+                                    <div class="policy-item">
+                                        <i class="fas fa-exchange-alt"></i>
+                                        <h4>Trocas</h4>
+                                        <p>Grátis para produtos com defeito ou engano no pedido</p>
+                                    </div>
+                                    <div class="policy-item">
+                                        <i class="fas fa-undo"></i>
+                                        <h4>Devoluções</h4>
+                                        <p>Reembolso integral mediante devolução do produto</p>
+                                    </div>
+                                    <div class="policy-item">
+                                        <i class="fas fa-tools"></i>
+                                        <h4>Garantia</h4>
+                                        <p>24 meses contra defeitos de fabricação</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Products Section -->
+        <section id="featured" class="related-products reveal-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">PRODUTOS RELACIONADOS</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">Complete seu kit profissional</p>
+                </div>
+                
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <a href="/produtos/maquina-rotativa-pro.html">
+                                <img src="/img/products/maquina1.png" alt="Máquina Rotativa Pro" loading="lazy">
+                            </a>
+                            <div class="product-actions">
+                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produtos/maquina-rotativa-pro.html">MÁQUINA ROTATIVA PRO</a></h3>
+                            <p class="product-category">Máquinas</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span>(32)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="old-price">R$ 900,00</span>
+                                <span class="price-amount">R$ 750,00</span>
+                                <span class="price-installment">ou 12x de R$ 62,50</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-MRP-001', 'MÁQUINA ROTATIVA PRO', 75000, '/img/products/maquina1.png')">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-badge">MAIS VENDIDO</div>
+                        <div class="product-image">
+                            <a href="/produtos/tinta-preto-absoluto.html">
+                                <img src="/img/products/tinta1.png" alt="Tinta Preto Absoluto" loading="lazy">
+                            </a>
+                            <div class="product-actions">
+                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produtos/tinta-preto-absoluto.html">TINTA PRETO ABSOLUTO</a></h3>
+                            <p class="product-category">Tintas</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>(45)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-amount">R$ 120,00</span>
+                                <span class="price-installment">ou 3x de R$ 40,00</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-TPA-001', 'TINTA PRETO ABSOLUTO', 12000, '/img/products/tinta1.png')">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                     <div class="product-card">
+                        <div class="product-image">
+                            <a href="/produtos/fonte-profissional.html">
+                                <img src="/img/products/fonte1.png" alt="Fonte Profissional" loading="lazy">
+                            </a>
+                            <div class="product-actions">
+                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produtos/fonte-profissional.html">FONTE PROFISSIONAL</a></h3>
+                            <p class="product-category">Acessórios</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span>(18)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-amount">R$ 350,00</span>
+                                <span class="price-installment">ou 6x de R$ 58,33</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-FP-001', 'FONTE PROFISSIONAL', 35000, '/img/products/fonte1.png')">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <a href="/produtos/grip-ergonomico.html">
+                                <img src="/img/products/grip1.png" alt="Grip Ergonômico" loading="lazy">
+                            </a>
+                            <div class="product-actions">
+                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produtos/grip-ergonomico.html">GRIP ERGONÔMICO</a></h3>
+                            <p class="product-category">Acessórios</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span>(27)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-amount">R$ 65,00</span>
+                                <span class="price-installment">ou 2x de R$ 32,50</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-GE-001', 'GRIP ERGONÔMICO', 6500, '/img/products/grip1.png')">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section reveal-section">
+            <div class="container">
+                <div class="newsletter-content">
+                    <div class="newsletter-text">
+                        <h2>ASSINE NOSSA NEWSLETTER</h2>
+                        <p>Receba ofertas exclusivas e novidades sobre produtos e técnicas de tatuagem.</p>
+                    </div>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Seu melhor e-mail" required>
+                        <button type="submit">ASSINAR</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>RAVEN STUDIO</h3>
+                    <p>Especializados em equipamentos profissionais para tatuagem desde 2015. Qualidade e inovação para artistas exigentes.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>LINKS ÚTEIS</h3>
+                    <ul>
+                        <li><a href="/pages/sobre.html">Sobre Nós</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/artists.html">Artistas</a></li>
+                        <li><a href="/pages/contato.html">Contato</a></li>
+                        <li><a href="/pages/faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>ATENDIMENTO</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Rua das Artes, 123 - São Paulo/SP</li>
+                        <li><i class="fas fa-phone"></i> (11) 98765-4321</li>
+                        <li><i class="fas fa-envelope"></i> contato@ravenstudio.com</li>
+                        <li><i class="fas fa-clock"></i> Seg-Sex: 10h-19h | Sáb: 10h-14h</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>PAGAMENTO</h3>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa" aria-label="Visa"></i>
+                        <i class="fab fa-cc-mastercard" aria-label="Mastercard"></i>
+                        <i class="fab fa-cc-amex" aria-label="American Express"></i>
+                        <i class="fab fa-cc-paypal" aria-label="PayPal"></i>
+                        <i class="fas fa-barcode" aria-label="Boleto"></i>
+                    </div>
+                    <div class="security-seals">
+                        <img src="https://via.placeholder.com/80x40?text=SSL" alt="Site Seguro" loading="lazy">
+                        <img src="https://via.placeholder.com/80x40?text=RAVEN" alt="Raven Certified" loading="lazy">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 RAVEN STUDIO. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="/pages/termos.html">Termos de Uso</a>
+                    <a href="/pages/privacidade.html">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button class="chat-toggle" id="chatToggle" aria-label="Abrir chat de atendimento">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <i class="fas fa-headset"></i>
+                    <div>
+                        <h4>ATENDIMENTO</h4>
+                        <span>Estamos online!</span>
+                    </div>
+                </div>
+                <button class="chat-close" id="chatClose" aria-label="Fechar chat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-content" id="chatContent">
+                <div class="chat-categories" id="categoriesView">
+                    <p>Como podemos te ajudar hoje?</p>
+                    <div class="category-buttons">
+                        <button class="category-btn" data-category="products">
+                            <i class="fas fa-shopping-cart"></i> Dúvidas sobre produtos
+                        </button>
+                        <button class="category-btn" data-category="orders">
+                            <i class="fas fa-box-open"></i> Acompanhar pedido
+                        </button>
+                        <button class="category-btn" data-category="technical">
+                            <i class="fas fa-tools"></i> Suporte técnico
+                        </button>
+                        <button class="category-btn" data-category="other">
+                            <i class="fas fa-question-circle"></i> Outras dúvidas
+                        </button>
+                    </div>
+                </div>
+                <div class="chat-questions" id="questionsView" style="display: none;">
+                    <div class="back-button">
+                        <button id="backToCategories">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                    <div id="questions-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para mostrar notificação
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${message}
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Função para atualizar o contador do carrinho
+        function updateCartCounter() {
+            try {
+                const cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
+                const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                const cartCountElement = document.querySelector('.cart-count');
+                if (cartCountElement) {
+                    cartCountElement.textContent = totalItems;
+                }
+            } catch (e) {
+                console.error("Erro ao atualizar contador do carrinho:", e);
+            }
+        }
+
+        // Função para adicionar produtos relacionados ao carrinho
+        function addRelatedToCart(productId, productName, productPrice, productImage) {
+            // Verifica se o usuário está logado
+            const user = JSON.parse(localStorage.getItem('ravenStudioCurrentUser'));
+            if (!user) {
+                alert('Você precisa estar logado para adicionar itens ao carrinho!');
+                window.location.href = '/pages/login.html';
+                return;
+            }
+
+            // Obtém o carrinho atual ou cria um novo se não existir
+            let cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
+            
+            // Verifica se o produto já está no carrinho
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                // Se já existe, aumenta a quantidade
+                existingItem.quantity += 1;
+            } else {
+                // Se não existe, adiciona novo item
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    image: productImage,
+                    quantity: 1
+                });
+            }
+            
+            // Salva o carrinho atualizado
+            localStorage.setItem('ravenStudioCart', JSON.stringify(cart));
+            
+            // Atualiza o contador do carrinho
+            updateCartCounter();
+            
+            // Mostra feedback visual
+            const cartCount = document.querySelector('.cart-count');
+            cartCount.classList.add('animate');
+            setTimeout(() => {
+                cartCount.classList.remove('animate');
+            }, 500);
+            
+            // Mostra notificação
+            showNotification(`${productName} adicionado ao carrinho!`);
+        }
+
+        // Função principal quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Atualiza o contador do carrinho
+            updateCartCounter();
+
+            // Botão de voltar ao topo
+            const backToTopButton = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Chat Widget
+            const chatToggle = document.getElementById('chatToggle');
+            const chatContainer = document.getElementById('chatContainer');
+            const chatClose = document.getElementById('chatClose');
+            
+            chatToggle.addEventListener('click', function() {
+                chatContainer.classList.toggle('active');
+            });
+            
+            chatClose.addEventListener('click', function() {
+                chatContainer.classList.remove('active');
+            });
+
+            // Sistema de tabs
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and panels
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding panel
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Galeria de imagens
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.querySelector('.main-image img');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    const imgSrc = this.querySelector('img').src;
+                    mainImage.src = imgSrc;
+                    
+                    // Remove active class from all thumbnails
+                    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                    
+                    // Add active class to clicked thumbnail
+                    this.classList.add('active');
+                });
+            });
+
+            // Seletor de quantidade
+            const minusBtn = document.querySelector('.quantity-btn.minus');
+            const plusBtn = document.querySelector('.quantity-btn.plus');
+            const quantityInput = document.querySelector('.quantity-selector input');
+            
+            minusBtn.addEventListener('click', function() {
+                let value = parseInt(quantityInput.value);
+                if (value > 1) {
+                    quantityInput.value = value - 1;
+                }
+            });
+            
+            plusBtn.addEventListener('click', function() {
+                let value = parseInt(quantityInput.value);
+                if (value < 12) { // Máximo de 12 unidades
+                    quantityInput.value = value + 1;
+                }
+            });
+
+            // Botão de adicionar ao carrinho (produto principal)
+            const addToCartBtn = document.getElementById('add-to-cart');
+            addToCartBtn.addEventListener('click', function() {
+                const quantity = parseInt(quantityInput.value);
+                const productId = 'RVN-BTP-001';
+                const productName = 'BANCADA DE TRABALHO PORTÁTIL';
+                const productPrice = 40000; // Em centavos (R$400,00)
+                const productImage = '/img/products/bancada1.png';
+                
+                addRelatedToCart(productId, productName, productPrice, productImage);
+            });
+
+            // Botão de comprar agora
+            const buyNowBtn = document.getElementById('buy-now');
+            buyNowBtn.addEventListener('click', function() {
+                const quantity = parseInt(quantityInput.value);
+                const productId = 'RVN-BTP-001';
+                const productName = 'BANCADA DE TRABALHO PORTÁTIL';
+                const productPrice = 40000; // Em centavos (R$400,00)
+                const productImage = '/img/products/bancada1.png';
+                
+                // Adiciona ao carrinho
+                addRelatedToCart(productId, productName, productPrice, productImage);
+                
+                // Redireciona para o checkout
+                window.location.href = '/pages/carrinho.html';
+            });
+
+            // Animação de revelação ao rolar
+            const revealElements = document.querySelectorAll('.reveal-section');
+            
+            function checkReveal() {
+                revealElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add('revealed');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', checkReveal);
+            checkReveal(); // Verifica na carga inicial
+        });
+         // Função para esconder o loading screen
+    function hideLoadingScreen() {
+        const loadingScreen = document.getElementById('loading-screen');
+        loadingScreen.style.opacity = '0';
+        loadingScreen.style.visibility = 'hidden';
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 500); // Tempo igual à duração da transição
+    }
+
+    // Função para simular o carregamento
+    function simulateLoading() {
+        const progressBar = document.querySelector('.loading-progress');
+        let width = 0;
+        const interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+                hideLoadingScreen();
+                // Mostra o conteúdo principal após o loading
+                document.getElementById('main').style.display = 'block';
+            } else {
+                width++;
+                progressBar.style.width = width + '%';
+                document.querySelector('.loading-text').textContent = 
+                    `Carregando ${width}%...`;
+            }
+        }, 30); // Ajuste este valor para mudar a velocidade do loading
+    }
+
+    // Quando a janela terminar de carregar
+    window.addEventListener('load', function() {
+        // Inicia a animação do loading
+        simulateLoading();
+        
+        // Ou, se quiser um loading mais rápido sem animação:
+        // hideLoadingScreen();
+        // document.getElementById('main').style.display = 'block';
+    });
+
+    // Caso o conteúdo carregue muito rápido, garantimos que o loading apareça por pelo menos 1s
+    let minimumLoadTime = 1000; // 1 segundo
+    let startTime = Date.now();
+
+    window.addEventListener('load', function() {
+        let loadTime = Date.now() - startTime;
+        if (loadTime < minimumLoadTime) {
+            setTimeout(hideLoadingScreen, minimumLoadTime - loadTime);
+        }
+    });
+
+    // Adicione este CSS para o loading screen (caso não tenha)
+    const loadingCSS = `
+    <style>
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: all 0.5s ease;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .loading-content {
+            text-align: center;
+            color: #fff;
+            max-width: 300px;
+        }
+        
+        .loading-logo {
+            margin-bottom: 2rem;
+        }
+        
+        .loading-logo h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #3b82f6;
+            margin-top: 1rem;
+        }
+        
+        .loading-mascot {
+            font-size: 4rem;
+            display: block;
+        }
+        
+        .loading-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #3b82f6, #22c55e);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .loading-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-top: 1rem;
+        }
+    </style>
+    `;
+
+    // Adiciona o CSS ao head
+    document.head.insertAdjacentHTML('beforeend', loadingCSS);
+
+    // Esconde o conteúdo principal inicialmente
+    document.getElementById('main').style.display = 'none';
+    </script>
+</body>
+</html>

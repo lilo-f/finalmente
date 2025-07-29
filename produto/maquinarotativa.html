@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máquina Rotativa Pro | Raven Studio</title>
+    <meta name="description" content="Máquina rotativa de alta performance para traço e pintura - Compre agora no Raven Studio.">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/produtos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Bebas+Neue&family=Teko:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#000000">
+    <meta name="color-scheme" content="dark">
+</head>
+
+<style>
+    /* Botão para voltar ao topo */
+    .back-to-top {
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(45deg, #3b82f6, #22c55e);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        z-index: 999;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .back-to-top:hover {
+        transform: translateY(-5px);
+        background: linear-gradient(45deg, #22c55e, #3b82f6);
+    }
+    
+    .back-to-top.show {
+        display: flex;
+    }
+
+    /* Chat Widget Styles */
+    .chat-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .chat-toggle {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(45deg, #3b82f6, #22c55e);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        color: white;
+        font-size: 1.5rem;
+        border: none;
+    }
+
+    .chat-toggle:hover {
+        transform: scale(1.1);
+        background: linear-gradient(45deg, #22c55e, #3b82f6);
+    }
+
+    .chat-container {
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        width: 350px;
+        height: 450px;
+        background: #1a1a1a;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        display: none;
+        flex-direction: column;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+    }
+
+    .chat-container.active {
+        display: flex;
+    }
+
+    .chat-header {
+        padding: 1rem;
+        background: linear-gradient(45deg, #3b82f6, #22c55e);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .chat-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: white;
+    }
+
+    .chat-title i {
+        color: #fff;
+    }
+
+    .chat-title h4 {
+        font-size: 1rem;
+        margin: 0;
+        font-family: 'Teko', sans-serif;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    .chat-title span {
+        font-size: 0.8rem;
+        color: #ccc;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .chat-close {
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .chat-content {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        background-color: #121212;
+    }
+
+    .chat-categories p {
+        color: #ccc;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .category-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .category-btn {
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: left;
+        font-family: 'Teko', sans-serif;
+        font-size: 1.1rem;
+        border: none;
+    }
+
+    .category-btn:hover {
+        background: rgba(59, 130, 246, 0.3);
+    }
+
+    .back-button {
+        margin-bottom: 1rem;
+    }
+
+    .back-button button {
+        background: none;
+        border: none;
+        color: #3b82f6;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-family: 'Teko', sans-serif;
+        padding: 0;
+    }
+
+    .back-button button:hover {
+        text-decoration: underline;
+    }
+
+    .question-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: left;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        border: none;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .question-btn:hover {
+        background: rgba(59, 130, 246, 0.3);
+    }
+
+    .answer-content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        color: #ccc;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .answer-content h5 {
+        color: #3b82f6;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .answer-content p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .btn-primary {
+        width: 100%;
+        background: linear-gradient(45deg, #3b82f6, #22c55e);
+        color: white;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+        margin-top: 1rem;
+        font-family: 'Teko', sans-serif;
+        font-size: 1.1rem;
+    }
+
+    .btn-primary:hover {
+        transform: scale(1.02);
+        background: linear-gradient(45deg, #22c55e, #3b82f6);
+    }
+
+    #questions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    @media (max-width: 480px) {
+        .chat-container {
+            width: 280px;
+            right: -10px;
+        }
+        
+        .back-to-top {
+            left: 10px;
+            bottom: 10px;
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+    }
+</style>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <span class="loading-mascot">🐦‍⬛</span>
+                <h2>RAVEN STUDIO</h2>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p class="loading-text">Preparando sua experiência...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-mascot" aria-hidden="true">🐦‍⬛</span>
+                <span class="brand-text">RAVEN </span>
+            </div>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="/" role="menuitem" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
+                <li role="none"><a href="#featured" role="menuitem" class="nav-link"><i class="fas fa-star"></i> Destaques</a></li>
+                <li role="none"><a href="#machines" role="menuitem" class="nav-link"><i class="fas fa-bolt"></i> Máquinas</a></li>
+                <li role="none"><a href="#needles" role="menuitem" class="nav-link"><i class="fas fa-syringe"></i> Agulhas</a></li>
+                <li role="none"><a href="#care" role="menuitem" class="nav-link"><i class="fas fa-heart"></i> Cuidados</a></li>
+                <li role="none"><a href="#contact" role="menuitem" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+            </ul>
+            <div class="nav-cart">
+                <a href="#" class="cart-link" aria-label="Carrinho de compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main" role="main">
+        <!-- Product Hero Section -->
+        <section class="product-hero" role="banner">
+            <div class="container">
+                <div class="product-hero-content">
+                    <div class="product-images">
+                        <div class="main-image">
+                            <img src="/img/products/maquina1.png" alt="Máquina Rotativa Pro" loading="lazy">
+                        </div>
+                        <div class="thumbnail-gallery">
+                            <div class="thumbnail active" tabindex="0" role="button" aria-label="Visualizar máquina">
+                                <img src="/img/products/maquina1.png" alt="Máquina Rotativa Pro - Vista frontal">
+                            </div>
+                            <div class="thumbnail" tabindex="0" role="button" aria-label="Visualizar detalhe">
+                                <img src="/img/products/maquina-detalhe1.png" alt="Máquina Rotativa Pro - Detalhe do motor">
+                            </div>
+                            <div class="thumbnail" tabindex="0" role="button" aria-label="Visualizar kit completo">
+                                <img src="/img/products/maquina-kit1.png" alt="Máquina Rotativa Pro - Kit completo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h1 class="product-title">MÁQUINA ROTATIVA PRO</h1>
+                        <div class="product-meta">
+                            <span class="product-sku">Código: RVN-MRP-001</span>
+                            <div class="product-rating">
+                                <div class="stars" aria-label="Avaliação 4.5 estrelas">
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                                </div>
+                                <span>(32 avaliações)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span class="price-amount">R$ 750,00</span>
+                            <span class="old-price">R$ 900,00</span>
+                            <span class="price-installment">ou 12x de R$ 62,50 sem juros</span>
+                            <span class="price-note">Frete grátis para compras acima de R$ 300,00</span>
+                        </div>
+                        
+                        <div class="product-variants">
+                            <div class="variant-option">
+                                <h3>COR:</h3>
+                                <div class="variant-selector">
+                                    <button class="variant-btn active" data-color="black">Preto</button>
+                                    <button class="variant-btn" data-color="silver">Prata</button>
+                                    <button class="variant-btn" data-color="gold">Dourado</button>
+                                </div>
+                            </div>
+                            
+                            <div class="variant-option">
+                                <h3>KIT:</h3>
+                                <div class="variant-selector">
+                                    <button class="variant-btn" data-kit="basic">Básico</button>
+                                    <button class="variant-btn active" data-kit="complete">Completo</button>
+                                    <button class="variant-btn" data-kit="professional">Profissional</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-stock">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Disponível em estoque (15 unidades)</span>
+                        </div>
+                        
+                        <div class="product-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus" aria-label="Reduzir quantidade">-</button>
+                                <input type="number" value="1" min="1" max="15" aria-label="Quantidade">
+                                <button class="quantity-btn plus" aria-label="Aumentar quantidade">+</button>
+                            </div>
+                            <button class="cta-button" id="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>ADICIONAR AO CARRINHO</span>
+                            </button>
+                            <button class="secondary-button" id="buy-now">
+                                <i class="fas fa-bolt"></i>
+                                <span>COMPRAR AGORA</span>
+                            </button>
+                        </div>
+                        
+                        <div class="product-payment-methods">
+                            <h3>FORMAS DE PAGAMENTO:</h3>
+                            <div class="payment-icons">
+                                <i class="fab fa-cc-visa" aria-label="Visa"></i>
+                                <i class="fab fa-cc-mastercard" aria-label="Mastercard"></i>
+                                <i class="fab fa-cc-amex" aria-label="American Express"></i>
+                                <i class="fab fa-cc-paypal" aria-label="PayPal"></i>
+                                <i class="fas fa-barcode" aria-label="Boleto"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="product-share">
+                            <h3>COMPARTILHE:</h3>
+                            <div class="share-buttons">
+                                <a href="#" class="social-share" aria-label="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-share" aria-label="Compartilhar no Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="social-share" aria-label="Compartilhar no Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-share" aria-label="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Tabs Section -->
+        <section class="product-tabs reveal-section">
+            <div class="container">
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="description">DESCRIÇÃO</button>
+                        <button class="tab-btn" data-tab="specs">ESPECIFICAÇÕES</button>
+                        <button class="tab-btn" data-tab="reviews">AVALIAÇÕES</button>
+                        <button class="tab-btn" data-tab="shipping">ENTREGA</button>
+                    </div>
+                    
+                    <div class="tabs-content">
+                        <!-- Description Tab -->
+                        <div class="tab-panel active" id="description">
+                            <h2>MÁQUINA ROTATIVA PRO</h2>
+                            <p>A Máquina Rotativa Pro é a escolha perfeita para tatuadores que buscam versatilidade e performance excepcional. Com design ergonômico e motor de alta precisão, oferece resultados profissionais tanto para traço quanto para pintura.</p>
+                            
+                            <div class="features-grid">
+                                <div class="feature-item">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <h3>Alta Performance</h3>
+                                    <p>Motor de 10W com rotação ajustável de 5.000 a 10.000 RPM</p>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-volume-off"></i>
+                                    <h3>Silenciosa</h3>
+                                    <p>Operação ultra silenciosa para maior conforto do cliente</p>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-battery-full"></i>
+                                    <h3>Durabilidade</h3>
+                                    <p>Construção em alumínio aeronáutico com revestimento anti-corrosão</p>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-weight"></i>
+                                    <h3>Leveza</h3>
+                                    <p>Apenas 120g para reduzir a fadiga durante longas sessões</p>
+                                </div>
+                            </div>
+                            
+                            <h3>KIT COMPLETO INCLUI:</h3>
+                            <ul class="kit-includes">
+                                <li><i class="fas fa-check"></i> 1x Máquina Rotativa Pro</li>
+                                <li><i class="fas fa-check"></i> 1x Fonte de alimentação digital</li>
+                                <li><i class="fas fa-check"></i> 3x Cabos de conexão (tamanhos variados)</li>
+                                <li><i class="fas fa-check"></i> 5x Agulhas de teste (3RL, 5RL, 7M1, 9RS, 11F)</li>
+                                <li><i class="fas fa-check"></i> 1x Estojo de transporte em EVA</li>
+                                <li><i class="fas fa-check"></i> 1x Manual do usuário e certificado de garantia</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Specifications Tab -->
+                        <div class="tab-panel" id="specs">
+                            <div class="specs-grid">
+                                <div class="specs-column">
+                                    <h3>ESPECIFICAÇÕES TÉCNICAS</h3>
+                                    <table class="specs-table">
+                                        <tr>
+                                            <th>Modelo</th>
+                                            <td>Rotativa Pro V3</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <td>Máquina rotativa para tatuagem</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Potência</th>
+                                            <td>Motor DC 10W</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Rotação</th>
+                                            <td>5.000 - 10.000 RPM (ajustável)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Peso</th>
+                                            <td>120g</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Dimensões</th>
+                                            <td>12cm x 3cm x 4cm</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Material</th>
+                                            <td>Alumínio aeronáutico</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Voltagem</th>
+                                            <td>12V DC</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                                <div class="specs-column">
+                                    <h3>RECOMENDAÇÕES</h3>
+                                    <ul class="compatibility-list">
+                                        <li><i class="fas fa-check"></i> Ideal para traço fino e sombreamento</li>
+                                        <li><i class="fas fa-check"></i> Compatível com todos os tipos de agulhas</li>
+                                        <li><i class="fas fa-check"></i> Recomendada para tatuadores profissionais</li>
+                                        <li><i class="fas fa-check"></i> Excelente para tatuagens realistas e detalhadas</li>
+                                    </ul>
+                                    
+                                    <h3>CERTIFICAÇÕES</h3>
+                                    <div class="certifications">
+                                        <img src="https://via.placeholder.com/80x40?text=CE" alt="Certificação CE" loading="lazy">
+                                        <img src="https://via.placeholder.com/80x40?text=ANVISA" alt="Certificação ANVISA" loading="lazy">
+                                        <img src="https://via.placeholder.com/80x40?text=ISO" alt="Certificação ISO 9001" loading="lazy">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Reviews Tab -->
+                        <div class="tab-panel" id="reviews">
+                            <div class="reviews-summary">
+                                <div class="rating-overview">
+                                    <div class="average-rating">
+                                        <span class="rating-value">4.5</span>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="rating-count">32 avaliações</span>
+                                    </div>
+                                    
+                                    <div class="rating-bars">
+                                        <div class="rating-bar">
+                                            <span class="star-count">5 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 60%"></div>
+                                            </div>
+                                            <span class="percentage">60%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span class="star-count">4 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 25%"></div>
+                                            </div>
+                                            <span class="percentage">25%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span class="star-count">3 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 10%"></div>
+                                            </div>
+                                            <span class="percentage">10%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span class="star-count">2 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 3%"></div>
+                                            </div>
+                                            <span class="percentage">3%</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span class="star-count">1 <i class="fas fa-star"></i></span>
+                                            <div class="bar-container">
+                                                <div class="bar" style="width: 2%"></div>
+                                            </div>
+                                            <span class="percentage">2%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button class="write-review-btn">ESCREVER AVALIAÇÃO</button>
+                            </div>
+                            
+                            <div class="reviews-list">
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="review-author">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Foto de Ricardo" loading="lazy">
+                                            <div>
+                                                <h4>Ricardo Silva</h4>
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="review-date">10/06/2023</span>
+                                    </div>
+                                    <div class="review-content">
+                                        <h3>Melhor máquina que já usei!</h3>
+                                        <p>Comprei essa máquina há 3 meses e estou impressionado com a qualidade. O motor é potente e silencioso, o peso é perfeito para longas sessões e o acabamento é impecável. Vale cada centavo!</p>
+                                        <div class="review-images">
+                                            <img src="/img/products/maquina1.png" alt="Foto da máquina" loading="lazy">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="review-author">
+                                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="Foto de Ana" loading="lazy">
+                                            <div>
+                                                <h4>Ana Paula</h4>
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="review-date">25/05/2023</span>
+                                    </div>
+                                    <div class="review-content">
+                                        <h3>Excelente para detalhes</h3>
+                                        <p>Uso principalmente para tatuagens realistas e a precisão é incrível. O único ponto negativo é que o cabo poderia ser mais flexível, mas isso é detalhe perto da qualidade geral.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="review-author">
+                                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop" alt="Foto de Marcelo" loading="lazy">
+                                            <div>
+                                                <h4>Marcelo Costa</h4>
+                                                <div class="stars">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="review-date">12/04/2023</span>
+                                    </div>
+                                    <div class="review-content">
+                                        <h3>Ótimo custo-benefício</h3>
+                                        <p>Depois de testar várias máquinas no mercado, essa se destacou pela relação qualidade/preço. A entrega foi rápida e o kit completo tem tudo que preciso para trabalhar.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="load-more-reviews">CARREGAR MAIS AVALIAÇÕES</button>
+                        </div>
+                        
+                        <!-- Shipping Tab -->
+                        <div class="tab-panel" id="shipping">
+                            <div class="shipping-info">
+                                <h3>POLÍTICA DE ENTREGA</h3>
+                                <div class="shipping-methods">
+                                    <div class="shipping-method">
+                                        <i class="fas fa-truck"></i>
+                                        <div>
+                                            <h4>Entrega Padrão</h4>
+                                            <p>3-5 dias úteis - R$ 15,00</p>
+                                            <p class="free-shipping">Frete grátis para compras acima de R$ 300,00</p>
+                                        </div>
+                                    </div>
+                                    <div class="shipping-method">
+                                        <i class="fas fa-rocket"></i>
+                                        <div>
+                                            <h4>Entrega Expressa</h4>
+                                            <p>1-2 dias úteis - R$ 35,00</p>
+                                        </div>
+                                    </div>
+                                    <div class="shipping-method">
+                                        <i class="fas fa-store"></i>
+                                        <div>
+                                            <h4>Retirada no Estúdio</h4>
+                                            <p>Disponível em 1 hora - Grátis</p>
+                                            <p>Rua das Artes, 123 - Vila Madalena, São Paulo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h3>POLÍTICA DE TROCAS E DEVOLUÇÕES</h3>
+                                <p>Oferecemos 7 dias para trocas ou devoluções a partir da data de recebimento do produto. O produto deve estar na embalagem original, sem indícios de uso e acompanhado da nota fiscal.</p>
+                                
+                                <div class="return-policy">
+                                    <div class="policy-item">
+                                        <i class="fas fa-exchange-alt"></i>
+                                        <h4>Trocas</h4>
+                                        <p>Grátis para produtos com defeito ou engano no pedido</p>
+                                    </div>
+                                    <div class="policy-item">
+                                        <i class="fas fa-undo"></i>
+                                        <h4>Devoluções</h4>
+                                        <p>Reembolso integral mediante devolução do produto</p>
+                                    </div>
+                                    <div class="policy-item">
+                                        <i class="fas fa-tools"></i>
+                                        <h4>Garantia</h4>
+                                        <p>12 meses contra defeitos de fabricação</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Products Section -->
+        <section id="featured" class="related-products reveal-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">PRODUTOS RELACIONADOS</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">Complete seu kit profissional</p>
+                </div>
+                
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-badge">OFERTA</div>
+                        <div class="product-image">
+                            <a href="/produtos/kit-agulhas-variadas.html">
+                                <img src="/img/products/agulhas1.png" alt="Kit Agulhas Variadas" loading="lazy">
+                            </a>
+                            <div class="product-actions">
+                                <button class="quick-view" aria-label="Visualização rápida"><i class="fas fa-eye"></i></button>
+                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produtos/kit-agulhas-variadas.html">KIT AGULHAS VARIADAS</a></h3>
+                            <p class="product-category">Agulhas</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span>(36)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-amount">R$ 80,00</span>
+                                <span class="price-installment">ou 2x de R$ 40,00</span>
+                            </div>
+                            <button class="add-to-cart-btn">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <a href="/produtos/tinta-preto-absoluto.html">
+                                <img src="/img/products/tinta1.png" alt="Tinta Preto Absoluto" loading="lazy">
+                            </a>
+                            <div class="product-actions">
+                                <button class="quick-view" aria-label="Visualização rápida"><i class="fas fa-eye"></i></button>
+                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produtos/tinta-preto-absoluto.html">TINTA PRETO ABSOLUTO</a></h3>
+                            <p class="product-category">Tintas</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>(45)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-amount">R$ 120,00</span>
+                                <span class="price-installment">ou 3x de R$ 40,00</span>
+                            </div>
+                            <button class="add-to-cart-btn">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-badge">MAIS VENDIDO</div>
+                        <div class="product-image">
+                            <a href="/produtos/fonte-alimentacao-digital.html">
+                                <img src="/img/products/fonte1.png" alt="Fonte de Alimentação Digital" loading="lazy">
+                            </a>
+                            <div class="product-actions">
+                                <button class="quick-view" aria-label="Visualização rápida"><i class="fas fa-eye"></i></button>
+                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produtos/fonte-alimentacao-digital.html">FONTE DE ALIMENTAÇÃO DIGITAL</a></h3>
+                            <p class="product-category">Acessórios</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span>(28)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-amount">R$ 300,00</span>
+                                <span class="price-installment">ou 6x de R$ 50,00</span>
+                            </div>
+                            <button class="add-to-cart-btn">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-badge">NOVO</div>
+                        <div class="product-image">
+                            <a href="/produtos/creme-pos-tatuagem.html">
+                                <img src="/img/products/creme2.png" alt="Creme Pós-Tatuagem" loading="lazy">
+                            </a>
+                            <div class="product-actions">
+                                <button class="quick-view" aria-label="Visualização rápida"><i class="fas fa-eye"></i></button>
+                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produtos/creme-pos-tatuagem.html">CREME PÓS-TATUAGEM</a></h3>
+                            <p class="product-category">Cuidados</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span>(18)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-amount">R$ 50,00</span>
+                                <span class="price-installment">ou 1x de R$ 50,00</span>
+                            </div>
+                            <button class="add-to-cart-btn">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <span class="brand-mascot">🐦‍⬛</span>
+                        <h3>RAVEN STUDIO</h3>
+                    </div>
+                    <p>Equipamentos profissionais para tatuadores desde 2016. Qualidade e inovação em cada produto.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Instagram do Raven Studio">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Facebook do Raven Studio">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="TikTok do Raven Studio">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="YouTube do Raven Studio">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>CATEGORIAS</h4>
+                    <ul>
+                        <li><a href="#machines">Máquinas</a></li>
+                        <li><a href="#needles">Agulhas</a></li>
+                        <li><a href="#care">Cuidados</a></li>
+                        <li><a href="#">Tintas</a></li>
+                        <li><a href="#">Acessórios</a></li>
+                        <li><a href="#">Kits</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>INSTITUCIONAL</h4>
+                    <ul>
+                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="#">Nossos Artistas</a></li>
+                        <li><a href="#">Trabalhe Conosco</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Termos e Condições</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>ATENDIMENTO</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Rua das Artes, 123<br>Vila Madalena - São Paulo, SP</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>(11) 99999-9999</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span>vendas@ravenstudio.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-clock" aria-hidden="true"></i>
+                        <span>Seg-Sex: 10h-19h<br>Sáb: 10h-15h</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-divider"></div>
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para tatuadores profissionais</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Botão para voltar ao topo -->
+    <button class="back-to-top" id="backToTop" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button class="chat-toggle" id="chatToggle">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                        <h4>RavenBot</h4>
+                        <span>Online • FAQ</span>
+                    </div>
+                </div>
+                <button class="chat-close" id="chatClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-content" id="chatContent">
+                <div class="chat-categories" id="chatCategories">
+                    <p>Escolha uma categoria para ver as perguntas frequentes:</p>
+                    <div class="category-buttons">
+                        <button class="category-btn" onclick="showCategory('precos')">Preços</button>
+                        <button class="category-btn" onclick="showCategory('procedimento')">Procedimento</button>
+                        <button class="category-btn" onclick="showCategory('cuidados')">Cuidados</button>
+                        <button class="category-btn" onclick="showCategory('estilos')">Estilos</button>
+                        <button class="category-btn" onclick="showCategory('agendamento')">Agendamento</button>
+                        <button class="category-btn" onclick="showCategory('tempo')">Tempo</button>
+                    </div>
+                </div>
+                <div class="chat-questions" id="chatQuestions" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showCategories()">← Voltar</button>
+                    </div>
+                    <div id="questionsList"></div>
+                </div>
+                <div class="chat-answer" id="chatAnswer" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showQuestions()">← Voltar</button>
+                    </div>
+                    <div id="answerContent"></div>
+                    <button class="btn-primary" onclick="showCategories()">Ver Outras Perguntas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+  <script src="/js/home.js"></script>
+ 
+     <script src="/js/user-session.js"></script>
+    <script>
+        // FAQ Data
+        const faqData = {
+            precos: [
+                {
+                    question: "Quanto custa uma tatuagem?",
+                    answer: "Os preços variam de R$ 200 a R$ 2000, dependendo do tamanho e complexidade. Tatuagens pequenas: R$ 200-500, médias: R$ 500-1000, grandes: acima de R$ 1000."
+                }
+            ],
+            procedimento: [
+                {
+                    question: "Dói muito fazer tatuagem?",
+                    answer: "A dor varia conforme a região do corpo e tolerância pessoal. Áreas ósseas doem mais. A sensação é similar a uma queimação contínua. Usamos técnicas para minimizar o desconforto."
+                }
+            ],
+            cuidados: [
+                {
+                    question: "Como cuidar da tatuagem?",
+                    answer: "Mantenha limpa e hidratada com pomada cicatrizante por 7-10 dias. Evite sol direto, piscina e mar por 15 dias. Não retire as casquinhas naturalmente formadas."
+                }
+            ],
+            estilos: [
+                {
+                    question: "Que estilos vocês fazem?",
+                    answer: "Oferecemos: Tradicional/Old School, Realismo, Minimalista, Aquarela, Geométrico, Blackwork, Fine Line. Cada artista tem especialidades específicas."
+                }
+            ],
+            agendamento: [
+                {
+                    question: "Como funciona o agendamento?",
+                    answer: "Escolha o artista, data e horário disponível. Pedimos entrada de 50% do valor total. Você receberá confirmação por e-mail."
+                }
+            ],
+            tempo: [
+                {
+                    question: "Quanto tempo demora?",
+                    answer: "Tatuagens pequenas: 1-2h, médias: 2-4h, grandes podem precisar múltiplas sessões. O tempo varia conforme complexidade e detalhamento."
+                }
+            ]
+        };
+
+        // Chat Widget Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatToggle = document.getElementById('chatToggle');
+            const chatContainer = document.getElementById('chatContainer');
+            const chatClose = document.getElementById('chatClose');
+            
+            // Botão de voltar ao topo
+            const backToTopButton = document.getElementById('backToTop');
+            
+            // Mostrar/ocultar botão de voltar ao topo
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+            
+            // Voltar ao topo
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Abrir/fechar chat
+            chatToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                chatContainer.classList.toggle('active');
+            });
+            
+            chatClose.addEventListener('click', function() {
+                chatContainer.classList.remove('active');
+            });
+            
+            // Fechar chat ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (!chatContainer.contains(e.target) && !chatToggle.contains(e.target)) {
+                    chatContainer.classList.remove('active');
+                }
+            });
+            
+            // Evitar fechar ao clicar dentro do chat
+            chatContainer.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+        
+        function showCategories() {
+            document.getElementById('chatCategories').style.display = 'block';
+            document.getElementById('chatQuestions').style.display = 'none';
+            document.getElementById('chatAnswer').style.display = 'none';
+            currentState = 'categories';
+            currentCategory = null;
+        }
+        
+        function showCategory(category) {
+            currentCategory = category;
+            currentState = 'questions';
+            
+            const questionsContainer = document.getElementById('questionsList');
+            const categoryData = faqData[category] || [];
+            
+            questionsContainer.innerHTML = '';
+            
+            categoryData.forEach((faq, index) => {
+                const questionBtn = document.createElement('button');
+                questionBtn.className = 'question-btn';
+                questionBtn.textContent = faq.question;
+                questionBtn.onclick = () => showAnswer(category, index);
+                questionsContainer.appendChild(questionBtn);
+            });
+            
+            document.getElementById('chatCategories').style.display = 'none';
+            document.getElementById('chatQuestions').style.display = 'block';
+            document.getElementById('chatAnswer').style.display = 'none';
+        }
+        
+        function showQuestions() {
+            if (currentCategory) {
+                showCategory(currentCategory);
+            } else {
+                showCategories();
+            }
+        }
+        
+        function showAnswer(category, questionIndex) {
+            const faq = faqData[category][questionIndex];
+            const answerContent = document.getElementById('answerContent');
+            
+            answerContent.innerHTML = `
+                <div class="answer-content">
+                    <h5>Pergunta:</h5>
+                    <p>${faq.question}</p>
+                    <h5 style="color: #3b82f6; margin-top: 1rem;">Resposta:</h5>
+                    <p>${faq.answer}</p>
+                </div>
+            `;
+            
+            document.getElementById('chatCategories').style.display = 'none';
+            document.getElementById('chatQuestions').style.display = 'none';
+            document.getElementById('chatAnswer').style.display = 'block';
+            currentState = 'answer';
+        }
+        
+        // Variáveis de estado do chat
+        let currentCategory = null;
+        let currentState = 'categories';
+
+        // Script específico para a página de produtos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Galeria de imagens
+            const mainImage = document.querySelector('.main-image img');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    mainImage.src = this.querySelector('img').src;
+                });
+                
+                thumb.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+            
+            // Seletor de variantes
+            const variantBtns = document.querySelectorAll('.variant-btn');
+            variantBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const parent = this.parentElement;
+                    parent.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Seletor de quantidade
+            const minusBtn = document.querySelector('.quantity-btn.minus');
+            const plusBtn = document.querySelector('.quantity-btn.plus');
+            const quantityInput = document.querySelector('.quantity-selector input');
+            
+            minusBtn.addEventListener('click', () => {
+                let value = parseInt(quantityInput.value);
+                if (value > 1) {
+                    quantityInput.value = value - 1;
+                }
+            });
+            
+            plusBtn.addEventListener('click', () => {
+                let value = parseInt(quantityInput.value);
+                if (value < 15) {
+                    quantityInput.value = value + 1;
+                }
+            });
+            
+            // Tabs de produto
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Atualiza tabs
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Atualiza painéis
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Botão de adicionar ao carrinho
+            const addToCartBtn = document.getElementById('add-to-cart');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    const cartCount = document.querySelector('.cart-count');
+                    let count = parseInt(cartCount.textContent);
+                    cartCount.textContent = count + parseInt(quantityInput.value);
+                    cartCount.classList.add('animate');
+                    
+                    setTimeout(() => {
+                        cartCount.classList.remove('animate');
+                    }, 500);
+                    
+                    // Simula adição ao carrinho
+                    alert('Produto adicionado ao carrinho!');
+                });
+            }
+            
+            // Botão de comprar agora
+            const buyNowBtn = document.getElementById('buy-now');
+            if (buyNowBtn) {
+                buyNowBtn.addEventListener('click', function() {
+                    // Simula checkout
+                    alert('Redirecionando para o checkout...');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

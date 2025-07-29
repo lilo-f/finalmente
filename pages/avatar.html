@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criador de Avatar | Raven Studio</title>
+        <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+
+    <meta name="description" content="Crie seu avatar personalizado - Raven Studio">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Teko:wght@400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .avatar-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+            z-index: -2;
+        }
+
+        .avatar-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .container {   max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3.5rem;
+            color: #3b82f6;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #d1d5db;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 3rem;
+        }
+
+        .avatar-section {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            height: fit-content;
+            position: sticky;   top: 2rem;
+        }
+
+        .avatar-container {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(59, 130, 246, 0.5);     
+               box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+         .avatar-container svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+             justify-content: center;
+        }
+
+        .btn {
+             padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Bebas Neue', cursive;
+             font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+             letter-spacing: 1px;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #000;
+        }
+         .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #000;
+        }
+  .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: #000;
+        }
+ .btn:hover {
+            transform: translateY(-2px);
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls-section {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .control-group {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+             }
+
+        .control-group:last-child {
+            border-bottom: none;
+             }
+
+        .control-group h3 {
+            font-family: 'Teko', sans-serif;
+            color: #3b82f6;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .control-item {
+            margin-bottom: 1rem;
+        }
+
+        .control-item label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #d1d5db;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .control-item select {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-item select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            outline: none;
+        }
+
+        .color-picker {
+             display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .color-option {
+              width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+ .color-option:hover,
+        .color-option.selected {
+            border-color: #3b82f6;
+              transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .avatar-section {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                     padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .avatar-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="avatar-bg"></div>
+    <div class="avatar-particles" id="particles-js"></div>
+    
+    <div class="container">
+        <div class="header">
+              <h1>🎨 Criador de Avatar</h1>
+            <p>Crie seu avatar personalizado estilo Instagram</p>
+        </div>
+
+        <div class="main-content">
+            <div class="avatar-section">
+                <div class="avatar-container">
+                    <svg id="avatar-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Background -->
+                        <circle cx="100" cy="100" r="100" fill="#f0f0f0"/>
+                        
+                        <!-- Hair back layer (cabelos que vão atrás) -->
+                        <path id="hairBack" d="" fill="#8B4513" style="display: none;"/>
+                        
+                        <!-- Clothing -->
+                        <path id="clothing" d="M50 170 Q50 160, 60 155 Q100 150, 140 155 Q150 160, 150 170 L150 200 L50 200 Z" fill="#4A90E2"/>
+                        
+                        <!-- Face -->
+                        <ellipse id="face" cx="100" cy="110" rx="45" ry="50" fill="#FDBCB4"/>
+                          <!-- Freckles -->
+                        <g id="freckles" style="display: none;">
+                            <circle cx="88" cy="105" r="1" fill="#D2691E"/>
+                            <circle cx="95" cy="108" r="0.8" fill="#D2691E"/>
+                            <circle cx="105" cy="106" r="1" fill="#D2691E"/>
+                            <circle cx="112" cy="109" r="0.8" fill="#D2691E"/>
+                            <circle cx="90" cy="115" r="0.9" fill="#D2691E"/>
+                            <circle cx="110" cy="114" r="0.9" fill="#D2691E"/>
+                            <circle cx="92" cy="125" r="0.8" fill="#D2691E"/>
+                            <circle cx="108" cy="123" r="0.8" fill="#D2691E"/>
+                        </g>
+                        
+                        <!-- Hair front layer (cabelo normal na frente) -->
+                        <path id="hair" d="M55 80 Q55 50, 100 50 Q145 50, 145 80 Q145 90, 140 95 Q60 95, 55 90 Z" fill="#8B4513"/>
+                        
+                        <!-- Eyes -->
+                        <ellipse id="leftEye" cx="85" cy="100" rx="8" ry="6" fill="white"/>
+                        <circle id="leftPupil" cx="85" cy="100" r="4" fill="#654321"/>
+                        <circle cx="86" cy="99" r="1.5" fill="white"/>
+                        
+                        <ellipse id="rightEye" cx="115" cy="100" rx="8" ry="6" fill="white"/>
+                        <circle id="rightPupil" cx="115" cy="100" r="4" fill="#654321"/>
+                        <circle cx="116" cy="99" r="1.5" fill="white"/>
+                        
+                        <!-- Eyebrows -->
+                        <path id="leftEyebrow" d="M75 90 Q85 87, 95 90" stroke="#8B4513" stroke-width="3" fill="none"/>
+                        <path id="rightEyebrow" d="M105 90 Q115 87, 125 90" stroke="#8B4513" stroke-width="3" fill="none"/>
+                        
+                        <!-- Nose -->
+                        <path id="nose" d="M100 105 Q98 115, 100 120 Q102 115, 100 105" fill="#E8A48C"/>
+                        
+                        <!-- Mouth -->
+                        <path id="mouth" d="M90 130 Q100 140, 110 130" stroke="#CD5C5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        
+                        <!-- Beard (moved after clothing to appear in front) -->
+                        <path id="beard" d="M70 140 Q100 155, 130 140 Q125 165, 100 170 Q75 165, 70 140" fill="#8B4513" style="display: none;"/>
+                        
+                        <!-- Glasses -->
+                        <g id="glasses" style="display: none;">
+                            <circle cx="85" cy="100" r="12" fill="none" stroke="#333" stroke-width="2"/>
+                            <circle cx="115" cy="100" r="12" fill="none" stroke="#333" stroke-width="2"/>
+                            <line x1="97" y1="100" x2="103" y2="100" stroke="#333" stroke-width="2"/>
+                        </g>
+                        
+                        <!-- Piercing no nariz -->
+                        <circle id="nosePiercing" cx="102" cy="115" r="1.5" fill="#C0C0C0" style="display: none;"/>
+                    </svg>
+                </div>
+
+                <div class="button-group">
+                     <button class="btn btn-success" onclick="downloadAvatar()">💾 Baixar PNG</button>
+                    <button class="btn btn-primary" onclick="saveAndReturn()">📷 Salvar</button>
+                    <button class="btn btn-danger" onclick="cancelAndReturn()">🔄 Cancelar</button>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <div class="control-group">
+                    <h3>🎨 Aparência</h3>
+                    <div class="control-item">
+                        <label>Tom de Pele</label>
+                        <div class="color-picker" id="skinTones">
+                            <div class="color-option" style="background-color: #FDBCB4" data-value="#FDBCB4"></div>
+                            <div class="color-option" style="background-color: #F1C27D" data-value="#F1C27D"></div>
+                            <div class="color-option" style="background-color: #E0AC69" data-value="#E0AC69"></div>
+                            <div class="color-option" style="background-color: #C68642" data-value="#C68642"></div>
+                            <div class="color-option" style="background-color: #8D5524" data-value="#8D5524"></div>
+                            <div class="color-option" style="background-color: #4A312C" data-value="#4A312C"></div>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <label>Formato do Rosto</label>
+                        <select id="faceShape">
+                            <option value="oval">Oval</option>
+                            <option value="round">Redondo</option>
+                            <option value="square">Quadrado</option>
+                        </select>
+                    </div>
+                    <div class="control-item">
+                        <label>Sardas</label>
+                        <select id="frecklesStyle">
+                            <option value="none">Nenhuma</option>
+                            <option value="light">Poucas</option>
+                            <option value="medium">Moderadas</option>
+                            <option value="heavy">Muitas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>💇 Cabelo</h3>
+                    <div class="control-item">
+                        <label>Estilo do Cabelo</label>
+                        <select id="hairStyle">
+                            <option value="short">Curto Clássico</option>
+                            <option value="medium">Médio</option>
+                            <option value="long">Longo</option>
+                            <option value="curly">Cacheado</option>
+                            <option value="wavy">Ondulado</option>
+                            <option value="fringe">Franja</option>
+                            <option value="mohawk">Moicano</option>
+                            <option value="pixie">Pixie</option>
+                            <option value="bob">Bob</option>
+                            <option value="braids">Tranças</option>
+                            <option value="undercut">Undercut</option>
+                            <option value="fade">Fade</option>
+                            <option value="pompadour">Pompadour</option>
+                            <option value="shag">Shag</option>
+                            <option value="layered">Em Camadas</option>
+                            <option value="straight">Liso Longo</option>
+                            <option value="afro">Afro</option>
+                            <option value="dreadlocks">Dreadlocks</option>
+                            <option value="topknot">Coque Alto</option>
+                            <option value="bald">Careca</option>
+                        </select>
+                    </div>
+                    <div class="control-item">
+                        <label>Cor do Cabelo</label>
+                        <div class="color-picker" id="hairColors">
+                            <div class="color-option" style="background-color: #000000" data-value="#000000"></div>
+                            <div class="color-option" style="background-color: #2C1B18" data-value="#2C1B18"></div>
+                            <div class="color-option" style="background-color: #8B4513" data-value="#8B4513"></div>
+                            <div class="color-option" style="background-color: #DAA520" data-value="#DAA520"></div>
+                            <div class="color-option" style="background-color: #FFD700" data-value="#FFD700"></div>
+                            <div class="color-option" style="background-color: #FF6347" data-value="#FF6347"></div>
+                            <div class="color-option" style="background-color: #9370DB" data-value="#9370DB"></div>
+                            <div class="color-option" style="background-color: #00CED1" data-value="#00CED1"></div>
+                            <div class="color-option" style="background-color: #FF1493" data-value="#FF1493"></div>
+                            <div class="color-option" style="background-color: #32CD32" data-value="#32CD32"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>😊 Expressão Facial</h3>
+                    <div class="control-item">
+                        <label>Expressão</label>
+                        <select id="facialExpression">
+                            <option value="happy">Feliz</option>
+                            <option value="neutral">Neutro</option>
+                            <option value="sad">Triste</option>
+                            <option value="surprised">Surpreso</option>
+                            <option value="angry">Bravo</option>
+                            <option value="wink">Piscadela</option>
+                            <option value="sleepy">Sonolento</option>
+                            <option value="cool">Descolado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>👀 Olhos</h3>
+                    <div class="control-item">
+                        <label>Formato dos Olhos</label>
+                        <select id="eyeShape">
+                            <option value="normal">Normal</option>
+                            <option value="wide">Largo</option>
+                            <option value="narrow">Estreito</option>
+                            <option value="round">Redondo</option>
+                        </select>
+                    </div>
+                    <div class="control-item">
+                        <label>Cor dos Olhos</label>
+                        <div class="color-picker" id="eyeColors">
+                            <div class="color-option" style="background-color: #654321" data-value="#654321"></div>
+                            <div class="color-option" style="background-color: #4169E1" data-value="#4169E1"></div>
+                            <div class="color-option" style="background-color: #228B22" data-value="#228B22"></div>
+                            <div class="color-option" style="background-color: #8B4513" data-value="#8B4513"></div>
+                            <div class="color-option" style="background-color: #32CD32" data-value="#32CD32"></div>
+                            <div class="color-option" style="background-color: #708090" data-value="#708090"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>🧔 Pelos Faciais</h3>
+                    <div class="control-item">
+                        <label>Barba</label>
+                        <select id="beardStyle">
+                            <option value="none">Nenhuma</option>
+                            <option value="full">Barba Completa</option>
+                            <option value="goatee">Cavanhaque</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>👕 Roupa</h3>
+                    <div class="control-item">
+                        <label>Cor da Roupa</label>
+                        <div class="color-picker" id="clothingColors">
+                            <div class="color-option" style="background-color: #4A90E2" data-value="#4A90E2"></div>
+                            <div class="color-option" style="background-color: #FF0000" data-value="#FF0000"></div>
+                            <div class="color-option" style="background-color: #00FF00" data-value="#00FF00"></div>
+                            <div class="color-option" style="background-color: #000000" data-value="#000000"></div>
+                            <div class="color-option" style="background-color: #800080" data-value="#800080"></div>
+                            <div class="color-option" style="background-color: #FFA500" data-value="#FFA500"></div>
+                            <div class="color-option" style="background-color: #FF69B4" data-value="#FF69B4"></div>
+                            <div class="color-option" style="background-color: #20B2AA" data-value="#20B2AA"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>✨ Acessórios</h3>
+                    <div class="control-item">
+                        <label>Óculos</label>
+                        <select id="glassesStyle">
+                            <option value="none">Nenhum</option>
+                            <option value="regular">Óculos</option>
+                            <option value="sunglasses">Óculos de Sol</option>
+                        </select>
+                    </div>
+                    <div class="control-item">
+                        <label>Piercing no Nariz</label>
+                        <select id="nosePiercingStyle">
+                            <option value="none">Nenhum</option>
+                            <option value="simple">Simples</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>🎨 Fundo</h3>
+                    <div class="control-item">
+                        <label>Tipo de Fundo</label>
+                        <select id="backgroundType">
+                            <option value="solid">Cor Sólida</option>
+                            <option value="gradient">Gradiente</option>
+                            <option value="nature">Natureza</option>
+                            <option value="urban">Urbano</option>
+                            <option value="space">Espaço</option>
+                            <option value="abstract">Abstrato</option>
+                        </select>
+                    </div>
+                    <div class="control-item" id="solidColorSection">
+                        <label>Cor do Fundo</label>
+                        <div class="color-picker" id="backgroundColors">
+                            <div class="color-option" style="background-color: #FFFFFF" data-value="#FFFFFF"></div>
+                            <div class="color-option" style="background-color: #F0F0F0" data-value="#F0F0F0"></div>
+                            <div class="color-option" style="background-color: #E8F4FD" data-value="#E8F4FD"></div>
+                            <div class="color-option" style="background-color: #FFE4E1" data-value="#FFE4E1"></div>
+                            <div class="color-option" style="background-color: #F0FFF0" data-value="#F0FFF0"></div>
+                            <div class="color-option" style="background-color: #FFF8DC" data-value="#FFF8DC"></div>
+                            <div class="color-option" style="background-color: #E6E6FA" data-value="#E6E6FA"></div>
+                            <div class="color-option" style="background-color: #F5F5DC" data-value="#F5F5DC"></div>
+                        </div>
+                    </div>
+                    <div class="control-item" id="gradientSection" style="display: none;">
+                        <label>Gradiente</label>
+                        <div class="color-picker" id="gradientColors">
+                            <div class="color-option" style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4)" data-value="linear-gradient(45deg, #FF6B6B, #4ECDC4)"></div>
+                            <div class="color-option" style="background: linear-gradient(45deg, #667eea, #764ba2)" data-value="linear-gradient(45deg, #667eea, #764ba2)"></div>
+                            <div class="color-option" style="background: linear-gradient(45deg, #f093fb, #f5576c)" data-value="linear-gradient(45deg, #f093fb, #f5576c)"></div>
+                            <div class="color-option" style="background: linear-gradient(45deg, #4facfe, #00f2fe)" data-value="linear-gradient(45deg, #4facfe, #00f2fe)"></div>
+                            <div class="color-option" style="background: linear-gradient(45deg, #43e97b, #38f9d7)" data-value="linear-gradient(45deg, #43e97b, #38f9d7)"></div>
+                            <div class="color-option" style="background: linear-gradient(45deg, #fa709a, #fee140)" data-value="linear-gradient(45deg, #fa709a, #fee140)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Inicializar partículas
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#3b82f6" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#3b82f6", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+
+        // Avatar configuration
+        let avatarConfig = {
+            skinTone: '#FDBCB4',
+            faceShape: 'oval',
+            hairStyle: 'short',
+            hairColor: '#8B4513',
+            eyeShape: 'normal',
+            eyeColor: '#654321',
+            beardStyle: 'none',
+            clothingColor: '#4A90E2',
+            glassesStyle: 'none',
+            nosePiercingStyle: 'none',
+            backgroundType: 'solid',
+            backgroundColor: '#f0f0f0',
+            frecklesStyle: 'none',
+            facialExpression: 'happy'
+        };
+
+        // Initialize avatar
+        function initAvatar() {
+            loadAvatarFromStorage();
+            setupEventListeners();
+            updateAvatar();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Color pickers
+            document.querySelectorAll('.color-picker .color-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const parentId = this.parentElement.id;
+                    const value = this.dataset.value;
+                    
+                    // Remove selected class from siblings
+                    this.parentElement.querySelectorAll('.color-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Update avatar config
+                    if (parentId === 'skinTones') {
+                        avatarConfig.skinTone = value;
+                    } else if (parentId === 'hairColors') {
+                        avatarConfig.hairColor = value;
+                    } else if (parentId === 'eyeColors') {
+                        avatarConfig.eyeColor = value;
+                    } else if (parentId === 'clothingColors') {
+                        avatarConfig.clothingColor = value;
+                    } else if (parentId === 'backgroundColors') {
+                        avatarConfig.backgroundColor = value;
+                    } else if (parentId === 'gradientColors') {
+                        avatarConfig.backgroundColor = value;
+                    }
+                    
+                    updateAvatar();
+                });
+            });
+
+            // Select dropdowns
+            document.getElementById('faceShape').addEventListener('change', function() {
+                avatarConfig.faceShape = this.value;
+                updateAvatar();
+            });
+
+            document.getElementById('hairStyle').addEventListener('change', function() {
+                avatarConfig.hairStyle = this.value;
+                updateAvatar();
+            });
+
+            document.getElementById('eyeShape').addEventListener('change', function() {
+                avatarConfig.eyeShape = this.value;
+                updateAvatar();
+            });
+
+            document.getElementById('beardStyle').addEventListener('change', function() {
+                avatarConfig.beardStyle = this.value;
+                updateAvatar();
+            });
+
+            document.getElementById('glassesStyle').addEventListener('change', function() {
+                avatarConfig.glassesStyle = this.value;
+                updateAvatar();
+            });
+
+            document.getElementById('nosePiercingStyle').addEventListener('change', function() {
+                avatarConfig.nosePiercingStyle = this.value;
+                updateAvatar();
+            });
+
+            document.getElementById('backgroundType').addEventListener('change', function() {
+                avatarConfig.backgroundType = this.value;
+                updateBackgroundSection();
+                updateAvatar();
+            });
+
+            document.getElementById('frecklesStyle').addEventListener('change', function() {
+                avatarConfig.frecklesStyle = this.value;
+                updateAvatar();
+            });
+
+            document.getElementById('facialExpression').addEventListener('change', function() {
+                avatarConfig.facialExpression = this.value;
+                updateAvatar();
+            });
+        }
+
+        // Update background section visibility
+        function updateBackgroundSection() {
+            const solidSection = document.getElementById('solidColorSection');
+            const gradientSection = document.getElementById('gradientSection');
+            
+            if (avatarConfig.backgroundType === 'solid') {
+                solidSection.style.display = 'block';
+                gradientSection.style.display = 'none';
+            } else if (avatarConfig.backgroundType === 'gradient') {
+                solidSection.style.display = 'none';
+                gradientSection.style.display = 'block';
+            } else {
+                solidSection.style.display = 'none';
+                gradientSection.style.display = 'none';
+            }
+        }
+
+        // Update avatar appearance
+        function updateAvatar() {
+            // Update background
+            const avatarContainer = document.querySelector('.avatar-container');
+            const background = document.querySelector('#avatar-svg circle');
+            
+            switch(avatarConfig.backgroundType) {
+                case 'solid':
+                    background.setAttribute('fill', avatarConfig.backgroundColor);
+                    avatarContainer.style.background = 'none';
+                    break;
+                case 'gradient':
+                    avatarContainer.style.background = avatarConfig.backgroundColor;
+                    background.setAttribute('fill', 'transparent');
+                    break;
+                case 'nature':
+                    avatarContainer.style.background = 'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%)';
+                    background.setAttribute('fill', 'transparent');
+                    break;
+                case 'urban':
+                    avatarContainer.style.background = 'linear-gradient(135deg, #636e72 0%, #2d3436 100%)';
+                    background.setAttribute('fill', 'transparent');
+                    break;
+                case 'space':
+                    avatarContainer.style.background = 'linear-gradient(135deg, #2d3436 0%, #636e72 50%, #6c5ce7 100%)';
+                    background.setAttribute('fill', 'transparent');
+                    break;
+                case 'abstract':
+                    avatarContainer.style.background = 'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #6c5ce7 100%)';
+                    background.setAttribute('fill', 'transparent');
+                    break;
+            }
+
+            // Update face
+            const face = document.getElementById('face');
+            face.setAttribute('fill', avatarConfig.skinTone);
+            
+            // Update face shape
+            if (avatarConfig.faceShape === 'round') {
+                face.setAttribute('rx', '50');
+                face.setAttribute('ry', '50');
+            } else if (avatarConfig.faceShape === 'square') {
+                face.setAttribute('rx', '35');
+                face.setAttribute('ry', '55');
+            } else {
+                face.setAttribute('rx', '45');
+                face.setAttribute('ry', '50');
+            }
+
+            // Update freckles
+            const freckles = document.getElementById('freckles');
+            if (avatarConfig.frecklesStyle === 'none') {
+                freckles.style.display = 'none';
+            } else {
+                freckles.style.display = 'block';
+                const freckleCircles = freckles.querySelectorAll('circle');
+                
+                if (avatarConfig.frecklesStyle === 'light') {
+                    freckleCircles.forEach((circle, index) => {
+                        circle.style.display = index < 3 ? 'block' : 'none';
+                    });
+                } else if (avatarConfig.frecklesStyle === 'medium') {
+                    freckleCircles.forEach((circle, index) => {
+                        circle.style.display = index < 5 ? 'block' : 'none';
+                    });
+                } else {
+                    freckleCircles.forEach(circle => {
+                        circle.style.display = 'block';
+                    });
+                }
+            }
+
+            // Update hair
+            const hair = document.getElementById('hair');
+            const hairBack = document.getElementById('hairBack');
+            hair.setAttribute('fill', avatarConfig.hairColor);
+            hairBack.setAttribute('fill', avatarConfig.hairColor);
+            
+            // Reset hair display
+            hair.style.display = 'none';
+            hairBack.style.display = 'none';
+            
+            if (avatarConfig.hairStyle === 'bald') {
+                // No hair
+            } else if (avatarConfig.hairStyle === 'long' || avatarConfig.hairStyle === 'straight') {
+                // Cabelo longo atrás
+                hairBack.style.display = 'block';
+                hairBack.setAttribute('d', 'M35 75 Q35 45, 100 45 Q165 45, 165 75 Q170 130, 160 140 Q40 140, 30 130 Q35 75, 35 75');
+            } else if (avatarConfig.hairStyle === 'fringe') {
+                // Franja que cobre parte dos olhos - vai atrás
+                hairBack.style.display = 'block';
+                hairBack.setAttribute('d', 'M50 80 Q50 45, 100 45 Q150 45, 150 80 Q150 105, 145 110 Q55 110, 50 105 Z');
+            } else if (avatarConfig.hairStyle === 'bob') {
+                // Bob que pode cobrir orelhas - vai atrás
+                hairBack.style.display = 'block';
+                hairBack.setAttribute('d', 'M45 80 Q45 40, 100 40 Q155 40, 155 80 Q155 120, 150 125 Q50 125, 45 120 Z');
+            } else if (avatarConfig.hairStyle === 'braids') {
+                // Tranças longas - vão atrás
+                hairBack.style.display = 'block';
+                hairBack.setAttribute('d', 'M55 80 Q55 50, 100 50 Q145 50, 145 80 M70 95 Q65 130, 70 140 M130 95 Q135 130, 130 140');
+            } else if (avatarConfig.hairStyle === 'layered') {
+                // Cabelo em camadas - vai atrás
+                hairBack.style.display = 'block';
+                hairBack.setAttribute('d', 'M45 80 Q45 35, 100 35 Q155 35, 155 80 Q155 110, 150 115 Q50 115, 45 110 Z');
+            } else if (avatarConfig.hairStyle === 'dreadlocks') {
+                // Dreadlocks - vão atrás
+                hairBack.style.display = 'block';
+                hairBack.setAttribute('d', 'M55 80 Q55 50, 100 50 Q145 50, 145 80 M65 90 Q60 125, 65 135 M75 88 Q70 123, 75 133 M85 86 Q80 121, 85 131 M115 86 Q120 121, 115 131 M125 88 Q130 123, 125 133 M135 90 Q140 125, 135 135');
+            } else {
+                // Cabelos que não cobrem o rosto - na frente
+                hair.style.display = 'block';
+                
+                switch(avatarConfig.hairStyle) {
+                    case 'short':
+                        hair.setAttribute('d', 'M55 80 Q55 50, 100 50 Q145 50, 145 80 Q145 90, 140 95 Q60 95, 55 90 Z');
+                        break;
+                    case 'medium':
+                        hair.setAttribute('d', 'M50 80 Q50 45, 100 45 Q150 45, 150 80 Q150 100, 145 105 Q55 105, 50 100 Z');
+                        break;
+                    case 'curly':
+                        hair.setAttribute('d', 'M55 80 Q40 50, 70 60 Q85 45, 100 60 Q115 45, 130 60 Q160 50, 145 80 Q145 90, 140 95 Q60 95, 55 90 Z');
+                        break;
+                    case 'wavy':
+                        hair.setAttribute('d', 'M55 80 Q45 50, 75 55 Q100 45, 125 55 Q155 50, 145 80 Q145 95, 140 100 Q60 100, 55 95 Z');
+                        break;
+                    case 'mohawk':
+                        hair.setAttribute('d', 'M85 80 Q85 40, 100 35 Q115 40, 115 80 Q115 85, 110 90 Q90 90, 85 85 Z');
+                        break;
+                    case 'pixie':
+                        hair.setAttribute('d', 'M60 80 Q60 55, 100 55 Q140 55, 140 80 Q140 85, 135 88 Q65 88, 60 85 Z');
+                        break;
+                    case 'undercut':
+                        hair.setAttribute('d', 'M70 80 Q70 45, 100 45 Q130 45, 130 80 Q130 85, 125 88 Q75 88, 70 85 Z');
+                        break;
+                    case 'fade':
+                        hair.setAttribute('d', 'M65 80 Q65 50, 100 50 Q135 50, 135 80 Q135 88, 130 90 Q70 90, 65 88 Z');
+                        break;
+                    case 'pompadour':
+                        hair.setAttribute('d', 'M60 80 Q60 35, 100 30 Q140 35, 140 80 Q140 85, 135 88 Q65 88, 60 85 Z');
+                        break;
+                    case 'shag':
+                        hair.setAttribute('d', 'M50 80 Q50 40, 75 50 Q100 35, 125 50 Q150 40, 150 80 Q150 95, 145 100 Q55 100, 50 95 Z');
+                        break;
+                    case 'afro':
+                        hair.setAttribute('d', 'M40 80 Q30 30, 100 30 Q170 30, 160 80 Q160 95, 155 100 Q45 100, 40 95 Z');
+                        break;
+                    case 'topknot':
+                        hair.setAttribute('d', 'M70 80 Q70 60, 85 65 Q100 40, 115 65 Q130 60, 130 80 Q130 85, 125 88 Q75 88, 70 85 Z');
+                        break;
+                }
+            }
+
+            // Update facial expression
+            updateFacialExpression();
+
+            // Update eyes
+            const leftPupil = document.getElementById('leftPupil');
+            const rightPupil = document.getElementById('rightPupil');
+            leftPupil.setAttribute('fill', avatarConfig.eyeColor);
+            rightPupil.setAttribute('fill', avatarConfig.eyeColor);
+
+            const leftEye = document.getElementById('leftEye');
+            const rightEye = document.getElementById('rightEye');
+            
+            if (avatarConfig.eyeShape === 'wide') {
+                leftEye.setAttribute('rx', '10');
+                rightEye.setAttribute('rx', '10');
+            } else if (avatarConfig.eyeShape === 'narrow') {
+                leftEye.setAttribute('rx', '6');
+                rightEye.setAttribute('rx', '6');
+            } else if (avatarConfig.eyeShape === 'round') {
+                leftEye.setAttribute('rx', '8');
+                leftEye.setAttribute('ry', '8');
+                rightEye.setAttribute('rx', '8');
+                rightEye.setAttribute('ry', '8');
+            } else {
+                leftEye.setAttribute('rx', '8');
+                leftEye.setAttribute('ry', '6');
+                rightEye.setAttribute('rx', '8');
+                rightEye.setAttribute('ry', '6');
+            }
+
+            // Update eyebrows
+            const leftEyebrow = document.getElementById('leftEyebrow');
+            const rightEyebrow = document.getElementById('rightEyebrow');
+            leftEyebrow.setAttribute('stroke', avatarConfig.hairColor);
+            rightEyebrow.setAttribute('stroke', avatarConfig.hairColor);
+
+            // Update beard
+            const beard = document.getElementById('beard');
+            if (avatarConfig.beardStyle === 'none') {
+                beard.style.display = 'none';
+            } else {
+                beard.style.display = 'block';
+                beard.setAttribute('fill', avatarConfig.hairColor);
+                
+                if (avatarConfig.beardStyle === 'goatee') {
+                    beard.setAttribute('d', 'M85 145 Q100 155, 115 145 Q110 165, 100 170 Q90 165, 85 145');
+                } else if (avatarConfig.beardStyle === 'full') {
+                    beard.setAttribute('d', 'M70 145 Q100 160, 130 145 Q125 170, 100 175 Q75 170, 70 145');
+                }
+            }
+
+            // Update clothing
+            const clothing = document.getElementById('clothing');
+            clothing.setAttribute('fill', avatarConfig.clothingColor);
+
+            // Update glasses
+            const glasses = document.getElementById('glasses');
+            if (avatarConfig.glassesStyle === 'none') {
+                glasses.style.display = 'none';
+            } else {
+                glasses.style.display = 'block';
+                
+                if (avatarConfig.glassesStyle === 'sunglasses') {
+                    glasses.querySelectorAll('circle').forEach(circle => {
+                        circle.setAttribute('fill', 'rgba(0,0,0,0.7)');
+                    });
+                } else {
+                    glasses.querySelectorAll('circle').forEach(circle => {
+                        circle.setAttribute('fill', 'none');
+                    });
+                }
+            }
+
+            // Update accessories
+            const nosePiercing = document.getElementById('nosePiercing');
+            nosePiercing.style.display = avatarConfig.nosePiercingStyle === 'none' ? 'none' : 'block';
+
+            // Update nose color to match skin tone
+            const nose = document.getElementById('nose');
+            const noseColor = darkenColor(avatarConfig.skinTone, 10);
+            nose.setAttribute('fill', noseColor);
+        }
+
+        // Update facial expression
+        function updateFacialExpression() {
+            const mouth = document.getElementById('mouth');
+            const leftEye = document.getElementById('leftEye');
+            const rightEye = document.getElementById('rightEye');
+            const leftEyebrow = document.getElementById('leftEyebrow');
+            const rightEyebrow = document.getElementById('rightEyebrow');
+
+            switch(avatarConfig.facialExpression) {
+                case 'happy':
+                    mouth.setAttribute('d', 'M90 130 Q100 140, 110 130');
+                    leftEye.setAttribute('ry', '6');
+                    rightEye.setAttribute('ry', '6');
+                    leftEyebrow.setAttribute('d', 'M75 90 Q85 87, 95 90');
+                    rightEyebrow.setAttribute('d', 'M105 90 Q115 87, 125 90');
+                    break;
+                case 'sad':
+                    mouth.setAttribute('d', 'M90 140 Q100 130, 110 140');
+                    leftEye.setAttribute('ry', '6');
+                    rightEye.setAttribute('ry', '6');
+                    leftEyebrow.setAttribute('d', 'M75 87 Q85 90, 95 87');
+                    rightEyebrow.setAttribute('d', 'M105 87 Q115 90, 125 87');
+                    break;
+                case 'surprised':
+                    mouth.setAttribute('d', 'M95 135 Q100 140, 105 135 Q100 145, 95 135');
+                    leftEye.setAttribute('ry', '8');
+                    rightEye.setAttribute('ry', '8');
+                    leftEyebrow.setAttribute('d', 'M75 85 Q85 82, 95 85');
+                    rightEyebrow.setAttribute('d', 'M105 85 Q115 82, 125 85');
+                    break;
+                case 'angry':
+                    mouth.setAttribute('d', 'M90 135 Q100 130, 110 135');
+                    leftEye.setAttribute('ry', '4');
+                    rightEye.setAttribute('ry', '4');
+                    leftEyebrow.setAttribute('d', 'M75 88 Q85 85, 95 88');
+                    rightEyebrow.setAttribute('d', 'M105 88 Q115 85, 125 88');
+                    break;
+                case 'wink':
+                    mouth.setAttribute('d', 'M90 130 Q100 135, 110 130');
+                    leftEye.setAttribute('ry', '2');
+                    rightEye.setAttribute('ry', '6');
+                    leftEyebrow.setAttribute('d', 'M75 90 Q85 87, 95 90');
+                    rightEyebrow.setAttribute('d', 'M105 90 Q115 87, 125 90');
+                    break;
+                case 'sleepy':
+                    mouth.setAttribute('d', 'M95 135 Q100 138, 105 135');
+                    leftEye.setAttribute('ry', '3');
+                    rightEye.setAttribute('ry', '3');
+                    leftEyebrow.setAttribute('d', 'M75 92 Q85 89, 95 92');
+                    rightEyebrow.setAttribute('d', 'M105 92 Q115 89, 125 92');
+                    break;
+                case 'cool':
+                    mouth.setAttribute('d', 'M93 133 Q100 136, 107 133');
+                    leftEye.setAttribute('ry', '5');
+                    rightEye.setAttribute('ry', '5');
+                    leftEyebrow.setAttribute('d', 'M75 88 Q85 86, 95 88');
+                    rightEyebrow.setAttribute('d', 'M105 88 Q115 86, 125 88');
+                    break;
+                default: // neutral
+                    mouth.setAttribute('d', 'M95 135 Q100 137, 105 135');
+                    leftEye.setAttribute('ry', '6');
+                    rightEye.setAttribute('ry', '6');
+                    leftEyebrow.setAttribute('d', 'M75 90 Q85 87, 95 90');
+                    rightEyebrow.setAttribute('d', 'M105 90 Q115 87, 125 90');
+                    break;
+            }
+        }
+
+        // Helper function to darken a color
+        function darkenColor(color, percent) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) - amt;
+            const G = (num >> 8 & 0x00FF) - amt;
+            const B = (num & 0x0000FF) - amt;
+            return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
+        }
+
+        // Save avatar and return to profile
+   function saveAndReturn() {
+    // Clonar o SVG para não modificar o original na página
+    const svg = document.getElementById('avatar-svg').cloneNode(true);
+    const avatarContainer = document.querySelector('.avatar-container');
+    
+    // Adicionar o gradiente ao SVG antes de exportar
+    if (avatarConfig.backgroundType === 'gradient' || 
+        avatarConfig.backgroundType === 'nature' || 
+        avatarConfig.backgroundType === 'urban' || 
+        avatarConfig.backgroundType === 'space' || 
+        avatarConfig.backgroundType === 'abstract') {
+        
+        // Criar um elemento de gradiente no SVG
+        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+        gradient.id = 'exportGradient';
+        gradient.setAttribute('x1', '0%');
+        gradient.setAttribute('y1', '0%');
+        gradient.setAttribute('x2', '100%');
+        gradient.setAttribute('y2', '100%');
+        
+        // Definir as cores do gradiente baseado no tipo selecionado
+        let stop1, stop2, stop3;
+        switch(avatarConfig.backgroundType) {
+            case 'gradient':
+                // Usar o gradiente selecionado
+                const gradientValue = avatarConfig.backgroundColor;
+                // Extrair cores do gradiente (simplificado)
+                const colors = gradientValue.match(/#[0-9a-f]{6}|#[0-9a-f]{3}/gi);
+                if (colors && colors.length >= 2) {
+                    stop1 = `<stop offset="0%" stop-color="${colors[0]}" />`;
+                    stop2 = colors[2] ? `<stop offset="50%" stop-color="${colors[1]}" />` : '';
+                    stop3 = `<stop offset="100%" stop-color="${colors[colors.length-1]}" />`;
+                } else {
+                    // Fallback para um gradiente azul se não conseguir extrair as cores
+                    stop1 = '<stop offset="0%" stop-color="#667eea" />';
+                    stop3 = '<stop offset="100%" stop-color="#764ba2" />';
+                }
+                break;
+            case 'nature':
+                stop1 = '<stop offset="0%" stop-color="#74b9ff" />';
+                stop2 = '<stop offset="50%" stop-color="#0984e3" />';
+                stop3 = '<stop offset="100%" stop-color="#00b894" />';
+                break;
+            case 'urban':
+                stop1 = '<stop offset="0%" stop-color="#636e72" />';
+                stop3 = '<stop offset="100%" stop-color="#2d3436" />';
+                break;
+            case 'space':
+                stop1 = '<stop offset="0%" stop-color="#2d3436" />';
+                stop2 = '<stop offset="50%" stop-color="#636e72" />';
+                stop3 = '<stop offset="100%" stop-color="#6c5ce7" />';
+                break;
+            case 'abstract':
+                stop1 = '<stop offset="0%" stop-color="#fd79a8" />';
+                stop2 = '<stop offset="50%" stop-color="#fdcb6e" />';
+                stop3 = '<stop offset="100%" stop-color="#6c5ce7" />';
+                break;
+        }
+        
+        gradient.innerHTML = stop1 + stop2 + stop3;
+        defs.appendChild(gradient);
+        svg.insertBefore(defs, svg.firstChild);
+        
+        // Atualizar o fundo do círculo para usar o gradiente
+        const bgCircle = svg.querySelector('circle');
+        bgCircle.setAttribute('fill', 'url(#exportGradient)');
+    } else if (avatarConfig.backgroundType === 'solid') {
+        // Para fundo sólido, apenas atualizar a cor
+        const bgCircle = svg.querySelector('circle');
+        bgCircle.setAttribute('fill', avatarConfig.backgroundColor);
+    }
+    
+    // Continuar com o processo de salvamento
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    
+    canvas.width = 400;
+    canvas.height = 400;
+    
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        
+        const dataURL = canvas.toDataURL('image/png');
+        
+        // Salvar no usuário atual
+        const currentUser = JSON.parse(localStorage.getItem('ravenStudioCurrentUser')) || {};
+        currentUser.avatar = dataURL;
+        localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(currentUser));
+        
+        // Redirecionar
+        window.location.href = '/pages/user.html';
+    };
+    
+    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+}
+
+        // Load avatar from localStorage
+        function loadAvatarFromStorage() {
+            const saved = localStorage.getItem('ravenStudioAvatar');
+            if (saved) {
+                try {
+                    avatarConfig = { ...avatarConfig, ...JSON.parse(saved) };
+                    
+                    // Update UI to reflect loaded config
+                    document.getElementById('faceShape').value = avatarConfig.faceShape;
+                    document.getElementById('hairStyle').value = avatarConfig.hairStyle;
+                    document.getElementById('eyeShape').value = avatarConfig.eyeShape;
+                    document.getElementById('beardStyle').value = avatarConfig.beardStyle;
+                    document.getElementById('glassesStyle').value = avatarConfig.glassesStyle;
+                    document.getElementById('nosePiercingStyle').value = avatarConfig.nosePiercingStyle || 'none';
+                    document.getElementById('backgroundType').value = avatarConfig.backgroundType || 'solid';
+                    document.getElementById('frecklesStyle').value = avatarConfig.frecklesStyle || 'none';
+                    document.getElementById('facialExpression').value = avatarConfig.facialExpression || 'happy';
+                    
+                    updateBackgroundSection();
+                    updateSelectedColors();
+                } catch (error) {
+                    console.error('Error loading avatar:', error);
+                }
+            }
+        }
+
+        // Update selected color options in UI
+        function updateSelectedColors() {
+            // Clear all selections first
+            document.querySelectorAll('.color-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Set selected colors
+            document.querySelectorAll('#skinTones .color-option').forEach(opt => {
+                if (opt.dataset.value === avatarConfig.skinTone) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            document.querySelectorAll('#hairColors .color-option').forEach(opt => {
+                if (opt.dataset.value === avatarConfig.hairColor) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            document.querySelectorAll('#eyeColors .color-option').forEach(opt => {
+                if (opt.dataset.value === avatarConfig.eyeColor) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            document.querySelectorAll('#clothingColors .color-option').forEach(opt => {
+                if (opt.dataset.value === avatarConfig.clothingColor) {
+                    opt.classList.add('selected');
+                }
+            });
+
+            document.querySelectorAll('#backgroundColors .color-option').forEach(opt => {
+                if (opt.dataset.value === avatarConfig.backgroundColor) {
+                    opt.classList.add('selected');
+                }
+            });
+        }
+
+        // Export avatar as image
+           function downloadAvatar() {
+    // Clonar o SVG para não modificar o original na página
+    const svg = document.getElementById('avatar-svg').cloneNode(true);
+    const avatarContainer = document.querySelector('.avatar-container');
+    
+    // Adicionar o gradiente ao SVG antes de exportar
+    if (avatarConfig.backgroundType === 'gradient' || 
+        avatarConfig.backgroundType === 'nature' || 
+        avatarConfig.backgroundType === 'urban' || 
+        avatarConfig.backgroundType === 'space' || 
+        avatarConfig.backgroundType === 'abstract') {
+        
+        // Criar um elemento de gradiente no SVG
+        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+        gradient.id = 'exportGradient';
+        gradient.setAttribute('x1', '0%');
+        gradient.setAttribute('y1', '0%');
+        gradient.setAttribute('x2', '100%');
+        gradient.setAttribute('y2', '100%');
+        
+        // Definir as cores do gradiente baseado no tipo selecionado
+        let stop1, stop2, stop3;
+        switch(avatarConfig.backgroundType) {
+            case 'gradient':
+                // Usar o gradiente selecionado
+                const gradientValue = avatarConfig.backgroundColor;
+                // Extrair cores do gradiente (simplificado)
+                const colors = gradientValue.match(/#[0-9a-f]{6}|#[0-9a-f]{3}/gi);
+                if (colors && colors.length >= 2) {
+                    stop1 = `<stop offset="0%" stop-color="${colors[0]}" />`;
+                    stop2 = colors[2] ? `<stop offset="50%" stop-color="${colors[1]}" />` : '';
+                    stop3 = `<stop offset="100%" stop-color="${colors[colors.length-1]}" />`;
+                } else {
+                    // Fallback para um gradiente azul se não conseguir extrair as cores
+                    stop1 = '<stop offset="0%" stop-color="#667eea" />';
+                    stop3 = '<stop offset="100%" stop-color="#764ba2" />';
+                }
+                break;
+            case 'nature':
+                stop1 = '<stop offset="0%" stop-color="#74b9ff" />';
+                stop2 = '<stop offset="50%" stop-color="#0984e3" />';
+                stop3 = '<stop offset="100%" stop-color="#00b894" />';
+                break;
+            case 'urban':
+                stop1 = '<stop offset="0%" stop-color="#636e72" />';
+                stop3 = '<stop offset="100%" stop-color="#2d3436" />';
+                break;
+            case 'space':
+                stop1 = '<stop offset="0%" stop-color="#2d3436" />';
+                stop2 = '<stop offset="50%" stop-color="#636e72" />';
+                stop3 = '<stop offset="100%" stop-color="#6c5ce7" />';
+                break;
+            case 'abstract':
+                stop1 = '<stop offset="0%" stop-color="#fd79a8" />';
+                stop2 = '<stop offset="50%" stop-color="#fdcb6e" />';
+                stop3 = '<stop offset="100%" stop-color="#6c5ce7" />';
+                break;
+        }
+        
+        gradient.innerHTML = stop1 + stop2 + stop3;
+        defs.appendChild(gradient);
+        svg.insertBefore(defs, svg.firstChild);
+        
+        // Atualizar o fundo do círculo para usar o gradiente
+        const bgCircle = svg.querySelector('circle');
+        bgCircle.setAttribute('fill', 'url(#exportGradient)');
+    }
+    
+    // Continuar com o processo de exportação
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    
+    // Aumentar a resolução para melhor qualidade
+    canvas.width = 800;
+    canvas.height = 800;
+    
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        
+        canvas.toBlob(function(blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'meu-avatar.png';
+            a.click();
+            URL.revokeObjectURL(url);
+        }, 'image/png');
+    };
+    
+    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+}
+
+        // Reset avatar and return to profile
+          function cancelAndReturn() {
+            // Remove avatar data
+            localStorage.removeItem('ravenStudioAvatarConfig');
+            localStorage.removeItem('ravenStudioAvatarImage');
+              // Return to profile page
+            window.location.href = '/pages/user.html';
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #3b82f6, #22c55e);
+                color: #000;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                font-family: 'Bebas Neue', cursive;
+                font-size: 1.2rem;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initAvatar);
+
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raven Studio - Ink Adventure</title>
+        <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/game.css">
+      <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Metal+Mania&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Bebas+Neue&family=Teko:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+
+        <!-- Adicionar logo após a abertura do body -->
+<a href="#main" class="skip-link">Pular para conteúdo principal</a>
+ <!-- Loading Screen -->
+<div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+        <div class="loading-logo">
+            <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-image">
+            <h2>RAVEN STUDIO</h2>
+        </div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+        <p class="loading-text">Preparando sua experiência...</p>
+    </div>
+</div>
+    <div id="gameContainer">
+        <!-- Header com logo e stats -->
+        <header id="gameHeader">
+            <div class="studio-logo">
+              <div class="logo-icon">
+    <img src="/img/Logo.png" alt="Raven Studio Logo">
+</div>
+                <div class="logo-text">
+                    <h1>RAVEN STUDIO</h1>
+                    <p>Ink Adventure</p>
+                </div>
+            </div>
+            <div class="game-stats">
+                <div class="stat-item">
+                    <span class="stat-label">PONTOS</span>
+                    <span class="stat-value" id="scoreDisplay">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">NÍVEL</span>
+                    <span class="stat-value" id="levelDisplay">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">VIDAS</span>
+                    <span class="stat-value" id="livesDisplay">❤️❤️❤️</span>
+                </div>
+            </div>
+           <button id="exitBtn" class="exit-btn">
+            <i class="fas fa-door-open"></i> SAIR
+        </button>
+     <!-- Adicione esta div no header do jogo, perto dos outros stats -->
+<div class="stat-item user-avatar-item">
+    <span class="stat-label">AVATAR</span>
+    <a href="/pages/user.html" id="gameUserLink" class="user-avatar-link">
+        <img src="" alt="Avatar do Usuário" id="gameUserAvatar" class="user-avatar-small" style="display: none;">
+        <i class="fas fa-user-circle" id="gameUserIcon"></i>
+    </a>
+</div>
+
+        </header>
+
+
+
+        <!-- Área principal do jogo -->
+        <main id="gameArea">
+            <canvas id="gameCanvas" width="1200" height="600"></canvas>
+            
+            <!-- Overlay para menus -->
+            <div id="gameOverlay">
+                <!-- Menu inicial -->
+                <div id="startMenu" class="menu-screen active">
+    <div class="menu-content">
+        <h2 class="game-title">INK ADVENTURE</h2>
+        <p class="game-subtitle">Colete tintas, evite perigos e domine o estúdio!</p>
+        <div class="menu-buttons">
+            <button id="startBtn" class="menu-btn primary">INICIAR JOGO</button>
+            <button id="instructionsBtn" class="menu-btn secondary">INSTRUÇÕES</button>
+        </div>
+    </div>
+</div>
+
+                <!-- Menu de instruções -->
+                <div id="instructionsMenu" class="menu-screen">
+                    <div class="menu-content">
+                        <h2>COMO JOGAR</h2>
+                        <div class="instructions-grid">
+                            <div class="instruction-item">
+                                <span class="key">←→</span>
+                                <span class="action">Mover personagem</span>
+                            </div>
+                            <div class="instruction-item">
+                                <span class="key">ESPAÇO</span>
+                                <span class="action">Pular</span>
+                            </div>
+                            <div class="instruction-item">
+                                <span class="key">↓</span>
+                                <span class="action">Agachar</span>
+                            </div>
+                            <div class="instruction-item">
+                                <span class="key">🎯</span>
+                                <span class="action">Colete todas as tintas</span>
+                            </div>
+                            <div class="instruction-item">
+                                <span class="key">⚠️</span>
+                                <span class="action">Evite corvos e armadilhas</span>
+                            </div>
+                            <div class="instruction-item">
+                                <span class="key">🏆</span>
+                                <span class="action">Complete níveis para descontos!</span>
+                            </div>
+                        </div>
+                        <button id="backBtn" class="menu-btn secondary">VOLTAR</button>
+                    </div>
+                </div>
+
+                <!-- Menu de game over -->
+                <div id="gameOverMenu" class="menu-screen">
+                    <div class="menu-content">
+                        <h2 class="game-over-title">GAME OVER</h2>
+                        <p class="final-score">Pontuação Final: <span id="finalScore">0</span></p>
+                        <div class="menu-buttons">
+                            <button id="restartBtn" class="menu-btn primary">JOGAR NOVAMENTE</button>
+                            <button id="menuBtn" class="menu-btn secondary">MENU PRINCIPAL</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu de level complete -->
+               <div id="levelCompleteMenu" class="menu-screen">
+    <div class="menu-content">
+        <h2 class="level-complete-title">NÍVEL COMPLETO!</h2>
+        <div class="points-reward">
+            <div class="points-icon">💰</div>
+            <p class="points-text">Você acumulou:</p>
+            <div class="points-display" id="pointsEarned">0</div>
+            <p class="points-info">Use seus pontos para obter descontos em nossa loja!</p>
+        </div>
+        <div class="menu-buttons">
+            <button id="nextLevelBtn" class="menu-btn primary">PRÓXIMO NÍVEL</button>
+              <button id="menuBtn" class="menu-btn secondary">MENU PRINCIPAL</button>
+        </div>
+    </div>
+</div>
+            </div>
+        </main>
+
+       <!-- Substitua a div de controles mobile por esta: -->
+<div id="mobileControls" class="mobile-only">
+    <div class="control-group left">
+        <button class="control-btn" id="leftBtn">←</button>
+        <button class="control-btn" id="rightBtn">→</button>
+    
+    </div>
+    <div class="control-group right">
+        <button class="control-btn jump" id="jumpBtn">PULAR</button>
+    </div>
+</div>
+    </div>
+
+    <!-- Modal de Confirmação Customizado -->
+<div id="customAlert" class="custom-alert">
+    <div class="alert-content">
+        <div class="alert-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3 class="alert-title">CONFIRMAR SAÍDA</h3>
+        <p class="alert-message">Tem certeza que deseja sair do jogo?</p>
+        <div class="alert-buttons">
+            <button id="alertConfirm" class="alert-btn confirm-btn">SIM</button>
+            <button id="alertCancel" class="alert-btn cancel-btn">CANCELAR</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/home.js" defer></script>
+<script src="/js/game.js" defer></script>
+</body>
+</html>

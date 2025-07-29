@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Raven Studio</title>
+        <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+
+    <meta name="description" content="Blog oficial do Raven Studio - Arte, técnicas e novidades do mundo da tatuagem">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Teko:wght@400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/navbar.css">
+    <style>
+        /* Estilos Premium para o Chatbot - INÍCIO */
+       .raven-chat-widget {
+    /* Keep position and z-index as is */
+    position: fixed;
+    bottom: 20px; /* Adjusted slightly up */
+    right: 20px; /* Adjusted slightly left */
+    z-index: 9999;
+}
+
+
+
+        .raven-chat-toggle {
+           width: 65px; 
+    height: 65px; 
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+            color: white;
+             font-size: 1.6rem;
+            border: none;
+            position: relative;
+            z-index: 100;
+        }
+
+        .raven-chat-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.6);
+        }
+
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            opacity: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            70% { transform: scale(1.3); opacity: 0; }
+            100% { transform: scale(0.8); opacity: 0; }
+        }
+
+        .raven-chat-container {
+            position: absolute;
+            bottom: 80px; /* Adjusted to match new toggle height */
+    right: 0;
+    width: 300px; /* Slightly narrower */
+    height: 450px;
+            background: #0f0f0f;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            display: none;
+            flex-direction: column;
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 99;
+        }
+
+        .raven-chat-container.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .raven-chat-header {
+            padding: 15px 20px;
+            background: linear-gradient(to right, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+        }
+
+        .artist-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #8a2be2;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+        }
+
+        .artist-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-title {
+            flex: 1;
+        }
+
+        .chat-title h4 {
+            margin: 0;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.3rem;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 3px;
+        }
+
+        .status-indicator span {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: #ccc;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+        }
+
+        .raven-chat-close {
+            background: none;
+            border: none;
+            color: #8a2be2;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .raven-chat-close:hover {
+            background: rgba(138, 43, 226, 0.2);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .raven-chat-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, #121212, #0a0a0a);
+            scrollbar-width: thin;
+            scrollbar-color: #8a2be2 #1a1a1a;
+        }
+
+        .raven-chat-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .raven-chat-content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .raven-chat-content::-webkit-scrollbar-thumb {
+            background-color: #8a2be2;
+            border-radius: 3px;
+        }
+
+        .welcome-message {
+            margin-bottom: 20px;
+        }
+
+        .bot-message {
+            background: rgba(138, 43, 226, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+            border-top-left-radius: 5px;
+            max-width: 80%;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-message p {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            display: block;
+            font-size: 0.7rem;
+            color: #8a2be2;
+            margin-top: 8px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .chat-options-container {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .category-card:hover {
+            background: rgba(138, 43, 226, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+            border-color: #8a2be2;
+        }
+
+        .category-card i {
+            font-size: 1.8rem;
+            color: #8a2be2;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover i {
+            transform: scale(1.2);
+            color: white;
+        }
+
+        .category-card span {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            color: white;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .back-button {
+            margin-bottom: 15px;
+            text-align: left; /* Alinha o botão à esquerda */
+        }
+
+        .back-button button {
+            background: none;
+            border: none;
+            color: #8a2be2;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            display: inline-flex; /* Usa inline-flex para o alinhamento de ícone e texto */
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px; /* Aumenta o padding para melhor clique */
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: white; /* Muda a cor do texto no hover */
+        }
+
+        #ravenQuestionsList {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .question-card {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 10px;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            background: rgba(138, 43, 226, 0.2);
+            border-color: #8a2be2;
+            transform: translateX(3px); /* Pequeno movimento no hover */
+        }
+
+        .question-card p {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        .answer-container {
+            background: rgba(30, 30, 30, 0.8);
+            border-left: 3px solid #8a2be2;
+            border-radius: 0 10px 10px 0;
+            padding: 15px;
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease-out;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .answer-container h5 {
+            color: #8a2be2;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            margin: 0 0 10px 0;
+            letter-spacing: 1px;
+        }
+
+       .answer-container p {
+    font-family: 'Open Sans', sans-serif; /* A more common and readable font */
+    font-size: 0.95rem; /* Slightly larger for better readability */
+    color: #e0e0e0; /* Slightly lighter for better contrast */
+    line-height: 1.7; /* Increased line height for better spacing */
+    margin: 0;
+}
+
+        .raven-primary-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .raven-primary-btn:hover {
+            background: linear-gradient(135deg, #4b0082, #8a2be2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.5);
+        }
+
+        /* Responsividade */
+@media (max-width: 480px) {
+    .raven-chat-container {
+        width: 90vw;
+        right: 5vw;
+        height: 65vh; /* Adjusted for mobile */
+        bottom: 15px;
+    }
+
+    .raven-chat-toggle {
+        width: 55px; /* Even smaller for mobile */
+        height: 55px;
+        font-size: 1.3rem;
+    }
+
+            .category-grid {
+                grid-template-columns: 1fr; /* Coluna única para mobile */
+            }
+
+            .raven-chat-content {
+                padding: 15px; /* Padding ajustado para mobile */
+            }
+        }
+        /* Estilos Premium para o Chatbot - FIM */
+        .login-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.8rem 2rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+    border: none;
+    border-radius: 25px;
+    color: #000;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+}
+
+.login-btn:hover {
+    background: #3b82f6;
+    transform: translateY(-2px);
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+.comment-input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    background: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 20px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.comment-input:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.comments-section {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.comments-section.show {
+    max-height: 500px;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+}
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .blog-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+            z-index: -2;
+        }
+
+        .blog-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .blog-main {
+            min-height: 100vh;
+            padding: 100px 2rem 2rem;
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .blog-header h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3.5rem;
+            color: #3b82f6;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-header p {
+            color: #d1d5db;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+.user-info {
+      top: 4.5rem; 
+    
+    position: fixed;
+    top: 70px; /* Aumentei de 20px para 70px */
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(15, 15, 15, 0.9);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .user-name {
+            color: #d1d5db;
+            font-size: 0.9rem;
+        }
+
+        .admin-toggle {
+            background: none;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 20px;
+            color: #3b82f6;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .admin-toggle.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .new-post-form {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .new-post-form.show {
+            display: block;
+        }
+
+        .post-form-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .form-user-info {
+            flex: 1;
+        }
+
+        .form-username {
+            font-family: 'Teko', sans-serif;
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .form-time {
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            resize: vertical;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        .form-group textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            outline: none;
+        }
+
+        .form-group textarea::placeholder {
+            color: #6b7280;
+        }
+
+        .image-upload {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .image-upload input[type="file"] {
+            display: none;
+        }
+
+        .image-upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(30, 30, 30, 0.8);
+            border: 2px dashed rgba(59, 130, 246, 0.5);
+            border-radius: 12px;
+            color: #3b82f6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .image-upload-btn:hover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .image-preview {
+            margin-top: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            display: none;
+        }
+
+        .image-preview img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: rgba(239, 68, 68, 0.8);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .remove-image:hover {
+            background: #ef4444;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .post-options {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .option-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 50%;
+            color: #3b82f6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .option-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+
+        .post-btn {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+            border: none;
+            border-radius: 25px;
+            color: #000;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .post-btn:hover {
+            background: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .posts-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .post-card {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .post-card:hover {
+            border-color: rgba(59, 130, 246, 0.6);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem 1.5rem 1rem;
+        }
+
+        .post-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-avatar.default {
+            background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .post-user-info {
+            flex: 1;
+        }
+
+        .post-username {
+            font-family: 'Teko', sans-serif;
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .post-time {
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+
+        .post-content {
+            padding: 0 1.5rem 1rem;
+        }
+
+        .post-text {
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .post-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .post-image:hover {
+            transform: scale(1.02);
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .post-action:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .post-action.liked {
+            color: #ef4444;
+        }
+
+        .post-action.liked:hover {
+            color: #dc2626;
+        }
+
+        .comments-section {
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .comments-section.show {
+            display: block;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .comment-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comment-avatar.default {
+            background: rgba(59, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 0.8rem;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .comment-input:focus {
+            border-color: #3b82f6;
+            outline: none;
+        }
+
+        .comment {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .comment-content {
+            flex: 1;
+            background: rgba(30, 30, 30, 0.5);
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .comment-user {
+            font-weight: bold;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .comment-text {
+            color: #d1d5db;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .comment-time {
+            color: #6b7280;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .empty-feed {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .empty-feed i {
+            font-size: 4rem;
+            color: rgba(59, 130, 246, 0.5);
+            margin-bottom: 2rem;
+        }
+
+        .empty-feed h3 {
+            font-family: 'Bebas Neue', cursive;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-feed p {
+            color: #d1d5db;
+        }
+
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .image-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .image-modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+       
+        /* Botão para voltar ao topo */
+        .back-to-top {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+        }
+
+    
+    </style>
+</head>
+<body>
+<header>
+    <a href="#content" class="skip-link">Pular para o conteúdo principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                <span class="brand-text">RAVEN     </span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+     <li><a href="/pages/home.html" class="nav-link active"><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="/pages/loja.html"  class="nav-link"><i class="fas fa-store"></i> Loja</a></li>
+                <li><a href="/pages/artists.html"  class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                <li ><a href="/pages/contato.html" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li ><a href="/pages/blog.html" class="nav-link active"><i class="fas fa-blog"></i> Blog</a></li>
+                <li ><a href="/pages/game.html"  class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                <li > <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-icons">
+               
+               
+                <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
+                    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+                    <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+</header>
+    <div class="blog-bg"></div>
+    <div class="blog-particles" id="particles-js"></div>
+    
+    <div class="user-info">
+        <div class="user-avatar" id="current-user-avatar">U</div>
+        <div class="user-name" id="current-user-name">Usuário</div>
+        <button class="admin-toggle" id="admin-toggle">
+            <i class="fas fa-user-shield"></i> Admin: OFF
+        </button>
+    </div>
+    
+    <main class="blog-main">
+        <header class="blog-header">
+            <h1>RAVEN STUDIO BLOG</h1>
+            <p>Arte, técnicas e novidades do mundo da tatuagem</p>
+        </header>
+        
+        <!-- Formulário para novos posts (apenas admin) -->
+        <div class="new-post-form" id="new-post-form">
+            <div class="post-form-header">
+                <div class="form-avatar">RS</div>
+                <div class="form-user-info">
+                    <div class="form-username">Raven Studio</div>
+                    <div class="form-time">Agora</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <textarea id="post-content" placeholder="Compartilhe algo interessante sobre tatuagem..."></textarea>
+            </div>
+            
+            <div class="image-upload">
+                <input type="file" id="image-input" accept="image/*">
+                <label for="image-input" class="image-upload-btn">
+                    <i class="fas fa-image"></i>
+                    Adicionar Foto
+                </label>
+                <div class="image-preview" id="image-preview">
+                    <img id="preview-image" src="" alt="Preview">
+                    <button class="remove-image" onclick="blog.removeImage()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="post-actions">
+                <div class="post-options">
+                    <button class="option-btn" title="Adicionar vídeo">
+                        <i class="fas fa-video"></i>
+                    </button>
+                    <button class="option-btn" title="Adicionar localização">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </button>
+                    <button class="option-btn" title="Adicionar emoji">
+                        <i class="fas fa-smile"></i>
+                    </button>
+                </div>
+                <button class="post-btn" onclick="blog.createPost()">
+                    PUBLICAR
+                </button>
+            </div>
+        </div>
+        
+        <!-- Feed de Posts -->
+        <div class="posts-feed" id="posts-feed">
+            <!-- Posts serão inseridos aqui -->
+        </div>
+    </main>
+
+    <!-- Modal para visualizar imagens -->
+    <div class="image-modal" id="image-modal">
+        <div class="close-modal" onclick="blog.closeImageModal()">&times;</div>
+        <div class="image-modal-content">
+            <img id="modal-image" src="" alt="Imagem ampliada">
+        </div>
+    </div>
+
+    <!-- Footer -->
+  <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <img src="/img/Logo.png" alt="Logo RAVEN" class="brand-logo" style="width: 50px; height: 50px;">
+                        <h3>RAVEN STUDIO</h3>
+                    </div>
+                    <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/raven_studio__" class="social-icon" aria-label="Instagram do Raven Studio">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>LINKS RÁPIDOS</h4>
+                    <ul>
+                        <li><a href="/pages/artists.html">Artistas</a></li>
+                        <li><a href="/pages/agendamento.html">Agendamento</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>CONTATO</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Rua das Artes, 123<br>Vila Madalena - São Paulo, SP</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>(11) 99999-9999</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span>contato@ravenstudio.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-divider"></div>
+                <div class="footer-copyright">
+                    <p>© 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+ <!-- Botão para voltar ao topo -->
+    <button class="back-to-top" id="backToTop" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+  <div class="raven-chat-widget">
+    <button class="raven-chat-toggle" id="ravenChatToggle" aria-expanded="false" aria-controls="ravenChatContainer" aria-label="Abrir ou fechar o chatbot">
+        <div class="pulse-ring"></div>
+        <i class="fas fa-comment-dots"></i>
+    </button>
+    <div class="raven-chat-container" id="ravenChatContainer" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+        <div class="raven-chat-header">
+            <div class="artist-avatar">
+                <img src="/img/Logo.png" alt="Logo Raven Studio Chatbot">
+            </div>
+            <div class="chat-title">
+                <h4 id="chatTitle">Raven Tattoo Bot</h4>
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span>Online</span>
+                </div>
+            </div>
+            <button class="raven-chat-close" id="ravenChatClose" aria-label="Fechar Chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="raven-chat-content" id="ravenChatContent">
+            <div class="welcome-message">
+                <div class="bot-message" role="alert" aria-live="polite">
+                    <p>Olá! Sou o assistente virtual do Raven Studio. Escolha uma opção abaixo para começar:</p>
+                    <span class="message-time" id="welcomeMessageTime"></span>
+                </div>
+            </div>
+
+            <div class="chat-options-container">
+                <div class="chat-categories" id="ravenChatCategories">
+                    <div class="category-grid">
+                        <button class="category-card" onclick="showRavenCategory('precos')" aria-label="Perguntas sobre Preços">
+                            <i class="fas fa-tag"></i>
+                            <span>Preços</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('dor')" aria-label="Perguntas sobre Nível de Dor">
+                            <i class="fas fa-bolt"></i>
+                            <span>Nível de Dor</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('procedimento')" aria-label="Perguntas sobre Procedimento">
+                            <i class="fas fa-clinic-medical"></i>
+                            <span>Procedimento</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('cuidados')" aria-label="Perguntas sobre Cuidados">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Cuidados</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('estilos')" aria-label="Perguntas sobre Estilos de Tatuagem">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>Estilos</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('agendamento')" aria-label="Perguntas sobre Agendamento">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Agendamento</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-questions" id="ravenChatQuestions" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showRavenCategories()" aria-label="Voltar para as categorias">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                    <div id="ravenQuestionsList" role="list"></div>
+                </div>
+
+                <div class="chat-answers" id="ravenChatAnswers" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showRavenQuestions()" aria-label="Voltar para as perguntas da categoria">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                    <div id="ravenAnswerContent" aria-live="polite" aria-atomic="true"></div>
+                    <button class="raven-primary-btn" onclick="showRavenCategories()" aria-label="Iniciar nova consulta ou voltar ao início">
+                        <i class="fas fa-redo"></i> Nova Consulta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+      <script src="/js/home.js"></script>
+         <script src="/js/navbar.js"></script>
+     <script src="/js/user-session.js"></script>
+      
+  
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script >
+            // Dados premium para o chatbot
+    const ravenFaqData = {
+        "precos": [
+            {
+                question: "Qual é o valor mínimo para uma tatuagem?",
+                answer: "Nosso valor mínimo é de R$ 300 para tatuagens pequenas (até 10cm).<br><br>" +
+                       "Tabela de referência:<br>" +
+                       "• Pequenas (até 10cm): R$ 300-600<br>" +
+                       "• Médias (10-20cm): R$ 600-1200<br>" +
+                       "• Grandes (acima de 20cm): A partir de R$ 1200<br><br>" +
+                       "Valores exatos são definidos após avaliação do desenho."
+            },
+            {
+                question: "Como é calculado o preço da tatuagem?",
+                answer: "Consideramos vários fatores:<br><br>" +
+                       "1. <strong>Tamanho</strong>: Área a ser tatuada<br>" +
+                       "2. <strong>Complexidade</strong>: Nível de detalhes e cores<br>" +
+                       "3. <strong>Tempo estimado</strong>: Horas de trabalho necessárias<br>" +
+                       "4. <strong>Local no corpo</strong>: Áreas mais difíceis podem ter ajuste<br>" +
+                       "5. <strong>Experiência do artista</strong>: Artistas sênior possuem valores diferenciados<br><br>" +
+                       "Oferecemos avaliação gratuita para orçamento preciso."
+            }
+        ],
+        "dor": [
+            {
+                question: "Quanto dói fazer uma tatuagem?",
+                answer: "A dor varia conforme a região do corpo:<br><br>" +
+                       "<strong>Baixa dor (1-3/10)</strong>:<br>" +
+                       "• Braços (parte externa)<br>" +
+                       "• Coxas<br>" +
+                       "• Costas<br><br>" +
+                       "<strong>Média dor (4-6/10)</strong>:<br>" +
+                       "• Panturrilhas<br>" +
+                       "• Peito<br>" +
+                       "• Ombros<br><br>" +
+                       "<strong>Alta dor (7-9/10)</strong>:<br>" +
+                       "• Costelas<br>" +
+                       "• Pés e mãos<br>" +
+                       "• Pescoço/Clavícula<br><br>" +
+                       "A maioria dos clientes descreve como uma queimadura constante."
+            },
+            {
+                question: "Qual a parte mais dolorosa para tatuar?",
+                answer: "As áreas mais dolorosas geralmente são:<br><br>" +
+                       "1. <strong>Costelas</strong>: Pele fina sobre osso<br>" +
+                       "2. <strong>Pés e mãos</strong>: Muitas terminações nervosas<br>" +
+                       "3. <strong>Axilas</strong>: Pele sensível e móvel<br>" +
+                       "4. <strong>Cotovelos e joelhos</strong>: Pele dura e articulações<br><br>" +
+                       "Dica: Sessões mais curtas ajudam nas áreas mais dolorosas."
+            }
+        ],
+        "procedimento": [
+            {
+                question: "Como é o processo de fazer uma tatuagem?",
+                answer: "Nosso processo premium:<br><br>" +
+                       "1. <strong>Consulta</strong>: Discussão do conceito e referências<br>" +
+                       "2. <strong>Agendamento</strong>: Reserva com sinal de 30%<br>" +
+                       "3. <strong>Desenho</strong>: Criação personalizada 48h antes<br>" +
+                       "4. <strong>Aprovação</strong>: Ajustes finais no studio<br>" +
+                       "5. <strong>Aplicação</strong>: Sessão com materiais esterilizados<br>" +
+                       "6. <strong>Cuidados</strong>: Orientações pós-tatuagem<br><br>" +
+                       "Todo material é descartável e de qualidade profissional."
+            },
+            {
+                question: "Preciso usar anestésico?",
+                answer: "Não recomendamos anestésicos tópicos porque:<br><br>" +
+                       "• Podem alterar a textura da pele<br>" +
+                       "• Afetam a absorção da tinta<br>" +
+                       "• O resultado final pode ser comprometido<br><br>" +
+                       "A dor é parte do processo, mas garantimos suporte durante toda a sessão."
+            }
+        ],
+        "cuidados": [
+            {
+                question: "Quais os cuidados após fazer a tatuagem?",
+                answer: "<strong>Primeiras 48 horas</strong>:<br>" +
+                       "• Manter o plástico por 2-4 horas<br>" +
+                       "• Lavar com sabonete antisséptico<br>" +
+                       "• Aplicar pomada específica<br><br>" +
+                       "<strong>Primeiras 2 semanas</strong>:<br>" +
+                       "• Lavar 3x ao dia<br>" +
+                       "• Manter hidratada<br>" +
+                       "• Evitar sol, piscina e mar<br>" +
+                       "• Não arrancar casquinhas<br><br>" +
+                       "<strong>Após cicatrização</strong>:<br>" +
+                       "• Usar protetor solar sempre"
+            },
+            {
+                question: "Quanto tempo leva para cicatrizar completamente?",
+                answer: "Cronograma de cicatrização:<br><br>" +
+                       "<strong>1-3 dias</strong>: Vermelhidão e inchaço<br>" +
+                       "<strong>3-7 dias</strong>: Pele começa a descamar<br>" +
+                       "<strong>2-3 semanas</strong>: Cicatrização superficial completa<br>" +
+                       "<strong>4-6 semanas</strong>: Cicatrização total das camadas profundas<br><br>" +
+                       "Tatuagens maiores podem levar mais tempo para cicatrizar completamente."
+            }
+        ],
+        "estilos": [
+            {
+                question: "Quais estilos de tatuagem vocês oferecem?",
+                answer: "Especialidades do nosso studio:<br><br>" +
+                       "• <strong>Tradicional/Old School</strong>: Cores vivas, traços grossos<br>" +
+                       "• <strong>Realismo</strong>: Retratos, animais, paisagens<br>" +
+                       "• <strong>Blackwork</strong>: Preenchimentos sólidos em preto<br>" +
+                       "• <strong>Aquarela</strong>: Efeito pintura com cores fluidas<br>" +
+                       "• <strong>Geométrico</strong>: Padrões simétricos e precisos<br>" +
+                       "• <strong>Pontilhismo</strong>: Imagens formadas por pontos<br>" +
+                       "• <strong>Minimalista</strong>: Traços finos e simplificados<br><br>" +
+                       "Cada artista tem seu estilo predominante."
+            },
+            {
+                question: "Qual estilo de tatuagem dura mais tempo?",
+                answer: "Durabilidade por estilo:<br><br>" +
+                       "<strong>Melhor duração</strong>:<br>" +
+                       "• Tradicional (traços grossos e cores sólidas)<br>" +
+                       "• Blackwork (grandes áreas de tinta preta)<br><br>" +
+                       "<strong>Requer mais manutenção</strong>:<br>" +
+                       "• Aquarela (cores claras e degradês)<br>" +
+                       "• Fine Line (traços muito finos)<br><br>" +
+                       "Independente do estilo, cuidados adequados prolongam a vida da tatuagem."
+            }
+        ],
+        "agendamento": [
+            {
+                question: "Como faço para agendar minha tatuagem?",
+                answer: "Processo de agendamento:<br><br>" +
+                       "1. Acesse nosso sistema online<br>" +
+                       "2. Selecione o artista desejado<br>" +
+                       "3. Escolha data/horário disponível<br>" +
+                       "4. Descreva sua ideia em detalhes<br>" +
+                       "5. Efetue o pagamento do sinal (30%)<br>" +
+                       "6. Receba confirmação por e-mail<br><br>" +
+                       "Cancelamentos devem ser feitos com 48h de antecedência."
+            },
+            {
+                question: "Preciso ter o desenho pronto antes de agendar?",
+                answer: "Não é necessário! Nossos artistas oferecem:<br><br>" +
+                       "• <strong>Consultoria criativa</strong>: Ajudamos a desenvolver sua ideia<br>" +
+                       "• <strong>Design personalizado</strong>: Criamos a arte exclusiva para você<br>" +
+                       "• <strong>Revisões gratuitas</strong>: Ajustes até você aprovar<br><br>" +
+                       "Basta trazer referências ou descrever sua visão que cuidamos do resto."
+            }
+        ]
+    };
+
+    // Variáveis de estado
+    let currentRavenCategory = null; // Armazena a categoria atualmente selecionada para o botão "Voltar"
+
+    // Função para formatar a hora (ex: 10:30 PM)
+    function formatTime(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // The hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        return hours + ':' + minutes + ' ' + ampm;
+    }
+
+    // Funções do Chatbot
+    function showRavenCategories() {
+        document.getElementById('ravenChatCategories').style.display = 'block';
+        document.getElementById('ravenChatQuestions').style.display = 'none';
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        currentRavenCategory = null; // Reseta a categoria atual
+
+        // Adiciona animação às categorias
+        const categories = document.querySelectorAll('.category-card');
+        categories.forEach((card, index) => {
+            card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
+            card.style.opacity = '0'; // Garante que começa invisível para a animação
+        });
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenCategory(category) {
+        currentRavenCategory = category;
+
+        const questionsContainer = document.getElementById('ravenQuestionsList');
+        const categoryData = ravenFaqData[category] || [];
+
+        questionsContainer.innerHTML = ''; // Limpa as perguntas anteriores
+
+        if (categoryData.length > 0) {
+            categoryData.forEach((faq, index) => {
+                const questionCard = document.createElement('button'); // Usar button para melhor acessibilidade
+                questionCard.className = 'question-card';
+                questionCard.setAttribute('role', 'listitem'); // Para leitores de tela
+                questionCard.setAttribute('aria-label', `Pergunta: ${faq.question}`);
+                questionCard.innerHTML = `<p>${faq.question}</p>`;
+                // Ao clicar, exibe a resposta para a pergunta específica
+                questionCard.onclick = () => showRavenAnswer(category, index);
+                questionCard.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
+                questionCard.style.opacity = '0';
+                questionsContainer.appendChild(questionCard);
+            });
+        } else {
+            questionsContainer.innerHTML = '<p style="color:#ddd; text-align:center;">Nenhuma pergunta disponível para esta categoria.</p>';
+        }
+
+        document.getElementById('ravenChatCategories').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'block';
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenAnswer(category, questionIndex) {
+        const faq = ravenFaqData[category][questionIndex];
+        const answerContent = document.getElementById('ravenAnswerContent');
+
+        answerContent.innerHTML = `
+            <div class="answer-container">
+                <h5>${faq.question}</h5>
+                <p>${faq.answer}</p>
+            </div>
+        `;
+
+        document.getElementById('ravenChatCategories').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'none';
+        document.getElementById('ravenChatAnswers').style.display = 'block';
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenQuestions() {
+        if (currentRavenCategory) {
+            showRavenCategory(currentRavenCategory); // Retorna para a categoria específica
+        } else {
+            showRavenCategories(); // Padrão: volta para as categorias
+        }
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'block'; // Garante que a seção de perguntas esteja visível
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+
+    // Inicialização do Chatbot
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatToggle = document.getElementById('ravenChatToggle');
+        const chatContainer = document.getElementById('ravenChatContainer');
+        const chatClose = document.getElementById('ravenChatClose');
+        const welcomeMessageTime = document.getElementById('welcomeMessageTime');
+        
+        // Botão de voltar ao topo
+        const backToTopButton = document.getElementById('backToTop');
+            
+        // Mostrar/ocultar botão de voltar ao topo
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+            
+        // Voltar ao topo
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Atualiza a hora da mensagem de boas-vindas
+        welcomeMessageTime.textContent = formatTime(new Date());
+
+        // Abrir/fechar chat
+        chatToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isActive = chatContainer.classList.toggle('active');
+            chatToggle.setAttribute('aria-expanded', isActive); // Acessibilidade: atualiza estado do botão
+            if (isActive) {
+                showRavenCategories(); // Garante que as categorias são mostradas ao abrir
+                chatContainer.focus(); // Foca no container para acessibilidade
+            }
+        });
+
+        chatClose.addEventListener('click', function() {
+            chatContainer.classList.remove('active');
+            chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
+            chatToggle.focus(); // Retorna o foco ao botão de toggle
+        });
+
+        // Fechar chat ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!chatContainer.contains(e.target) && !chatToggle.contains(e.target)) {
+                chatContainer.classList.remove('active');
+                chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
+            }
+        });
+
+        // Evitar fechar ao clicar dentro do chat
+        chatContainer.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Adiciona funcionalidade para fechar com a tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && chatContainer.classList.contains('active')) {
+                chatContainer.classList.remove('active');
+                chatToggle.setAttribute('aria-expanded', 'false');
+                chatToggle.focus();
+            }
+        });
+
+    });
+    </script>
+    <script>
+        // Inicializar partículas
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#3b82f6" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#3b82f6", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+
+      class RavenBlog {
+    constructor() {
+        this.posts = JSON.parse(localStorage.getItem('ravenStudioPosts')) || this.getDefaultPosts();
+        this.currentUser = JSON.parse(localStorage.getItem('ravenStudioCurrentUser')) || null;
+        this.isAdmin = false;
+        this.selectedImage = null;
+        this.init();
+    }
+
+            init() {
+                this.loadCurrentUser();
+                this.renderPosts();
+                this.setupEventListeners();
+            }
+
+            loadCurrentUser() {
+                const userAvatar = document.getElementById('current-user-avatar');
+                const userName = document.getElementById('current-user-name');
+                
+                if (this.currentUser.avatar) {
+                    userAvatar.innerHTML = `<img src="${this.currentUser.avatar}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                } else {
+                    userAvatar.textContent = this.currentUser.name.charAt(0).toUpperCase();
+                }
+                
+                userName.textContent = this.currentUser.name;
+            }
+
+            getDefaultPosts() {
+    return [
+        {
+            id: 'post1',
+            user: 'Raven Studio',
+            avatar: 'https://example.com/raven-avatar.png', // Adicione uma URL para o avatar do admin
+            content: 'Acabamos de terminar uma peça incrível! Arte blackwork com elementos geométricos. O que vocês acham dessa tendência?',
+            image: 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=600',
+            timestamp: Date.now() - 3600000,
+            likes: 24,
+            comments: [
+                {
+                    id: 'comment1',
+                    user: 'João Silva',
+                    avatar: null,
+                    content: 'Ficou incrível! Quando posso agendar uma sessão?',
+                    timestamp: Date.now() - 3000000
+                },
+                // ... outros comentários
+            ],
+            liked: false
+        },
+        // ... outros posts
+    ];
+}
+            toggleAdmin() {
+                this.isAdmin = !this.isAdmin;
+                const toggle = document.getElementById('admin-toggle');
+                const form = document.getElementById('new-post-form');
+                
+                if (this.isAdmin) {
+                    toggle.classList.add('active');
+                    toggle.innerHTML = '<i class="fas fa-user-shield"></i> Admin: ON';
+                    form.classList.add('show');
+                } else {
+                    toggle.classList.remove('active');
+                    toggle.innerHTML = '<i class="fas fa-user-shield"></i> Admin: OFF';
+                    form.classList.remove('show');
+                }
+            }
+
+            createPost() {
+                const content = document.getElementById('post-content').value.trim();
+                if (!content || !this.isAdmin) return;
+
+                const newPost = {
+                    id: 'post' + Date.now(),
+                    user: 'Raven Studio',
+                    avatar: null,
+                    content: content,
+                    image: this.selectedImage,
+                    timestamp: Date.now(),
+                    likes: 0,
+                    comments: [],
+                    liked: false
+                };
+
+                this.posts.unshift(newPost);
+                this.savePosts();
+                this.renderPosts();
+                
+                // Limpar formulário
+                document.getElementById('post-content').value = '';
+                this.removeImage();
+                this.showNotification('Post publicado com sucesso!');
+            }
+
+            handleImageUpload(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.selectedImage = e.target.result;
+                        document.getElementById('preview-image').src = this.selectedImage;
+                        document.getElementById('image-preview').style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            removeImage() {
+                this.selectedImage = null;
+                document.getElementById('image-preview').style.display = 'none';
+                document.getElementById('image-input').value = '';
+            }
+
+            openImageModal(imageSrc) {
+                document.getElementById('modal-image').src = imageSrc;
+                document.getElementById('image-modal').style.display = 'block';
+            }
+
+            closeImageModal() {
+                document.getElementById('image-modal').style.display = 'none';
+            }
+
+            getUserAvatar(user, avatar) {
+                if (avatar) {
+                    return `<img src="${avatar}" alt="${user}">`;
+                } else if (user === 'Raven Studio') {
+                    return '<div class="post-avatar default">RS</div>';
+                } else {
+                    return `<div class="comment-avatar default">${user.charAt(0).toUpperCase()}</div>`;
+                }
+            }
+  toggleLike(postId) {
+        if (!window.userSession || !window.userSession.isLoggedIn()) {
+            alert('Por favor, faça login para curtir posts.');
+            window.location.href = '/pages/login.html';
+            return;
+        }
+
+        const post = this.posts.find(p => p.id === postId);
+        if (post) {
+            post.liked = !post.liked;
+            post.likes = post.liked ? post.likes + 1 : post.likes - 1;
+            this.savePosts();
+            this.renderPosts();
+        }
+    }
+
+ addComment(postId) {
+    const input = document.getElementById(`comment-input-${postId}`);
+    const content = input.value.trim();
+    
+    if (!content) {
+        this.showNotification('Digite um comentário antes de enviar!');
+        return;
+    }
+
+    if (!window.userSession || !window.userSession.isLoggedIn()) {
+        this.showNotification('Por favor, faça login para comentar.');
+        setTimeout(() => {
+            window.location.href = '/pages/login.html';
+        }, 1500);
+        return;
+    }
+
+    const post = this.posts.find(p => p.id === postId);
+    if (post) {
+        const newComment = {
+            id: 'comment' + Date.now(),
+            user: window.userSession.currentUser.name,
+            avatar: window.userSession.currentUser.avatar,
+            content: content,
+            timestamp: Date.now()
+        };
+
+        post.comments.push(newComment);
+        this.savePosts();
+        this.renderPosts();
+        
+        // Limpa o input e mantém a seção de comentários aberta
+        input.value = '';
+        const commentsSection = document.getElementById(`comments-${postId}`);
+        commentsSection.classList.add('show');
+        
+        this.showNotification('Comentário adicionado!');
+    }
+}
+    // Modifique o método renderPosts para usar os dados do usuário logado
+   renderPosts() {
+    const container = document.getElementById('posts-feed');
+    
+    if (this.posts.length === 0) {
+        container.innerHTML = `
+            <div class="empty-feed">
+                <i class="fas fa-rss"></i>
+                <h3>Nenhum post ainda</h3>
+                <p>Seja o primeiro a compartilhar algo interessante!</p>
+            </div>
+        `;
+        return;
+    }
+
+    const postsHtml = this.posts.map(post => {
+        const timeAgo = this.getTimeAgo(post.timestamp);
+        
+        // HTML dos comentários
+        const commentsHtml = post.comments.map(comment => {
+            const avatarHtml = comment.avatar 
+                ? `<div class="comment-avatar"><img src="${comment.avatar}" alt="${comment.user}"></div>`
+                : `<div class="comment-avatar default">${comment.user.charAt(0).toUpperCase()}</div>`;
+            
+            return `
+                <div class="comment">
+                    ${avatarHtml}
+                    <div class="comment-content">
+                        <div class="comment-user">${comment.user}</div>
+                        <div class="comment-text">${comment.content}</div>
+                        <div class="comment-time">${this.getTimeAgo(comment.timestamp)}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // HTML do formulário de comentário
+        const currentUser = this.currentUser;
+        const commentFormHtml = `
+            <div class="comment-form">
+                ${currentUser && currentUser.avatar 
+                    ? `<div class="comment-avatar"><img src="${currentUser.avatar}" alt="${currentUser.name}"></div>`
+                    : `<div class="comment-avatar default">${currentUser ? currentUser.name.charAt(0).toUpperCase() : 'U'}</div>`}
+                <input type="text" class="comment-input" id="comment-input-${post.id}" 
+                       placeholder="Escreva um comentário..." 
+                       onkeypress="if(event.key === 'Enter') blog.addComment('${post.id}')">
+            </div>
+        `;
+
+        // HTML completo do post
+        return `
+            <article class="post-card">
+                <header class="post-header">
+                    ${post.avatar 
+                        ? `<div class="post-avatar"><img src="${post.avatar}" alt="${post.user}"></div>`
+                        : `<div class="post-avatar default">${post.user.charAt(0).toUpperCase()}</div>`}
+                    <div class="post-user-info">
+                        <div class="post-username">${post.user}</div>
+                        <div class="post-time">${timeAgo}</div>
+                    </div>
+                </header>
+                
+                <div class="post-content">
+                    <p class="post-text">${post.content}</p>
+                    ${post.image ? `<img src="${post.image}" class="post-image" onclick="blog.openImageModal('${post.image}')">` : ''}
+                </div>
+                
+                <footer class="post-footer">
+                    <button class="post-action ${post.liked ? 'liked' : ''}" onclick="blog.toggleLike('${post.id}')">
+                        <i class="fas fa-heart"></i> ${post.likes}
+                    </button>
+                    <button class="post-action" onclick="blog.toggleComments('${post.id}')">
+                        <i class="fas fa-comment"></i> ${post.comments.length}
+                    </button>
+                    <button class="post-action">
+                        <i class="fas fa-share"></i> Compartilhar
+                    </button>
+                </footer>
+                
+                <div class="comments-section" id="comments-${post.id}">
+                    ${commentFormHtml}
+                    ${commentsHtml}
+                </div>
+            </article>
+        `;
+    }).join('');
+
+    container.innerHTML = postsHtml;
+}
+
+                  toggleComments(postId) {
+    const commentsSection = document.getElementById(`comments-${postId}`);
+    commentsSection.classList.toggle('show');
+    
+    // Foca no campo de comentário quando aberto
+    if (commentsSection.classList.contains('show')) {
+        const input = document.getElementById(`comment-input-${postId}`);
+        setTimeout(() => input.focus(), 100);
+    }
+}
+            getTimeAgo(timestamp) {
+                const now = Date.now();
+                const diff = now - timestamp;
+                const minutes = Math.floor(diff / 60000);
+                const hours = Math.floor(diff / 3600000);
+                const days = Math.floor(diff / 86400000);
+
+                if (days > 0) return `${days}d`;
+                if (hours > 0) return `${hours}h`;
+                if (minutes > 0) return `${minutes}min`;
+                return 'agora';
+            }
+
+            savePosts() {
+                localStorage.setItem('ravenStudioPosts', JSON.stringify(this.posts));
+            }
+
+            showNotification(message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #3b82f6, #22c55e);
+                    color: #000;
+                    padding: 1rem 2rem;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                    z-index: 1000;
+                    font-family: 'Bebas Neue', cursive;
+                    font-size: 1.2rem;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            setupEventListeners() {
+                document.getElementById('admin-toggle').addEventListener('click', () => {
+                    this.toggleAdmin();
+                });
+
+                document.getElementById('image-input').addEventListener('change', (e) => {
+                    this.handleImageUpload(e);
+                });
+
+                // Close modal when clicking outside
+                document.getElementById('image-modal').addEventListener('click', (e) => {
+                    if (e.target.id === 'image-modal') {
+                        this.closeImageModal();
+                    }
+                });
+            }
+        }
+
+        // Adicionar estilos de animação
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+    const blogHeader = document.querySelector('.blog-header');
+const isLoggedIn = window.userSession && window.userSession.isLoggedIn();    
+    if (!isLoggedIn) {
+        blogHeader.innerHTML = `
+            <h1>ACESSO RESTRITO</h1>
+            <p>Faça login para visualizar o conteúdo do blog</p>
+            <a href="/pages/login.html" class="login-btn">Fazer Login</a>
+        `;
+        
+        // Opcional: esconder o feed de posts se não estiver logado
+        document.getElementById('posts-feed').style.display = 'none';
+    }
+});
+
+
+        // Inicializar blog
+        const blog = new RavenBlog();
+    </script>
+</body>
+</html>

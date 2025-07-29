@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento | Raven Studio</title>
+        <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+
+    <meta name="description" content="Agende sua consulta de tatuagem em etapas no Raven Studio.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Bebas+Neue&family=Teko:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/navbar.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        
+        
+        /* Variáveis de Cores e Fontes (se não estiverem em style.css) */
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --light-gray: #d1d5db;
+            --soft-blue: #3b82f6;
+            --neon-blue: #00f0ff; /* Similar ao azul do Bebas Neue h1 */
+            --soft-green: #22c55e;
+            --font-display: 'Bebas Neue', cursive;
+            --font-body: 'Orbitron', sans-serif;
+            --font-tech: 'Teko', sans-serif;
+            --transition-smooth: all 0.3s ease-in-out;
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #00f0ff 100%);
+            --gradient-dark: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+            --soft-glow-blue: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        body {
+            background: var(--gradient-dark);
+            color: var(--light-gray);
+            font-family: var(--font-body);
+        }
+
+        .appointment-section {
+            padding: 120px 2rem 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            color: white;
+            min-height: calc(100vh - 200px); /* Ajuste para footer */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .appointment-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .appointment-header h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            color: var(--soft-blue);
+            text-shadow: var(--soft-glow-blue);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .appointment-header p {
+            color: var(--light-gray);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .multi-step-form-container {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 20px;
+            padding: 3rem; /* Ajustado de 2rem para 3rem */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+            position: relative;
+            min-height: 500px; /* Para acomodar o conteúdo das etapas */
+            display: flex;
+            flex-direction: column;
+            /* Nova Largura do Container */
+            max-width: 800px; /* Reduced max-width */
+            margin: 0 auto; /* Centraliza o container */
+        }
+
+        .multi-step-form-container:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: var(--dark-gray);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border: 1px solid var(--soft-blue);
+        }
+
+        .progress-bar {
+            height: 15px;
+            width: 0%;
+            background: var(--gradient-blue);
+            border-radius: 10px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .form-step {
+            display: none; /* Esconde todas as etapas por padrão */
+            flex-grow: 1; /* Faz a etapa ocupar o espaço disponível */
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .form-step.active {
+            display: flex; /* Mostra a etapa ativa */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-content {
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--light-gray);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: 90%;
+            padding: 1rem;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 12px;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: var(--transition-smooth);
+        }
+        
+        /* Ajuste para o input de data (se ainda usado em algum lugar) */
+        .form-group input[type="date"] {
+            font-size: 1.1rem; /* Aumenta a fonte */
+            padding: 1.2rem; /* Aumenta o padding */
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--soft-blue);
+            box-shadow: var(--soft-glow-blue);
+            outline: none;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #6b7280;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: auto; /* Empurra os botões para o final */
+            padding-top: 2rem; /* Espaço acima dos botões */
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .form-actions button, .form-actions a {
+            padding: 1rem 2rem;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--gradient-blue);
+            border: none;
+            color: var(--primary-black);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--soft-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: var(--soft-blue);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .confirmation-message {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            border-radius: 12px;
+            color: var(--soft-green);
+            font-size: 1.1rem;
+            display: none; /* Escondido por padrão */
+            flex-grow: 1;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .confirmation-message i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+            color: var(--soft-green);
+        }
+        .confirmation-message h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .confirmation-message p {
+            font-family: var(--font-body);
+            margin-bottom: 1rem;
+        }
+
+        /* Step 1: Artist Selection */
+        .artist-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Min-width slightly smaller */
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        .artist-card {
+            background: var(--dark-gray);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            padding: 1.2rem; /* Slightly smaller padding */
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .artist-card:hover {
+            border-color: var(--soft-blue);
+            box-shadow: var(--soft-glow-blue);
+            transform: translateY(-5px);
+        }
+
+        .artist-card.selected {
+            border-color: var(--soft-green);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+            transform: scale(1.02);
+        }
+
+        .artist-card img {
+            width: 100px; /* Slightly smaller image */
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--soft-blue);
+            margin-bottom: 0.8rem;
+            transition: var(--transition-smooth);
+        }
+
+        .artist-card.selected img {
+            border-color: var(--soft-green);
+        }
+
+        .artist-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem; /* Slightly smaller font */
+            color: white;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.5px;
+        }
+
+        .artist-card p {
+            font-family: var(--font-body);
+            font-size: 0.85rem; /* Slightly smaller font */
+            color: var(--light-gray);
+            margin-bottom: 0.8rem;
+        }
+
+        .artist-card .select-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--soft-green);
+            font-size: 1.5rem;
+            display: none;
+        }
+
+        .artist-card.selected .select-icon {
+            display: block;
+        }
+        
+        /* Error message style */
+        .error-message {
+            color: #ef4444;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
+        
+        /* Budget Range Slider Value Display Improvement */
+        .budget-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+        .budget-display span {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--soft-blue);
+            letter-spacing: 0.5px;
+        }
+        .budget-display #current-budget-value {
+             font-family: var(--font-display);
+            font-size: 1.5rem; /* Make selected value larger */
+            color: var(--neon-blue); /* Distinct color for current value */
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+        }
+
+        /* Interactive Calendar Styles */
+        .calendar-container {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--soft-blue);
+        }
+
+        .calendar-header button {
+            background: transparent;
+            border: none;
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: var(--transition-smooth);
+        }
+
+        .calendar-header button:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .calendar-weekdays, .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+        }
+
+        .calendar-weekdays div {
+            font-weight: bold;
+            color: var(--soft-blue);
+            padding: 0.5rem;
+        }
+
+        .calendar-day {
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 45px; /* Fixed height for consistent grid */
+            border: 1px solid transparent;
+        }
+
+        .calendar-day.empty {
+            background-color: transparent;
+            cursor: default;
+            color: #6b7280;
+        }
+
+        .calendar-day:not(.empty):hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-color: var(--soft-blue);
+        }
+
+        .calendar-day.selected {
+            background: var(--gradient-blue);
+            color: var(--primary-black);
+            font-weight: bold;
+            box-shadow: var(--soft-glow-blue);
+            border-color: var(--soft-green);
+        }
+        .calendar-day.current-day:not(.selected) {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .selected-date-display {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 12px;
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--neon-blue);
+            text-align: center;
+            transition: all 0.3s ease; /* Add transition for error border */
+        }
+        .selected-date-display.error-border {
+            border-color: #ef4444;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Time selection styles */
+        .time-selection-container {
+            margin-top: 1.5rem;
+            display: none; /* Hidden by default */
+            transition: opacity 0.3s ease-in-out;
+        }
+        .time-selection-container.show {
+            display: block;
+            opacity: 1;
+        }
+        .time-selection-container label {
+            font-size: 1rem;
+        }
+        .time-selection-container select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 12px;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            appearance: none; /* Remove default dropdown arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23d1d5db" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow */
+            background-repeat: no-repeat;
+            background-position: right 0.8rem top 50%;
+            background-size: 20px auto;
+        }
+        .time-selection-container select:focus {
+            border-color: var(--soft-blue);
+            box-shadow: var(--soft-glow-blue);
+            outline: none;
+        }
+
+     /* Botão para voltar ao topo */
+        .back-to-top {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+        }
+
+        /* Chat Widget Styles */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1.5rem;
+            border: none;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+
+        .chat-container {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: #1a1a1a;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            display: none;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-container.active {
+            display: flex;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+        }
+
+        .chat-title i {
+            color: #fff;
+        }
+
+        .chat-title h4 {
+            font-size: 1rem;
+            margin: 0;
+            font-family: 'Teko', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .chat-title span {
+            font-size: 0.8rem;
+            color: #ccc;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .chat-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: #121212;
+        }
+
+        .chat-categories p {
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .category-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .category-btn {
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: left;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.1rem;
+            border: none;
+        }
+
+        .category-btn:hover {
+            background: rgba(138, 43, 226, 0.3);
+        }
+
+        .back-button {
+            margin-bottom: 1rem;
+        }
+
+        .back-button button {
+            background: none;
+            border: none;
+            color: #8a2be2;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: 'Teko', sans-serif;
+            padding: 0;
+        }
+
+        .back-button button:hover {
+            text-decoration: underline;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            border: none;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .question-btn:hover {
+            background: rgba(138, 43, 226, 0.3);
+        }
+
+        .answer-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            color: #ccc;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .answer-content h5 {
+            color: #8a2be2;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .answer-content p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            margin-top: 1rem;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+
+        #questions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        /* --- Responsiveness --- */
+
+        /* Mobile devices (up to 767px) */
+        @media (max-width: 767px) {
+            .appointment-section {
+                padding: 80px 1rem 2rem; /* Reduced padding for smaller screens */
+            }
+
+            .appointment-header h1 {
+                font-size: 2.5rem; /* Smaller header font */
+            }
+
+            .appointment-header p {
+                font-size: 0.9rem; /* Smaller paragraph font */
+            }
+
+            .multi-step-form-container {
+                padding: 1.5rem; /* Less padding inside the form */
+                min-height: auto; /* Allow height to adjust dynamically */
+            }
+
+            .progress-bar-container {
+                margin-bottom: 1.5rem; /* Adjust spacing */
+            }
+
+            .form-group label {
+                font-size: 0.85rem; /* Smaller label font */
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 0.8rem; /* Smaller input padding */
+                font-size: 0.85rem; /* Smaller input font */
+            }
+
+            .form-actions {
+                flex-direction: column; /* Stack buttons vertically */
+                gap: 0.8rem; /* Space between stacked buttons */
+                padding-top: 1.5rem; /* Adjust padding above buttons */
+            }
+
+            .form-actions button, .form-actions a {
+         
+                padding: 0.9rem 1.5rem; /* Adjust button padding */
+                font-size: 1rem; /* Smaller button font */
+            }
+            
+            .artist-selection-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Allow artists side-by-side */
+                gap: 0.8rem; /* Slightly reduced gap */
+            }
+
+            .artist-card {
+                padding: 0.8rem; /* Smaller card padding */
+            }
+
+            .artist-card img {
+                width: 70px; /* Smaller artist image */
+                height: 70px;
+                margin-bottom: 0.5rem;
+            }
+
+            .artist-card h3 {
+                font-size: 1.3rem; /* Smaller artist name font */
+            }
+
+            .artist-card p {
+                font-size: 0.75rem; /* Smaller artist specialty font */
+            }
+
+            .calendar-header {
+                font-size: 1.5rem; /* Smaller calendar header font */
+            }
+
+            .calendar-weekdays div, .calendar-day {
+                font-size: 0.8rem; /* Smaller calendar day font */
+                padding: 0.6rem; /* Adjust padding for calendar days */
+                height: 40px; /* Smaller fixed height */
+            }
+            
+            .selected-date-display {
+                font-size: 1.1rem; /* Smaller selected date display font */
+                padding: 0.8rem;
+            }
+
+            .budget-display span {
+                font-size: 1rem; /* Smaller budget min/max text */
+            }
+
+            .budget-display #current-budget-value {
+                font-size: 1.3rem; /* Smaller current budget value */
+            }
+
+            .confirmation-message h3 {
+                font-size: 1.8rem; /* Smaller confirmation header */
+            }
+
+            .confirmation-message p {
+                font-size: 1rem; /* Smaller confirmation paragraph */
+            }
+
+            .chat-widget {
+                bottom: 15px; /* Adjust chat widget position */
+                right: 15px;
+            }
+
+            .chat-toggle {
+                width: 50px; /* Smaller chat toggle button */
+                height: 50px;
+                font-size: 1.3rem;
+            }
+
+            .chat-container {
+                width: 90%; /* Make chat container wider on mobile */
+                max-width: 320px; /* Limit max width */
+                height: 400px; /* Adjust height */
+                bottom: 70px; /* Position above toggle */
+                right: 5%; /* Centered with percentage */
+                left: 5%; /* Centered with percentage */
+            }
+
+            .back-to-top {
+                left: 15px;
+                bottom: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Tablet devices (768px to 1024px) */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .appointment-section {
+                padding: 100px 1.5rem 3rem;
+            }
+
+            .appointment-header h1 {
+                font-size: 3rem;
+            }
+
+            .multi-step-form-container {
+                padding: 2.5rem;
+                max-width: 700px; /* Slightly narrower than desktop */
+            }
+            
+            .artist-selection-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Adjust min-width for tablets */
+            }
+
+            .chat-container {
+                width: 320px; /* Slightly smaller chat container */
+                right: 15px;
+            }
+        }
+        
+        /* Desktop devices (1025px and up) */
+        @media (min-width: 1025px) {
+            .appointment-section {
+                padding: 120px 2rem 4rem;
+            }
+
+            .appointment-header h1 {
+                font-size: 3.5rem;
+            }
+
+            .multi-step-form-container {
+                max-width: 800px;
+                padding: 3rem;
+            }
+
+            .artist-selection-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+            
+            .chat-container {
+                width: 350px;
+                right: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<header>
+  
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                <span class="brand-text">RAVEN     </span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+     <li><a href="/pages/home.html" class="nav-link "><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="/pages/loja.html"  class="nav-link active"><i class="fas fa-store"></i> Loja</a></li>
+                <li><a href="/pages/artists.html"  class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                <li ><a href="/pages/contato.html" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li ><a href="/pages/blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                <li ><a href="/pages/game.html"  class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                <li > <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-icons">
+               
+               
+                <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
+                    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+                    <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+</header>
+
+
+    <main class="appointment-section">
+        <div class="appointment-header">
+            <h1>Agendamento de <span>Tatuagem</span></h1>
+            <p>Sua jornada artística começa aqui. Siga as etapas para agendar sua sessão.</p>
+        </div>
+
+        <div class="multi-step-form-container">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="form-step active" id="step-1">
+                <div class="step-content">
+                    <h2>Escolha seu <span>Artista</span></h2>
+                    <p>Selecione o tatuador com o estilo que mais combina com sua ideia.</p>
+                    <div class="artist-selection-grid" id="artistSelectionGrid">
+                        </div>
+                    <span class="error-message" id="artistSelectionError" style="display: none;">Por favor, selecione um artista para continuar.</span>
+                </div>
+                <div class="form-actions">
+                    <a href="/pages/artists.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Ver Artistas</a>
+                    <button type="button" class="btn btn-primary" id="next-step-1">
+                        Próximo <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step-2-personal-data">
+                <div class="step-content">
+                    <h2>Seus <span>Dados Pessoais</span></h2>
+                    <p>Por favor, preencha suas informações de contato.</p>
+                    <div class="form-group">
+                        <label for="client-name">Seu Nome Completo:</label>
+                        <input type="text" id="client-name" placeholder="Nome Sobrenome" required>
+                        <span class="error-message" id="nameError" style="display: none;">Por favor, informe seu nome.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-email">Seu Melhor E-mail:</label>
+                        <input type="email" id="client-email" placeholder="seuemail@exemplo.com" required>
+                        <span class="error-message" id="emailError" style="display: none;">Por favor, informe um e-mail válido.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-phone">Número de Telefone:</label>
+                        <input type="tel" id="client-phone" placeholder="(XX) XXXXX-XXXX" required>
+                        <span class="error-message" id="phoneError" style="display: none;">Por favor, informe seu telefone.</span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="prev-step-personal-data">
+                        <i class="fas fa-arrow-left"></i> Anterior
+                    </button>
+                    <button type="button" class="btn btn-primary" id="next-step-personal-data">
+                        Próximo <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step-3-datetime">
+                <div class="step-content">
+                    <h2>Selecione a <span>Data e Horário</span></h2>
+                    <p>Escolha a data e o horário preferenciais para sua sessão.</p>
+                    <div class="form-group">
+                        <label for="preferred-date-1">Data Preferencial:</label>
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button type="button" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                                <span id="currentMonthYear"></span>
+                                <button type="button" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <div class="calendar-weekdays">
+                                <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+                            </div>
+                            <div class="calendar-days" id="calendarDays">
+                                </div>
+                        </div>
+                        <div class="selected-date-display" id="selectedDateDisplay">Nenhuma data selecionada</div>
+                        <span class="error-message" id="date1Error" style="display: none;">Por favor, selecione uma data.</span>
+                    </div>
+
+                    <div class="form-group time-selection-container" id="timeSelectionContainer">
+                        <label for="preferred-time-1">Horário Preferencial:</label>
+                        <select id="preferred-time-1">
+                            <option value="">Selecione um horário</option>
+                        </select>
+                        <span class="error-message" id="time1Error" style="display: none;">Por favor, selecione um horário.</span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="prev-step-datetime">
+                        <i class="fas fa-arrow-left"></i> Anterior
+                    </button>
+                    <button type="button" class="btn btn-primary" id="next-step-datetime">
+                        Próximo <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step-4-idea-budget">
+                <div class="step-content">
+                    <h2>Sua <span>Ideia</span> e Orçamento</h2>
+                    <p>Descreva sua tatuagem e nos diga sua faixa de orçamento.</p>
+                     <div class="form-group">
+                        <label for="tattoo-style">Estilo de Tatuagem Desejado:</label>
+                        <select id="tattoo-style">
+                            <option value="">Selecione um estilo</option>
+                            <option value="realism">Realismo</option>
+                            <option value="blackwork">Blackwork</option>
+                            <option value="geometric">Geométrico</option>
+                            <option value="portrait">Retratos</option>
+                            <option value="minimalist">Minimalista</option>
+                            <option value="tradicional">Tradicional</option>
+                            <option value="oriental">Oriental</option>
+                            <option value="watercolor">Aquarela</option>
+                            <option value="other">Outro</option>
+                        </select>
+                         <span class="error-message" id="styleError" style="display: none;">Por favor, selecione um estilo.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="tattoo-description">Descreva sua Ideia de Tatuagem:</label>
+                        <textarea id="tattoo-description" placeholder="Descreva sua ideia em detalhes, incluindo tamanho aproximado, local no corpo e elementos desejados."></textarea>
+                        <span class="error-message" id="descriptionError" style="display: none;">Por favor, descreva sua ideia.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget-range">Orçamento Estimado (R$):</label>
+                        <input type="range" id="budget-range" min="500" max="15000" step="100" value="1500">
+                        <div class="budget-display">
+                            <span>Mínimo: R$ 500,00</span>
+                            <span id="current-budget-value">R$ 1.500,00</span>
+                            <span>Máximo: R$ 15.000,00</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reference-images">Imagens de Referência (Opcional):</label>
+                        <input type="file" id="reference-images" accept="image/*" multiple>
+                        <small style="color: #6b7280; display: block; margin-top: 0.5rem;">Max. 3 arquivos, JPG/PNG, até 5MB cada.</small>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="prev-step-idea-budget">
+                        <i class="fas fa-arrow-left"></i> Anterior
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="submit-appointment-btn">
+                        Finalizar Agendamento <i class="fas fa-calendar-check"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="confirmation-message" id="confirmation-message">
+                <i class="fas fa-check-circle"></i>
+                <h3>Agendamento Solicitado!</h3>
+                <p>Obrigado! Sua solicitação de agendamento foi enviada com sucesso.</p>
+                <p>Retornaremos o contato em breve para confirmar a data e discutir os detalhes.</p>
+                <a href="/pages/home.html" class="btn btn-primary" style="margin-top: 1.5rem;">Voltar à Página Inicial</a>
+            </div>
+        </div>
+    </main>
+
+<footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <img src="/img/Logo.png" alt="Logo RAVEN" class="brand-logo" style="width: 50px; height: 50px;">
+                        <h3>RAVEN STUDIO</h3>
+                    </div>
+                    <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/raven_studio__" class="social-icon" aria-label="Instagram do Raven Studio">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>LINKS RÁPIDOS</h4>
+                    <ul>
+                        <li><a href="/pages/artists.html">Artistas</a></li>
+                        <li><a href="/pages/agendamento.html">Agendamento</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>CONTATO</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Rua das Artes, 123<br>Vila Madalena - São Paulo, SP</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>(11) 99999-9999</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span>contato@ravenstudio.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-divider"></div>
+                <div class="footer-copyright">
+                    <p>© 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+     <button class="back-to-top" id="backToTop" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <div class="chat-widget">
+        <button class="chat-toggle" id="chatToggle">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                        <h4>RavenBot</h4>
+                        <span>Online • FAQ</span>
+                    </div>
+                </div>
+                <button class="chat-close" id="chatClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-content" id="chatContent">
+                <div class="chat-categories" id="chatCategories">
+                    <p>Escolha uma categoria para ver as perguntas frequentes:</p>
+                    <div class="category-buttons">
+                        <button class="category-btn" onclick="showCategory('precos')">Preços</button>
+                        <button class="category-btn" onclick="showCategory('procedimento')">Procedimento</button>
+                        <button class="category-btn" onclick="showCategory('cuidados')">Cuidados</button>
+                        <button class="category-btn" onclick="showCategory('estilos')">Estilos</button>
+                        <button class="category-btn" onclick="showCategory('agendamento')">Agendamento</button>
+                        <button class="category-btn" onclick="showCategory('tempo')">Tempo</button>
+                    </div>
+                </div>
+                <div class="chat-questions" id="chatQuestions" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showCategories()">← Voltar</button>
+                    </div>
+                    <div id="questionsList"></div>
+                </div>
+                <div class="chat-answer" id="chatAnswer" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showQuestions()">← Voltar</button>
+                    </div>
+                    <div id="answerContent"></div>
+                    <button class="btn-primary" onclick="showCategories()">Ver Outras Perguntas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  <script src="/js/navbar.js"></script>
+     <script src="/js/user-session.js"></script>
+    <script>
+        // FAQ Data
+        const faqData = {
+            precos: [
+                {
+                    question: "Quanto custa uma tatuagem?",
+                    answer: "Os preços variam de R$ 200 a R$ 2000, dependendo do tamanho e complexidade. Tatuagens pequenas: R$ 200-500, médias: R$ 500-1000, grandes: acima de R$ 1000."
+                }
+            ],
+            procedimento: [
+                {
+                    question: "Dói muito fazer tatuagem?",
+                    answer: "A dor varia conforme a região do corpo e tolerância pessoal. Áreas ósseas doem mais. A sensação é similar a uma queimação contínua. Usamos técnicas para minimizar o desconforto."
+                }
+            ],
+            cuidados: [
+                {
+                    question: "Como cuidar da tatuagem?",
+                    answer: "Mantenha limpa e hidratada com pomada cicatrizante por 7-10 dias. Evite sol direto, piscina e mar por 15 dias. Não retire as casquinhas naturalmente formadas."
+                }
+            ],
+            estilos: [
+                {
+                    question: "Que estilos vocês fazem?",
+                    answer: "Oferecemos: Tradicional/Old School, Realismo, Minimalista, Aquarela, Geométrico, Blackwork, Fine Line. Cada artista tem especialidades específicas."
+                }
+            ],
+            agendamento: [
+                {
+                    question: "Como funciona o agendamento?",
+                    answer: "Escolha o artista, data e horário disponível. Pedimos entrada de 50% do valor total. Você receberá confirmação por e-mail."
+                }
+            ],
+            tempo: [
+                {
+                    question: "Quanto tempo demora?",
+                    answer: "Tatuagens pequenas: 1-2h, médias: 2-4h, grandes podem precisar múltiplas sessões. O tempo varia conforme complexidade e detalhamento."
+                }
+            ]
+        };
+
+        // Chat Widget Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatToggle = document.getElementById('chatToggle');
+            const chatContainer = document.getElementById('chatContainer');
+            const chatClose = document.getElementById('chatClose');
+            
+            // Botão de voltar ao topo
+            const backToTopButton = document.getElementById('backToTop');
+            
+            // Mostrar/ocultar botão de voltar ao topo
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+            
+            // Voltar ao topo
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Abrir/fechar chat
+            chatToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                chatContainer.classList.toggle('active');
+            });
+            
+            chatClose.addEventListener('click', function() {
+                chatContainer.classList.remove('active');
+            });
+            
+            // Fechar chat ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (!chatContainer.contains(e.target) && !chatToggle.contains(e.target)) {
+                    chatContainer.classList.remove('active');
+                }
+            });
+            
+            // Evitar fechar ao clicar dentro do chat
+            chatContainer.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+        
+        function showCategories() {
+            document.getElementById('chatCategories').style.display = 'block';
+            document.getElementById('chatQuestions').style.display = 'none';
+            document.getElementById('chatAnswer').style.display = 'none';
+            currentState = 'categories';
+            currentCategory = null;
+        }
+        
+        function showCategory(category) {
+            currentCategory = category;
+            currentState = 'questions';
+            
+            const questionsContainer = document.getElementById('questionsList');
+            const categoryData = faqData[category] || [];
+            
+            questionsContainer.innerHTML = '';
+            
+            categoryData.forEach((faq, index) => {
+                const questionBtn = document.createElement('button');
+                questionBtn.className = 'question-btn';
+                questionBtn.textContent = faq.question;
+                questionBtn.onclick = () => showAnswer(category, index);
+                questionsContainer.appendChild(questionBtn);
+            });
+            
+            document.getElementById('chatCategories').style.display = 'none';
+            document.getElementById('chatQuestions').style.display = 'block';
+            document.getElementById('chatAnswer').style.display = 'none';
+        }
+        
+        function showQuestions() {
+            if (currentCategory) {
+                showCategory(currentCategory);
+            } else {
+                showCategories();
+            }
+        }
+        
+        function showAnswer(category, questionIndex) {
+            const faq = faqData[category][questionIndex];
+            const answerContent = document.getElementById('answerContent');
+            
+            answerContent.innerHTML = `
+                <div class="answer-content">
+                    <h5>Pergunta:</h5>
+                    <p>${faq.question}</p>
+                    <h5 style="color: #8a2be2; margin-top: 1rem;">Resposta:</h5>
+                    <p>${faq.answer}</p>
+                </div>
+            `;
+            
+            document.getElementById('chatCategories').style.display = 'none';
+            document.getElementById('chatQuestions').style.display = 'none';
+            document.getElementById('chatAnswer').style.display = 'block';
+            currentState = 'answer';
+        }
+        
+        // Variáveis de estado do chat
+        let currentCategory = null;
+        let currentState = 'categories';
+   
+        document.addEventListener('DOMContentLoaded', function() {
+            const formSteps = document.querySelectorAll('.form-step');
+            const progressBar = document.getElementById('progressBar');
+            let currentStep = 0; // 0-indexed
+
+            const appointmentData = {}; // Objeto para armazenar os dados do agendamento
+
+            const artists = [
+                { id: 'alex-silva', name: 'Augustos', specialty: 'Maori, Tribal e Realismo', imageUrl: '/img/artistas/augusto.png' },
+                { id: 'mariana-costa', name: 'Clara', specialty: 'Blackwork & Geométrico', imageUrl: '/img/artistas/clara.png' },
+                { id: 'lucas-moraes', name: 'Isabela', specialty: 'Aquarela & Florais', imageUrl: '/img/artistas/isabella.png' },
+                { id: 'carla-souza', name: 'Ricardo', specialty: 'Aquarela e Colorido', imageUrl: '/img/artistas/ricardo.png' },
+                { id: 'lucas-moraes', name: 'sofia', specialty: 'Old School & Tradicional', imageUrl: '/img/artistas/sofia.png' },
+                
+            ];
+
+            function showStep(stepIndex) {
+                formSteps.forEach((step, index) => {
+                    if (index === stepIndex) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+                currentStep = stepIndex;
+                updateProgressBar();
+            }
+
+           function updateProgressBar() { // Simplified updateProgressBar as previous one was for a different structure
+                const progressWidth = ((currentStep + 1) / formSteps.length) * 100;
+                progressBar.style.width = `${progressWidth}%`;
+            }
+
+
+            function validateStep(step) {
+                let isValid = true;
+                // Hide all error messages for current step
+                step.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
+                if (currentStep === 0) { // Artist Selection (Step 1)
+                    const selectedArtistCard = document.querySelector('.artist-card.selected');
+                    if (!selectedArtistCard) {
+                        document.getElementById('artistSelectionError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        appointmentData.artist = selectedArtistCard.dataset.artistId;
+                        appointmentData.artistName = selectedArtistCard.querySelector('h3').textContent;
+                    }
+                } else if (currentStep === 1) { // Personal Data (New Step 2)
+                    const nameInput = document.getElementById('client-name');
+                    const emailInput = document.getElementById('client-email');
+                    const phoneInput = document.getElementById('client-phone');
+
+                    if (nameInput.value.trim() === '') {
+                        document.getElementById('nameError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        appointmentData.clientName = nameInput.value.trim();
+                    }
+
+                    if (emailInput.value.trim() === '' || !/@/.test(emailInput.value)) {
+                        document.getElementById('emailError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        appointmentData.clientEmail = emailInput.value.trim();
+                    }
+                    
+                    if (phoneInput.value.trim() === '') {
+                        document.getElementById('phoneError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        appointmentData.clientPhone = phoneInput.value.trim();
+                    }
+
+                } else if (currentStep === 2) { // Date and Time Selection (New Step 3)
+                    const selectedDateDiv = document.getElementById('selectedDateDisplay');
+                    const selectedTimeSelect = document.getElementById('preferred-time-1');
+
+                    if (!appointmentData.preferredDate1) { // Check if date was set by calendar click
+                        document.getElementById('date1Error').style.display = 'block';
+                        selectedDateDiv.classList.add('error-border');
+                        isValid = false;
+                    } else {
+                        selectedDateDiv.classList.remove('error-border');
+                    }
+
+                    if (appointmentData.preferredDate1 && !appointmentData.preferredTime1) { // If date chosen, but no time
+                        document.getElementById('time1Error').style.display = 'block';
+                        selectedTimeSelect.classList.add('error-border'); // Optional: add error border to select
+                        isValid = false;
+                    } else {
+                        document.getElementById('time1Error').style.display = 'none';
+                        selectedTimeSelect.classList.remove('error-border');
+                    }
+                    
+                } else if (currentStep === 3) { // Idea and Budget (New Step 4)
+                    const styleSelect = document.getElementById('tattoo-style');
+                    const descriptionTextarea = document.getElementById('tattoo-description');
+
+                    if (styleSelect.value === '') {
+                        document.getElementById('styleError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        appointmentData.tattooStyle = styleSelect.value;
+                    }
+
+                    if (descriptionTextarea.value.trim() === '') {
+                        document.getElementById('descriptionError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        appointmentData.tattooDescription = descriptionTextarea.value.trim();
+                        appointmentData.budget = document.getElementById('budget-range').value;
+                        // Handle reference images - for a real app, this would involve file uploads to a server
+                        // For now, we just acknowledge the input
+                        const referenceImages = document.getElementById('reference-images').files;
+                        if (referenceImages.length > 0) {
+                            appointmentData.referenceImagesCount = referenceImages.length;
+                            // In a real application, you'd handle file uploads here (e.g., using FormData and fetch API)
+                        }
+                    }
+                }
+                return isValid;
+            }
+
+            // --- Step 1: Artist Selection ---
+            const artistSelectionGrid = document.getElementById('artistSelectionGrid');
+            artists.forEach(artist => {
+                const card = document.createElement('div');
+                card.className = 'artist-card';
+                card.dataset.artistId = artist.id;
+                card.innerHTML = `
+                    <img src="${artist.imageUrl}" alt="${artist.name}">
+                    <h3>${artist.name}</h3>
+                    <p>${artist.specialty}</p>
+                    <i class="fas fa-check-circle select-icon"></i>
+                `;
+                card.addEventListener('click', () => {
+                    // When an artist is selected (in step 1)
+document.querySelectorAll('.artist-card').forEach(card => {
+    card.addEventListener('click', () => {
+        // Deselect any previously selected artist
+        document.querySelectorAll('.artist-card').forEach(ac => ac.classList.remove('selected'));
+        // Select the clicked artist
+        card.classList.add('selected');
+        
+        // Save artist data to appointmentData
+        appointmentData.artist = card.dataset.artistId;
+        appointmentData.artistName = card.querySelector('h3').textContent;
+        
+        // Hide error message if an artist is selected
+        document.getElementById('artistSelectionError').style.display = 'none';
+    });
+});
+                });
+                artistSelectionGrid.appendChild(card);
+            });
+
+            document.getElementById('next-step-1').addEventListener('click', () => {
+                if (validateStep(formSteps[currentStep])) {
+                    showStep(currentStep + 1);
+                }
+            });
+
+            // --- Step 2: Personal Data ---
+            document.getElementById('prev-step-personal-data').addEventListener('click', () => {
+                showStep(currentStep - 1);
+            });
+            document.getElementById('next-step-personal-data').addEventListener('click', () => {
+                if (validateStep(formSteps[currentStep])) {
+                    showStep(currentStep + 1);
+                }
+            });
+
+            // Phone number mask
+            const phoneInput = document.getElementById('client-phone');
+            phoneInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+                if (value.length > 10) { // For (XX) XXXXX-XXXX
+                    value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+                } else if (value.length > 5) { // For (XX) XXXX-XXXX
+                    value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+                } else if (value.length > 2) { // For (XX) XXXXX
+                    value = value.replace(/^(\d{2})(\d+)/, '($1) $2');
+                }
+                e.target.value = value;
+            });
+
+            // --- Step 3: Date and Time Selection ---
+            document.getElementById('prev-step-datetime').addEventListener('click', () => {
+                showStep(currentStep - 1);
+            });
+            document.getElementById('next-step-datetime').addEventListener('click', () => {
+                if (validateStep(formSteps[currentStep])) {
+                    showStep(currentStep + 1);
+                }
+            });
+
+            // --- Interactive Calendar Logic ---
+            const currentMonthYearSpan = document.getElementById('currentMonthYear');
+            const calendarDaysGrid = document.getElementById('calendarDays');
+            const prevMonthBtn = document.getElementById('prevMonth');
+            const nextMonthBtn = document.getElementById('nextMonth');
+            const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+            const timeSelectionContainer = document.getElementById('timeSelectionContainer');
+            const preferredTimeSelect = document.getElementById('preferred-time-1');
+
+            let today = new Date();
+            today.setHours(0, 0, 0, 0); // Reset time to compare only dates
+            let currentCalendarDate = new Date(today.getFullYear(), today.getMonth(), 1); // Start of current month
+
+            function renderCalendar() {
+                calendarDaysGrid.innerHTML = ''; // Clear previous days
+                const year = currentCalendarDate.getFullYear();
+                const month = currentCalendarDate.getMonth(); // 0-indexed
+
+                currentMonthYearSpan.textContent = new Date(year, month).toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
+
+                const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 (Sunday) to 6 (Saturday)
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                // Add empty cells for days before the 1st of the month
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.classList.add('calendar-day', 'empty');
+                    calendarDaysGrid.appendChild(emptyDay);
+                }
+
+                // Add actual days
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.classList.add('calendar-day');
+                    dayElement.textContent = day;
+                    
+                    const dateToCheck = new Date(year, month, day);
+                    dateToCheck.setHours(0, 0, 0, 0); // Reset time to compare only dates
+
+                    // Disable past dates
+                    if (dateToCheck < today) {
+                        dayElement.classList.add('empty'); // Use 'empty' class to visually disable
+                        dayElement.style.cursor = 'not-allowed';
+                        dayElement.style.opacity = '0.5';
+                    } else {
+                        dayElement.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                        
+                        // Mark current day
+                        if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+                            dayElement.classList.add('current-day');
+                        }
+
+                        // Mark selected day if matches
+                        if (appointmentData.preferredDate1 && appointmentData.preferredDate1 === dayElement.dataset.date) {
+                            dayElement.classList.add('selected');
+                            updateSelectedDateDisplay();
+                        }
+
+                        dayElement.addEventListener('click', () => {
+                            // Only allow click if not a past date
+                            if (dateToCheck >= today) { 
+                                const previouslySelected = calendarDaysGrid.querySelector('.calendar-day.selected');
+                                if (previouslySelected) {
+                                    previouslySelected.classList.remove('selected');
+                                }
+                                dayElement.classList.add('selected');
+                                appointmentData.preferredDate1 = dayElement.dataset.date;
+                                
+                                // Show time selection and populate it
+                                populateTimeSlots();
+                                timeSelectionContainer.classList.add('show');
+                                
+                                // Reset time selection if date changes and previously had a time
+                                if (appointmentData.preferredTime1) {
+                                    preferredTimeSelect.value = ''; // Reset select
+                                    appointmentData.preferredTime1 = ''; // Clear stored time
+                                }
+                                updateSelectedDateDisplay(); // Update display without time initially
+                                document.getElementById('date1Error').style.display = 'none'; // Hide date error
+                                selectedDateDisplay.classList.remove('error-border'); // Remove error border
+                            }
+                        });
+                    }
+                    calendarDaysGrid.appendChild(dayElement);
+                }
+                // Disable previous month button if it goes before current month
+                prevMonthBtn.disabled = (currentCalendarDate.getFullYear() === today.getFullYear() && currentCalendarDate.getMonth() === today.getMonth());
+                prevMonthBtn.style.opacity = prevMonthBtn.disabled ? '0.3' : '1';
+                prevMonthBtn.style.cursor = prevMonthBtn.disabled ? 'not-allowed' : 'pointer';
+            }
+
+            function populateTimeSlots() {
+                preferredTimeSelect.innerHTML = '<option value="">Selecione um horário</option>'; // Reset options
+                const startHour = 9; // 9 AM
+                const endHour = 18;  // 6 PM
+                for (let i = startHour; i <= endHour; i++) {
+                    const hour = String(i).padStart(2, '0');
+                    const option = document.createElement('option');
+                    option.value = `${hour}:00`;
+                    option.textContent = `${hour}:00`;
+                    preferredTimeSelect.appendChild(option);
+                }
+            }
+
+            preferredTimeSelect.addEventListener('change', () => {
+                appointmentData.preferredTime1 = preferredTimeSelect.value;
+                updateSelectedDateDisplay(); // Update display with selected time
+                document.getElementById('time1Error').style.display = 'none'; // Hide time error
+                preferredTimeSelect.classList.remove('error-border');
+            });
+
+            function updateSelectedDateDisplay() {
+                if (appointmentData.preferredDate1) {
+                    const dateObj = new Date(appointmentData.preferredDate1 + 'T00:00:00'); // Ensure UTC for consistent parsing
+                    const formattedDate = dateObj.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+                    let displayText = `Data Selecionada: ${formattedDate}`;
+                    if (appointmentData.preferredTime1) {
+                        displayText += ` às ${appointmentData.preferredTime1}`;
+                    }
+                    selectedDateDisplay.textContent = displayText;
+                } else {
+                    selectedDateDisplay.textContent = 'Nenhuma data selecionada';
+                }
+            }
+
+            prevMonthBtn.addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            nextMonthBtn.addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            // --- Step 4: Budget and Idea Description ---
+            document.getElementById('prev-step-idea-budget').addEventListener('click', () => {
+                showStep(currentStep - 1);
+            });
+
+            // Inside the appointment submit button event listener
+document.getElementById('submit-appointment-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    if (validateStep(formSteps[currentStep])) {
+        // Add current date/time to appointment
+        appointmentData.createdAt = new Date().toISOString();
+        appointmentData.status = "Pendente"; // Initial status
+        appointmentData.id = 'APP-' + Math.random().toString(36).substr(2, 9); // Generate unique ID
+        
+        // Add selected artist's photo and specialty
+        const selectedArtistCard = document.querySelector('.artist-card.selected');
+        if (selectedArtistCard) {
+            const artistImg = selectedArtistCard.querySelector('img');
+            appointmentData.artistImage = artistImg.src;
+            appointmentData.artistSpecialty = selectedArtistCard.querySelector('p').textContent;
+        }
+        
+        // Save to localStorage
+        let appointments = JSON.parse(localStorage.getItem('ravenStudioAppointments')) || [];
+        appointments.push(appointmentData);
+        localStorage.setItem('ravenStudioAppointments', JSON.stringify(appointments));
+        
+        // Update user session
+        if (window.userSession && window.userSession.currentUser) {
+            const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
+            const userIndex = users.findIndex(u => u.email === window.userSession.currentUser.email);
+            
+            if (userIndex !== -1) {
+                if (!users[userIndex].appointments) {
+                    users[userIndex].appointments = [];
+                }
+                users[userIndex].appointments.push(appointmentData);
+                localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
+                
+                // Update current user
+                window.userSession.currentUser.appointments = users[userIndex].appointments;
+                localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(window.userSession.currentUser));
+            }
+        }
+
+        // Show confirmation message
+        document.querySelectorAll('.form-step').forEach(step => step.style.display = 'none');
+        document.getElementById('progressBar').style.display = 'none';
+        document.getElementById('confirmation-message').style.display = 'flex';
+        updateProgressBar();
+    }
+});
+
+            // Budget value display
+            const budgetRange = document.getElementById('budget-range');
+            const currentBudgetValueSpan = document.getElementById('current-budget-value');
+            
+            // Set initial value display
+            currentBudgetValueSpan.textContent = 'R$ ' + parseInt(budgetRange.value).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            budgetRange.addEventListener('input', function() {
+                currentBudgetValueSpan.textContent = 'R$ ' + parseInt(this.value).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            });
+
+            // Initial setup
+            renderCalendar(); // Render calendar on load
+            showStep(0); // Start at the first step
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Silva | Tatuador Especialista em Realismo | Ink Studio Tattoo</title>
+    <meta name="description" content="Alex Silva, mestre em tatuagem realista no Ink Studio Tattoo. Conheça seu portfólio, estilo único e agende sua tatuagem personalizada.">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Bebas+Neue&family=Teko:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/perfilartistas.css">
+</head>
+ <style>
+        /* Botão para voltar ao topo */
+        .back-to-top {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+        }
+
+        /* Chat Widget Styles */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1.5rem;
+            border: none;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+
+        .chat-container {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: #1a1a1a;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            display: none;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-container.active {
+            display: flex;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+        }
+
+        .chat-title i {
+            color: #fff;
+        }
+
+        .chat-title h4 {
+            font-size: 1rem;
+            margin: 0;
+            font-family: 'Teko', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .chat-title span {
+            font-size: 0.8rem;
+            color: #ccc;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .chat-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: #121212;
+        }
+
+        .chat-categories p {
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .category-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .category-btn {
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: left;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.1rem;
+            border: none;
+        }
+
+        .category-btn:hover {
+            background: rgba(138, 43, 226, 0.3);
+        }
+
+        .back-button {
+            margin-bottom: 1rem;
+        }
+
+        .back-button button {
+            background: none;
+            border: none;
+            color: #8a2be2;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: 'Teko', sans-serif;
+            padding: 0;
+        }
+
+        .back-button button:hover {
+            text-decoration: underline;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            border: none;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .question-btn:hover {
+            background: rgba(138, 43, 226, 0.3);
+        }
+
+        .answer-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            color: #ccc;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .answer-content h5 {
+            color: #8a2be2;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .answer-content p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            margin-top: 1rem;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+
+        #questions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .chat-container {
+                width: 280px;
+                right: -10px;
+            }
+            
+            .back-to-top {
+                left: 10px;
+                bottom: 10px;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+<body>
+ <!-- ***** Header Area Start ***** -->
+    <nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
+    <div class="nav-container">
+        <div class="nav-brand">
+            <a href="/pages/home.html" class="brand-link">
+                <img src="/img/logo.png" alt="Logo RAVEN" class="brand-logo">
+                <span class="brand-text">RAVEN</span>
+            </a>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-menu" id="nav-menu" role="menubar">
+            <li role="none"><a href="/pages/home.html" role="menuitem" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
+            <li role="none"><a href="/pages/loja.html" role="menuitem" class="nav-link active"><i class="fas fa-store"></i> Loja</a></li>
+            <li role="none"><a href="/pages/artists.html" role="menuitem" class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+            <li role="none"><a href="/pages/contato.html" role="menuitem" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+            <li role="none"><a href="/pages/blog.html" role="menuitem" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+            <li role="none"><a href="/pages/game.html" role="menuitem" class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+        </ul>
+        <div class="nav-icons">
+            <a href="/pages/login.html" class="nav-icon" aria-label="Login"><i class="fas fa-user"></i></a>
+            <a href="/pages/carrinho.html" class="nav-icon" aria-label="Carrinho de compras"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </div>
+</nav>
+
+    <!-- About Section - Creative Version -->
+    <section class="about-creative">
+        <div class="creative-container">
+            <!-- Left Panel - Artist Visual Identity -->
+            <div class="artist-visual">
+                <div class="polaroid-frame">
+                    <img src="/ASSETS/images/team-member-01.jpg" alt="Alex Silva no estúdio" class="polaroid-img">
+                    <div class="polaroid-caption">Alex Silva - Ink Studio</div>
+                </div>
+                <div class="badges-container">
+                    <div class="artist-badge">
+                        <div class="badge-icon"><i class="fas fa-medal"></i></div>
+                        <div class="badge-content">
+                            <span class="badge-number">7</span>
+                            <span class="badge-label">Prêmios Internacionais</span>
+                        </div>
+                    </div>
+                    <div class="artist-badge">
+                        <div class="badge-icon"><i class="fas fa-globe-americas"></i></div>
+                        <div class="badge-content">
+                            <span class="badge-number">12+</span>
+                            <span class="badge-label">Anos de Experiência</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Creative Story -->
+            <div class="artist-story">
+                <h2 class="creative-title">A <span>Arte</span> Sob a <span>Pele</span></h2>
+                
+                <div class="story-tabs">
+                    <button class="tab-btn active" data-tab="journey">Jornada</button>
+                    <button class="tab-btn" data-tab="philosophy">Filosofia</button>
+                    <button class="tab-btn" data-tab="technique">Técnica</button>
+                </div>
+                
+                <div class="tab-content active" id="journey">
+                    <p>Minha história com a tatuagem começou nas galerias de arte, onde passava horas estudando a obra dos mestres do realismo. Em 2010, transformei essa paixão em profissão, iniciando como aprendiz no lendário estúdio Paulistano.</p>
+                    <p>O reconhecimento veio em 2014 quando meu trabalho foi premiado na Convenção Internacional de Tatuagem. Desde então, tenho levado minha arte para convenções em Londres, Berlim e Tóquio, sempre buscando evoluir.</p>
+                    <div class="milestone">
+                        <i class="fas fa-map-pin"></i>
+                        <span>Atualmente liderando o departamento de realismo no Ink Studio</span>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="philosophy">
+                    <p>"Acredito que uma tatuagem deve ser tão única quanto a pessoa que a carrega. Não se trata apenas de dominar a técnica, mas de capturar histórias e transformá-las em arte viva."</p>
+                    <p>Cada projeto é uma colaboração íntima entre artista e cliente, onde minha missão é traduzir emoções em traços precisos e sombras que ganham vida na pele.</p>
+                    
+                </div>
+                
+                <div class="tab-content" id="technique">
+                    <p>Minha abordagem técnica combina:</p>
+                    <ul class="technique-list">
+                        <li><i class="fas fa-circle-notch"></i> Estudo profundo de anatomia para realismo tridimensional</li>
+                        <li><i class="fas fa-circle-notch"></i> Uso de pigmentos premium para durabilidade</li>
+                        <li><i class="fas fa-circle-notch"></i> Técnicas de sombreamento que respeitam o envelhecimento da pele</li>
+                        <li><i class="fas fa-circle-notch"></i> Processo de consultoria personalizada para cada projeto</li>
+                    </ul>
+                </div>
+                
+                <div class="studio-cta">
+                    <p>Quer conhecer meu processo criativo?</p>
+                    <a href="#" class="studio-tour-btn">
+                        <i class="fas fa-video"></i> Tour Virtual pelo Estúdio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Meu <span>Portfólio</span></h2>
+                <p>Alguns dos meus trabalhos mais recentes</p>
+            </div>
+            <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="realismo">Realismo</button>
+                <button class="filter-btn" data-filter="blackwork">Blackwork</button>
+                <button class="filter-btn" data-filter="retratos">Retratos</button>
+                <button class="filter-btn" data-filter="geometrico">Geométrico</button>
+            </div>
+            <div class="portfolio-grid" id="lightgallery">
+                <a href="../images/work1.jpg" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Retrato Realista</h4><p>Tatuagem de retrato em preto e cinza com sombreamento avançado</p>">
+                    <img src="../images/work1-thumb.jpg" alt="Tatuagem realista de retrato" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Realismo</span>
+                        <div class="portfolio-info">
+                            <h3>Retrato Realista</h3>
+                            <p>Tatuagem de retrato em preto e cinza</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/work2.jpg" class="portfolio-item" data-category="blackwork" data-sub-html="<h4>Natureza Morta</h4><p>Composição em blackwork com detalhes minimalistas</p>">
+                    <img src="../images/work2-thumb.jpg" alt="Tatuagem blackwork" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Blackwork</span>
+                        <div class="portfolio-info">
+                            <h3>Natureza Morta</h3>
+                            <p>Composição em blackwork minimalista</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/work3.jpg" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Realismo Animal</h4><p>Detalhes impressionantes em escala de cinza</p>">
+                    <img src="../images/work3-thumb.jpg" alt="Tatuagem realista de animal" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Realismo</span>
+                        <div class="portfolio-info">
+                            <h3>Realismo Animal</h3>
+                            <p>Detalhes impressionantes em escala de cinza</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/work4.jpg" class="portfolio-item" data-category="geometrico" data-sub-html="<h4>Arte Conceitual</h4><p>Peça original desenhada especialmente para o cliente</p>">
+                    <img src="../images/work4-thumb.jpg" alt="Tatuagem conceitual" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Geométrico</span>
+                        <div class="portfolio-info">
+                            <h3>Arte Conceitual</h3>
+                            <p>Peça original personalizada</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/work5.jpg" class="portfolio-item" data-category="retratos" data-sub-html="<h4>Retrato em Microrealismo</h4><p>Detalhes impressionantes em pequena escala</p>">
+                    <img src="../images/work5-thumb.jpg" alt="Microrealismo" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Retratos</span>
+                        <div class="portfolio-info">
+                            <h3>Microrealismo</h3>
+                            <p>Detalhes impressionantes em pequena escala</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/work6.jpg" class="portfolio-item" data-category="geometrico" data-sub-html="<h4>Composição Geométrica</h4><p>Combinação de blackwork e elementos realistas</p>">
+                    <img src="../images/work6-thumb.jpg" alt="Tatuagem geométrica" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Geométrico</span>
+                        <div class="portfolio-info">
+                            <h3>Composição Geométrica</h3>
+                            <p>Blackwork com elementos realistas</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Pronto para transformar sua ideia em arte?</h2>
+                <p>Agende uma consulta gratuita para discutir seu projeto e receber um orçamento personalizado.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn">Agendar Consulta</a>
+                    <a href="#" class="btn btn-outline">Ver Portfólio Completo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <span class="brand-mascot">🐦‍⬛</span>
+                        <h3>RAVEN STUDIO</h3>
+                    </div>
+                    <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Instagram do Raven Studio">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Facebook do Raven Studio">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="TikTok do Raven Studio">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="YouTube do Raven Studio">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>LINKS RÁPIDOS</h4>
+                    <ul>
+                        <li><a href="/">Início</a></li>
+                        <li><a href="/artists.html">Artistas</a></li>
+                        <li><a href="/portfolio.html">Portfólio</a></li>
+                        <li><a href="#testimonials">Depoimentos</a></li>
+                        <li><a href="#booking">Agendamento</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>CONTATO</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Rua das Artes, 123<br>Vila Madalena - São Paulo, SP</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>(11) 99999-9999</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span>contato@ravenstudio.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-divider"></div>
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tabs functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    button.classList.add('active');
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Portfolio filter functionality
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    portfolioItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Initialize LightGallery
+            lightGallery(document.getElementById('lightgallery'), {
+                selector: '.portfolio-item',
+                download: false,
+                zoom: true,
+                counter: false,
+                speed: 300,
+                mode: 'lg-fade',
+                cssEasing: 'cubic-bezier(0.25, 0, 0.25, 1)'
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

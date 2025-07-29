@@ -1,0 +1,2202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Raven Studio</title>
+    <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+    <meta name="description" content="Finalizar compra - Raven Studio">
+    
+    <!-- Fontes e ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Teko:wght@400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Reset e estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Layout principal */
+        .checkout-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+            z-index: -2;
+        }
+
+        .checkout-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .checkout-main {
+            min-height: 100vh;
+            padding: 80px 1rem 2rem;
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Cabeçalho */
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .checkout-header h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: #3b82f6;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .checkout-header p {
+            color: #d1d5db;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+
+        /* Barra de progresso */
+    .checkout-progress {
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    min-width: 280px; /* Largura mínima para garantir que caiba em telas pequenas */
+}
+
+        .checkout-progress::-webkit-scrollbar {
+            display: none;
+        }
+
+   .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    min-width: 60px;
+    color: #6b7280;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+
+        .step.active {
+            color: #3b82f6;
+        }
+
+        .step.completed {
+            color: #22c55e;
+        }
+
+        .step.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+.step-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(107, 114, 128, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+
+.step.active .step-number {
+    background: #3b82f6;
+    color: #000;
+}
+
+.step.completed .step-number {
+    background: #22c55e;
+    color: #000;
+}
+
+
+.step-label {
+    white-space: nowrap;
+    font-size: 0.65rem;
+    text-align: center;
+}
+.step:not(:last-child):after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: calc(100% - 12px);
+    width: calc(100% - 24px);
+    height: 2px;
+    background: rgba(107, 114, 128, 0.3);
+    z-index: -1;
+}
+
+.step.active:not(:last-child):after,
+.step.completed:not(:last-child):after {
+    background: #3b82f6;
+}
+
+
+        .step-separator {
+            width: 20px;
+            height: 2px;
+            background: rgba(107, 114, 128, 0.3);
+            margin: 0 0.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Layout do conteúdo */
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .checkout-forms {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .checkout-summary {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            height: fit-content;
+        }
+
+        /* Seções do formulário */
+        .checkout-section {
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .checkout-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .section-header .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.1rem;
+        }
+
+        .section-header h3 {
+            font-family: 'Teko', sans-serif;
+            color: #3b82f6;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            text-transform: uppercase;
+        }
+
+        /* Formulários */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #d1d5db;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group label .required {
+            color: #ef4444;
+            margin-left: 0.2rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            outline: none;
+        }
+
+        .form-group input::placeholder {
+            color: #6b7280;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        .card-brand {
+            position: absolute;
+            right: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+        }
+
+        /* Métodos de pagamento */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-method {
+            padding: 1rem;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+            min-height: 90px;
+        }
+
+        .payment-method:hover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .payment-method.selected {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .payment-method input[type="radio"] {
+            display: none;
+        }
+
+        .payment-method .icon {
+            font-size: 1.5rem;
+            color: #3b82f6;
+        }
+
+        .payment-method .label {
+            font-family: 'Orbitron', sans-serif;
+            color: #d1d5db;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Endereços salvos */
+        .saved-addresses {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .saved-address {
+            padding: 1rem;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .saved-address:hover {
+            border-color: #3b82f6;
+        }
+
+        .saved-address.selected {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .saved-address input[type="radio"] {
+            display: none;
+        }
+
+        /* Resumo do pedido */
+        .summary-title {
+            font-family: 'Bebas Neue', cursive;
+            color: #3b82f6;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-name {
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-price {
+            color: #3b82f6;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+        }
+
+        .summary-totals {
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .summary-row.total {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #3b82f6;
+            font-family: 'Bebas Neue', cursive;
+        }
+
+        /* Botões */
+        .checkout-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.8rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 10px;
+            color: #3b82f6;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            flex: 2;
+            min-width: 160px;
+            padding: 0.8rem 1rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Mensagens de erro */
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        /* Alertas personalizados */
+        .custom-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            width: calc(100% - 2rem);
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: center;
+            display: none;
+        }
+
+        .custom-alert.show {
+            display: block;
+            animation: alertShow 0.3s ease-out;
+        }
+
+        .alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            display: none;
+        }
+
+        .alert-overlay.show {
+            display: block;
+        }
+
+        .alert-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .alert-icon.success {
+            color: #22c55e;
+        }
+
+        .alert-icon.error {
+            color: #ef4444;
+        }
+
+        .alert-icon.warning {
+            color: #f59e0b;
+        }
+
+        .alert-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.3rem;
+            color: #3b82f6;
+            margin-bottom: 0.8rem;
+        }
+
+        .alert-message {
+            color: #d1d5db;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .alert-button {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .alert-button:hover {
+            background: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        /* Estilos específicos para boleto */
+        .boleto-info {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .boleto-info p {
+            margin-bottom: 0.8rem;
+            color: #d1d5db;
+            font-size: 0.9rem;
+        }
+
+        .boleto-info .btn-boleto {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #22c55e 0%, #3b82f6 100%);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .boleto-info .btn-boleto:hover {
+            background: #22c55e;
+            transform: translateY(-2px);
+        }
+
+        /* Estilos para PIX */
+        .pix-code-container {
+            background: rgba(50, 50, 50, 0.8);
+            border: 1px dashed #3b82f6;
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            word-break: break-all;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: #a0aec0;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .pix-buttons {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .pix-buttons .btn-copy-pix {
+            padding: 0.7rem 1.2rem;
+            background: #22c55e;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .pix-buttons .btn-copy-pix:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        .pix-buttons .btn-ok {
+            padding: 0.7rem 1.2rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 8px;
+            color: #3b82f6;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .pix-buttons .btn-ok:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Estilos para pontos */
+        .points-info {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .points-total, .points-balance {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 0.3rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .points-total i {
+            color: #FFD700;
+        }
+
+        .points-balance i {
+            color: #3b82f6;
+        }
+
+        .points-total strong, .points-balance strong {
+            color: #FFD700;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+        }
+
+        .points-warning {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 0.6rem;
+            border-radius: 6px;
+            margin-top: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            font-size: 0.8rem;
+        }
+
+        .points-success {
+            color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+            padding: 0.6rem;
+            border-radius: 6px;
+            margin-top: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            font-size: 0.8rem;
+        }
+
+        /* Animações */
+        @keyframes alertShow {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+
+
+        
+        /* Media Queries para telas maiores */
+        @media (min-width: 768px) {
+            .checkout-main {
+                padding: 100px 1.5rem 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+            
+            .checkout-progress {
+                padding: 1.5rem;
+            }
+            
+            .step-separator {
+                width: 40px;
+                margin: 0 1rem;
+            }
+            
+            .checkout-section {
+                padding: 2rem;
+                border-radius: 20px;
+            }
+            
+            .checkout-summary {
+                padding: 2rem;
+                border-radius: 20px;
+            }
+            
+            .payment-methods {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .checkout-content {
+                grid-template-columns: 1fr 350px;
+            }
+            
+            .checkout-summary {
+                position: sticky;
+                top: 120px;
+            }
+            
+            .checkout-actions {
+                flex-wrap: nowrap;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .checkout-content {
+                grid-template-columns: 1fr 400px;
+                gap: 3rem;
+            }
+            
+            .checkout-forms {
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-bg"></div>
+    <div class="checkout-particles" id="particles-js"></div>
+    
+    <div class="alert-overlay" id="alert-overlay"></div>
+    <div class="custom-alert" id="custom-alert">
+        <div class="alert-icon" id="alert-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="alert-title" id="alert-title">Sucesso!</div>
+        <div class="alert-message" id="alert-message">Operação realizada com sucesso!</div>
+        <button class="alert-button" id="alert-button" onclick="closeAlert()">OK</button>
+    </div>
+    
+    <main class="checkout-main">
+        <header class="checkout-header">
+            <h1>FINALIZAR COMPRA</h1>
+            <p>Complete seus dados para finalizar o pedido</p>
+        </header>
+
+        <div class="checkout-progress">
+    <div class="progress-steps">
+        <div class="step active" id="step-1" onclick="goToStep(1)">
+            <div class="step-number">1</div>
+            <span class="step-label">Dados</span>
+        </div>
+        <div class="step disabled" id="step-2" onclick="goToStep(2)">
+            <div class="step-number">2</div>
+            <span class="step-label">Endereço</span>
+        </div>
+        <div class="step disabled" id="step-3" onclick="goToStep(3)">
+            <div class="step-number">3</div>
+            <span class="step-label">Pagamento</span>
+        </div>
+        <div class="step disabled" id="step-4" onclick="goToStep(4)">
+            <div class="step-number">4</div>
+            <span class="step-label">Confirmação</span>
+        </div>
+    </div>
+</div>
+
+        <div class="checkout-content">
+            <div class="checkout-forms">
+                <div class="checkout-section active" id="personal-data">
+                    <div class="section-header">
+                        <div class="icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3>Dados Pessoais</h3>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="full-name">Nome Completo <span class="required">*</span></label>
+                            <input type="text" id="full-name" placeholder="Digite seu nome completo" required>
+                            <div class="error-message" id="name-error">Nome é obrigatório</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail <span class="required">*</span></label>
+                            <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
+                            <div class="error-message" id="email-error">E-mail válido é obrigatório</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Telefone <span class="required">*</span></label>
+                            <input type="tel" id="phone" placeholder="(11)99999-9999" required>
+                            <div class="error-message" id="phone-error">Telefone é obrigatório</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CPF <span class="required">*</span></label>
+                            <input type="text" id="cpf" placeholder="000.000.000-00" required>
+                            <div class="error-message" id="cpf-error">CPF válido é obrigatório</div>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-actions">
+                        <button class="btn-secondary" onclick="window.history.back()">
+                            <i class="fas fa-arrow-left"></i> Voltar ao Carrinho
+                        </button>
+                        <button class="btn-primary" onclick="nextStep()">
+                            Próximo <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="checkout-section" id="address-data">
+                    <div class="section-header">
+                        <div class="icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Endereço de Entrega</h3>
+                    </div>
+                    
+                    <div id="saved-addresses-container" style="display: none;">
+                        <h4 style="color: #3b82f6; margin-bottom: 1rem; font-family: 'Teko', sans-serif;">Endereços Salvos</h4>
+                        <div class="saved-addresses" id="saved-addresses"></div>
+                        <button type="button" id="new-address-btn" class="btn-secondary" style="margin-bottom: 1.5rem;">
+                            <i class="fas fa-plus"></i> Usar Novo Endereço
+                        </button>
+                    </div>
+                    
+                    <div id="address-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cep">CEP <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <input type="text" id="cep" placeholder="00000-000" required>
+                                    <div class="input-icon" id="cep-loading" style="display: none;">
+                                        <div class="loading"></div>
+                                    </div>
+                                </div>
+                                <div class="error-message" id="cep-error">CEP válido é obrigatório</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="street">Rua <span class="required">*</span></label>
+                                <input type="text" id="street" placeholder="Nome da rua" required>
+                                <div class="error-message" id="street-error">Rua é obrigatória</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="number">Número <span class="required">*</span></label>
+                                <input type="text" id="number" placeholder="123" required>
+                                <div class="error-message" id="number-error">Número é obrigatório</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="complement">Complemento</label>
+                                <input type="text" id="complement" placeholder="Apartamento, bloco, etc.">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="neighborhood">Bairro <span class="required">*</span></label>
+                                <input type="text" id="neighborhood" placeholder="Nome do bairro" required>
+                                <div class="error-message" id="neighborhood-error">Bairro é obrigatório</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">Cidade <span class="required">*</span></label>
+                                <input type="text" id="city" placeholder="Nome da cidade" required>
+                                <div class="error-message" id="city-error">Cidade é obrigatória</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="state">Estado <span class="required">*</span></label>
+                                <select id="state" required>
+                                    <option value="">Selecione o estado</option>
+                                    <option value="AC">Acre</option>
+                                    <option value="AL">Alagoas</option>
+                                    <option value="AP">Amapá</option>
+                                    <option value="AM">Amazonas</option>
+                                    <option value="BA">Bahia</option>
+                                    <option value="CE">Ceará</option>
+                                    <option value="DF">Distrito Federal</option>
+                                    <option value="ES">Espírito Santo</option>
+                                    <option value="GO">Goiás</option>
+                                    <option value="MA">Maranhão</option>
+                                    <option value="MT">Mato Grosso</option>
+                                    <option value="MS">Mato Grosso do Sul</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="PA">Pará</option>
+                                    <option value="PB">Paraíba</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="PE">Pernambuco</option>
+                                    <option value="PI">Piauí</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="RN">Rio Grande do Norte</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="RO">Rondônia</option>
+                                    <option value="RR">Roraima</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="SE">Sergipe</option>
+                                    <option value="TO">Tocantins</option>
+                                </select>
+                                <div class="error-message" id="state-error">Estado é obrigatório</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="shipping">Frete <span class="required">*</span></label>
+                                <select id="shipping" required>
+                                    <option value="">Calcular frete</option>
+                                    <option value="standard" data-price="1500">Padrão - R$ 15,00 (5-7 dias)</option>
+                                    <option value="express" data-price="2500">Expresso - R$ 25,00 (2-3 dias)</option>
+                                </select>
+                                <div class="error-message" id="shipping-error">Selecione uma opção de frete</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-actions">
+                        <button class="btn-secondary" onclick="previousStep()">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <button class="btn-primary" onclick="nextStep()">
+                            Próximo <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="checkout-section" id="payment-data">
+                    <div class="section-header">
+                        <div class="icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h3>Método de Pagamento</h3>
+                    </div>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method" data-method="credit">
+                            <input type="radio" name="payment" value="credit" id="payment-credit">
+                            <div class="icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="label">Cartão de Crédito</div>
+                        </div>
+                        <div class="payment-method" data-method="debit">
+                            <input type="radio" name="payment" value="debit" id="payment-debit">
+                            <div class="icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="label">Cartão de Débito</div>
+                        </div>
+                        <div class="payment-method" data-method="pix">
+                            <input type="radio" name="payment" value="pix" id="payment-pix">
+                            <div class="icon">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                            <div class="label">PIX</div>
+                        </div>
+                        <div class="payment-method" data-method="boleto">
+                            <input type="radio" name="payment" value="boleto" id="payment-boleto">
+                            <div class="icon">
+                                <i class="fas fa-barcode"></i>
+                            </div>
+                            <div class="label">Boleto Bancário</div>
+                        </div>
+                        <div class="payment-method" data-method="points">
+                            <input type="radio" name="payment" value="points" id="payment-points">
+                            <div class="icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="label">Pontos</div>
+                        </div>
+                    </div>
+
+                    <div id="card-details" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="card-number">Número do Cartão <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <input type="text" id="card-number" placeholder="0000 0000 0000 0000">
+                                    <div class="card-brand" id="card-brand"></div>
+                                </div>
+                                <div class="error-message" id="card-number-error">Número do cartão é obrigatório</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="card-name">Nome no Cartão <span class="required">*</span></label>
+                                <input type="text" id="card-name" placeholder="Nome como impresso no cartão">
+                                <div class="error-message" id="card-name-error">Nome no cartão é obrigatório</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="card-expiry">Validade <span class="required">*</span></label>
+                                <input type="text" id="card-expiry" placeholder="MM/AA">
+                                <div class="error-message" id="card-expiry-error">Validade é obrigatória</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="card-cvv">CVV <span class="required">*</span></label>
+                                <input type="text" id="card-cvv" placeholder="000">
+                                <div class="error-message" id="card-cvv-error">CVV é obrigatório</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="boleto-details" class="boleto-info" style="display: none;">
+                        <i class="fas fa-info-circle" style="color: #3b82f6; font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
+                        <p>O boleto bancário será gerado após a finalização do seu pedido.</p>
+                        <p>Você poderá pagar em qualquer banco, casa lotérica ou aplicativo de banco até a data de vencimento.</p>
+                        <button class="btn-boleto" onclick="alert('Funcionalidade de geração de boleto aqui!')">
+                            <i class="fas fa-print"></i> Gerar Boleto
+                        </button>
+                    </div>
+                    
+                    <div id="points-details" class="boleto-info" style="display: none;">
+                        <div class="points-info">
+                            <div class="points-total">
+                                <i class="fas fa-coins"></i> Total em pontos: <strong id="points-total">0 pts</strong>
+                            </div>
+                            <div class="points-balance">
+                                <i class="fas fa-wallet"></i> Seus pontos: <strong id="user-points-balance">0 pts</strong>
+                            </div>
+                            <div class="points-warning" id="points-warning" style="display: none;">
+                                <i class="fas fa-exclamation-triangle"></i> Pontos insuficientes!
+                            </div>
+                            <div class="points-success" id="points-success" style="display: none;">
+                                <i class="fas fa-check-circle"></i> Você tem pontos suficientes para esta compra!
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-actions">
+                        <button class="btn-secondary" onclick="previousStep()">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <button class="btn-primary" onclick="nextStep()">
+                            Próximo <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="checkout-section" id="confirmation-data">
+                    <div class="section-header">
+                        <div class="icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Confirmação do Pedido</h3>
+                    </div>
+                    
+                    <div id="order-summary"></div>
+                    
+                    <div class="checkout-actions">
+                        <button class="btn-secondary" onclick="previousStep()">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <button class="btn-primary" onclick="checkout.finishOrder()">
+                            <i class="fas fa-check"></i> Finalizar Pedido
+                        </button>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="checkout-summary">
+                <h3 class="summary-title">RESUMO DO PEDIDO</h3>
+                <div id="order-items"></div>
+                <div class="summary-totals">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal-value">R$ 0,00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Frete:</span>
+                        <span id="shipping-value">R$ 0,00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>TOTAL:</span>
+                        <span id="total-value">R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- VLibras (Acessibilidade) -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Inicializar VLibras
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+        
+        // Inicializar partículas
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#3b82f6" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#3b82f6", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+
+        class Checkout {
+            constructor() {
+                this.cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
+                this.userData = JSON.parse(localStorage.getItem('ravenStudioCurrentUser')) || {};
+                this.addresses = JSON.parse(localStorage.getItem('ravenStudioAddresses')) || [];
+                this.currentStep = 1;
+                this.shippingCost = 0;
+                this.init();
+            }
+
+            init() {
+                this.loadUserData();
+                this.loadSavedAddresses();
+                this.renderOrderSummary();
+                this.setupEventListeners();
+                this.setupMasks();
+            }
+
+            loadUserData() {
+                if (this.userData.name) document.getElementById('full-name').value = this.userData.name;
+                if (this.userData.email) document.getElementById('email').value = this.userData.email;
+                if (this.userData.phone) document.getElementById('phone').value = this.userData.phone;
+                if (this.userData.cpf) document.getElementById('cpf').value = this.userData.cpf;
+            }
+            
+            loadSavedAddresses() {
+                if (this.addresses.length > 0) {
+                    const container = document.getElementById('saved-addresses-container');
+                    const addressesHtml = this.addresses.map((address, index) => `
+                        <div class="saved-address" data-index="${index}" onclick="checkout.selectAddress(${index})">
+                            <input type="radio" name="saved-address" value="${index}" id="address-${index}" 
+                                   ${address.isDefault ? 'checked' : ''}>
+                            <label for="address-${index}">
+                                <strong>${address.type || 'Endereço ' + (index + 1)}</strong><br>
+                                ${address.street}, ${address.number}${address.complement ? ', ' + address.complement : ''}<br>
+                                ${address.neighborhood}, ${address.city} - ${address.state}<br>
+                                CEP: ${address.cep}
+                            </label>
+                        </div>
+                    `).join('');
+                    
+                    document.getElementById('saved-addresses').innerHTML = addressesHtml;
+                    container.style.display = 'block';
+                    
+                    const defaultAddress = this.addresses.find(addr => addr.isDefault);
+                    if (defaultAddress) {
+                        this.fillAddressForm(defaultAddress);
+                    }
+                }
+            }
+
+            selectAddress(index) {
+                const address = this.addresses[index];
+                this.fillAddressForm(address);
+            }
+
+            fillAddressForm(address) {
+                document.getElementById('cep').value = address.cep || '';
+                document.getElementById('street').value = address.street || '';
+                document.getElementById('number').value = address.number || '';
+                document.getElementById('complement').value = address.complement || '';
+                document.getElementById('neighborhood').value = address.neighborhood || '';
+                document.getElementById('city').value = address.city || '';
+                document.getElementById('state').value = address.state || '';
+            }
+
+            renderOrderSummary() {
+                  const container = document.getElementById('order-items');
+    let subtotal = 0;
+    
+    const itemsHtml = this.cart.map(item => {
+        // Garante que o preço seja tratado como centavos
+        const priceInCents = typeof item.price === 'string' ? 
+            parseFloat(item.price.replace(/[^\d,]/g, '').replace(',', '.')) * 100 :
+            item.price * 100;
+        const itemTotal = priceInCents * item.quantity;
+        subtotal += itemTotal;
+        
+        return `
+            <div class="summary-item">
+                <div class="item-image">
+                    <img src="${item.image}" alt="${item.name}">
+                </div>
+                <div class="item-details">
+                    <div class="item-name">${item.name} x${item.quantity}</div>
+                    <div class="item-price">${this.formatPrice(itemTotal)}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+                
+                const appliedCoupon = localStorage.getItem('ravenStudioAppliedCoupon');
+                let discount = 0;
+                
+                if (appliedCoupon) {
+                    const coupons = {
+                        'BEMVINDO10': { discount: 0.10, type: 'percentage' },
+                        'BEMVINDO15': { discount: 0.15, type: 'percentage' },
+                        'BEMVINDO20': { discount: 0.20, type: 'percentage' }
+                    };
+                    const coupon = coupons[appliedCoupon];
+                    discount = coupon.type === 'percentage' ? Math.floor(subtotal * coupon.discount) : coupon.discount;
+                }
+                
+                container.innerHTML = itemsHtml;
+                this.updateTotals(subtotal, discount);
+            }
+
+            updateTotals(subtotal, discount = 0) {
+                    // Garante que subtotal seja tratado como centavos
+    if (typeof subtotal === 'string') {
+        subtotal = parseFloat(subtotal.replace(/[^\d,]/g, '').replace(',', '.')) * 100;
+    }
+                if (discount === 0) {
+                    const appliedCoupon = localStorage.getItem('ravenStudioAppliedCoupon');
+                    if (appliedCoupon) {
+                        const coupons = {
+                            'BEMVINDO10': { discount: 0.10, type: 'percentage' },
+                            'BEMVINDO15': { discount: 0.15, type: 'percentage' },
+                            'BEMVINDO20': { discount: 0.20, type: 'percentage' }
+                        };
+                        const coupon = coupons[appliedCoupon];
+                        discount = coupon.type === 'percentage' ? Math.floor(subtotal * coupon.discount) : coupon.discount;
+                    }
+                }
+
+                const total = subtotal - discount + this.shippingCost;
+                
+                document.getElementById('subtotal-value').textContent = this.formatPrice(subtotal);
+                
+                const appliedCoupon = localStorage.getItem('ravenStudioAppliedCoupon');
+                const discountRow = document.querySelector('.summary-row.discount');
+                
+                if (appliedCoupon && discount > 0) {
+                    if (!discountRow) {
+                        const subtotalRow = document.querySelector('.summary-row:nth-child(1)');
+                        const newRow = document.createElement('div');
+                        newRow.className = 'summary-row discount';
+                        newRow.innerHTML = `
+                            <span>Desconto (${appliedCoupon}):</span>
+                            <span style="color: #22c55e;">-${this.formatPrice(discount)}</span>
+                        `;
+                        subtotalRow.after(newRow);
+                    } else {
+                        discountRow.innerHTML = `
+                            <span>Desconto (${appliedCoupon}):</span>
+                            <span style="color: #22c55e;">-${this.formatPrice(discount)}</span>
+                        `;
+                    }
+                } else if (discountRow) {
+                    discountRow.remove();
+                }
+                
+                document.getElementById('shipping-value').textContent = this.shippingCost === 0 ? 'GRÁTIS' : this.formatPrice(this.shippingCost);
+                document.getElementById('total-value').textContent = this.formatPrice(total);
+            }
+
+            setupEventListeners() {
+                document.addEventListener('change', (e) => {
+                    if (e.target.name === 'saved-address') {
+                        const addressIndex = parseInt(e.target.value);
+                        const address = this.addresses[addressIndex];
+                        this.fillAddressForm(address);
+                        document.getElementById('address-form').style.display = 'none';
+                    }
+                });
+
+                document.getElementById('new-address-btn').addEventListener('click', () => {
+                    document.querySelectorAll('input[name="saved-address"]').forEach(input => {
+                        input.checked = false;
+                    });
+                    document.querySelectorAll('.saved-address').forEach(addr => {
+                        addr.classList.remove('selected');
+                    });
+                    document.getElementById('address-form').style.display = 'block';
+                    this.clearAddressForm();
+                });
+
+                document.querySelectorAll('.payment-method').forEach(method => {
+                    method.addEventListener('click', () => {
+                        document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                        method.classList.add('selected');
+                        
+                        const radio = method.querySelector('input[type="radio"]');
+                        radio.checked = true;
+                        
+                        const cardDetails = document.getElementById('card-details');
+                        const boletoDetails = document.getElementById('boleto-details');
+                        const pointsDetails = document.getElementById('points-details');
+                        
+                        cardDetails.style.display = 'none';
+                        boletoDetails.style.display = 'none';
+                        pointsDetails.style.display = 'none';
+                        
+                        if (radio.value === 'credit' || radio.value === 'debit') {
+                            cardDetails.style.display = 'block';
+                            const shippingSelect = document.getElementById('shipping');
+                            if (shippingSelect.value) {
+                                this.shippingCost = parseInt(shippingSelect.selectedOptions[0].dataset.price) || 0;
+                            }
+                        } else if (radio.value === 'boleto') {
+                            boletoDetails.style.display = 'block';
+                            const shippingSelect = document.getElementById('shipping');
+                            if (shippingSelect.value) {
+                                this.shippingCost = parseInt(shippingSelect.selectedOptions[0].dataset.price) || 0;
+                            }
+                        } else if (radio.value === 'points') {
+                            pointsDetails.style.display = 'block';
+                            this.shippingCost = 0;
+                            document.getElementById('shipping').value = '';
+                        }
+                        
+                        this.updateTotals(this.calculateSubtotal());
+                        this.updatePointsInfo();
+                    });
+                });
+
+                document.getElementById('shipping').addEventListener('change', (e) => {
+                    const paymentMethod = document.querySelector('input[name="payment"]:checked');
+                    
+                    if (paymentMethod && paymentMethod.value === 'points') {
+                        return;
+                    }
+                    
+                    const option = e.target.selectedOptions[0];
+                    this.shippingCost = parseInt(option.dataset.price) || 0;
+                    
+                    const appliedCoupon = localStorage.getItem('ravenStudioAppliedCoupon');
+                    let discount = 0;
+                    
+                    if (appliedCoupon) {
+                        const coupons = {
+                            'BEMVINDO10': { discount: 0.10, type: 'percentage' },
+                            'BEMVINDO15': { discount: 0.15, type: 'percentage' },
+                            'BEMVINDO20': { discount: 0.20, type: 'percentage' }
+                        };
+                        const coupon = coupons[appliedCoupon];
+                        const subtotal = this.calculateSubtotal();
+                        discount = coupon.type === 'percentage' ? Math.floor(subtotal * coupon.discount) : coupon.discount;
+                    }
+                    
+                    this.updateTotals(this.calculateSubtotal(), discount);
+                });
+            }
+
+            updatePointsInfo() {
+                const user = JSON.parse(localStorage.getItem('ravenStudioCurrentUser')) || {};
+                const userPoints = user.points || 0;
+                const subtotal = this.calculateSubtotal();
+                
+                let discount = 0;
+                const appliedCoupon = localStorage.getItem('ravenStudioAppliedCoupon');
+                if (appliedCoupon) {
+                    const coupons = {
+                        'BEMVINDO10': { discount: 0.10, type: 'percentage' },
+                        'BEMVINDO15': { discount: 0.15, type: 'percentage' },
+                        'BEMVINDO20': { discount: 0.20, type: 'percentage' }
+                    };
+                    const coupon = coupons[appliedCoupon];
+                    discount = coupon.type === 'percentage' ? Math.floor(subtotal * coupon.discount) : coupon.discount;
+                }
+                
+                const totalInPoints = subtotal - discount + this.shippingCost;
+                
+                document.getElementById('points-total').textContent = `${totalInPoints} pts`;
+                document.getElementById('user-points-balance').textContent = `${userPoints} pts`;
+                
+                const warningElement = document.getElementById('points-warning');
+                const successElement = document.getElementById('points-success');
+                
+                if (userPoints >= totalInPoints) {
+                    warningElement.style.display = 'none';
+                    successElement.style.display = 'block';
+                } else {
+                    warningElement.style.display = 'block';
+                    successElement.style.display = 'none';
+                }
+            }
+
+            finishOrder() {
+                if (!this.validateCurrentStep()) {
+                    return;
+                }
+
+                const paymentMethod = document.querySelector('input[name="payment"]:checked');
+                if (!paymentMethod) {
+                    this.showAlert('Erro', 'Selecione um método de pagamento.', 'error');
+                    return;
+                }
+                
+                if (paymentMethod.value !== 'points') {
+                    const shippingSelect = document.getElementById('shipping');
+                    if (!shippingSelect.value) {
+                        this.showAlert('Erro', 'Selecione uma opção de frete.', 'error');
+                        return;
+                    }
+                }
+                
+                if (paymentMethod.value === 'points') {
+                    if (this._processPointsPayment()) {
+                        this.showAlert(
+                            'Compra Finalizada!', 
+                            'Sua compra foi concluída com sucesso usando seus pontos!', 
+                            'success'
+                        );
+                        
+                        setTimeout(() => {
+                            window.location.href = 'loja.html';
+                        }, 3000);
+                        
+                        localStorage.removeItem('ravenStudioCart');
+                        localStorage.removeItem('ravenStudioAppliedCoupon');
+                    }
+                } else if (paymentMethod.value === 'pix') {
+                    this._showPixPaymentDetailsAndFinalize();
+                } else {
+                    this._finalizeOrderAndRedirect();
+                }
+            }
+
+            _processPointsPayment() {
+                const currentUser = JSON.parse(localStorage.getItem('ravenStudioCurrentUser')) || {};
+                if (!currentUser.email) {
+                    this.showAlert('Erro', 'Você precisa estar logado para usar pontos.', 'error');
+                    return false;
+                }
+
+                const subtotal = this.calculateSubtotal();
+                let discount = 0;
+                const appliedCoupon = localStorage.getItem('ravenStudioAppliedCoupon');
+                
+                if (appliedCoupon) {
+                    const coupons = {
+                        'BEMVINDO10': { discount: 0.10, type: 'percentage' },
+                        'BEMVINDO15': { discount: 0.15, type: 'percentage' },
+                        'BEMVINDO20': { discount: 0.20, type: 'percentage' }
+                    };
+                    const coupon = coupons[appliedCoupon];
+                    discount = coupon.type === 'percentage' ? Math.floor(subtotal * coupon.discount) : coupon.discount;
+                }
+                
+                const totalInPoints = subtotal - discount + this.shippingCost;
+                const userPoints = currentUser.points || 0;
+
+                if (userPoints < totalInPoints) {
+                    this.showAlert('Pontos Insuficientes', 
+                        `Você precisa de ${totalInPoints} pontos (saldo: ${userPoints})`, 
+                        'error');
+                    return false;
+                }
+
+                const newPoints = userPoints - totalInPoints;
+                currentUser.points = newPoints;
+                localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(currentUser));
+
+                const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                if (userIndex !== -1) {
+                    users[userIndex].points = newPoints;
+                    localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
+                }
+
+                this._updateAllPointsDisplays(newPoints);
+                
+                return true;
+            }
+
+            _updateAllPointsDisplays(newPoints) {
+                document.getElementById('user-points-balance').textContent = `${newPoints} pts`;
+                
+                if (window.userProfile) {
+                    window.userProfile.displayUserPoints(newPoints);
+                }
+                
+                const pointsDisplays = document.querySelectorAll('.points-display, [id*="points"]');
+                pointsDisplays.forEach(el => {
+                    el.textContent = newPoints;
+                });
+            }
+
+            setupMasks() {
+                document.getElementById('cpf').addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                    e.target.value = value;
+                });
+
+                document.getElementById('phone').addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    value = value.replace(/(\d{2})(\d)/, '($1)$2');
+                    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                    e.target.value = value;
+                });
+
+                document.getElementById('cep').addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                    e.target.value = value;
+                    
+                    if (value.length === 9) {
+                        this.lookupCEP();
+                    }
+                });
+
+                document.getElementById('card-number').addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    value = value.replace(/(\d{4})(\d)/, '$1 $2');
+                    value = value.replace(/(\d{4})(\d)/, '$1 $2');
+                    value = value.replace(/(\d{4})(\d)/, '$1 $2');
+                    e.target.value = value;
+                    
+                    this.detectCardBrand(value);
+                });
+
+                document.getElementById('card-expiry').addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    value = value.replace(/(\d{2})(\d)/, '$1/$2');
+                    e.target.value = value;
+                });
+
+                document.getElementById('card-cvv').addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+                });
+            }
+
+            async lookupCEP() {
+                const cep = document.getElementById('cep').value.replace(/\D/g, '');
+                if (cep.length !== 8) return;
+
+                const loading = document.getElementById('cep-loading');
+                loading.style.display = 'block';
+
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const data = await response.json();
+
+                    if (!data.erro) {
+                        document.getElementById('street').value = data.logradouro;
+                        document.getElementById('neighborhood').value = data.bairro;
+                        document.getElementById('city').value = data.localidade;
+                        document.getElementById('state').value = data.uf;
+                    }
+                } catch (error) {
+                    console.error('Erro ao buscar CEP:', error);
+                } finally {
+                    loading.style.display = 'none';
+                }
+            }
+
+            detectCardBrand(number) {
+                const cleanNumber = number.replace(/\D/g, '');
+                const brandElement = document.getElementById('card-brand');
+                
+                if (cleanNumber.startsWith('4')) {
+                    brandElement.innerHTML = '<i class="fab fa-cc-visa" style="color: #1a1f71;"></i>';
+                } else if (cleanNumber.startsWith('5') || cleanNumber.startsWith('2')) {
+                    brandElement.innerHTML = '<i class="fab fa-cc-mastercard" style="color: #eb001b;"></i>';
+                } else if (cleanNumber.startsWith('3')) {
+                    brandElement.innerHTML = '<i class="fab fa-cc-amex" style="color: #006fcf;"></i>';
+                } else {
+                    brandElement.innerHTML = '<i class="fas fa-credit-card" style="color: #6b7280;"></i>';
+                }
+            }
+
+            clearAddressForm() {
+                document.getElementById('cep').value = '';
+                document.getElementById('street').value = '';
+                document.getElementById('number').value = '';
+                document.getElementById('complement').value = '';
+                document.getElementById('neighborhood').value = '';
+                document.getElementById('city').value = '';
+                document.getElementById('state').value = '';
+            }
+
+            validateCurrentStep() {
+                const step = this.currentStep;
+                
+                if (step === 1) {
+                    const requiredFields = ['full-name', 'email', 'phone', 'cpf'];
+                    for (const fieldId of requiredFields) {
+                        const field = document.getElementById(fieldId);
+                        if (!field.value.trim()) {
+                            this.showAlert('Erro', 'Por favor, preencha todos os campos obrigatórios.', 'error');
+                            return false;
+                        }
+                    }
+                } else if (step === 2) {
+                    const requiredFields = ['cep', 'street', 'number', 'neighborhood', 'city', 'state', 'shipping'];
+                    for (const fieldId of requiredFields) {
+                        const field = document.getElementById(fieldId);
+                        if (!field.value.trim()) {
+                            this.showAlert('Erro', 'Por favor, preencha todos os campos de endereço.', 'error');
+                            return false;
+                        }
+                    }
+                } else if (step === 3) {
+                    const paymentMethod = document.querySelector('input[name="payment"]:checked');
+                    if (!paymentMethod) {
+                        this.showAlert('Erro', 'Por favor, selecione um método de pagamento.', 'error');
+                        return false;
+                    }
+                    
+                    if (paymentMethod.value === 'credit' || paymentMethod.value === 'debit') {
+                        const cardFields = ['card-number', 'card-name', 'card-expiry', 'card-cvv'];
+                        for (const fieldId of cardFields) {
+                            const field = document.getElementById(fieldId);
+                            if (!field.value.trim()) {
+                                this.showAlert('Erro', 'Por favor, preencha todos os dados do cartão.', 'error');
+                                return false;
+                            }
+                        }
+                    }
+                    
+                    if (paymentMethod.value === 'points') {
+                        const user = JSON.parse(localStorage.getItem('ravenStudioCurrentUser')) || {};
+                        const userPoints = user.points || 0;
+                        const totalInPoints = this.calculateSubtotal() + this.shippingCost;
+                        
+                        if (userPoints < totalInPoints) {
+                            this.showAlert('Pontos Insuficientes', 'Você não tem pontos suficientes para completar esta compra.', 'error');
+                            return false;
+                        }
+                    }
+                }
+                
+                return true;
+            }
+
+           calculateSubtotal() {
+    return this.cart.reduce((total, item) => {
+        // Garante que o preço seja tratado como centavos
+        const priceInCents = typeof item.price === 'string' ? 
+            parseFloat(item.price.replace(/[^\d,]/g, '').replace(',', '.')) * 100 :
+            item.price * 100;
+        return total + (priceInCents * item.quantity);
+    }, 0);
+}
+
+            formatPrice(priceInCents) {
+    // Se o valor já estiver em formato de moeda, converte para centavos
+    if (typeof priceInCents === 'string') {
+        priceInCents = parseFloat(priceInCents.replace(/[^\d,]/g, '').replace(',', '.')) * 100;
+    }
+    
+    return (priceInCents / 100).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2
+    });
+}
+
+            showAlert(title, message, type = 'success') {
+                const alertOverlay = document.getElementById('alert-overlay');
+                const customAlert = document.getElementById('custom-alert');
+                const alertIcon = document.getElementById('alert-icon');
+                const alertTitle = document.getElementById('alert-title');
+                const alertMessage = document.getElementById('alert-message');
+                const alertButton = document.getElementById('alert-button');
+
+                alertButton.style.display = 'block';
+                alertButton.textContent = 'OK';
+                alertButton.onclick = closeAlert;
+
+                alertIcon.className = `alert-icon ${type}`;
+                if (type === 'success') {
+                    alertIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+                } else if (type === 'error') {
+                    alertIcon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+                } else if (type === 'warning') {
+                    alertIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                }
+
+                alertTitle.textContent = title;
+                alertMessage.textContent = message;
+
+                alertOverlay.classList.add('show');
+                customAlert.classList.add('show');
+            }
+
+            _showPixPaymentDetailsAndFinalize() {
+                const alertOverlay = document.getElementById('alert-overlay');
+                const customAlert = document.getElementById('custom-alert');
+                const alertIcon = document.getElementById('alert-icon');
+                const alertTitle = document.getElementById('alert-title');
+                const alertMessage = document.getElementById('alert-message');
+                const alertButton = document.getElementById('alert-button');
+                
+                const pixCode = '00020126580014BR.GOV.BCB.PIX0136' + 
+                                Math.random().toString(36).substring(2, 18).toUpperCase() + 
+                                '5204000053039865405' + (this.calculateSubtotal() + this.shippingCost).toString().padStart(6, '0') +
+                                '5802BR5913FULANO DE TAL6008CIDADE SP62070503***63041A2B';
+
+                alertIcon.className = 'alert-icon';
+                alertIcon.innerHTML = '<i class="fas fa-qrcode" style="color: #22c55e;"></i>';
+                alertTitle.textContent = 'Pagamento via PIX';
+                alertMessage.innerHTML = `
+                    <p>Utilize o código abaixo para realizar o pagamento do seu pedido no valor de <strong>${this.formatPrice(this.calculateSubtotal() + this.shippingCost)}</strong>. Após o pagamento, a compra será confirmada automaticamente.</p>
+                    <div class="pix-code-container" id="pix-code">${pixCode}</div>
+                    <div class="pix-buttons">
+                        <button class="btn-copy-pix" id="copy-pix-button">
+                            <i class="fas fa-copy"></i> Copiar Código PIX
+                        </button>
+                        <button class="btn-ok" id="close-pix-alert">OK, entendi</button>
+                    </div>
+                `;
+                
+                alertButton.style.display = 'none';
+
+                alertOverlay.classList.add('show');
+                customAlert.classList.add('show');
+
+                document.getElementById('copy-pix-button').onclick = async () => {
+                    await navigator.clipboard.writeText(pixCode);
+                    this.showAlert('Código Copiado!', 'O código PIX foi copiado para sua área de transferência. Agora realize o pagamento.', 'success');
+                    this._finalizeOrderAndRedirect();
+                };
+
+                document.getElementById('close-pix-alert').onclick = () => {
+                    closeAlert();
+                };
+            }
+
+            _finalizeOrderAndRedirect(paidWithPoints = false) {
+                this.showSuccessMessage(paidWithPoints);
+                
+                const orderData = this.createOrderData();
+                this.saveOrder(orderData);
+                
+                if (paidWithPoints) {
+                    this.updatePointsDisplay();
+                    
+                    setTimeout(() => {
+                        window.location.href = 'loja.html';
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        window.location.href = 'loja.html';
+                    }, 3000);
+                }
+                
+                localStorage.removeItem('ravenStudioCart');
+                localStorage.removeItem('ravenStudioAppliedCoupon');
+            }
+
+            showSuccessMessage(paidWithPoints = false) {
+                const alertOverlay = document.getElementById('alert-overlay');
+                const customAlert = document.getElementById('custom-alert');
+                const alertIcon = document.getElementById('alert-icon');
+                const alertTitle = document.getElementById('alert-title');
+                const alertMessage = document.getElementById('alert-message');
+                const alertButton = document.getElementById('alert-button');
+
+                alertIcon.className = 'alert-icon success';
+                alertIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+                alertTitle.textContent = 'Compra Finalizada!';
+                
+                if (paidWithPoints) {
+                    alertMessage.innerHTML = `
+                        <p>Sua compra foi concluída com sucesso usando seus pontos!</p>
+                        <p>Você será redirecionado para a loja em instantes...</p>
+                    `;
+                } else {
+                    alertMessage.innerHTML = `
+                        <p>Sua compra foi concluída com sucesso!</p>
+                        <p>Você será redirecionado para a loja em instantes...</p>
+                    `;
+                }
+                
+                alertButton.textContent = 'Ir para Loja Agora';
+                alertButton.onclick = () => {
+                    window.location.href = 'loja.html';
+                };
+
+                alertOverlay.classList.add('show');
+                customAlert.classList.add('show');
+            }
+
+            createOrderData() {
+                const appliedCoupon = localStorage.getItem('ravenStudioAppliedCoupon');
+                const subtotal = this.calculateSubtotal();
+                let discount = 0;
+                
+                if (appliedCoupon) {
+                    const coupons = {
+                        'BEMVINDO10': { discount: 0.10, type: 'percentage' },
+                        'BEMVINDO15': { discount: 0.15, type: 'percentage' },
+                        'BEMVINDO20': { discount: 0.20, type: 'percentage' }
+                    };
+                    const coupon = coupons[appliedCoupon];
+                    discount = coupon.type === 'percentage' ? Math.floor(subtotal * coupon.discount) : coupon.discount;
+                }
+
+                const paymentMethod = document.querySelector('input[name="payment"]:checked');
+                
+                return {
+                    id: 'ORD' + Date.now(),
+                    date: new Date().toISOString(),
+                    items: [...this.cart],
+                    subtotal: subtotal,
+                    discount: discount,
+                    coupon: appliedCoupon || null,
+                    shipping: this.shippingCost,
+                    total: subtotal - discount + this.shippingCost,
+                    status: 'Processando',
+                    customer: {
+                        name: document.getElementById('full-name').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        cpf: document.getElementById('cpf').value
+                    },
+                    address: {
+                        cep: document.getElementById('cep').value,
+                        street: document.getElementById('street').value,
+                        number: document.getElementById('number').value,
+                        complement: document.getElementById('complement').value,
+                        neighborhood: document.getElementById('neighborhood').value,
+                        city: document.getElementById('city').value,
+                        state: document.getElementById('state').value
+                    },
+                    payment: {
+                        method: paymentMethod.value,
+                        pointsUsed: paymentMethod.value === 'points' ? subtotal - discount + this.shippingCost : 0
+                    }
+                };
+            }
+
+            saveOrder(orderData) {
+                if (!orderData || !orderData.items || orderData.items.length === 0) return;
+
+                if (this.userData && this.userData.email) {
+                    const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
+                    const userIndex = users.findIndex(u => u.email === this.userData.email);
+
+                    if (userIndex !== -1) {
+                        users[userIndex].orders = users[userIndex].orders || [];
+                        users[userIndex].orders.unshift(orderData);
+                        localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
+                        
+                        this.userData.orders = users[userIndex].orders;
+                        localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(this.userData));
+                    }
+                }
+
+                const allOrders = JSON.parse(localStorage.getItem('ravenStudioAllOrders')) || [];
+                allOrders.unshift(orderData);
+                localStorage.setItem('ravenStudioAllOrders', JSON.stringify(allOrders));
+
+                return orderData;
+            }
+
+            clearCartAndRedirect() {
+                localStorage.removeItem('ravenStudioCart');
+                localStorage.removeItem('ravenStudioAppliedCoupon');
+                
+                setTimeout(() => {
+                    window.location.href = 'loja.html';
+                }, 5000);
+            }
+        }
+
+        // Step navigation functions
+        function goToStep(stepNumber) {
+            const currentStepElement = document.getElementById(`step-${checkout.currentStep}`);
+            const targetStepElement = document.getElementById(`step-${stepNumber}`);
+            
+            if (targetStepElement.classList.contains('disabled')) {
+                return;
+            }
+            
+            document.getElementById(getSectionId(checkout.currentStep)).classList.remove('active');
+            
+            currentStepElement.classList.remove('active');
+            targetStepElement.classList.add('active');
+            
+            document.getElementById(getSectionId(stepNumber)).classList.add('active');
+            
+            checkout.currentStep = stepNumber;
+        }
+
+        function nextStep() {
+            if (!checkout.validateCurrentStep()) {
+                return;
+            }
+            
+            const currentStepElement = document.getElementById(`step-${checkout.currentStep}`);
+            const nextStepNumber = checkout.currentStep + 1;
+            
+            if (nextStepNumber <= 4) {
+                currentStepElement.classList.remove('active');
+                currentStepElement.classList.add('completed');
+                
+                const nextStepElement = document.getElementById(`step-${nextStepNumber}`);
+                nextStepElement.classList.remove('disabled');
+                nextStepElement.classList.add('active');
+                
+                document.getElementById(getSectionId(checkout.currentStep)).classList.remove('active');
+                document.getElementById(getSectionId(nextStepNumber)).classList.add('active');
+                
+                checkout.currentStep = nextStepNumber;
+                
+                if (nextStepNumber === 4) {
+                    generateOrderSummary();
+                }
+            }
+        }
+
+        function previousStep() {
+            const prevStepNumber = checkout.currentStep - 1;
+            
+            if (prevStepNumber >= 1) {
+                const currentStepElement = document.getElementById(`step-${checkout.currentStep}`);
+                currentStepElement.classList.remove('active');
+                currentStepElement.classList.add('disabled');
+                
+                const prevStepElement = document.getElementById(`step-${prevStepNumber}`);
+                prevStepElement.classList.remove('completed');
+                prevStepElement.classList.add('active');
+                
+                document.getElementById(getSectionId(checkout.currentStep)).classList.remove('active');
+                document.getElementById(getSectionId(prevStepNumber)).classList.add('active');
+                
+                checkout.currentStep = prevStepNumber;
+            }
+        }
+
+        function getSectionId(stepNumber) {
+            const sections = {
+                1: 'personal-data',
+                2: 'address-data',
+                3: 'payment-data',
+                4: 'confirmation-data'
+            };
+            return sections[stepNumber];
+        }
+
+        function generateOrderSummary() {
+            const summaryContainer = document.getElementById('order-summary');
+            const customer = {
+                name: document.getElementById('full-name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                cpf: document.getElementById('cpf').value
+            };
+            
+            const address = {
+                cep: document.getElementById('cep').value,
+                street: document.getElementById('street').value,
+                number: document.getElementById('number').value,
+                complement: document.getElementById('complement').value,
+                neighborhood: document.getElementById('neighborhood').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value
+            };
+            
+            const paymentMethod = document.querySelector('input[name="payment"]:checked');
+            const paymentLabel = paymentMethod ? paymentMethod.parentElement.querySelector('.label').textContent : '';
+            
+            const appliedCoupon = localStorage.getItem('ravenStudioAppliedCoupon');
+            const cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            let discount = 0;
+            
+            if (appliedCoupon) {
+                const coupons = {
+                    'BEMVINDO10': { discount: 0.10, type: 'percentage' },
+                    'BEMVINDO15': { discount: 0.15, type: 'percentage' },
+                    'BEMVINDO20': { discount: 0.20, type: 'percentage' }
+                };
+                const coupon = coupons[appliedCoupon];
+                discount = coupon.type === 'percentage' ? Math.floor(subtotal * coupon.discount) : coupon.discount;
+            }
+            
+            summaryContainer.innerHTML = `
+                <div style="background: rgba(30, 30, 30, 0.8); padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                    <h4 style="color: #3b82f6; margin-bottom: 0.8rem;">Dados do Cliente</h4>
+                    <p><strong>Nome:</strong> ${customer.name}</p>
+                    <p><strong>E-mail:</strong> ${customer.email}</p>
+                    <p><strong>Telefone:</strong> ${customer.phone}</p>
+                    <p><strong>CPF:</strong> ${customer.cpf}</p>
+                </div>
+                
+                <div style="background: rgba(30, 30, 30, 0.8); padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                    <h4 style="color: #3b82f6; margin-bottom: 0.8rem;">Endereço de Entrega</h4>
+                    <p>${address.street}, ${address.number}${address.complement ? ', ' + address.complement : ''}</p>
+                    <p>${address.neighborhood}, ${address.city} - ${address.state}</p>
+                    <p>CEP: ${address.cep}</p>
+                </div>
+                
+                <div style="background: rgba(30, 30, 30, 0.8); padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                    <h4 style="color: #3b82f6; margin-bottom: 0.8rem;">Resumo do Pedido</h4>
+                    <p><strong>Subtotal:</strong> ${formatPrice(subtotal)}</p>
+                    ${appliedCoupon ? `<p><strong>Desconto (${appliedCoupon}):</strong> <span style="color: #22c55e;">-${formatPrice(discount)}</span></p>` : ''}
+                    <p><strong>Frete:</strong> ${checkout.shippingCost === 0 ? 'GRÁTIS' : formatPrice(checkout.shippingCost)}</p>
+                    <p><strong>Total:</strong> <span style="color: #3b82f6; font-weight: bold;">${formatPrice(subtotal - discount + checkout.shippingCost)}</span></p>
+                </div>
+                
+                <div style="background: rgba(30, 30, 30, 0.8); padding: 1.5rem; border-radius: 10px;">
+                    <h4 style="color: #3b82f6; margin-bottom: 0.8rem;">Método de Pagamento</h4>
+                    <p>${paymentLabel}</p>
+                </div>
+            `;
+        }
+
+        function formatPrice(priceInCents) {
+            return (priceInCents / 100).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2
+            });
+        }
+
+        function closeAlert() {
+            document.getElementById('alert-overlay').classList.remove('show');
+            document.getElementById('custom-alert').classList.remove('show');
+            document.getElementById('alert-button').style.display = 'block';
+            document.getElementById('alert-button').textContent = 'OK';
+            document.getElementById('alert-button').onclick = closeAlert;
+        }
+
+        // Torna o userProfile globalmente acessível
+        if (!window.userProfile && window.location.pathname.includes('user.html')) {
+            window.userProfile = new UserProfile();
+        }
+
+        // Initialize checkout
+        let checkout;
+        document.addEventListener('DOMContentLoaded', () => {
+            checkout = new Checkout();
+        });
+    </script>
+</body>
+</html>

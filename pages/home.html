@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raven Studio - Estúdio de Tatuagem</title>
+    <meta name="description" content="Raven Studio - Estúdio de tatuagem artístico e moderno. Transforme sua pele em arte.">
+    <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Bebas+Neue&family=Teko:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://www.ravenstudio.com" />
+<meta name="description" content="Raven Studio - Estúdio de tatuagem artístico em São Paulo. Especialistas em realismo, blackwork, aquarela e geométrico. Agende sua sessão.">
+<meta property="og:title" content="Raven Studio - Estúdio de Tatuagem Artístico">
+<meta property="og:description" content="Transforme sua pele em arte com nossos talentosos artistas. Agende sua sessão no melhor estúdio de tatuagem de São Paulo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ravenstudio.com">
+<meta property="og:image" content="https://www.ravenstudio.com/images/og-image.jpg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+
+ /* Botão para voltar ao topo */
+        .back-to-top {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+        }
+
+        /* Estilos Premium para o Chatbot - INÍCIO */
+       .raven-chat-widget {
+    /* Keep position and z-index as is */
+    position: fixed;
+    bottom: 20px; /* Adjusted slightly up */
+    right: 20px; /* Adjusted slightly left */
+    z-index: 9999;
+}
+
+
+
+        .raven-chat-toggle {
+           width: 65px; 
+    height: 65px; 
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+            color: white;
+             font-size: 1.6rem;
+            border: none;
+            position: relative;
+            z-index: 100;
+        }
+
+        .raven-chat-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.6);
+        }
+
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            opacity: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            70% { transform: scale(1.3); opacity: 0; }
+            100% { transform: scale(0.8); opacity: 0; }
+        }
+
+        .raven-chat-container {
+            position: absolute;
+            bottom: 80px; /* Adjusted to match new toggle height */
+    right: 0;
+    width: 300px; /* Slightly narrower */
+    height: 450px;
+            background: #0f0f0f;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            display: none;
+            flex-direction: column;
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 99;
+        }
+
+        .raven-chat-container.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .raven-chat-header {
+            padding: 15px 20px;
+            background: linear-gradient(to right, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+        }
+
+        .artist-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #8a2be2;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+        }
+
+        .artist-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-title {
+            flex: 1;
+        }
+
+        .chat-title h4 {
+            margin: 0;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.3rem;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 3px;
+        }
+
+        .status-indicator span {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: #ccc;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+        }
+
+        .raven-chat-close {
+            background: none;
+            border: none;
+            color: #8a2be2;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .raven-chat-close:hover {
+            background: rgba(138, 43, 226, 0.2);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .raven-chat-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, #121212, #0a0a0a);
+            scrollbar-width: thin;
+            scrollbar-color: #8a2be2 #1a1a1a;
+        }
+
+        .raven-chat-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .raven-chat-content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .raven-chat-content::-webkit-scrollbar-thumb {
+            background-color: #8a2be2;
+            border-radius: 3px;
+        }
+
+        .welcome-message {
+            margin-bottom: 20px;
+        }
+
+        .bot-message {
+            background: rgba(138, 43, 226, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+            border-top-left-radius: 5px;
+            max-width: 80%;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-message p {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            display: block;
+            font-size: 0.7rem;
+            color: #8a2be2;
+            margin-top: 8px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .chat-options-container {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .category-card:hover {
+            background: rgba(138, 43, 226, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+            border-color: #8a2be2;
+        }
+
+        .category-card i {
+            font-size: 1.8rem;
+            color: #8a2be2;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover i {
+            transform: scale(1.2);
+            color: white;
+        }
+
+        .category-card span {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            color: white;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .back-button {
+            margin-bottom: 15px;
+            text-align: left; /* Alinha o botão à esquerda */
+        }
+
+        .back-button button {
+            background: none;
+            border: none;
+            color: #8a2be2;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            display: inline-flex; /* Usa inline-flex para o alinhamento de ícone e texto */
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px; /* Aumenta o padding para melhor clique */
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: white; /* Muda a cor do texto no hover */
+        }
+
+        #ravenQuestionsList {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .question-card {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 10px;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            background: rgba(138, 43, 226, 0.2);
+            border-color: #8a2be2;
+            transform: translateX(3px); /* Pequeno movimento no hover */
+        }
+
+        .question-card p {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        .answer-container {
+            background: rgba(30, 30, 30, 0.8);
+            border-left: 3px solid #8a2be2;
+            border-radius: 0 10px 10px 0;
+            padding: 15px;
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease-out;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .answer-container h5 {
+            color: #8a2be2;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            margin: 0 0 10px 0;
+            letter-spacing: 1px;
+        }
+
+       .answer-container p {
+    font-family: 'Open Sans', sans-serif; /* A more common and readable font */
+    font-size: 0.95rem; /* Slightly larger for better readability */
+    color: #e0e0e0; /* Slightly lighter for better contrast */
+    line-height: 1.7; /* Increased line height for better spacing */
+    margin: 0;
+}
+
+        .raven-primary-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .raven-primary-btn:hover {
+            background: linear-gradient(135deg, #4b0082, #8a2be2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.5);
+        }
+
+        /* Responsividade */
+@media (max-width: 480px) {
+    .raven-chat-container {
+        width: 90vw;
+        right: 5vw;
+        height: 65vh; /* Adjusted for mobile */
+        bottom: 15px;
+    }
+
+    .raven-chat-toggle {
+        width: 55px; /* Even smaller for mobile */
+        height: 55px;
+        font-size: 1.3rem;
+    }
+
+            .category-grid {
+                grid-template-columns: 1fr; /* Coluna única para mobile */
+            }
+
+            .raven-chat-content {
+                padding: 15px; /* Padding ajustado para mobile */
+            }
+        }
+        /* Estilos Premium para o Chatbot - FIM */
+
+
+
+/* Estilo fixo para a seção de artistas */
+.artists-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 20px !important;
+    padding-bottom: 20px !important;
+    scrollbar-width: none !important; /* Para Firefox */
+}
+
+.artists-grid::-webkit-scrollbar {
+    display: none !important; /* Para Chrome, Safari e Opera */
+}
+
+.artist-card {
+    min-width: 300px !important;
+    flex: 0 0 auto !important;
+    margin-bottom: 0 !important;
+}
+
+/* Remover o estilo responsivo para artistas */
+@media (max-width: 768px) {
+    .artists-grid {
+        grid-template-columns: unset !important;
+        display: flex !important;
+    }
+    
+    .artist-card {
+        width: 300px !important;
+        margin-right: 20px !important;
+    }
+
+}
+.artists {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.artists-grid {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.artist-card {
+    display: inline-block;
+    width: 300px;
+    margin-right: 20px;
+    vertical-align: top;
+    white-space: normal;
+}
+/* Estilo para a seção de artistas - DESKTOP */
+@media (min-width: 769px) {
+    .artists-grid {
+        display: flex !important;
+        justify-content: center !important; /* Centraliza horizontalmente */
+        flex-wrap: wrap !important; /* Permite quebra de linha se necessário */
+        gap: 30px !important; /* Espaço entre os cards */
+        overflow: visible !important;
+        margin: 0 auto !important;
+        max-width: 1200px !important; /* Ajuste conforme necessário */
+    }
+    
+    .artist-card {
+        flex: 0 0 calc(33.333% - 30px) !important; /* 3 cards por linha */
+        max-width: 300px !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+/* Estilo para MOBILE (mantém o scroll horizontal) */
+@media (max-width: 768px) {
+    .artists-grid {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 20px !important;
+        padding-bottom: 20px !important;
+        scrollbar-width: none !important;
+    }
+    
+    .artists-grid::-webkit-scrollbar {
+        display: none !important;
+    }
+    
+    .artist-card {
+        min-width: 250px !important;
+        flex: 0 0 auto !important;
+    }
+}
+/* Estilo para os stats - MOBILE */
+@media (max-width: 768px) {
+    .about-stats {
+        grid-template-columns: repeat(3, 1fr) !important; /* 3 itens lado a lado */
+        gap: 10px !important; /* Espaço entre os itens */
+    }
+    
+    .stat-item {
+        padding: 0.8rem !important; /* Reduz o padding */
+        min-height: auto !important;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem !important; /* Tamanho do número */
+    }
+    
+    .stat-label {
+        font-size: 0.7rem !important; /* Tamanho do texto */
+        line-height: 1.2 !important;
+    }
+}
+
+/* Estilo para telas maiores (opcional - para manter consistência) */
+@media (min-width: 769px) {
+    .about-stats {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 15px !important;
+    }
+    
+    .stat-item {
+        padding: 1rem !important;
+    }
+}
+@media (max-width: 480px) {
+    .stat-item {
+        padding: 0.5rem !important;
+    }
+    
+    .stat-number {
+        font-size: 1.2rem !important;
+    }
+    
+    .stat-label {
+        font-size: 0.6rem !important;
+    }
+}
+/* ===== ULTRA RESPONSIVIDADE PARA MOBILE ===== */
+/* Efeitos de transição suave */
+* {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Dispositivos muito pequenos (até 360px) */
+@media (max-width: 360px) {
+  body {
+    font-size: 13px !important;
+  }
+  
+  .hero-title {
+    font-size: 1.6rem !important;
+    letter-spacing: 0.5px !important;
+  }
+  
+  .cta-button {
+    padding: 10px 18px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .portfolio-grid, .gallery-grid {
+    gap: 6px !important;
+  }
+}
+
+/* Celulares pequenos (361px-480px) */
+@media (min-width: 361px) and (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem !important;
+  }
+  
+  .section-title {
+    font-size: 1.6rem !important;
+  }
+}
+
+/* Celulares (481px-600px) */
+@media (min-width: 481px) and (max-width: 600px) {
+  .hero-title {
+    font-size: 2rem !important;
+  }
+}
+
+/* Breakpoint principal para mobile (até 768px) */
+@media (max-width: 768px) {
+  /* Reset básico */
+  html {
+    font-size: 14px;
+  }
+  
+  body {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  /* Container fluido */
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 12px !important;
+  }
+  
+  /* Navbar super otimizada */
+  .navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 8px 12px !important;
+    border-radius: 0 !important;
+    background: rgba(0, 0, 0, 0.98) !important;
+    backdrop-filter: blur(10px) !important;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .brand-logo img {
+    height: 30px !important;
+  }
+  
+  .brand-text {
+    font-size: 1.1rem !important;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 56px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 56px);
+    background: rgba(10, 10, 10, 0.99) !important;
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 20px 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    overflow-y: auto;
+  }
+  
+  .nav-menu.active {
+    left: 0;
+  }
+  
+  .nav-link {
+    width: 100% !important;
+    padding: 14px 20px !important;
+    font-size: 1.1rem !important;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+    justify-content: flex-start;
+  }
+  
+  .nav-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+  
+  /* Hero section ultra responsiva */
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    padding: 70px 0 30px;
+    text-align: center;
+  }
+  
+  .hero-content {
+    padding: 0 10px;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem !important;
+    line-height: 1.15 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.05rem !important;
+    line-height: 1.5 !important;
+    padding: 0 10px;
+    margin-bottom: 1.8rem !important;
+  }
+  
+  .cta-button {
+    padding: 12px 28px !important;
+    font-size: 1.05rem !important;
+    border-radius: 30px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Seções genéricas */
+  section {
+    padding: 50px 0 !important;
+  }
+  
+  .section-header {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .section-title {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .title-underline {
+    width: 60px !important;
+    height: 3px !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem !important;
+    padding: 0 15px;
+    line-height: 1.5 !important;
+  }
+  
+  /* Sobre nós */
+  .about-content {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  .about-text p {
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  .about-stats {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .stat-item {
+    padding: 1.2rem !important;
+  }
+  
+  /* Portfólio/Galeria */
+  .portfolio-grid, .gallery-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  
+  .portfolio-item, .gallery-item {
+    aspect-ratio: 1/1 !important;
+    border-radius: 10px !important;
+  }
+  
+  /* Artistas */
+  .artists-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  .artist-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .artist-image {
+    height: 200px !important;
+  }
+  
+  /* Contato */
+  .contact-content {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  
+  .contact-info {
+    padding: 1.5rem !important;
+  }
+  
+  .map-container iframe {
+    height: 250px !important;
+    border-radius: 10px !important;
+  }
+  
+  /* Rodapé */
+  .footer {
+    padding: 2.5rem 0 1rem !important;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+    text-align: center;
+  }
+  
+  .footer-brand, 
+  .footer-links, 
+  .footer-contact {
+    margin-bottom: 2rem;
+  }
+  
+  .social-icons {
+    justify-content: center !important;
+  }
+  
+  .footer-contact-item {
+    justify-content: center !important;
+    text-align: center;
+  }
+  
+  /* Modal super responsivo */
+  .modal-content {
+    width: 95% !important;
+    max-width: 100% !important;
+    padding: 1.5rem !important;
+    border-radius: 10px !important;
+  }
+  
+  .discount-game h2 {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .gift-selection {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  
+  .gift-box {
+    width: 100% !important;
+    padding: 1.5rem 1rem !important;
+  }
+  
+  /* Quiz responsivo */
+  .quiz-result {
+    width: 100% !important;
+    padding: 1.5rem !important;
+  }
+  
+  .answer-options {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Ajustes de toque para mobile */
+  button, a, input[type="submit"], .nav-link {
+    min-height: 48px !important;
+    min-width: 48px !important;
+  }
+  
+  /* Otimização de performance */
+  .hero-background, .neon-grid {
+    animation: none !important;
+  }
+}
+
+/* Tablet (769px-992px) */
+@media (min-width: 769px) and (max-width: 992px) {
+  .container {
+    max-width: 95% !important;
+  }
+  
+  .hero-title {
+    font-size: 2.8rem !important;
+  }
+  
+  .portfolio-grid, .gallery-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .about-content {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .about-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Efeitos especiais para mobile */
+@media (max-width: 768px) {
+  /* Melhoria na experiência de toque */
+  .nav-link, .cta-button, .gift-box, .portfolio-item, .artist-card {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Feedback tátil */
+  .cta-button:active, .nav-link:active {
+    transform: scale(0.96) !important;
+  }
+  
+  /* Otimização de animações */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+  
+  /* Dark mode adaptativo */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: #0a0a0a !important;
+    }
+  }
+}
+    /* Estilo para o botão "Ver Artistas" */
+    .see-more-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #015ec89e 0%, #5f820ee3 100%);
+        color: #ffffff;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 2px solid #ffffff9c;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(140, 255, 0, 0.314);
+    }
+    
+    .see-more-button:hover {
+        background: linear-gradient(135deg, #05667cd6 0%, #63e904a9 100%);
+        color: #6fff2c;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(153, 255, 0, 0.3);
+    }
+    
+    .see-more-button i {
+        margin-left: 10px;
+        transition: all 0.3s ease;
+    }
+    
+    .see-more-button:hover i {
+        transform: translateX(5px);
+    }
+    
+    .see-more-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(191, 255, 0, 0.2), transparent);
+        transition: all 0.5s ease;
+    }
+    
+    .see-more-button:hover::before {
+        left: 100%;
+    }
+    
+    /* Efeito de brilho ao redor */
+    .see-more-button::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border: 1px solid #006ae3;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .see-more-button:hover::after {
+        opacity: 1;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+    }
+</style>
+<body>
+<header>
+    <a href="#content" class="skip-link">Pular para o conteúdo principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/pages/home.html" class="nav-brand">
+                <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                <span class="brand-text">RAVEN     </span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="/pages/home.html" class="nav-link active"><i class="fas fa-home "></i> Início</a></li>
+                <li><a href="/pages/loja.html"  class="nav-link "><i class="fas fa-store"></i> Loja</a></li>
+                <li><a href="/pages/artists.html"  class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                <li ><a href="/pages/contato.html" class="nav-link "><i class="fas fa-envelope"></i> Contato</a></li>
+                <li ><a href="/pages/blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                <li ><a href="/pages/game.html"  class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                <li > <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-icons">
+               
+               
+                <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
+                    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+                    <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+</header>
+
+    <div id="discount-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="Fechar modal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="discount-game">
+                <h2 id="modal-title">ESCOLHA SEU PRESENTE!</h2>
+                <p id="modal-description">Selecione uma das opções e raspe para revelar seu desconto especial</p>
+                
+                <div class="gift-selection" id="gift-selection">
+                    <div class="gift-option" data-discount="10" tabindex="0" role="button" aria-label="Presente misterioso 1">
+                        <div class="gift-box">
+                            <i class="fas fa-gift"></i>
+                            <span>PRESENTE 1</span>
+                        </div>
+                    </div>
+                    <div class="gift-option" data-discount="15" tabindex="0" role="button" aria-label="Presente misterioso 2">
+                        <div class="gift-box">
+                            <i class="fas fa-gift"></i>
+                            <span>PRESENTE 2</span>
+                        </div>
+                    </div>
+                    <div class="gift-option" data-discount="20" tabindex="0" role="button" aria-label="Presente misterioso 3">
+                        <div class="gift-box">
+                            <i class="fas fa-gift"></i>
+                            <span>PRESENTE 3</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scratch-game" id="scratch-game" style="display: none;">
+                    <h3>RASPE PARA REVELAR!</h3>
+                    <div class="scratch-card" id="scratch-card" tabindex="0" role="button" aria-label="Raspadinha para revelar desconto">
+                        <canvas id="scratch-canvas" width="300" height="150"></canvas>
+                        <div class="scratch-content">
+                            <span class="discount-value" id="final-discount"></span>
+                            <p>DE DESCONTO!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="discount-result" id="discount-result" style="display: none;">
+                    <h3>PARABÉNS!</h3>
+                    <p>Você ganhou <span id="discount-amount"></span> de desconto!</p>
+                    <form id="email-form" class="email-form">
+                        <div class="input-group">
+                            <input 
+                                type="email" 
+                                id="email-input" 
+                                placeholder="Digite seu e-mail para receber o cupom" 
+                                required 
+                                autocomplete="email"
+                                aria-label="Digite seu e-mail"
+                            >
+                            <button type="submit" class="claim-button">
+                                <i class="fas fa-gift"></i>
+                                RESGATAR
+                            </button>
+                        </div>
+                        <div id="email-error" class="error-message" role="alert" aria-live="polite"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <main id="main" role="main"></main>
+        <section id="home" class="hero" role="banner">
+            <div class="hero-background">
+                <div class="neon-grid"></div>
+                <div class="floating-elements">
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                </div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-word">TRANSFORME</span>
+                    <span class="title-word highlight">SUA PELE</span>
+                    <span class="title-word">EM ARTE</span>
+                </h1>
+                <p class="hero-subtitle">No Raven Studio, cada tatuagem conta uma história única. Venha descobrir a sua.</p>
+                <a href="/pages/agendamento.html" class="cta-button">
+                    <span>AGENDE SUA TATUAGEM</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="scroll-indicator" aria-hidden="true">
+                <span>EXPLORE</span>
+                <div class="scroll-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section id="about" class="about reveal-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">SOBRE O RAVEN STUDIO</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">Onde a arte encontra a pele</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Há mais de 8 anos, o Raven Studio é sinônimo de excelência em arte corporal. Nossa equipe de artistas especializados transforma ideias em obras de arte permanentes, respeitando sempre a individualidade e história de cada cliente.</p>
+                        <p>Utilizamos apenas equipamentos de última geração e produtos de qualidade superior, garantindo não apenas o resultado estético perfeito, mas também a máxima segurança em todos os procedimentos.</p>
+                        <ul class="about-features">
+                            <li><i class="fas fa-palette" aria-hidden="true"></i> Artistas especializados e certificados</li>
+                            <li><i class="fas fa-shield-alt" aria-hidden="true"></i> Protocolos rigorosos de segurança</li>
+                            <li><i class="fas fa-gem" aria-hidden="true"></i> Ambiente exclusivo e acolhedor</li>
+                            <li><i class="fas fa-user-friends" aria-hidden="true"></i> Atendimento personalizado</li>
+                        </ul>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Clientes Satisfeitos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">8</span>
+                            <span class="stat-label">Anos de Experiência</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Segurança</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+    
+<section id="tattoo-quiz" class="pro-quiz">
+    <div class="container">
+        <div class="quiz-intro" id="quiz-intro">
+            <div class="intro-content">
+                <h2>DESCUBRA SEU ESTILO DE TATUAGEM</h2>
+                <p>Responda nosso quiz e encontre o estilo que combina com sua personalidade</p>
+                <button id="start-quiz" class="cta-button">
+                    <span>INICIAR QUIZ</span>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="quiz-questions" id="quiz-questions" style="display:none">
+            <div class="quiz-header">
+                <div class="progress-container">
+                    <div class="progress-bar" id="quiz-progress"></div>
+                </div>
+                <h3 id="current-question">Pergunta <span id="current-q-number">1</span>/<span id="total-questions">4</span></h3>
+            </div>
+
+            <div class="question-container" id="question-container">
+                </div>
+        </div>
+
+        <div class="quiz-result" id="quiz-result" style="display:none">
+            <div class="result-content">
+                <h3>SEU ESTILO IDEAL É:</h3>
+                <div class="result-style" id="result-style"></div>
+                <p id="result-description"></p>
+                
+                <div class="style-features">
+                    <h4>CARACTERÍSTICAS PRINCIPAIS:</h4>
+                    <ul id="style-features"></ul>
+                </div>
+
+                <div class="result-gallery" id="result-gallery"></div>
+                
+                <div class="artist-match">
+                    <h4>ARTISTAS RECOMENDADOS:</h4>
+                    <div id="artist-match"></div>
+                </div>
+
+                <button id="restart-quiz" class="cta-button">
+                    <span>FAZER NOVAMENTE</span>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12,4C14.1,4 16.1,4.8 17.6,6.3C20.7,9.4 20.7,14.5 17.6,17.6C15.8,19.5 13.3,20.2 10.9,19.9L11.4,17.9C13.1,18.1 14.9,17.5 16.2,16.2C18.5,13.9 18.5,10.1 16.2,7.8C15.1,6.7 13.5,6 12,6V10.6L7,5.6L12,0.6V4M6.3,17.6C3.7,15 3.3,11 5.1,7.9L6.6,9.4C5.5,11.6 5.9,14.4 7.8,16.2C8.3,16.7 8.9,17.1 9.6,17.4L9,19.4C8,19 7.1,18.4 6.3,17.6Z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="tattoo-gallery" class="gallery-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">NOSSA GALERIA</h2>
+            <div class="title-underline"></div>
+            <p class="section-subtitle">Explore nossos trabalhos incríveis, filtrados por estilo, artista ou local do corpo.</p>
+        </div>
+
+        <div class="filter-buttons" role="group" aria-label="Filtros da galeria de tatuagens">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="realismo">Realismo</button>
+            <button class="filter-btn" data-filter="blackwork">Blackwork</button>
+            <button class="filter-btn" data-filter="aquarela">Aquarela</button>
+            <button class="filter-btn" data-filter="geometria">Geométrico</button>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+            <div class="gallery-item" data-style="realismo" data-artist="joao" data-body-part="arm">
+                <img src="/img/tatuagens/realismo1.jpg" alt="Tatuagem de realismo no braço por João Silva">
+                <div class="item-overlay">
+                    <h3>Realismo - Braço</h3>
+                    <p>Artista: João Silva</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-style="blackwork" data-artist="maria" data-body-part="leg">
+                <img src="/img/tatuagens/blackwork1.jpg" alt="Tatuagem blackwork na Braço por Maria Souza">
+                <div class="item-overlay">
+                    <h3>Blackwork - Braço</h3>
+                    <p>Artista: Maria Souza</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-style="aquarela" data-artist="joao" data-body-part="back">
+                <img src="/img/tatuagens/aquarela1.jpg" alt="Tatuagem aquarela nas Braço por João Silva">
+                <div class="item-overlay">
+                    <h3>Aquarela - Braço</h3>
+                    <p>Artista: João Silva</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-style="geometria" data-artist="maria" data-body-part="arm">
+                <img src="/img/tatuagens/geométrico1.jpg" alt="Tatuagem geométrica no braço por Maria Souza">
+                <div class="item-overlay">
+                    <h3>Geométrico - Braço</h3>
+                    <p>Artista: Maria Souza</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-style="realismo" data-artist="maria" data-body-part="leg">
+                <img src="/img/tatuagens/realismo2.jpg" alt="Tatuagem de realismo na Braço por Maria Souza">
+                <div class="item-overlay">
+                    <h3>Realismo - Braço</h3>
+                    <p>Artista: Maria Souza</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-style="blackwork" data-artist="joao" data-body-part="back">
+                <img src="/img/tatuagens/blackwork2.jpg" alt="Tatuagem blackwork nas Braço por João Silva">
+                <div class="item-overlay">
+                    <h3>Blackwork - Braço</h3>
+                    <p>Artista: João Silva</p>
+                </div>
+            </div>
+                        <div class="gallery-item" data-style="aquarela" data-artist="joao" data-body-part="back">
+                <img src="/img/tatuagens/aquarela2.jpg" alt="Tatuagem aquarela nas Braço por João Silva">
+                <div class="item-overlay">
+                    <h3>Aquarela - Braço</h3>
+                    <p>Artista: João Silva</p>
+                </div>
+            </div>
+
+              <div class="gallery-item" data-style="aquarela" data-artist="joao" data-body-part="back">
+                <img src="/img/tatuagens/aquarela3.jpg" alt="Tatuagem aquarela nas Ombro por João Silva">
+                <div class="item-overlay">
+                    <h3>Aquarela - Ombro</h3>
+                    <p>Artista: João Silva</p>
+                </div>
+            </div>
+
+
+         <div class="gallery-item" data-style="blackwork" data-artist="joao" data-body-part="back">
+                <img src="/img/tatuagens/blackwork3.jpg" alt="Tatuagem blackwork nas Braço por João Silva">
+                <div class="item-overlay">
+                    <h3>Blackwork - Braço</h3>
+                    <p>Artista: João Silva</p>
+                </div>
+            </div>
+
+
+             <div class="gallery-item" data-style="realismo" data-artist="maria" data-body-part="leg">
+                <img src="/img/tatuagens/realismo3.jpg" alt="Tatuagem de realismo na Costas por Maria Souza">
+                <div class="item-overlay">
+                    <h3>Realismo - Costas</h3>
+                    <p>Artista: Maria Souza</p>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-style="geometria" data-artist="maria" data-body-part="arm">
+                <img src="/img/tatuagens/geométrico2.jpg" alt="Tatuagem geométrica no braço por Maria Souza">
+                <div class="item-overlay">
+                    <h3>Geométrico - Braço</h3>
+                    <p>Artista: Maria Souza</p>
+                </div>
+            </div>
+                        <div class="gallery-item" data-style="geometria" data-artist="maria" data-body-part="arm">
+                <img src="/img/tatuagens/geométrico3.jpg" alt="Tatuagem geométrica no Perna por Maria Souza">
+                <div class="item-overlay">
+                    <h3>Geométrico - Perna</h3>
+                    <p>Artista: Maria Souza</p>
+                </div>
+            </div>
+            
+</section>
+
+
+      <!-- Artists Section -->
+<section id="artists" class="artists reveal-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">CONHEÇA NOSSOS ARTISTAS</h2>
+            <div class="title-underline"></div>
+            <p class="section-subtitle">Talentos especializados em diferentes estilos</p>
+        </div>
+        <div class="artists-grid">
+            <!-- Artist 1 -->
+            <a href="/artistas/augusto.html" class="artist-card" tabindex="0">
+                <div class="artist-image">
+                    <img src="/img/artistas/augusto.png" alt="Artista Augusto - Especialista em Maori e Tribal" loading="lazy">
+                </div>
+                <div class="artist-info">
+                    <h3>Augusto</h3>
+                    <p class="artist-specialty">Maori, Tribal e Realismo</p>
+                    <p class="artist-bio">10 anos transformando ideias em obras hiper-realistas.</p>
+                    <span class="artist-button">VER PORTFÓLIO</span>
+                </div>
+            </a>
+            
+            <!-- Artist 2 -->
+            <a href="/artistas/clara.html" class="artist-card" tabindex="0">
+                <div class="artist-image">
+                    <img src="/img/artistas/clara.png" alt="Artista Clara - Especialista em Blackwork" loading="lazy">
+                </div>
+                <div class="artist-info">
+                    <h3>CLARA</h3>
+                    <p class="artist-specialty">Blackwork & Geométrico</p>
+                    <p class="artist-bio">Mestre em designs precisos e padrões complexos.</p>
+                    <span class="artist-button">VER PORTFÓLIO</span>
+                </div>
+            </a>
+
+            
+            
+            <!-- Artist 3 -->
+            <a href="/artistas/isabella.html" class="artist-card" tabindex="0">
+                <div class="artist-image">
+                    <img src="/img/artistas/isabella.png" alt="Artista Isabella - Especialista em Aquarela" loading="lazy">
+                </div>
+                <div class="artist-info">
+                    <h3>ISABELLA</h3>
+                    <p class="artist-specialty">Aquarela & Florais</p>
+                    <p class="artist-bio">Transforma sua pele em pinturas delicadas e coloridas.</p>
+                    <span class="artist-button">VER PORTFÓLIO</span>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Botão Ver Mais -->
+        <div class="see-more-container" style="text-align: center; margin-top: 3rem;">
+            <a href="/pages/artists.html" class="see-more-button">
+                VER TODOS OS ARTISTAS
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+</section>
+
+        <section id="contact" class="contact reveal-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">VISITE-NOS</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">Sua nova tatuagem está a um passo de distância</p>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>ENDEREÇO</h3>
+                                <p>Rua das Artes, 123<br>Vila Madalena - São Paulo, SP<br>CEP: 01234-567</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock" aria-hidden="true"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>HORÁRIO DE FUNCIONAMENTO</h3>
+                                <p>Segunda a Sexta: 10h às 20h<br>Sábado: 10h às 18h<br>Domingo: Fechado</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>CONTATO</h3>
+                                <p>Telefone: (11) 99999-9999<br>WhatsApp: (11) 99999-9999<br>E-mail: contato@ravenstudio.com</p>
+                            </div>
+                        </div>
+                    </div>
+                  
+                     <div class="map-container">
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.3764159442626!2d-46.6930709242393!3d-23.55493047880085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDMzJzE3LjgiUyA0NsKwNDEnMzEuOCJX!5e0!3m2!1sen!2sbr!4v1620000000000!5m2!1sen!2sbr" 
+    width="600" 
+    height="450" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy"
+    aria-label="Mapa da localização do Raven Studio na Vila Madalena"
+    title="Localização do Raven Studio">
+  </iframe>
+</div>
+                 
+                </div>
+            </div>
+        </section>
+    </main>
+
+<footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <img src="/img/Logo.png" alt="Logo RAVEN" class="brand-logo" style="width: 50px; height: 50px;">
+                        <h3>RAVEN STUDIO</h3>
+                    </div>
+                    <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/raven_studio__" class="social-icon" aria-label="Instagram do Raven Studio">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>LINKS RÁPIDOS</h4>
+                    <ul>
+                        <li><a href="/pages/artists.html">Artistas</a></li>
+                        <li><a href="/pages/agendamento.html">Agendamento</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>CONTATO</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Rua das Artes, 123<br>Vila Madalena - São Paulo, SP</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>(11) 99999-9999</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span>contato@ravenstudio.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-divider"></div>
+                <div class="footer-copyright">
+                    <p>© 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+   <button class="back-to-top" id="backToTop" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <div class="raven-chat-widget">
+    <button class="raven-chat-toggle" id="ravenChatToggle" aria-expanded="false" aria-controls="ravenChatContainer" aria-label="Abrir ou fechar o chatbot">
+        <div class="pulse-ring"></div>
+        <i class="fas fa-comment-dots"></i>
+    </button>
+    <div class="raven-chat-container" id="ravenChatContainer" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+        <div class="raven-chat-header">
+            <div class="artist-avatar">
+                <img src="/img/Logo.png" alt="Logo Raven Studio Chatbot">
+            </div>
+            <div class="chat-title">
+                <h4 id="chatTitle">Raven Tattoo Bot</h4>
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span>Online</span>
+                </div>
+            </div>
+            <button class="raven-chat-close" id="ravenChatClose" aria-label="Fechar Chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="raven-chat-content" id="ravenChatContent">
+            <div class="welcome-message">
+                <div class="bot-message" role="alert" aria-live="polite">
+                    <p>Olá! Sou o assistente virtual do Raven Studio. Escolha uma opção abaixo para começar:</p>
+                    <span class="message-time" id="welcomeMessageTime"></span>
+                </div>
+            </div>
+
+            <div class="chat-options-container">
+                <div class="chat-categories" id="ravenChatCategories">
+                    <div class="category-grid">
+                        <button class="category-card" onclick="showRavenCategory('precos')" aria-label="Perguntas sobre Preços">
+                            <i class="fas fa-tag"></i>
+                            <span>Preços</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('dor')" aria-label="Perguntas sobre Nível de Dor">
+                            <i class="fas fa-bolt"></i>
+                            <span>Nível de Dor</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('procedimento')" aria-label="Perguntas sobre Procedimento">
+                            <i class="fas fa-clinic-medical"></i>
+                            <span>Procedimento</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('cuidados')" aria-label="Perguntas sobre Cuidados">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Cuidados</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('estilos')" aria-label="Perguntas sobre Estilos de Tatuagem">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>Estilos</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('agendamento')" aria-label="Perguntas sobre Agendamento">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Agendamento</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-questions" id="ravenChatQuestions" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showRavenCategories()" aria-label="Voltar para as categorias">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                    <div id="ravenQuestionsList" role="list"></div>
+                </div>
+
+                <div class="chat-answers" id="ravenChatAnswers" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showRavenQuestions()" aria-label="Voltar para as perguntas da categoria">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                    <div id="ravenAnswerContent" aria-live="polite" aria-atomic="true"></div>
+                    <button class="raven-primary-btn" onclick="showRavenCategories()" aria-label="Iniciar nova consulta ou voltar ao início">
+                        <i class="fas fa-redo"></i> Nova Consulta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+   <script src="/js/navbar.js"></script>
+   <script src="/js/home.js"></script>
+    <script src="/js/user-session.js"></script>
+    <script>
+          // Dados premium para o chatbot
+    const ravenFaqData = {
+        "precos": [
+            {
+                question: "Qual é o valor mínimo para uma tatuagem?",
+                answer: "Nosso valor mínimo é de R$ 300 para tatuagens pequenas (até 10cm).<br><br>" +
+                       "Tabela de referência:<br>" +
+                       "• Pequenas (até 10cm): R$ 300-600<br>" +
+                       "• Médias (10-20cm): R$ 600-1200<br>" +
+                       "• Grandes (acima de 20cm): A partir de R$ 1200<br><br>" +
+                       "Valores exatos são definidos após avaliação do desenho."
+            },
+            {
+                question: "Como é calculado o preço da tatuagem?",
+                answer: "Consideramos vários fatores:<br><br>" +
+                       "1. <strong>Tamanho</strong>: Área a ser tatuada<br>" +
+                       "2. <strong>Complexidade</strong>: Nível de detalhes e cores<br>" +
+                       "3. <strong>Tempo estimado</strong>: Horas de trabalho necessárias<br>" +
+                       "4. <strong>Local no corpo</strong>: Áreas mais difíceis podem ter ajuste<br>" +
+                       "5. <strong>Experiência do artista</strong>: Artistas sênior possuem valores diferenciados<br><br>" +
+                       "Oferecemos avaliação gratuita para orçamento preciso."
+            }
+        ],
+        "dor": [
+            {
+                question: "Quanto dói fazer uma tatuagem?",
+                answer: "A dor varia conforme a região do corpo:<br><br>" +
+                       "<strong>Baixa dor (1-3/10)</strong>:<br>" +
+                       "• Braços (parte externa)<br>" +
+                       "• Coxas<br>" +
+                       "• Costas<br><br>" +
+                       "<strong>Média dor (4-6/10)</strong>:<br>" +
+                       "• Panturrilhas<br>" +
+                       "• Peito<br>" +
+                       "• Ombros<br><br>" +
+                       "<strong>Alta dor (7-9/10)</strong>:<br>" +
+                       "• Costelas<br>" +
+                       "• Pés e mãos<br>" +
+                       "• Pescoço/Clavícula<br><br>" +
+                       "A maioria dos clientes descreve como uma queimadura constante."
+            },
+            {
+                question: "Qual a parte mais dolorosa para tatuar?",
+                answer: "As áreas mais dolorosas geralmente são:<br><br>" +
+                       "1. <strong>Costelas</strong>: Pele fina sobre osso<br>" +
+                       "2. <strong>Pés e mãos</strong>: Muitas terminações nervosas<br>" +
+                       "3. <strong>Axilas</strong>: Pele sensível e móvel<br>" +
+                       "4. <strong>Cotovelos e joelhos</strong>: Pele dura e articulações<br><br>" +
+                       "Dica: Sessões mais curtas ajudam nas áreas mais dolorosas."
+            }
+        ],
+        "procedimento": [
+            {
+                question: "Como é o processo de fazer uma tatuagem?",
+                answer: "Nosso processo premium:<br><br>" +
+                       "1. <strong>Consulta</strong>: Discussão do conceito e referências<br>" +
+                       "2. <strong>Agendamento</strong>: Reserva com sinal de 30%<br>" +
+                       "3. <strong>Desenho</strong>: Criação personalizada 48h antes<br>" +
+                       "4. <strong>Aprovação</strong>: Ajustes finais no studio<br>" +
+                       "5. <strong>Aplicação</strong>: Sessão com materiais esterilizados<br>" +
+                       "6. <strong>Cuidados</strong>: Orientações pós-tatuagem<br><br>" +
+                       "Todo material é descartável e de qualidade profissional."
+            },
+            {
+                question: "Preciso usar anestésico?",
+                answer: "Não recomendamos anestésicos tópicos porque:<br><br>" +
+                       "• Podem alterar a textura da pele<br>" +
+                       "• Afetam a absorção da tinta<br>" +
+                       "• O resultado final pode ser comprometido<br><br>" +
+                       "A dor é parte do processo, mas garantimos suporte durante toda a sessão."
+            }
+        ],
+        "cuidados": [
+            {
+                question: "Quais os cuidados após fazer a tatuagem?",
+                answer: "<strong>Primeiras 48 horas</strong>:<br>" +
+                       "• Manter o plástico por 2-4 horas<br>" +
+                       "• Lavar com sabonete antisséptico<br>" +
+                       "• Aplicar pomada específica<br><br>" +
+                       "<strong>Primeiras 2 semanas</strong>:<br>" +
+                       "• Lavar 3x ao dia<br>" +
+                       "• Manter hidratada<br>" +
+                       "• Evitar sol, piscina e mar<br>" +
+                       "• Não arrancar casquinhas<br><br>" +
+                       "<strong>Após cicatrização</strong>:<br>" +
+                       "• Usar protetor solar sempre"
+            },
+            {
+                question: "Quanto tempo leva para cicatrizar completamente?",
+                answer: "Cronograma de cicatrização:<br><br>" +
+                       "<strong>1-3 dias</strong>: Vermelhidão e inchaço<br>" +
+                       "<strong>3-7 dias</strong>: Pele começa a descamar<br>" +
+                       "<strong>2-3 semanas</strong>: Cicatrização superficial completa<br>" +
+                       "<strong>4-6 semanas</strong>: Cicatrização total das camadas profundas<br><br>" +
+                       "Tatuagens maiores podem levar mais tempo para cicatrizar completamente."
+            }
+        ],
+        "estilos": [
+            {
+                question: "Quais estilos de tatuagem vocês oferecem?",
+                answer: "Especialidades do nosso studio:<br><br>" +
+                       "• <strong>Tradicional/Old School</strong>: Cores vivas, traços grossos<br>" +
+                       "• <strong>Realismo</strong>: Retratos, animais, paisagens<br>" +
+                       "• <strong>Blackwork</strong>: Preenchimentos sólidos em preto<br>" +
+                       "• <strong>Aquarela</strong>: Efeito pintura com cores fluidas<br>" +
+                       "• <strong>Geométrico</strong>: Padrões simétricos e precisos<br>" +
+                       "• <strong>Pontilhismo</strong>: Imagens formadas por pontos<br>" +
+                       "• <strong>Minimalista</strong>: Traços finos e simplificados<br><br>" +
+                       "Cada artista tem seu estilo predominante."
+            },
+            {
+                question: "Qual estilo de tatuagem dura mais tempo?",
+                answer: "Durabilidade por estilo:<br><br>" +
+                       "<strong>Melhor duração</strong>:<br>" +
+                       "• Tradicional (traços grossos e cores sólidas)<br>" +
+                       "• Blackwork (grandes áreas de tinta preta)<br><br>" +
+                       "<strong>Requer mais manutenção</strong>:<br>" +
+                       "• Aquarela (cores claras e degradês)<br>" +
+                       "• Fine Line (traços muito finos)<br><br>" +
+                       "Independente do estilo, cuidados adequados prolongam a vida da tatuagem."
+            }
+        ],
+        "agendamento": [
+            {
+                question: "Como faço para agendar minha tatuagem?",
+                answer: "Processo de agendamento:<br><br>" +
+                       "1. Acesse nosso sistema online<br>" +
+                       "2. Selecione o artista desejado<br>" +
+                       "3. Escolha data/horário disponível<br>" +
+                       "4. Descreva sua ideia em detalhes<br>" +
+                       "5. Efetue o pagamento do sinal (30%)<br>" +
+                       "6. Receba confirmação por e-mail<br><br>" +
+                       "Cancelamentos devem ser feitos com 48h de antecedência."
+            },
+            {
+                question: "Preciso ter o desenho pronto antes de agendar?",
+                answer: "Não é necessário! Nossos artistas oferecem:<br><br>" +
+                       "• <strong>Consultoria criativa</strong>: Ajudamos a desenvolver sua ideia<br>" +
+                       "• <strong>Design personalizado</strong>: Criamos a arte exclusiva para você<br>" +
+                       "• <strong>Revisões gratuitas</strong>: Ajustes até você aprovar<br><br>" +
+                       "Basta trazer referências ou descrever sua visão que cuidamos do resto."
+            }
+        ]
+    };
+
+    // Variáveis de estado
+    let currentRavenCategory = null; // Armazena a categoria atualmente selecionada para o botão "Voltar"
+
+    // Função para formatar a hora (ex: 10:30 PM)
+    function formatTime(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // The hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        return hours + ':' + minutes + ' ' + ampm;
+    }
+
+    // Funções do Chatbot
+    function showRavenCategories() {
+        document.getElementById('ravenChatCategories').style.display = 'block';
+        document.getElementById('ravenChatQuestions').style.display = 'none';
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        currentRavenCategory = null; // Reseta a categoria atual
+
+        // Adiciona animação às categorias
+        const categories = document.querySelectorAll('.category-card');
+        categories.forEach((card, index) => {
+            card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
+            card.style.opacity = '0'; // Garante que começa invisível para a animação
+        });
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenCategory(category) {
+        currentRavenCategory = category;
+
+        const questionsContainer = document.getElementById('ravenQuestionsList');
+        const categoryData = ravenFaqData[category] || [];
+
+        questionsContainer.innerHTML = ''; // Limpa as perguntas anteriores
+
+        if (categoryData.length > 0) {
+            categoryData.forEach((faq, index) => {
+                const questionCard = document.createElement('button'); // Usar button para melhor acessibilidade
+                questionCard.className = 'question-card';
+                questionCard.setAttribute('role', 'listitem'); // Para leitores de tela
+                questionCard.setAttribute('aria-label', `Pergunta: ${faq.question}`);
+                questionCard.innerHTML = `<p>${faq.question}</p>`;
+                // Ao clicar, exibe a resposta para a pergunta específica
+                questionCard.onclick = () => showRavenAnswer(category, index);
+                questionCard.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
+                questionCard.style.opacity = '0';
+                questionsContainer.appendChild(questionCard);
+            });
+        } else {
+            questionsContainer.innerHTML = '<p style="color:#ddd; text-align:center;">Nenhuma pergunta disponível para esta categoria.</p>';
+        }
+
+        document.getElementById('ravenChatCategories').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'block';
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenAnswer(category, questionIndex) {
+        const faq = ravenFaqData[category][questionIndex];
+        const answerContent = document.getElementById('ravenAnswerContent');
+
+        answerContent.innerHTML = `
+            <div class="answer-container">
+                <h5>${faq.question}</h5>
+                <p>${faq.answer}</p>
+            </div>
+        `;
+
+        document.getElementById('ravenChatCategories').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'none';
+        document.getElementById('ravenChatAnswers').style.display = 'block';
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenQuestions() {
+        if (currentRavenCategory) {
+            showRavenCategory(currentRavenCategory); // Retorna para a categoria específica
+        } else {
+            showRavenCategories(); // Padrão: volta para as categorias
+        }
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'block'; // Garante que a seção de perguntas esteja visível
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+
+    // Inicialização do Chatbot
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatToggle = document.getElementById('ravenChatToggle');
+        const chatContainer = document.getElementById('ravenChatContainer');
+        const chatClose = document.getElementById('ravenChatClose');
+        const welcomeMessageTime = document.getElementById('welcomeMessageTime');
+        
+        // Botão de voltar ao topo
+        const backToTopButton = document.getElementById('backToTop');
+            
+        // Mostrar/ocultar botão de voltar ao topo
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+            
+        // Voltar ao topo
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Atualiza a hora da mensagem de boas-vindas
+        welcomeMessageTime.textContent = formatTime(new Date());
+
+        // Abrir/fechar chat
+        chatToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isActive = chatContainer.classList.toggle('active');
+            chatToggle.setAttribute('aria-expanded', isActive); // Acessibilidade: atualiza estado do botão
+            if (isActive) {
+                showRavenCategories(); // Garante que as categorias são mostradas ao abrir
+                chatContainer.focus(); // Foca no container para acessibilidade
+            }
+        });
+
+        chatClose.addEventListener('click', function() {
+            chatContainer.classList.remove('active');
+            chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
+            chatToggle.focus(); // Retorna o foco ao botão de toggle
+        });
+
+        // Fechar chat ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!chatContainer.contains(e.target) && !chatToggle.contains(e.target)) {
+                chatContainer.classList.remove('active');
+                chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
+            }
+        });
+
+        // Evitar fechar ao clicar dentro do chat
+        chatContainer.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Adiciona funcionalidade para fechar com a tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && chatContainer.classList.contains('active')) {
+                chatContainer.classList.remove('active');
+                chatToggle.setAttribute('aria-expanded', 'false');
+                chatToggle.focus();
+            }
+        });
+
+    });
+    </script>
+</body>
+</html>
