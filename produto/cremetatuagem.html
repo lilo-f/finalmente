@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creme Pós-Tatuagem | Raven Studio</title>
+    <link rel="icon" href="/img/raven.ico" type="image/x-icon">
     <meta name="description" content="Creme regenerador para cuidados pós-tatuagem - Compre agora no Raven Studio.">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/produtos.css">
@@ -264,6 +265,32 @@
         display: none !important;
     }
 
+    /* Novo estilo para o botão de adicionar ao carrinho */
+    .add-to-cart-bottom {
+        width: 100%;
+        background: linear-gradient(45deg, #3b82f6, #22c55e);
+        color: white;
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+        margin-top: 1.5rem;
+        font-family: 'Teko', sans-serif;
+        font-size: 1.1rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .add-to-cart-bottom:hover {
+        transform: scale(1.02);
+        background: linear-gradient(45deg, #22c55e, #3b82f6);
+    }
+
     @media (max-width: 480px) {
         .chat-container {
             width: 280px;
@@ -278,22 +305,404 @@
             font-size: 1rem;
         }
     }
+     /* ========== RESPONSIVIDADE ========== */
+
+/* Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+    .product-hero-content {
+        flex-direction: column;
+    }
+    
+    .product-images, 
+    .product-info {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .thumbnail-gallery {
+        justify-content: center;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .product-card {
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    /* Ajustes para descrição do produto */
+    .tab-panel#description {
+        padding: 1rem;
+    }
+    
+    .features-grid {
+        gap: 1rem;
+    }
+    
+    .feature-item {
+        padding: 1rem;
+    }
+    
+    .kit-includes li {
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Botão centralizado em tablets */
+    .add-to-cart-btn {
+        width: 80%;
+        margin: 0.8rem auto 0;
+        padding: 0.6rem;
+        font-size: 0.8rem;
+        display: block;
+    }
+}
+
+/* Celulares médios (576px - 768px) */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 70px);
+        background: #1a1a1a;
+        flex-direction: column;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .product-variants {
+        flex-direction: column;
+    }
+    
+    .variant-option {
+        width: 100%;
+    }
+    
+    .variant-selector {
+        flex-wrap: wrap;
+    }
+    
+    .product-actions {
+        flex-direction: column;
+    }
+    
+    .quantity-selector {
+        margin-bottom: 1rem;
+    }
+    
+    .cta-button, 
+    .secondary-button {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .video-container iframe {
+        height: 400px;
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+    
+    /* Melhorias na descrição do produto */
+    .tab-panel#description {
+        padding: 0.5rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .feature-item {
+        padding: 0.8rem;
+        text-align: center;
+    }
+    
+    .feature-item i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .kit-includes {
+        padding-left: 1rem;
+    }
+    
+    .kit-includes li {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Botão centralizado em celulares médios */
+    .add-to-cart-btn {
+        width: 85%;
+        margin: 0.6rem auto 0;
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Celulares pequenos (até 576px) */
+@media (max-width: 576px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .nav-brand .brand-text {
+        font-size: 1.5rem;
+    }
+    
+    .product-title {
+        font-size: 1.8rem;
+    }
+    
+    .thumbnail {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .product-card {
+        padding: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .chat-container {
+        width: 280px;
+        right: -10px;
+    }
+    
+    .back-to-top {
+        left: 10px;
+        bottom: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .video-container iframe {
+        height: 250px;
+    }
+    
+    /* Otimização da descrição do produto para mobile */
+    .tab-panel#description {
+        padding: 0;
+    }
+    
+    .tab-panel#description h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .tab-panel#description p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+    
+    .tab-panel#description h3 {
+        font-size: 1.2rem;
+        margin: 1.5rem 0 1rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .feature-item {
+        padding: 0.8rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+    }
+    
+    .feature-item i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .feature-item h3 {
+        font-size: 1.1rem;
+        margin: 0.5rem 0;
+    }
+    
+    .feature-item p {
+        font-size: 0.85rem;
+    }
+    
+    .kit-includes {
+        padding-left: 1rem;
+    }
+    
+    .kit-includes li {
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .kit-includes i {
+        margin-right: 0.5rem;
+    }
+    
+    /* Botão centralizado em celulares pequenos */
+    .add-to-cart-btn {
+        width: 90%;
+        margin: 0.5rem auto 0;
+        padding: 0.5rem 0.3rem;
+        font-size: 0.7rem;
+    }
+}
+
+/* Telas muito pequenas (até 400px) */
+@media (max-width: 400px) {
+    .variant-btn {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .product-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .product-rating {
+        margin-top: 0.5rem;
+    }
+    
+    .payment-icons i {
+        font-size: 1.5rem;
+    }
+    
+    .share-buttons a {
+        margin-right: 0.5rem;
+    }
+    
+    .review-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .review-date {
+        margin-top: 0.5rem;
+    }
+    
+    .products-grid {
+        gap: 0.8rem;
+    }
+    
+    /* Ajustes finos para descrição em telas muito pequenas */
+    .tab-panel#description h2 {
+        font-size: 1.3rem;
+    }
+    
+    .tab-panel#description h3 {
+        font-size: 1.1rem;
+    }
+    
+    .feature-item {
+        padding: 0.7rem;
+    }
+    
+    .kit-includes li {
+        font-size: 0.8rem;
+    }
+    
+    /* Botão centralizado em telas muito pequenas */
+    .add-to-cart-btn {
+        width: 95%;
+        padding: 0.4rem 0.2rem;
+        font-size: 0.65rem;
+        margin: 0.4rem auto 0;
+    }
+}
+
+/* Ajustes para orientação paisagem */
+@media (max-height: 500px) and (orientation: landscape) {
+    .product-hero {
+        padding: 1rem 0;
+    }
+    
+    .product-images {
+        flex-direction: row;
+    }
+    
+    .thumbnail-gallery {
+        flex-direction: column;
+        margin-left: 1rem;
+    }
+    
+    .thumbnail {
+        width: 50px;
+        height: 50px;
+        margin: 0.3rem 0;
+    }
+    
+    .chat-container {
+        height: 300px;
+    }
+    
+    /* Ajustes para descrição em paisagem */
+    .tab-panel#description {
+        padding: 0.5rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+    
+    /* Botão centralizado em paisagem */
+    .add-to-cart-btn {
+        width: 85%;
+        padding: 0.4rem;
+        font-size: 0.7rem;
+        margin: 0.4rem auto 0;
+    }
+}
 </style>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-logo">
-                <span class="loading-mascot">🐦‍⬛</span>
-                <h2>RAVEN STUDIO</h2>
-            </div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
-            </div>
-            <p class="loading-text">Preparando sua experiência...</p>
-        </div>
-    </div>
-
     <!-- Navigation -->
     <nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
         <div class="nav-container">
@@ -337,11 +746,8 @@
                             <div class="thumbnail active" tabindex="0" role="button" aria-label="Visualizar creme">
                                 <img src="/img/products/creme2.png" alt="Creme Pós-Tatuagem - Embalagem">
                             </div>
-                            <div class="thumbnail" tabindex="0" role="button" aria-label="Visualizar aplicação">
-                                <img src="/img/products/creme-aplicacao.png" alt="Creme Pós-Tatuagem - Aplicação">
-                            </div>
                             <div class="thumbnail" tabindex="0" role="button" aria-label="Visualizar ingredientes">
-                                <img src="/img/products/creme-ingredientes.png" alt="Creme Pós-Tatuagem - Ingredientes">
+                                <img src="/img/products/creme3.png" alt="Creme Pós-Tatuagem - Ingredientes">
                             </div>
                         </div>
                     </div>
@@ -365,25 +771,6 @@
                             <span class="price-amount">R$ 50,00</span>
                             <span class="price-installment">ou 2x de R$ 25,00 sem juros</span>
                             <span class="price-note">Frete grátis para compras acima de R$ 300,00</span>
-                        </div>
-                        
-                        <div class="product-variants">
-                            <div class="variant-option">
-                                <h3>TAMANHO:</h3>
-                                <div class="variant-selector">
-                                    <button class="variant-btn" data-size="30g">30g</button>
-                                    <button class="variant-btn active" data-size="60g">60g</button>
-                                    <button class="variant-btn" data-size="120g">120g</button>
-                                </div>
-                            </div>
-                            
-                            <div class="variant-option">
-                                <h3>TIPO:</h3>
-                                <div class="variant-selector">
-                                    <button class="variant-btn active" data-type="normal">Normal</button>
-                                    <button class="variant-btn" data-type="sensivel">Pele Sensível</button>
-                                </div>
-                            </div>
                         </div>
                         
                         <div class="product-stock">
@@ -418,15 +805,13 @@
                             </div>
                         </div>
                         
-                        <div class="product-share">
-                            <h3>COMPARTILHE:</h3>
-                            <div class="share-buttons">
-                                <a href="#" class="social-share" aria-label="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" class="social-share" aria-label="Compartilhar no Instagram"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="social-share" aria-label="Compartilhar no Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="social-share" aria-label="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                            </div>
-                        </div>
+                        <!-- Novo botão de adicionar ao carrinho -->
+                        <button class="add-to-cart-bottom" id="add-to-cart-bottom">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>ADICIONAR AO CARRINHO</span>
+                        </button>
+                        
+                      
                     </div>
                 </div>
             </div>
@@ -751,76 +1136,13 @@
                 <div class="products-grid">
                     <div class="product-card">
                         <div class="product-image">
-                            <a href="/produtos/sabonete-pos-tatuagem.html">
-                                <img src="/img/products/sabonete1.png" alt="Sabonete Pós-Tatuagem" loading="lazy">
+                            <a href="/produto/kitagulha.html">
+                                <img src="/img/products/agulhas1.png" alt="Kit Agulhas Variadas" loading="lazy">
                             </a>
-                            <div class="product-actions">
-                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
-                            </div>
                         </div>
                         <div class="product-info">
-                            <h3><a href="/produtos/sabonete-pos-tatuagem.html">SABONETE PÓS-TATUAGEM</a></h3>
-                            <p class="product-category">Cuidados</p>
-                            <div class="product-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span>(28)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="price-amount">R$ 35,00</span>
-                                <span class="price-installment">ou 1x de R$ 35,00</span>
-                            </div>
-                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-SPT-001', 'SABONETE PÓS-TATUAGEM', 3500, '/img/products/sabonete1.png')">ADICIONAR AO CARRINHO</button>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <div class="product-badge">MAIS VENDIDO</div>
-                        <div class="product-image">
-                            <a href="/produtos/protetor-solar-tattoo.html">
-                                <img src="/img/products/protetor1.png" alt="Protetor Solar Tattoo" loading="lazy">
-                            </a>
-                            <div class="product-actions">
-                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h3><a href="/produtos/protetor-solar-tattoo.html">PROTETOR SOLAR TATTOO</a></h3>
-                            <p class="product-category">Cuidados</p>
-                            <div class="product-rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span>(56)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="price-amount">R$ 65,00</span>
-                                <span class="price-installment">ou 2x de R$ 32,50</span>
-                            </div>
-                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-PST-001', 'PROTETOR SOLAR TATTOO', 6500, '/img/products/protetor1.png')">ADICIONAR AO CARRINHO</button>
-                        </div>
-                    </div>
-                     <div class="product-card">
-                        <div class="product-image">
-                            <a href="/produtos/kit-cuidados-completo.html">
-                                <img src="/img/products/kit-cuidados1.png" alt="Kit Cuidados Completo" loading="lazy">
-                            </a>
-                            <div class="product-actions">
-                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h3><a href="/produtos/kit-cuidados-completo.html">KIT CUIDADOS COMPLETO</a></h3>
-                            <p class="product-category">Cuidados</p>
+                            <h3><a href="/produto/kitagulha.html">KIT AGULHAS VARIADAS</a></h3>
+                            <p class="product-category">Agulhas</p>
                             <div class="product-rating">
                                 <div class="stars">
                                     <i class="fas fa-star"></i>
@@ -829,28 +1151,52 @@
                                     <i class="fas fa-star"></i>
                                     <i class="far fa-star"></i>
                                 </div>
-                                <span>(15)</span>
+                                <span>(36)</span>
                             </div>
                             <div class="product-price">
-                                <span class="price-amount">R$ 120,00</span>
-                                <span class="price-installment">ou 3x de R$ 40,00</span>
+                                <span class="price-amount">R$ 80,00</span>
+                                <span class="price-installment">ou 2x de R$ 40,00</span>
                             </div>
-                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-KCC-001', 'KIT CUIDADOS COMPLETO', 12000, '/img/products/kit-cuidados1.png')">ADICIONAR AO CARRINHO</button>
+                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-KAV-001', 'KIT AGULHAS VARIADAS', 8000, '/img/products/agulhas1.png')">ADICIONAR AO CARRINHO</button>
                         </div>
                     </div>
                     
-                    <div class="product-card">
+                   <div class="product-card">
                         <div class="product-image">
-                            <a href="/produtos/filme-cicatrizante.html">
-                                <img src="/img/products/filme1.png" alt="Filme Cicatrizante" loading="lazy">
+                            <a href="/produto/maquinadigital.html">
+                                <img src="/img/products/fonte1.png" alt="Fonte Profissional" loading="lazy">
                             </a>
-                            <div class="product-actions">
-                                <button class="add-to-wishlist" aria-label="Adicionar à lista de desejos"><i class="far fa-heart"></i></button>
-                            </div>
                         </div>
                         <div class="product-info">
-                            <h3><a href="/produtos/filme-cicatrizante.html">FILME CICATRIZANTE</a></h3>
-                            <p class="product-category">Cuidados</p>
+                            <h3><a href="/produto/maquinadigital.html">FONTE PROFISSIONAL</a></h3>
+                            <p class="product-category">Acessórios</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span>(18)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-amount">R$ 350,00</span>
+                                <span class="price-installment">ou 6x de R$ 58,33</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-FP-001', 'FONTE PROFISSIONAL', 35000, '/img/products/fonte1.png')">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                     
+                    <div class="product-card">
+                        <div class="product-image">
+                            <a href="/produto/maquinarotativa.html">
+                                <img src="/img/products/maquina1.png" alt="Máquina Rotativa Pro" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produto/maquinarotativa.html">MÁQUINA ROTATIVA PRO</a></h3>
+                            <p class="product-category">Máquinas</p>
                             <div class="product-rating">
                                 <div class="stars">
                                     <i class="fas fa-star"></i>
@@ -859,34 +1205,48 @@
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star-half-alt"></i>
                                 </div>
-                                <span>(22)</span>
+                                <span>(32)</span>
                             </div>
                             <div class="product-price">
-                                <span class="price-amount">R$ 45,00</span>
-                                <span class="price-installment">ou 1x de R$ 45,00</span>
+                                <span class="old-price">R$ 900,00</span>
+                                <span class="price-amount">R$ 750,00</span>
+                                <span class="price-installment">ou 12x de R$ 62,50</span>
                             </div>
-                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-FC-001', 'FILME CICATRIZANTE', 4500, '/img/products/filme1.png')">ADICIONAR AO CARRINHO</button>
+                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-MRP-001', 'MÁQUINA ROTATIVA PRO', 75000, '/img/products/maquina1.png')">ADICIONAR AO CARRINHO</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-badge">MAIS VENDIDO</div>
+                        <div class="product-image">
+                            <a href="/produto/tintapreta.html">
+                                <img src="/img/products/tinta1.png" alt="Tinta Preto Absoluto" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="/produto/tintapreta.html">TINTA PRETO ABSOLUTO</a></h3>
+                            <p class="product-category">Tintas</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>(45)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price-amount">R$ 120,00</span>
+                                <span class="price-installment">ou 3x de R$ 40,00</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addRelatedToCart('RVN-TPA-001', 'TINTA PRETO ABSOLUTO', 12000, '/img/products/tinta1.png')">ADICIONAR AO CARRINHO</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Newsletter Section -->
-        <section class="newsletter-section reveal-section">
-            <div class="container">
-                <div class="newsletter-content">
-                    <div class="newsletter-text">
-                        <h2>ASSINE NOSSA NEWSLETTER</h2>
-                        <p>Receba ofertas exclusivas e novidades sobre produtos e técnicas de tatuagem.</p>
-                    </div>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Seu melhor e-mail" required>
-                        <button type="submit">ASSINAR</button>
-                    </form>
-                </div>
-            </div>
-        </section>
     </main>
 
     <!-- Footer -->
@@ -1165,12 +1525,56 @@
                 }
             });
 
+            // Botões de tamanho (30g, 60g, 120g)
+            const sizeButtons = document.querySelectorAll('.variant-btn[data-size]');
+            sizeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all size buttons
+                    document.querySelectorAll('.variant-btn[data-size]').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                });
+            });
+
+            // Botões de tipo (Normal, Pele Sensível)
+            const typeButtons = document.querySelectorAll('.variant-btn[data-type]');
+            typeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all type buttons
+                    document.querySelectorAll('.variant-btn[data-type]').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                });
+            });
+
             // Botão de adicionar ao carrinho (produto principal)
             const addToCartBtn = document.getElementById('add-to-cart');
             addToCartBtn.addEventListener('click', function() {
                 const quantity = parseInt(quantityInput.value);
-                const productId = 'RVN-CPT-001';
-                const productName = 'CREME PÓS-TATUAGEM';
+                //const selectedSize = document.querySelector('.variant-btn[data-size].active').getAttribute('data-size');
+                //const selectedType = document.querySelector('.variant-btn[data-type].active').getAttribute('data-type');
+                const productId = 'RVN-CPT-001-';
+                const productName = 'CREME PÓS-TATUAGEM ';
+                const productPrice = 5000; // Em centavos (R$50,00)
+                const productImage = '/img/products/creme2.png';
+                
+                addRelatedToCart(productId, productName, productPrice, productImage);
+            });
+
+            // Novo botão de adicionar ao carrinho (parte inferior)
+            const addToCartBottomBtn = document.getElementById('add-to-cart-bottom');
+            addToCartBottomBtn.addEventListener('click', function() {
+                const quantity = parseInt(quantityInput.value);
+                //const selectedSize = document.querySelector('.variant-btn[data-size].active').getAttribute('data-size');
+                //const selectedType = document.querySelector('.variant-btn[data-type].active').getAttribute('data-type');
+                const productId = 'RVN-CPT-001-';
+                const productName = 'CREME PÓS-TATUAGEM ';
                 const productPrice = 5000; // Em centavos (R$50,00)
                 const productImage = '/img/products/creme2.png';
                 
@@ -1181,8 +1585,10 @@
             const buyNowBtn = document.getElementById('buy-now');
             buyNowBtn.addEventListener('click', function() {
                 const quantity = parseInt(quantityInput.value);
-                const productId = 'RVN-CPT-001';
-                const productName = 'CREME PÓS-TATUAGEM';
+                //const selectedSize = document.querySelector('.variant-btn[data-size].active').getAttribute('data-size');
+                //const selectedType = document.querySelector('.variant-btn[data-type].active').getAttribute('data-type');
+                const productId = 'RVN-CPT-001-';
+                const productName = 'CREME PÓS-TATUAGEM ';
                 const productPrice = 5000; // Em centavos (R$50,00)
                 const productImage = '/img/products/creme2.png';
                 
@@ -1210,128 +1616,6 @@
             window.addEventListener('scroll', checkReveal);
             checkReveal(); // Verifica na carga inicial
         });
-         // Função para esconder o loading screen
-    function hideLoadingScreen() {
-        const loadingScreen = document.getElementById('loading-screen');
-        loadingScreen.style.opacity = '0';
-        loadingScreen.style.visibility = 'hidden';
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 500); // Tempo igual à duração da transição
-    }
-
-    // Função para simular o carregamento
-    function simulateLoading() {
-        const progressBar = document.querySelector('.loading-progress');
-        let width = 0;
-        const interval = setInterval(() => {
-            if (width >= 100) {
-                clearInterval(interval);
-                hideLoadingScreen();
-                // Mostra o conteúdo principal após o loading
-                document.getElementById('main').style.display = 'block';
-            } else {
-                width++;
-                progressBar.style.width = width + '%';
-                document.querySelector('.loading-text').textContent = 
-                    `Carregando ${width}%...`;
-            }
-        }, 30); // Ajuste este valor para mudar a velocidade do loading
-    }
-
-    // Quando a janela terminar de carregar
-    window.addEventListener('load', function() {
-        // Inicia a animação do loading
-        simulateLoading();
-        
-        // Ou, se quiser um loading mais rápido sem animação:
-        // hideLoadingScreen();
-        // document.getElementById('main').style.display = 'block';
-    });
-
-    // Caso o conteúdo carregue muito rápido, garantimos que o loading apareça por pelo menos 1s
-    let minimumLoadTime = 1000; // 1 segundo
-    let startTime = Date.now();
-
-    window.addEventListener('load', function() {
-        let loadTime = Date.now() - startTime;
-        if (loadTime < minimumLoadTime) {
-            setTimeout(hideLoadingScreen, minimumLoadTime - loadTime);
-        }
-    });
-
-    // Adicione este CSS para o loading screen (caso não tenha)
-    const loadingCSS = `
-    <style>
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: all 0.5s ease;
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .loading-content {
-            text-align: center;
-            color: #fff;
-            max-width: 300px;
-        }
-        
-        .loading-logo {
-            margin-bottom: 2rem;
-        }
-        
-        .loading-logo h2 {
-            font-family: 'Bebas Neue', cursive;
-            font-size: 2.5rem;
-            color: #3b82f6;
-            margin-top: 1rem;
-        }
-        
-        .loading-mascot {
-            font-size: 4rem;
-            display: block;
-        }
-        
-        .loading-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-        
-        .loading-progress {
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, #3b82f6, #22c55e);
-            transition: width 0.3s ease;
-            border-radius: 10px;
-        }
-        
-        .loading-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            color: #ccc;
-            margin-top: 1rem;
-        }
-    </style>
-    `;
-
-    // Adiciona o CSS ao head
-    document.head.insertAdjacentHTML('beforeend', loadingCSS);
-
-    // Esconde o conteúdo principal inicialmente
-    document.getElementById('main').style.display = 'none';
     </script>
 </body>
 </html>
