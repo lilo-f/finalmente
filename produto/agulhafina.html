@@ -7,6 +7,7 @@
     <link rel="icon" href="/img/raven.ico" type="image/x-icon">
     <meta name="description" content="Agulha Round Liner para traços finos e detalhes precisos - Compre agora no Raven Studio.">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/produtos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -305,6 +306,10 @@
             font-size: 1rem;
         }
     }
+
+
+        
+
   /* ========== RESPONSIVIDADE ========== */
 
 /* Tablets (768px - 1024px) */
@@ -341,10 +346,7 @@
         text-align: center;
     }
     
-    .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
+    
     
     /* Ajustes para descrição do produto */
     .tab-panel#description {
@@ -706,33 +708,43 @@
     
 
     <!-- Navigation -->
-    <nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
+    <header>
+    <a href="#content" class="skip-link">Pular para o conteúdo principal</a>
+    <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-brand">
-                <span class="brand-mascot" aria-hidden="true">🐦‍⬛</span>
-                <span class="brand-text">RAVEN </span>
-            </div>
-            <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu" id="nav-menu" role="menubar">
-                <li role="none"><a href="/" role="menuitem" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
-                <li role="none"><a href="#featured" role="menuitem" class="nav-link"><i class="fas fa-star"></i> Destaques</a></li>
-                <li role="none"><a href="#machines" role="menuitem" class="nav-link"><i class="fas fa-bolt"></i> Máquinas</a></li>
-                <li role="none"><a href="#needles" role="menuitem" class="nav-link"><i class="fas fa-syringe"></i> Agulhas</a></li>
-                <li role="none"><a href="#care" role="menuitem" class="nav-link"><i class="fas fa-heart"></i> Cuidados</a></li>
-                <li role="none"><a href="#contact" role="menuitem" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
-            </ul>
-            <div class="nav-cart">
-                <a href="/pages/carrinho.html" class="cart-link" aria-label="Carrinho de compras">
+            <a href="index.html" class="nav-brand">
+                <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                <span class="brand-text">RAVEN     </span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+     <li><a href="/pages/home.html" class="nav-link "><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="/pages/loja.html"  class="nav-link "><i class="fas fa-store"></i> Loja</a></li>
+                <li><a href="/pages/artists.html"  class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                <li ><a href="/pages/contato.html" class="nav-link active"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li ><a href="/pages/blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                <li ><a href="/pages/game.html"  class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                <li > <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">0</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-icons">
+               
+               
+                <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
+                    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+                    <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
                 </a>
             </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
+</header>
 
     <!-- Main Content -->
     <main id="main" role="main">
@@ -1248,64 +1260,54 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
-                    <h3>RAVEN STUDIO</h3>
-                    <p>Especializados em equipamentos profissionais para tatuagem desde 2015. Qualidade e inovação para artistas exigentes.</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <img src="/img/Logo.png" alt="Logo RAVEN" class="brand-logo" style="width: 50px; height: 50px;">
+                        <h3>RAVEN STUDIO</h3>
+                    </div>
+                    <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/raven_studio__" class="social-icon" aria-label="Instagram do Raven Studio">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>LINKS ÚTEIS</h3>
+                <div class="footer-links">
+                    <h4>LINKS RÁPIDOS</h4>
                     <ul>
-                        <li><a href="/pages/sobre.html">Sobre Nós</a></li>
-                        <li><a href="/pages/blog.html">Blog</a></li>
                         <li><a href="/pages/artists.html">Artistas</a></li>
+                        <li><a href="/pages/agendamento.html">Agendamento</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
                         <li><a href="/pages/contato.html">Contato</a></li>
-                        <li><a href="/pages/faq.html">FAQ</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>ATENDIMENTO</h3>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Rua das Artes, 123 - São Paulo/SP</li>
-                        <li><i class="fas fa-phone"></i> (11) 98765-4321</li>
-                        <li><i class="fas fa-envelope"></i> contato@ravenstudio.com</li>
-                        <li><i class="fas fa-clock"></i> Seg-Sex: 10h-19h | Sáb: 10h-14h</li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>PAGAMENTO</h3>
-                    <div class="payment-methods">
-                        <i class="fab fa-cc-visa" aria-label="Visa"></i>
-                        <i class="fab fa-cc-mastercard" aria-label="Mastercard"></i>
-                        <i class="fab fa-cc-amex" aria-label="American Express"></i>
-                        <i class="fab fa-cc-paypal" aria-label="PayPal"></i>
-                        <i class="fas fa-barcode" aria-label="Boleto"></i>
+                <div class="footer-contact">
+                    <h4>CONTATO</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Rua das Artes, 123<br>Vila Madalena - São Paulo, SP</span>
                     </div>
-                    <div class="security-seals">
-                        <img src="https://via.placeholder.com/80x40?text=SSL" alt="Site Seguro" loading="lazy">
-                        <img src="https://via.placeholder.com/80x40?text=RAVEN" alt="Raven Certified" loading="lazy">
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>(11) 99999-9999</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span>contato@ravenstudio.com</span>
                     </div>
                 </div>
             </div>
-            
             <div class="footer-bottom">
-                <p>&copy; 2023 RAVEN STUDIO. Todos os direitos reservados.</p>
-                <div class="footer-links">
-                    <a href="/pages/termos.html">Termos de Uso</a>
-                    <a href="/pages/privacidade.html">Política de Privacidade</a>
+                <div class="footer-divider"></div>
+                <div class="footer-copyright">
+                    <p>© 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
                 </div>
             </div>
         </div>
     </footer>
-
     <!-- Back to Top Button -->
     <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
 
@@ -1356,6 +1358,10 @@
             </div>
         </div>
     </div>
+
+    <script src="/js/home.js"></script>
+  <script src="/js/navbar.js"></script>
+     <script src="/js/user-session.js"></script>
 
     <script>
         // Função para mostrar notificação
