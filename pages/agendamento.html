@@ -541,220 +541,48 @@
         .back-to-top.show {
             display: flex;
         }
+.confirmation-message .btn-primary {
+    /* Estilos herdados do .btn-primary */
+    background: var(--gradient-blue);
+    border: none;
+    color: var(--primary-black);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+    padding: 1rem 2rem; /* Ajuste o padding se necessário */
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-decoration: none; /* Garante que pareça um botão, não um link sublinhado */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    margin-top: 1.5rem; /* Adicionado para garantir espaçamento conforme seu HTML */
+}
 
-        /* Chat Widget Styles */
-        .chat-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
+.confirmation-message .btn-primary:hover {
+    background: var(--soft-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.5); /* Efeito de sombra mais pronunciado no hover */
+}
 
-        .chat-toggle {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #8a2be2, #4b0082);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            color: white;
-            font-size: 1.5rem;
-            border: none;
-        }
+/* Opcional: Se quiser um estilo específico para um ícone dentro dele */
+.confirmation-message .btn-primary i {
+    margin-right: 0.5rem; /* Espaçamento entre o ícone e o texto */
+}
 
-        .chat-toggle:hover {
-            transform: scale(1.1);
-            background: linear-gradient(45deg, #4b0082, #8a2be2);
-        }
-
-        .chat-container {
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            width: 350px;
-            height: 450px;
-            background: #1a1a1a;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            display: none;
-            flex-direction: column;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-        }
-
-        .chat-container.active {
-            display: flex;
-        }
-
-        .chat-header {
-            padding: 1rem;
-            background: linear-gradient(45deg, #4b0082, #8a2be2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .chat-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
-        }
-
-        .chat-title i {
-            color: #fff;
-        }
-
-        .chat-title h4 {
-            font-size: 1rem;
-            margin: 0;
-            font-family: 'Teko', sans-serif;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-
-        .chat-title span {
-            font-size: 0.8rem;
-            color: #ccc;
-            font-family: 'Teko', sans-serif;
-        }
-
-        .chat-close {
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .chat-content {
-            flex: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            background-color: #121212;
-        }
-
-        .chat-categories p {
-            color: #ccc;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            font-family: 'Teko', sans-serif;
-        }
-
-        .category-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .category-btn {
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: left;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.1rem;
-            border: none;
-        }
-
-        .category-btn:hover {
-            background: rgba(138, 43, 226, 0.3);
-        }
-
-        .back-button {
-            margin-bottom: 1rem;
-        }
-
-        .back-button button {
-            background: none;
-            border: none;
-            color: #8a2be2;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-family: 'Teko', sans-serif;
-            padding: 0;
-        }
-
-        .back-button button:hover {
-            text-decoration: underline;
-        }
-
-        .question-btn {
-            width: 100%;
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: left;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            border: none;
-            font-family: 'Teko', sans-serif;
-        }
-
-        .question-btn:hover {
-            background: rgba(138, 43, 226, 0.3);
-        }
-
-        .answer-content {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            color: #ccc;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .answer-content h5 {
-            color: #8a2be2;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            font-family: 'Teko', sans-serif;
-        }
-
-        .answer-content p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            font-family: 'Teko', sans-serif;
-        }
-
-        .btn-primary {
-            width: 100%;
-            background: linear-gradient(45deg, #8a2be2, #4b0082);
-            color: white;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.3s ease;
-            margin-top: 1rem;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.1rem;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.02);
-            background: linear-gradient(45deg, #4b0082, #8a2be2);
-        }
-
-        #questions-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+/* Responsividade para o botão */
+@media (max-width: 767px) {
+    .confirmation-message .btn-primary {
+        padding: 0.9rem 1.5rem; /* Menor padding em telas pequenas */
+        font-size: 1rem; /* Fonte menor em telas pequenas */
+        width: auto; /* Ocupa o espaço necessário */
+        min-width: unset; /* Remove min-width se houver algum padrão */
+    }
+}
 
         /* --- Responsiveness --- */
 
@@ -1191,51 +1019,7 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <div class="chat-widget">
-        <button class="chat-toggle" id="chatToggle">
-            <i class="fas fa-comment-dots"></i>
-        </button>
-        <div class="chat-container" id="chatContainer">
-            <div class="chat-header">
-                <div class="chat-title">
-                    <i class="fas fa-robot"></i>
-                    <div>
-                        <h4>RavenBot</h4>
-                        <span>Online • FAQ</span>
-                    </div>
-                </div>
-                <button class="chat-close" id="chatClose">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="chat-content" id="chatContent">
-                <div class="chat-categories" id="chatCategories">
-                    <p>Escolha uma categoria para ver as perguntas frequentes:</p>
-                    <div class="category-buttons">
-                        <button class="category-btn" onclick="showCategory('precos')">Preços</button>
-                        <button class="category-btn" onclick="showCategory('procedimento')">Procedimento</button>
-                        <button class="category-btn" onclick="showCategory('cuidados')">Cuidados</button>
-                        <button class="category-btn" onclick="showCategory('estilos')">Estilos</button>
-                        <button class="category-btn" onclick="showCategory('agendamento')">Agendamento</button>
-                        <button class="category-btn" onclick="showCategory('tempo')">Tempo</button>
-                    </div>
-                </div>
-                <div class="chat-questions" id="chatQuestions" style="display: none;">
-                    <div class="back-button">
-                        <button onclick="showCategories()">← Voltar</button>
-                    </div>
-                    <div id="questionsList"></div>
-                </div>
-                <div class="chat-answer" id="chatAnswer" style="display: none;">
-                    <div class="back-button">
-                        <button onclick="showQuestions()">← Voltar</button>
-                    </div>
-                    <div id="answerContent"></div>
-                    <button class="btn-primary" onclick="showCategories()">Ver Outras Perguntas</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>

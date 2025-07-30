@@ -2128,7 +2128,7 @@ class Shop {
         }
     }
 
-    renderProducts() {
+renderProducts() {
     const productGrid = document.getElementById('product-grid');
     const noResultsMessage = document.getElementById('no-results-message');
     const paginationContainer = document.getElementById('pagination');
@@ -2152,11 +2152,34 @@ class Shop {
 
         const wishlist = window.userSession?.getWishlist() || [];
 
+        // Mapeamento dos produtos para suas URLs correspondentes
+        const productUrls = {
+            1: '/produto/maquinarotativa.html',
+            2: '/produto/tintapreta.html',
+            3: '/produto/kitagulha.html',
+            4: '/produto/bancada.html',
+            5: '/produto/maquinabobina.html',
+            6: '/produto/tintavermelhaescarlate.html',
+            7: '/produto/agulhamagnum.html',
+            8: '/produto/cremetatuagem.html',
+            9: '/produto/maquinahibrida.html',
+            10: '/produto/tintaazuloceano.html',
+            11: '/produto/agulhafina.html',
+            12: '/produto/bancada.html'
+        };
+
         productsToRender.forEach(product => {
             const isWished = wishlist.includes(product.id);
             const productCard = document.createElement('div');
             productCard.classList.add('product-card');
-            productCard.innerHTML = `
+            
+            // Cria um link para a página do produto
+            const productLink = document.createElement('a');
+            productLink.href = productUrls[product.id] || '#';
+            productLink.style.textDecoration = 'none';
+            productLink.style.color = 'inherit';
+            
+            productLink.innerHTML = `
                 ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
                 <div class="product-image">
                     <img src="${product.image}" alt="${product.name}">
@@ -2173,16 +2196,23 @@ class Shop {
                         <i class="fas fa-coins points-icon"></i>
                         <span class="points-value">${Math.floor(product.price)} pts</span>
                     </div>
-                    <div class="product-actions">
-                        <button class="add-to-cart" data-id="${product.id}">
-                            <i class="fas fa-shopping-cart"></i> Adicionar
-                        </button>
-                        <button class="wishlist-btn ${isWished ? 'active' : ''}" data-id="${product.id}">
-                            <i class="fas fa-heart"></i>
-                        </button>
-                    </div>
-                </div>
             `;
+            
+            productCard.appendChild(productLink);
+            
+            // Adiciona os botões de ação fora do link
+            const actionButtons = document.createElement('div');
+            actionButtons.className = 'product-actions';
+            actionButtons.innerHTML = `
+                <button class="add-to-cart" data-id="${product.id}">
+                    <i class="fas fa-shopping-cart"></i> Adicionar
+                </button>
+                <button class="wishlist-btn ${isWished ? 'active' : ''}" data-id="${product.id}">
+                    <i class="fas fa-heart"></i>
+                </button>
+            `;
+            
+            productCard.appendChild(actionButtons);
             productGrid.appendChild(productCard);
         });
     }

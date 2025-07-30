@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raven Studio - Estúdio de Tatuagem</title>
+        <link rel="icon" href="/img/raven.ico" type="image/x-icon">
     <meta name="description" content="Raven Studio - Estúdio de tatuagem artístico e moderno. Transforme sua pele em arte.">
     <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/navbar.css">
@@ -21,6 +22,7 @@
 <meta property="og:url" content="https://www.ravenstudio.com">
 <meta property="og:image" content="https://www.ravenstudio.com/images/og-image.jpg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 </head>
 <style>
 
@@ -669,18 +671,7 @@
   }
   
   /* Navbar super otimizada */
-  .navbar {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    padding: 8px 12px !important;
-    border-radius: 0 !important;
-    background: rgba(0, 0, 0, 0.98) !important;
-    backdrop-filter: blur(10px) !important;
-    z-index: 1000;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
-  }
+  
   
   .brand-logo img {
     height: 30px !important;
@@ -690,33 +681,13 @@
     font-size: 1.1rem !important;
   }
   
-  .nav-menu {
-    position: fixed;
-    top: 56px;
-    left: -100%;
-    width: 100%;
-    height: calc(100vh - 56px);
-    background: rgba(10, 10, 10, 0.99) !important;
-    backdrop-filter: blur(20px);
-    flex-direction: column;
-    padding: 20px 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 999;
-    overflow-y: auto;
-  }
+ 
   
   .nav-menu.active {
     left: 0;
   }
   
-  .nav-link {
-    width: 100% !important;
-    padding: 14px 20px !important;
-    font-size: 1.1rem !important;
-    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-    justify-content: flex-start;
-  }
-  
+ 
   .nav-toggle {
     display: flex !important;
     align-items: center;
@@ -906,11 +877,7 @@
     grid-template-columns: 1fr !important;
   }
   
-  /* Ajustes de toque para mobile */
-  button, a, input[type="submit"], .nav-link {
-    min-height: 48px !important;
-    min-width: 48px !important;
-  }
+
   
   /* Otimização de performance */
   .hero-background, .neon-grid {
