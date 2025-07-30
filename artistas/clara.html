@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clara Almeida | Tatuadora Especialista em Geek e Pop Culture | Ink Studio Tattoo</title>
-        <link rel="icon" href="/img/raven.ico" type="image/x-icon">
-
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="icon" href="/img/raven.ico" type="image/x-icon">
     <meta name="description" content="Clara Almeida, mestre em tatuagem geek e pop culture no Ink Studio Tattoo. Conheça seu portfólio, estilo único e agende sua tatuagem personalizada.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,42 +85,764 @@
                 order: unset; /* Remove explicit order for stacked layout */
             }
         }
+        /* Botão para voltar ao topo */
+        .back-to-top {
+            position: fixed;
+            left: 15px; /* Posição um pouco mais para a esquerda */
+            bottom: 15px; /* Posição um pouco mais para baixo */
+            width: 45px; /* Ligeiramente menor */
+            height: 45px; /* Ligeiramente menor */
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem; /* Fonte ligeiramente menor */
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+        /* Estilos Premium para o Chatbot - INÍCIO */
+       .raven-chat-widget {
+    /* Keep position and z-index as is */
+    position: fixed;
+    bottom: 20px; /* Adjusted slightly up */
+    right: 20px; /* Adjusted slightly left */
+    z-index: 9999;
+}
+
+
+
+        .raven-chat-toggle {
+           width: 65px; 
+    height: 65px; 
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+            color: white;
+             font-size: 1.6rem;
+            border: none;
+            position: relative;
+            z-index: 100;
+        }
+
+        .raven-chat-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.6);
+        }
+
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            opacity: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            70% { transform: scale(1.3); opacity: 0; }
+            100% { transform: scale(0.8); opacity: 0; }
+        }
+
+        .raven-chat-container {
+            position: absolute;
+            bottom: 80px; /* Adjusted to match new toggle height */
+    right: 0;
+    width: 300px; /* Slightly narrower */
+    height: 450px;
+            background: #0f0f0f;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            display: none;
+            flex-direction: column;
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 99;
+        }
+
+        .raven-chat-container.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .raven-chat-header {
+            padding: 15px 20px;
+            background: linear-gradient(to right, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+        }
+
+        .artist-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #8a2be2;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+        }
+
+        .artist-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-title {
+            flex: 1;
+        }
+
+        .chat-title h4 {
+            margin: 0;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.3rem;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 3px;
+        }
+
+        .status-indicator span {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: #ccc;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+        }
+
+        .raven-chat-close {
+            background: none;
+            border: none;
+            color: #8a2be2;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .raven-chat-close:hover {
+            background: rgba(138, 43, 226, 0.2);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .raven-chat-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, #121212, #0a0a0a);
+            scrollbar-width: thin;
+            scrollbar-color: #8a2be2 #1a1a1a;
+        }
+
+        .raven-chat-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .raven-chat-content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .raven-chat-content::-webkit-scrollbar-thumb {
+            background-color: #8a2be2;
+            border-radius: 3px;
+        }
+
+        .welcome-message {
+            margin-bottom: 20px;
+        }
+
+        .bot-message {
+            background: rgba(138, 43, 226, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+            border-top-left-radius: 5px;
+            max-width: 80%;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-message p {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            display: block;
+            font-size: 0.7rem;
+            color: #8a2be2;
+            margin-top: 8px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .chat-options-container {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .category-card:hover {
+            background: rgba(138, 43, 226, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+            border-color: #8a2be2;
+        }
+
+        .category-card i {
+            font-size: 1.8rem;
+            color: #8a2be2;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover i {
+            transform: scale(1.2);
+            color: white;
+        }
+
+        .category-card span {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            color: white;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .back-button {
+            margin-bottom: 15px;
+            text-align: left; /* Alinha o botão à esquerda */
+        }
+
+        .back-button button {
+            background: none;
+            border: none;
+            color: #8a2be2;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            display: inline-flex; /* Usa inline-flex para o alinhamento de ícone e texto */
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px; /* Aumenta o padding para melhor clique */
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: white; /* Muda a cor do texto no hover */
+        }
+
+        #ravenQuestionsList {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .question-card {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 10px;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            background: rgba(138, 43, 226, 0.2);
+            border-color: #8a2be2;
+            transform: translateX(3px); /* Pequeno movimento no hover */
+        }
+
+        .question-card p {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        .answer-container {
+            background: rgba(30, 30, 30, 0.8);
+            border-left: 3px solid #8a2be2;
+            border-radius: 0 10px 10px 0;
+            padding: 15px;
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease-out;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .answer-container h5 {
+            color: #8a2be2;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            margin: 0 0 10px 0;
+            letter-spacing: 1px;
+        }
+
+       .answer-container p {
+    font-family: 'Open Sans', sans-serif; /* A more common and readable font */
+    font-size: 0.95rem; /* Slightly larger for better readability */
+    color: #e0e0e0; /* Slightly lighter for better contrast */
+    line-height: 1.7; /* Increased line height for better spacing */
+    margin: 0;
+}
+
+        .raven-primary-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .raven-primary-btn:hover {
+            background: linear-gradient(135deg, #4b0082, #8a2be2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.5);
+        }
+
+        /* Responsividade */
+@media (max-width: 480px) {
+    .raven-chat-container {
+        width: 90vw;
+        right: 5vw;
+        height: 65vh; /* Adjusted for mobile */
+        bottom: 15px;
+    }
+
+    .raven-chat-toggle {
+        width: 55px; /* Even smaller for mobile */
+        height: 55px;
+        font-size: 1.3rem;
+    }
+
+            .category-grid {
+                grid-template-columns: 1fr; /* Coluna única para mobile */
+            }
+
+            .raven-chat-content {
+                padding: 15px; /* Padding ajustado para mobile */
+            }
+        }
+        /* Estilos Premium para o Chatbot - FIM */
+        /* INÍCIO DAS ALTERAÇÕES PARA RESPONSIVIDADE (ULTRA-AGRESSIVAS) */
+
+        /* Garante o box model correto */
+        html {
+            box-sizing: border-box;
+        }
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
+
+        /* Ajustes gerais para mobile/tablet (até 768px) */
+        @media (max-width: 768px) {
+            body {
+                font-size: 12px; /* Fonte base ainda mais menor para mobile */
+            }
+
+            /* Seções e Títulos */
+            section {
+                padding: 40px 10px; /* Reduzir ainda mais o padding nas seções */
+            }
+
+            .section-header {
+                padding-bottom: 18px; /* Padding menor */
+            }
+
+            .section-title {
+                font-size: 1.6rem; /* Títulos menores */
+            }
+
+            .section-subtitle {
+                font-size: 0.85rem; /* Subtítulos menores */
+            }
+
+            .hero-title {
+                font-size: 2.5rem; /* Título do hero menor */
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem; /* Subtítulo do hero menor */
+            }
+
+            /* Formulários */
+            .form-row {
+                flex-direction: column;
+                gap: 10px; /* Espaço entre grupos empilhados menor */
+            }
+
+            .form-group {
+                width: 100%;
+            }
+
+            .contact-form input,
+            .contact-form select,
+            .contact-form textarea,
+            .work-form input,
+            .work-form select,
+            .work-form textarea {
+                padding: 7px; /* Padding menor */
+                font-size: 0.9rem; /* Tamanho da fonte legível mas compacto */
+            }
+
+            .submit-button {
+                padding: 9px 15px; /* Ajustar padding do botão */
+                font-size: 0.9rem; /* Texto do botão menor */
+            }
+
+            .form-footer {
+                flex-direction: column;
+                gap: 10px; /* Gap menor */
+                align-items: center;
+            }
+
+            .checkbox-group label {
+                font-size: 0.8rem; /* Texto menor para label do checkbox */
+            }
+
+            /* Seção de Informações de Contato */
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr); /* DUAS COLUNAS para tablets/celulares maiores */
+                gap: 10px; /* Espaço entre cartões menor */
+            }
+
+            .contact-card {
+                padding: 10px; /* Ajustar padding para os cartões ficarem menores */
+            }
+            .contact-card h3 {
+                font-size: 0.95rem; /* Títulos de cartão menores */
+            }
+            .contact-card p, .contact-card a {
+                font-size: 0.75rem; /* Texto de cartão menor */
+            }
+            .contact-card .contact-icon {
+                font-size: 1.5rem; /* Ícones um pouco menores */
+                margin-bottom: 5px; /* Margem menor */
+            }
+
+            /* Seção Trabalhe Conosco */
+            .work-content {
+                flex-direction: column;
+                gap: 20px; /* Espaço entre o conteúdo empilhado menor */
+            }
+
+            .benefits-list ul {
+                padding-left: 12px; /* Ajustar indentação da lista */
+            }
+
+            .benefits-list li {
+                font-size: 0.85rem; /* Texto menor para os benefícios */
+            }
+
+            /* Seção do Mapa */
+            .map-container iframe {
+                height: 250px; /* Tornar o mapa menor */
+            }
+
+            .transport-options {
+                display: flex; /* Mudar para flex */
+                flex-direction: row; /* Colocar um ao lado do outro */
+                flex-wrap: wrap; /* Permitir quebra de linha se não houver espaço */
+                justify-content: center; /* Centralizar itens */
+                gap: 12px; /* Gap menor */
+            }
+
+            .transport-card {
+                padding: 10px; /* Ajustar padding */
+                flex: 1 1 30%; /* Permitir que cresça/diminua, com base de 30% para caber 3 por linha */
+                min-width: 120px; /* Largura mínima para evitar que fiquem muito pequenos */
+                max-width: 200px; /* Largura máxima para evitar que fiquem muito grandes em 2 colunas */
+            }
+
+            .transport-card h3 {
+                font-size: 1rem;
+            }
+
+            .transport-card p {
+                font-size: 0.8rem;
+            }
+
+           
+        }
+
+        /* Ajustes específicos para celulares pequenos (max-width: 480px) */
+        @media (max-width: 480px) {
+            .chat-container {
+                width: 240px; /* Chat ainda menor */
+                right: 0px; /* Posição mais para a direita para evitar borda da tela */
+                height: 350px; /* Altura menor */
+            }
+
+            .back-to-top {
+                left: 5px; /* Mais perto da borda */
+                bottom: 5px; /* Mais perto da borda */
+                width: 30px; /* Ainda menor */
+                height: 30px; /* Ainda menor */
+                font-size: 0.8rem; /* Fonte menor */
+            }
+
+            section {
+                padding: 25px 8px; /* Padding mínimo nas seções */
+            }
+
+            .section-header {
+                padding-bottom: 12px; /* Padding menor */
+            }
+
+            .section-title {
+                font-size: 1.4rem; /* Títulos menores */
+            }
+
+            .section-subtitle {
+                font-size: 0.75rem; /* Subtítulos menores */
+            }
+
+            .hero-title {
+                font-size: 2rem; /* Título do hero menor */
+            }
+
+            .hero-subtitle {
+                font-size: 0.85rem; /* Subtítulo do hero menor */
+            }
+
+            /* Formulários */
+            .contact-form .form-row,
+            .work-form .form-row {
+                gap: 8px; /* Espaço entre grupos empilhados ainda menor */
+            }
+
+            .contact-form input,
+            .contact-form select,
+            .contact-form textarea,
+            .work-form input,
+            .work-form select,
+            .work-form textarea {
+                padding: 3px; /* Padding MÍNIMO para campos de formulário */
+                font-size: 0.7rem; /* Fonte AINDA MENOR */
+            }
+
+            .submit-button {
+                padding: 6px 8px; /* Padding e fonte do botão AINDA MENORES */
+                font-size: 0.75rem;
+            }
+
+            .form-group label {
+                font-size: 0.75rem; /* Labels AINDA MENORES */
+            }
+
+            .form-group small {
+                font-size: 0.6rem; /* Texto de ajuda AINDA MENOR */
+            }
+             .checkbox-group label {
+                font-size: 0.7rem; /* Checkbox label AINDA MENOR */
+            }
+
+
+            /* Seção de Informações de Contato */
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr); /* FORÇA DUAS COLUNAS para celulares muito pequenos */
+                gap: 6px; /* Espaçamento AINDA MENOR */
+            }
+            .contact-card {
+                padding: 5px; /* Padding MÍNIMO */
+            }
+            .contact-card h3 {
+                font-size: 0.8rem; /* Títulos de cartão AINDA MENORES */
+            }
+            .contact-card p, .contact-card a {
+                font-size: 0.65rem; /* Texto de cartão AINDA MENOR */
+                line-height: 1.2; /* Ajustar line-height para caber mais texto */
+            }
+            .contact-card .contact-icon {
+                font-size: 1.1rem; /* Ícones AINDA MENORES */
+                margin-bottom: 2px; /* Margem mínima */
+            }
+            .contact-card a.map-link, .contact-card a.whatsapp-button, .contact-card a.email-button {
+                padding: 3px 6px; /* Padding muito pequeno para botões */
+                font-size: 0.6rem; /* Fonte muito pequena para botões */
+                margin-top: 3px; /* Margem mínima */
+            }
+
+            /* Seção Trabalhe Conosco */
+            .work-info h3 {
+                font-size: 1.1rem; /* Título na seção de trabalho menor */
+            }
+            .work-info p {
+                font-size: 0.8rem; /* Parágrafo menor */
+            }
+            .benefits-list h4 {
+                font-size: 0.95rem; /* Título de benefícios menor */
+            }
+
+            /* Seção do Mapa */
+            .map-container iframe {
+                height: 180px; /* Mapa ainda menor */
+            }
+            .transport-card {
+                flex: 1 1 45%; /* Duas colunas em telas muito pequenas */
+                min-width: unset; /* Remover min-width para flexibilidade máxima */
+                max-width: unset; /* Remover max-width */
+            }
+            /* Rodapé */
+            .footer-brand h3 {
+                font-size: 1.1rem;
+            }
+            .footer-brand p {
+                font-size: 0.75rem;
+            }
+            .footer-links h4, .footer-contact h4 {
+                font-size: 0.85rem;
+                margin-bottom: 6px;
+            }
+            .footer-links a, .footer-contact-item span {
+                font-size: 0.7rem;
+            }
+            .footer-copyright p {
+                font-size: 0.65rem;
+            }
+        }
     </style>
 </head>
 <body>
- <nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
+ <header>
+    <a href="#content" class="skip-link">Pular para o conteúdo principal</a>
+    <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-brand">
-                <a href="/pages/home.html" class="brand-link">
-                    <img src="/img/logo.png" alt="Logo RAVEN" class="brand-logo">
-                    <span class="brand-text">RAVEN</span>
-                </a>
-            </div>
-            <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu" id="nav-menu" role="menubar">
-                <li role="none"><a href="/pages/home.html" role="menuitem" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
-                <li role="none"><a href="/pages/loja.html" role="menuitem" class="nav-link"><i class="fas fa-store"></i> Loja</a></li>
-                <li role="none"><a href="/pages/artists.html" role="menuitem" class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
-                <li role="none"><a href="/pages/contato.html" role="menuitem" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
-                <li role="none"><a href="/pages/blog.html" role="menuitem" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-                <li role="none"><a href="/pages/game.html" role="menuitem" class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
-            </ul>
-            <div class="nav-icons">
-                <a href="/pages/login.html" class="nav-icon" aria-label="Login" id="user-nav-link">
-                    <i class="fas fa-user" id="nav-user-icon"></i>
-                    <img src="" alt="User Avatar" id="nav-user-avatar" style="display: none; width: 24px; height: 24px; border-radius: 50%;">
-                </a>
-                <a href="/pages/carrinho.html" class="nav-icon cart-icon-container" aria-label="Carrinho de compras">
-                    <i class="fas fa-shopping-cart cart-icon"></i>
+            <a href="index.html" class="nav-brand">
+                <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                <span class="brand-text">RAVEN     </span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+     <li><a href="/pages/home.html" class="nav-link "><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="/pages/loja.html"  class="nav-link "><i class="fas fa-store"></i> Loja</a></li>
+                <li><a href="/pages/artists.html"  class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                <li ><a href="/pages/contato.html" class="nav-link active"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li ><a href="/pages/blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                <li ><a href="/pages/game.html"  class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                <li > <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
+                    <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count" id="cart-count">0</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-icons">
+               
+               
+                <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
+                    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+                    <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
                 </a>
             </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
+</header>
 
 
     <section class="about-creative">
@@ -146,7 +868,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/pages/agendamento.html" class="btn btn-schedule-artist">Agendar Consulta</a>
+             
             </div>
 
             <div class="artist-story">
@@ -182,7 +904,7 @@
                         <li><i class="fas fa-circle-notch"></i> Criação de designs personalizados baseados em referências geek</li>
                     </ul>
                 </div>
-                
+                   <a href="/pages/agendamento.html" class="btn btn-schedule-artist">Agendar Consulta</a>
             </div>
         </div>
     </section>
@@ -270,34 +992,25 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <div class="brand-logo">
-                        <span class="brand-mascot">🐦‍⬛</span>
+                        <img src="/img/Logo.png" alt="Logo RAVEN" class="brand-logo" style="width: 50px; height: 50px;">
                         <h3>RAVEN STUDIO</h3>
                     </div>
                     <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
                     <div class="social-icons">
-                        <a href="#" class="social-icon" aria-label="Instagram do Raven Studio">
+                        <a href="https://www.instagram.com/raven_studio__" class="social-icon" aria-label="Instagram do Raven Studio">
                             <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="Facebook do Raven Studio">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="TikTok do Raven Studio">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="YouTube do Raven Studio">
-                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
                 <div class="footer-links">
                     <h4>LINKS RÁPIDOS</h4>
                     <ul>
-                        <li><a href="/">Início</a></li>
-                        <li><a href="/artists.html">Artistas</a></li>
-                        <li><a href="/portfolio.html">Portfólio</a></li>
-                        <li><a href="#testimonials">Depoimentos</a></li>
+                        <li><a href="/pages/artists.html">Artistas</a></li>
                         <li><a href="/pages/agendamento.html">Agendamento</a></li>
-                        <li><a href="#contact">Contato</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/contato.html">Contato</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -319,13 +1032,117 @@
             <div class="footer-bottom">
                 <div class="footer-divider"></div>
                 <div class="footer-copyright">
-                    <p>&copy; 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p>© 2024 Raven Studio. Todos os direitos reservados.</p>
                     <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
                 </div>
             </div>
         </div>
     </footer>
+
+<button class="back-to-top" id="backToTop" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <div class="raven-chat-widget">
+    <button class="raven-chat-toggle" id="ravenChatToggle" aria-expanded="false" aria-controls="ravenChatContainer" aria-label="Abrir ou fechar o chatbot">
+        <div class="pulse-ring"></div>
+        <i class="fas fa-comment-dots"></i>
+    </button>
+    <div class="raven-chat-container" id="ravenChatContainer" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+        <div class="raven-chat-header">
+            <div class="artist-avatar">
+                <img src="/img/Logo.png" alt="Logo Raven Studio Chatbot">
+            </div>
+            <div class="chat-title">
+                <h4 id="chatTitle">Raven Tattoo Bot</h4>
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span>Online</span>
+                </div>
+            </div>
+            <button class="raven-chat-close" id="ravenChatClose" aria-label="Fechar Chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="raven-chat-content" id="ravenChatContent">
+            <div class="welcome-message">
+                <div class="bot-message" role="alert" aria-live="polite">
+                    <p>Olá! Sou o assistente virtual do Raven Studio. Escolha uma opção abaixo para começar:</p>
+                    <span class="message-time" id="welcomeMessageTime"></span>
+                </div>
+            </div>
+
+            <div class="chat-options-container">
+                <div class="chat-categories" id="ravenChatCategories">
+                    <div class="category-grid">
+                        <button class="category-card" onclick="showRavenCategory('precos')" aria-label="Perguntas sobre Preços">
+                            <i class="fas fa-tag"></i>
+                            <span>Preços</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('dor')" aria-label="Perguntas sobre Nível de Dor">
+                            <i class="fas fa-bolt"></i>
+                            <span>Nível de Dor</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('procedimento')" aria-label="Perguntas sobre Procedimento">
+                            <i class="fas fa-clinic-medical"></i>
+                            <span>Procedimento</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('cuidados')" aria-label="Perguntas sobre Cuidados">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Cuidados</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('estilos')" aria-label="Perguntas sobre Estilos de Tatuagem">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>Estilos</span>
+                        </button>
+                        <button class="category-card" onclick="showRavenCategory('agendamento')" aria-label="Perguntas sobre Agendamento">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Agendamento</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-questions" id="ravenChatQuestions" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showRavenCategories()" aria-label="Voltar para as categorias">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                    <div id="ravenQuestionsList" role="list"></div>
+                </div>
+
+                <div class="chat-answers" id="ravenChatAnswers" style="display: none;">
+                    <div class="back-button">
+                        <button onclick="showRavenQuestions()" aria-label="Voltar para as perguntas da categoria">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                    <div id="ravenAnswerContent" aria-live="polite" aria-atomic="true"></div>
+                    <button class="raven-primary-btn" onclick="showRavenCategories()" aria-label="Iniciar nova consulta ou voltar ao início">
+                        <i class="fas fa-redo"></i> Nova Consulta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
 <script src="/js/home.js"></script>
+     <script src="/js/user-session.js"></script>
+       <script src="/js/navbar.js"></script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -397,6 +1214,315 @@
                 });
             });
         });
+        // Dados premium para o chatbot
+    const ravenFaqData = {
+        "precos": [
+            {
+                question: "Qual é o valor mínimo para uma tatuagem?",
+                answer: "Nosso valor mínimo é de R$ 300 para tatuagens pequenas (até 10cm).<br><br>" +
+                       "Tabela de referência:<br>" +
+                       "• Pequenas (até 10cm): R$ 300-600<br>" +
+                       "• Médias (10-20cm): R$ 600-1200<br>" +
+                       "• Grandes (acima de 20cm): A partir de R$ 1200<br><br>" +
+                       "Valores exatos são definidos após avaliação do desenho."
+            },
+            {
+                question: "Como é calculado o preço da tatuagem?",
+                answer: "Consideramos vários fatores:<br><br>" +
+                       "1. <strong>Tamanho</strong>: Área a ser tatuada<br>" +
+                       "2. <strong>Complexidade</strong>: Nível de detalhes e cores<br>" +
+                       "3. <strong>Tempo estimado</strong>: Horas de trabalho necessárias<br>" +
+                       "4. <strong>Local no corpo</strong>: Áreas mais difíceis podem ter ajuste<br>" +
+                       "5. <strong>Experiência do artista</strong>: Artistas sênior possuem valores diferenciados<br><br>" +
+                       "Oferecemos avaliação gratuita para orçamento preciso."
+            }
+        ],
+        "dor": [
+            {
+                question: "Quanto dói fazer uma tatuagem?",
+                answer: "A dor varia conforme a região do corpo:<br><br>" +
+                       "<strong>Baixa dor (1-3/10)</strong>:<br>" +
+                       "• Braços (parte externa)<br>" +
+                       "• Coxas<br>" +
+                       "• Costas<br><br>" +
+                       "<strong>Média dor (4-6/10)</strong>:<br>" +
+                       "• Panturrilhas<br>" +
+                       "• Peito<br>" +
+                       "• Ombros<br><br>" +
+                       "<strong>Alta dor (7-9/10)</strong>:<br>" +
+                       "• Costelas<br>" +
+                       "• Pés e mãos<br>" +
+                       "• Pescoço/Clavícula<br><br>" +
+                       "A maioria dos clientes descreve como uma queimadura constante."
+            },
+            {
+                question: "Qual a parte mais dolorosa para tatuar?",
+                answer: "As áreas mais dolorosas geralmente são:<br><br>" +
+                       "1. <strong>Costelas</strong>: Pele fina sobre osso<br>" +
+                       "2. <strong>Pés e mãos</strong>: Muitas terminações nervosas<br>" +
+                       "3. <strong>Axilas</strong>: Pele sensível e móvel<br>" +
+                       "4. <strong>Cotovelos e joelhos</strong>: Pele dura e articulações<br><br>" +
+                       "Dica: Sessões mais curtas ajudam nas áreas mais dolorosas."
+            }
+        ],
+        "procedimento": [
+            {
+                question: "Como é o processo de fazer uma tatuagem?",
+                answer: "Nosso processo premium:<br><br>" +
+                       "1. <strong>Consulta</strong>: Discussão do conceito e referências<br>" +
+                       "2. <strong>Agendamento</strong>: Reserva com sinal de 30%<br>" +
+                       "3. <strong>Desenho</strong>: Criação personalizada 48h antes<br>" +
+                       "4. <strong>Aprovação</strong>: Ajustes finais no studio<br>" +
+                       "5. <strong>Aplicação</strong>: Sessão com materiais esterilizados<br>" +
+                       "6. <strong>Cuidados</strong>: Orientações pós-tatuagem<br><br>" +
+                       "Todo material é descartável e de qualidade profissional."
+            },
+            {
+                question: "Preciso usar anestésico?",
+                answer: "Não recomendamos anestésicos tópicos porque:<br><br>" +
+                       "• Podem alterar a textura da pele<br>" +
+                       "• Afetam a absorção da tinta<br>" +
+                       "• O resultado final pode ser comprometido<br><br>" +
+                       "A dor é parte do processo, mas garantimos suporte durante toda a sessão."
+            }
+        ],
+        "cuidados": [
+            {
+                question: "Quais os cuidados após fazer a tatuagem?",
+                answer: "<strong>Primeiras 48 horas</strong>:<br>" +
+                       "• Manter o plástico por 2-4 horas<br>" +
+                       "• Lavar com sabonete antisséptico<br>" +
+                       "• Aplicar pomada específica<br><br>" +
+                       "<strong>Primeiras 2 semanas</strong>:<br>" +
+                       "• Lavar 3x ao dia<br>" +
+                       "• Manter hidratada<br>" +
+                       "• Evitar sol, piscina e mar<br>" +
+                       "• Não arrancar casquinhas<br><br>" +
+                       "<strong>Após cicatrização</strong>:<br>" +
+                       "• Usar protetor solar sempre"
+            },
+            {
+                question: "Quanto tempo leva para cicatrizar completamente?",
+                answer: "Cronograma de cicatrização:<br><br>" +
+                       "<strong>1-3 dias</strong>: Vermelhidão e inchaço<br>" +
+                       "<strong>3-7 dias</strong>: Pele começa a descamar<br>" +
+                       "<strong>2-3 semanas</strong>: Cicatrização superficial completa<br>" +
+                       "<strong>4-6 semanas</strong>: Cicatrização total das camadas profundas<br><br>" +
+                       "Tatuagens maiores podem levar mais tempo para cicatrizar completamente."
+            }
+        ],
+        "estilos": [
+            {
+                question: "Quais estilos de tatuagem vocês oferecem?",
+                answer: "Especialidades do nosso studio:<br><br>" +
+                       "• <strong>Tradicional/Old School</strong>: Cores vivas, traços grossos<br>" +
+                       "• <strong>Realismo</strong>: Retratos, animais, paisagens<br>" +
+                       "• <strong>Blackwork</strong>: Preenchimentos sólidos em preto<br>" +
+                       "• <strong>Aquarela</strong>: Efeito pintura com cores fluidas<br>" +
+                       "• <strong>Geométrico</strong>: Padrões simétricos e precisos<br>" +
+                       "• <strong>Pontilhismo</strong>: Imagens formadas por pontos<br>" +
+                       "• <strong>Minimalista</strong>: Traços finos e simplificados<br><br>" +
+                       "Cada artista tem seu estilo predominante."
+            },
+            {
+                question: "Qual estilo de tatuagem dura mais tempo?",
+                answer: "Durabilidade por estilo:<br><br>" +
+                       "<strong>Melhor duração</strong>:<br>" +
+                       "• Tradicional (traços grossos e cores sólidas)<br>" +
+                       "• Blackwork (grandes áreas de tinta preta)<br><br>" +
+                       "<strong>Requer mais manutenção</strong>:<br>" +
+                       "• Aquarela (cores claras e degradês)<br>" +
+                       "• Fine Line (traços muito finos)<br><br>" +
+                       "Independente do estilo, cuidados adequados prolongam a vida da tatuagem."
+            }
+        ],
+        "agendamento": [
+            {
+                question: "Como faço para agendar minha tatuagem?",
+                answer: "Processo de agendamento:<br><br>" +
+                       "1. Acesse nosso sistema online<br>" +
+                       "2. Selecione o artista desejado<br>" +
+                       "3. Escolha data/horário disponível<br>" +
+                       "4. Descreva sua ideia em detalhes<br>" +
+                       "5. Efetue o pagamento do sinal (30%)<br>" +
+                       "6. Receba confirmação por e-mail<br><br>" +
+                       "Cancelamentos devem ser feitos com 48h de antecedência."
+            },
+            {
+                question: "Preciso ter o desenho pronto antes de agendar?",
+                answer: "Não é necessário! Nossos artistas oferecem:<br><br>" +
+                       "• <strong>Consultoria criativa</strong>: Ajudamos a desenvolver sua ideia<br>" +
+                       "• <strong>Design personalizado</strong>: Criamos a arte exclusiva para você<br>" +
+                       "• <strong>Revisões gratuitas</strong>: Ajustes até você aprovar<br><br>" +
+                       "Basta trazer referências ou descrever sua visão que cuidamos do resto."
+            }
+        ]
+    };
+
+    // Variáveis de estado
+    let currentRavenCategory = null; // Armazena a categoria atualmente selecionada para o botão "Voltar"
+
+    // Função para formatar a hora (ex: 10:30 PM)
+    function formatTime(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // The hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        return hours + ':' + minutes + ' ' + ampm;
+    }
+
+    // Funções do Chatbot
+    function showRavenCategories() {
+        document.getElementById('ravenChatCategories').style.display = 'block';
+        document.getElementById('ravenChatQuestions').style.display = 'none';
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        currentRavenCategory = null; // Reseta a categoria atual
+
+        // Adiciona animação às categorias
+        const categories = document.querySelectorAll('.category-card');
+        categories.forEach((card, index) => {
+            card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
+            card.style.opacity = '0'; // Garante que começa invisível para a animação
+        });
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenCategory(category) {
+        currentRavenCategory = category;
+
+        const questionsContainer = document.getElementById('ravenQuestionsList');
+        const categoryData = ravenFaqData[category] || [];
+
+        questionsContainer.innerHTML = ''; // Limpa as perguntas anteriores
+
+        if (categoryData.length > 0) {
+            categoryData.forEach((faq, index) => {
+                const questionCard = document.createElement('button'); // Usar button para melhor acessibilidade
+                questionCard.className = 'question-card';
+                questionCard.setAttribute('role', 'listitem'); // Para leitores de tela
+                questionCard.setAttribute('aria-label', `Pergunta: ${faq.question}`);
+                questionCard.innerHTML = `<p>${faq.question}</p>`;
+                // Ao clicar, exibe a resposta para a pergunta específica
+                questionCard.onclick = () => showRavenAnswer(category, index);
+                questionCard.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
+                questionCard.style.opacity = '0';
+                questionsContainer.appendChild(questionCard);
+            });
+        } else {
+            questionsContainer.innerHTML = '<p style="color:#ddd; text-align:center;">Nenhuma pergunta disponível para esta categoria.</p>';
+        }
+
+        document.getElementById('ravenChatCategories').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'block';
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenAnswer(category, questionIndex) {
+        const faq = ravenFaqData[category][questionIndex];
+        const answerContent = document.getElementById('ravenAnswerContent');
+
+        answerContent.innerHTML = `
+            <div class="answer-container">
+                <h5>${faq.question}</h5>
+                <p>${faq.answer}</p>
+            </div>
+        `;
+
+        document.getElementById('ravenChatCategories').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'none';
+        document.getElementById('ravenChatAnswers').style.display = 'block';
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+    function showRavenQuestions() {
+        if (currentRavenCategory) {
+            showRavenCategory(currentRavenCategory); // Retorna para a categoria específica
+        } else {
+            showRavenCategories(); // Padrão: volta para as categorias
+        }
+        document.getElementById('ravenChatAnswers').style.display = 'none';
+        document.getElementById('ravenChatQuestions').style.display = 'block'; // Garante que a seção de perguntas esteja visível
+        // Rola para o topo do conteúdo do chat
+        document.getElementById('ravenChatContent').scrollTop = 0;
+    }
+
+
+    // Inicialização do Chatbot
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatToggle = document.getElementById('ravenChatToggle');
+        const chatContainer = document.getElementById('ravenChatContainer');
+        const chatClose = document.getElementById('ravenChatClose');
+        const welcomeMessageTime = document.getElementById('welcomeMessageTime');
+        
+        // Botão de voltar ao topo
+        const backToTopButton = document.getElementById('backToTop');
+            
+        // Mostrar/ocultar botão de voltar ao topo
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+            
+        // Voltar ao topo
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Atualiza a hora da mensagem de boas-vindas
+        welcomeMessageTime.textContent = formatTime(new Date());
+
+        // Abrir/fechar chat
+        chatToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isActive = chatContainer.classList.toggle('active');
+            chatToggle.setAttribute('aria-expanded', isActive); // Acessibilidade: atualiza estado do botão
+            if (isActive) {
+                showRavenCategories(); // Garante que as categorias são mostradas ao abrir
+                chatContainer.focus(); // Foca no container para acessibilidade
+            }
+        });
+
+        chatClose.addEventListener('click', function() {
+            chatContainer.classList.remove('active');
+            chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
+            chatToggle.focus(); // Retorna o foco ao botão de toggle
+        });
+
+        // Fechar chat ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!chatContainer.contains(e.target) && !chatToggle.contains(e.target)) {
+                chatContainer.classList.remove('active');
+                chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
+            }
+        });
+
+        // Evitar fechar ao clicar dentro do chat
+        chatContainer.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Adiciona funcionalidade para fechar com a tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && chatContainer.classList.contains('active')) {
+                chatContainer.classList.remove('active');
+                chatToggle.setAttribute('aria-expanded', 'false');
+                chatToggle.focus();
+            }
+        });
+
+    });
     </script>
 </body>
 </html>
