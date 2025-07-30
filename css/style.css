@@ -2690,11 +2690,6 @@ textarea:focus-visible {
     transition: all 0.3s ease;
 }
 
-.artist-badge:hover {
-    background: var(--gradient-soft);
-    color: var(--primary-black);
-    transform: translateY(-3px);
-}
 
 
 /* Gallery Section */
