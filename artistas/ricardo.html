@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricardo Alves | Tatuador Especialista em Tribal e Blackwork | Ink Studio Tattoo</title>
-        <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+<link rel="icon" href="/img/raven.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/navbar.css">
 
     <meta name="description" content="Ricardo Alves, mestre em tatuagem tribal e blackwork no Ink Studio Tattoo. Conheça seu portfólio, estilo único e agende sua tatuagem personalizada.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -806,33 +807,43 @@
     </style>
 </head>
 <body>
-<nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
-    <div class="nav-container">
-        <div class="nav-brand">
-            <a href="/pages/home.html" class="brand-link">
-                <img src="/img/logo.png" alt="Logo RAVEN" class="brand-logo">
-                <span class="brand-text">RAVEN</span>
+<header>
+    <a hreadf="#content" class="skip-link">Pular para o conteúdo principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                <span class="brand-text">RAVEN     </span>
             </a>
+
+            <ul class="nav-menu" id="navMenu">
+     <li><a href="/pages/home.html" class="nav-link "><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="/pages/loja.html"  class="nav-link "><i class="fas fa-store"></i> Loja</a></li>
+                <li><a href="/pages/artists.html"  class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                <li ><a href="/pages/contato.html" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li ><a href="/pages/blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                <li ><a href="/pages/game.html"  class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                <li > <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-icons">
+               
+               
+                <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
+                    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+                    <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <ul class="nav-menu" id="nav-menu" role="menubar">
-            <li role="none"><a href="/pages/home.html" role="menuitem" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
-            <li role="none"><a href="/pages/loja.html" role="menuitem" class="nav-link active"><i class="fas fa-store"></i> Loja</a></li>
-            <li role="none"><a href="/pages/artists.html" role="menuitem" class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
-            <li role="none"><a href="/pages/contato.html" role="menuitem" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
-            <li role="none"><a href="/pages/blog.html" role="menuitem" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-            <li role="none"><a href="/pages/game.html" role="menuitem" class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
-        </ul>
-        <div class="nav-icons">
-            <a href="/pages/login.html" class="nav-icon" aria-label="Login"><i class="fas fa-user"></i></a>
-            <a href="/pages/carrinho.html" class="nav-icon" aria-label="Carrinho de compras"><i class="fas fa-shopping-cart"></i></a>
-        </div>
-    </div>
-</nav>
+    </nav>
+</header>
 
 
     <section class="about-creative">
@@ -913,8 +924,8 @@
                 <button class="filter-btn" data-filter="abstractblack">Abstrato Blackwork</button>
             </div>
             <div class="portfolio-grid" id="lightgallery">
-                <a href="../images/tribal1.jpg" class="portfolio-item" data-category="tribal" data-sub-html="<h4>Tribal Maori</h4><p>Design tribal com padrões e linhas autênticas.</p>">
-                    <img src="../images/tribal1-thumb.jpg" alt="Tatuagem tribal maori" class="portfolio-img">
+                <a href="../img/tatuagens/tribal3.jpg" class="portfolio-item" data-category="tribal" data-sub-html="<h4>Tribal Maori</h4><p>Design tribal com padrões e linhas autênticas.</p>">
+                    <img src="../img/tatuagens/tribal3.jpg" alt="Tatuagem tribal maori" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Tribal</span>
                         <div class="portfolio-info">
@@ -923,18 +934,18 @@
                         </div>
                     </div>
                 </a>
-                <a href="../images/blackwork1.jpg" class="portfolio-item" data-category="blackwork" data-sub-html="<h4>Crânio Blackwork</h4><p>Crânio detalhado em estilo blackwork com sombreamento intenso.</p>">
-                    <img src="../images/blackwork1-thumb.jpg" alt="Tatuagem crânio blackwork" class="portfolio-img">
+                <a href="../img/tatuagens/blackwork1.jpg" class="portfolio-item" data-category="blackwork" data-sub-html="<h4>Crânio Blackwork</h4><p>Crânio detalhado em estilo blackwork com sombreamento intenso.</p>">
+                    <img src="../img/tatuagens/blackwork1.jpg" alt="Tatuagem crânio blackwork" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Blackwork</span>
                         <div class="portfolio-info">
-                            <h3>Crânio</h3>
+                            <h3>Black Obscuro</h3>
                             <p>Sombreamento intenso</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/tribal2.jpg" class="portfolio-item" data-category="tribal" data-sub-html="<h4>Polinésio Moderno</h4><p>Design polinésio com elementos contemporâneos.</p>">
-                    <img src="../images/tribal2-thumb.jpg" alt="Tatuagem polinésio moderno" class="portfolio-img">
+                <a href="../img/tatuagens/polinesio.jpg" class="portfolio-item" data-category="tribal" data-sub-html="<h4>Polinésio Moderno</h4><p>Design polinésio com elementos contemporâneos.</p>">
+                    <img src="../img/tatuagens/polinesio.jpg" alt="Tatuagem polinésio moderno" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Tribal</span>
                         <div class="portfolio-info">
@@ -943,18 +954,18 @@
                         </div>
                     </div>
                 </a>
-                <a href="../images/geometricblack1.jpg" class="portfolio-item" data-category="geometricblack" data-sub-html="<h4>Mão Geométrica Blackwork</h4><p>Design geométrico intricado na mão em blackwork.</p>">
-                    <img src="../images/geometricblack1-thumb.jpg" alt="Tatuagem mão geométrica blackwork" class="portfolio-img">
+                <a href="../img/tatuagens/geométrico1.jpg" class="portfolio-item" data-category="geometricblack" data-sub-html="<h4>Mão Geométrica Blackwork</h4><p>Design geométrico intricado na mão em blackwork.</p>">
+                    <img src="../img/tatuagens/geométrico1.jpg" alt="Tatuagem mão geométrica blackwork" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Geométrico Blackwork</span>
                         <div class="portfolio-info">
-                            <h3>Mão Geométrica</h3>
+                            <h3>Braço Floral Black</h3>
                             <p>Intricado e detalhado</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/blackwork2.jpg" class="portfolio-item" data-category="blackwork" data-sub-html="<h4>Floresta Noturna Blackwork</h4><p>Paisagem de floresta com árvores e sombras escuras.</p>">
-                    <img src="../images/blackwork2-thumb.jpg" alt="Tatuagem floresta noturna blackwork" class="portfolio-img">
+                <a href="../img/tatuagens/blackwork2.jpg" class="portfolio-item" data-category="blackwork" data-sub-html="<h4>Floresta Noturna Blackwork</h4><p>Paisagem de floresta com árvores e sombras escuras.</p>">
+                    <img src="../img/tatuagens/blackwork2.jpg" alt="Tatuagem floresta noturna blackwork" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Blackwork</span>
                         <div class="portfolio-info">
@@ -963,8 +974,8 @@
                         </div>
                     </div>
                 </a>
-                <a href="../images/abstractblack1.jpg" class="portfolio-item" data-category="abstractblack" data-sub-html="<h4>Abstrato Fluido Blackwork</h4><p>Composição abstrata com formas orgânicas e pretos sólidos.</p>">
-                    <img src="../images/abstractblack1-thumb.jpg" alt="Tatuagem abstrato fluido blackwork" class="portfolio-img">
+                <a href="../img/tatuagens/blackwork3.jpg" class="portfolio-item" data-category="abstractblack" data-sub-html="<h4>Abstrato Fluido Blackwork</h4><p>Composição abstrata com formas orgânicas e pretos sólidos.</p>">
+                    <img src="../img/tatuagens/blackwork3.jpg" alt="Tatuagem abstrato fluido blackwork" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Abstrato Blackwork</span>
                         <div class="portfolio-info">
@@ -982,34 +993,25 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <div class="brand-logo">
-                        <span class="brand-mascot">🐦‍⬛</span>
+                        <img src="/img/Logo.png" alt="Logo RAVEN" class="brand-logo" style="width: 50px; height: 50px;">
                         <h3>RAVEN STUDIO</h3>
                     </div>
                     <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
                     <div class="social-icons">
-                        <a href="#" class="social-icon" aria-label="Instagram do Raven Studio">
+                        <a href="https://www.instagram.com/raven_studio__" class="social-icon" aria-label="Instagram do Raven Studio">
                             <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="Facebook do Raven Studio">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="TikTok do Raven Studio">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="YouTube do Raven Studio">
-                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
                 <div class="footer-links">
                     <h4>LINKS RÁPIDOS</h4>
                     <ul>
-                        <li><a href="/">Início</a></li>
-                        <li><a href="/artists.html">Artistas</a></li>
-                        <li><a href="/portfolio.html">Portfólio</a></li>
-                        <li><a href="#testimonials">Depoimentos</a></li>
+                        <li><a href="/pages/artists.html">Artistas</a></li>
                         <li><a href="/pages/agendamento.html">Agendamento</a></li>
-                        <li><a href="#contact">Contato</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/contato.html">Contato</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -1031,12 +1033,13 @@
             <div class="footer-bottom">
                 <div class="footer-divider"></div>
                 <div class="footer-copyright">
-                    <p>&copy; 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p>© 2024 Raven Studio. Todos os direitos reservados.</p>
                     <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
                 </div>
             </div>
         </div>
     </footer>
+
 <button class="back-to-top" id="backToTop" title="Voltar ao topo">
         <i class="fas fa-arrow-up"></i>
     </button>

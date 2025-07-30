@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Isabella Torres | Tatuadora Especialista em Fine Line e Pontilhismo | Ink Studio Tattoo</title>
         <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/navbar.css">
 
     <meta name="description" content="Isabella Torres, mestre em tatuagem fine line e pontilhismo no Ink Studio Tattoo. Conheça seu portfólio, estilo único e agende sua tatuagem personalizada.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -806,33 +807,43 @@
     </style>
 </head>
 <body>
-<nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
-    <div class="nav-container">
-        <div class="nav-brand">
-            <a href="/pages/home.html" class="brand-link">
-                <img src="/img/logo.png" alt="Logo RAVEN" class="brand-logo">
-                <span class="brand-text">RAVEN</span>
+<header>
+    <a hreadf="#content" class="skip-link">Pular para o conteúdo principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                <span class="brand-text">RAVEN     </span>
             </a>
+
+            <ul class="nav-menu" id="navMenu">
+     <li><a href="/pages/home.html" class="nav-link "><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="/pages/loja.html"  class="nav-link "><i class="fas fa-store"></i> Loja</a></li>
+                <li><a href="/pages/artists.html"  class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                <li ><a href="/pages/contato.html" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li ><a href="/pages/blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                <li ><a href="/pages/game.html"  class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                <li > <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-icons">
+               
+               
+                <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
+                    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+                    <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <ul class="nav-menu" id="nav-menu" role="menubar">
-            <li role="none"><a href="/pages/home.html" role="menuitem" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
-            <li role="none"><a href="/pages/loja.html" role="menuitem" class="nav-link active"><i class="fas fa-store"></i> Loja</a></li>
-            <li role="none"><a href="/pages/artists.html" role="menuitem" class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
-            <li role="none"><a href="/pages/contato.html" role="menuitem" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
-            <li role="none"><a href="/pages/blog.html" role="menuitem" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-            <li role="none"><a href="/pages/game.html" role="menuitem" class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
-        </ul>
-        <div class="nav-icons">
-            <a href="/pages/login.html" class="nav-icon" aria-label="Login"><i class="fas fa-user"></i></a>
-            <a href="/pages/carrinho.html" class="nav-icon" aria-label="Carrinho de compras"><i class="fas fa-shopping-cart"></i></a>
-        </div>
-    </div>
-</nav>
+    </nav>
+</header>
 
 
     <section class="about-creative">
@@ -913,28 +924,28 @@
                 <button class="filter-btn" data-filter="minimalista">Minimalista</button>
             </div>
             <div class="portfolio-grid" id="lightgallery">
-                <a href="../images/fineline1.jpg" class="portfolio-item" data-category="fineline" data-sub-html="<h4>Flor de Lótus Fine Line</h4><p>Tatuagem delicada e detalhada no estilo fine line.</p>">
-                    <img src="../images/fineline1-thumb.jpg" alt="Tatuagem flor de lótus fine line" class="portfolio-img">
+                <a href="../img/tatuagens/fineline1.jpg" class="portfolio-item" data-category="fineline" data-sub-html="<h4>Flor de Lótus Fine Line</h4><p>Tatuagem delicada e detalhada no estilo fine line.</p>">
+                    <img src="../img/tatuagens/fineline1.jpg" alt="Tatuagem flor de lótus fine line" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Fine Line</span>
                         <div class="portfolio-info">
-                            <h3>Flor de Lótus</h3>
+                            <h3>Borboletas e Nome</h3>
                             <p>Tatuagem delicada</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/pontilhismo1.jpg" class="portfolio-item" data-category="pontilhismo" data-sub-html="<h4>Mandala em Pontilhismo</h4><p>Complexa mandala criada com a técnica de pontilhismo.</p>">
-                    <img src="../images/pontilhismo1-thumb.jpg" alt="Tatuagem mandala pontilhismo" class="portfolio-img">
+                <a href="../img/tatuagens/pontilhismo1.jpg" class="portfolio-item" data-category="pontilhismo" data-sub-html="<h4>Mandala em Pontilhismo</h4><p>Complexa mandala criada com a técnica de pontilhismo.</p>">
+                    <img src="../img/tatuagens/pontilhismo1.jpg" alt="Tatuagem mandala pontilhismo" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Pontilhismo</span>
                         <div class="portfolio-info">
-                            <h3>Mandala</h3>
+                            <h3>Arte em Pontilhismo</h3>
                             <p>Técnica de pontilhismo</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/botanico1.jpg" class="portfolio-item" data-category="botanico" data-sub-html="<h4>Ramo de Folhas Botânicas</h4><p>Design botânico elegante e orgânico.</p>">
-                    <img src="../images/botanico1-thumb.jpg" alt="Tatuagem ramo de folhas botânicas" class="portfolio-img">
+                <a href="../img/tatuagens/botanico.jpg" class="portfolio-item" data-category="botanico" data-sub-html="<h4>Ramo de Folhas Botânicas</h4><p>Design botânico elegante e orgânico.</p>">
+                    <img src="../img/tatuagens/botanico.jpg" alt="Tatuagem ramo de folhas botânicas" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Botânico</span>
                         <div class="portfolio-info">
@@ -943,8 +954,8 @@
                         </div>
                     </div>
                 </a>
-                <a href="../images/minimalista1.jpg" class="portfolio-item" data-category="minimalista" data-sub-html="<h4>Símbolo Minimalista</h4><p>Tatuagem pequena e significativa.</p>">
-                    <img src="../images/minimalista1-thumb.jpg" alt="Tatuagem símbolo minimalista" class="portfolio-img">
+                <a href="../img/tatuagens/minimalista1.jpg" class="portfolio-item" data-category="minimalista" data-sub-html="<h4>Símbolo Minimalista</h4><p>Tatuagem pequena e significativa.</p>">
+                    <img src="../img/tatuagens/minimalista1.jpg" alt="Tatuagem símbolo minimalista" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Minimalista</span>
                         <div class="portfolio-info">
@@ -953,22 +964,22 @@
                         </div>
                     </div>
                 </a>
-                <a href="../images/fineline2.jpg" class="portfolio-item" data-category="fineline" data-sub-html="<h4>Constelação Fine Line</h4><p>Desenho de constelação com traços finos e precisos.</p>">
-                    <img src="../images/fineline2-thumb.jpg" alt="Tatuagem constelação fine line" class="portfolio-img">
+                <a href="../img/tatuagens/fineline2.jpg" class="portfolio-item" data-category="fineline" data-sub-html="<h4>Constelação Fine Line</h4><p>Desenho de constelação com traços finos e precisos.</p>">
+                    <img src="../img/tatuagens/fineline2.jpg" alt="Tatuagem constelação fine line" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Fine Line</span>
                         <div class="portfolio-info">
-                            <h3>Constelação</h3>
+                            <h3>Flor Fine Line</h3>
                             <p>Traços finos e precisos</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/pontilhismo2.jpg" class="portfolio-item" data-category="pontilhismo" data-sub-html="<h4>Animal Geométrico em Pontilhismo</h4><p>Combinação de formas geométricas e pontilhismo.</p>">
-                    <img src="../images/pontilhismo2-thumb.jpg" alt="Tatuagem animal geométrico pontilhismo" class="portfolio-img">
+                <a href="../img/tatuagens/pontilhismo2.jpg" class="portfolio-item" data-category="pontilhismo" data-sub-html="<h4>Animal Geométrico em Pontilhismo</h4><p>Combinação de formas geométricas e pontilhismo.</p>">
+                    <img src="../img/tatuagens/pontilhismo2.jpg" alt="Tatuagem animal geométrico pontilhismo" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Pontilhismo</span>
                         <div class="portfolio-info">
-                            <h3>Animal Geométrico</h3>
+                            <h3>Pontilhismo/h3>
                             <p>Geometria e pontilhismo</p>
                         </div>
                     </div>
@@ -982,34 +993,25 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <div class="brand-logo">
-                        <span class="brand-mascot">🐦‍⬛</span>
+                        <img src="/img/Logo.png" alt="Logo RAVEN" class="brand-logo" style="width: 50px; height: 50px;">
                         <h3>RAVEN STUDIO</h3>
                     </div>
                     <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
                     <div class="social-icons">
-                        <a href="#" class="social-icon" aria-label="Instagram do Raven Studio">
+                        <a href="https://www.instagram.com/raven_studio__" class="social-icon" aria-label="Instagram do Raven Studio">
                             <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="Facebook do Raven Studio">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="TikTok do Raven Studio">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="YouTube do Raven Studio">
-                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
                 <div class="footer-links">
                     <h4>LINKS RÁPIDOS</h4>
                     <ul>
-                        <li><a href="/">Início</a></li>
-                        <li><a href="/artists.html">Artistas</a></li>
-                        <li><a href="/portfolio.html">Portfólio</a></li>
-                        <li><a href="#testimonials">Depoimentos</a></li>
+                        <li><a href="/pages/artists.html">Artistas</a></li>
                         <li><a href="/pages/agendamento.html">Agendamento</a></li>
-                        <li><a href="#contact">Contato</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/contato.html">Contato</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -1031,12 +1033,13 @@
             <div class="footer-bottom">
                 <div class="footer-divider"></div>
                 <div class="footer-copyright">
-                    <p>&copy; 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p>© 2024 Raven Studio. Todos os direitos reservados.</p>
                     <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
                 </div>
             </div>
         </div>
     </footer>
+
 <button class="back-to-top" id="backToTop" title="Voltar ao topo">
         <i class="fas fa-arrow-up"></i>
     </button>

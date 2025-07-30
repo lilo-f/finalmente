@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marco Oliveira | Tatuador Especialista em Old School e Neotradicional | Ink Studio Tattoo</title>
         <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/navbar.css">
 
     <meta name="description" content="Marco Oliveira, mestre em tatuagem old school e neotradicional no Ink Studio Tattoo. Conheça seu portfólio, estilo único e agende sua tatuagem personalizada.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -806,33 +807,43 @@
     </style>
 </head>
 <body>
-<nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
-    <div class="nav-container">
-        <div class="nav-brand">
-            <a href="/pages/home.html" class="brand-link">
-                <img src="/img/logo.png" alt="Logo RAVEN" class="brand-logo">
-                <span class="brand-text">RAVEN</span>
+<header>
+    <a hreadf="#content" class="skip-link">Pular para o conteúdo principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                <span class="brand-text">RAVEN     </span>
             </a>
+
+            <ul class="nav-menu" id="navMenu">
+     <li><a href="/pages/home.html" class="nav-link "><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="/pages/loja.html"  class="nav-link "><i class="fas fa-store"></i> Loja</a></li>
+                <li><a href="/pages/artists.html"  class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                <li ><a href="/pages/contato.html" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li ><a href="/pages/blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                <li ><a href="/pages/game.html"  class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                <li > <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-icons">
+               
+               
+                <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
+                    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+                    <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <ul class="nav-menu" id="nav-menu" role="menubar">
-            <li role="none"><a href="/pages/home.html" role="menuitem" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
-            <li role="none"><a href="/pages/loja.html" role="menuitem" class="nav-link active"><i class="fas fa-store"></i> Loja</a></li>
-            <li role="none"><a href="/pages/artists.html" role="menuitem" class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
-            <li role="none"><a href="/pages/contato.html" role="menuitem" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
-            <li role="none"><a href="/pages/blog.html" role="menuitem" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-            <li role="none"><a href="/pages/game.html" role="menuitem" class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
-        </ul>
-        <div class="nav-icons">
-            <a href="/pages/login.html" class="nav-icon" aria-label="Login"><i class="fas fa-user"></i></a>
-            <a href="/pages/carrinho.html" class="nav-icon" aria-label="Carrinho de compras"><i class="fas fa-shopping-cart"></i></a>
-        </div>
-    </div>
-</nav>
+    </nav>
+</header>
 
 
     <section class="about-creative">
@@ -909,66 +920,64 @@
                 <button class="filter-btn active" data-filter="all">Todos</button>
                 <button class="filter-btn" data-filter="oldschool">Old School</button>
                 <button class="filter-btn" data-filter="neotradicional">Neotradicional</button>
-                <button class="filter-btn" data-filter="tradicional">Tradicional</button>
-                <button class="filter-btn" data-filter="coresvibrantes">Cores Vibrantes</button>
             </div>
             <div class="portfolio-grid" id="lightgallery">
-                <a href="../images/oldschool1.jpg" class="portfolio-item" data-category="oldschool" data-sub-html="<h4>Âncora Tradicional</h4><p>Clássica tatuagem old school com cores fortes.</p>">
-                    <img src="../images/oldschool1-thumb.jpg" alt="Tatuagem âncora old school" class="portfolio-img">
+                <a href="../img/tatuagens/oldSchool1.jpg" class="portfolio-item" data-category="oldschool" data-sub-html="<h4>Âncora Tradicional</h4><p>Clássica tatuagem old school com cores fortes.</p>">
+                    <img src="../img/tatuagens/oldSchool1.jpg" alt="Tatuagem âncora old school" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Old School</span>
                         <div class="portfolio-info">
-                            <h3>Âncora</h3>
+                            <h3>OldSchool</h3>
                             <p>Cores fortes</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/neotradicional1.jpg" class="portfolio-item" data-category="neotradicional" data-sub-html="<h4>Rosa Neotradicional</h4><p>Rosa vibrante com detalhes neotradicionais.</p>">
-                    <img src="../images/neotradicional1-thumb.jpg" alt="Tatuagem rosa neotradicional" class="portfolio-img">
+                <a href="../img/tatuagens/neotradicional1.jpg" class="portfolio-item" data-category="neotradicional" data-sub-html="<h4>Rosa Neotradicional</h4><p>Rosa vibrante com detalhes neotradicionais.</p>">
+                    <img src="../img/tatuagens/neotradicional1.jpg" alt="Tatuagem rosa neotradicional" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Neotradicional</span>
                         <div class="portfolio-info">
-                            <h3>Rosa Vibrante</h3>
+                            <h3>Rosa</h3>
                             <p>Detalhes neotradicionais</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/oldschool2.jpg" class="portfolio-item" data-category="oldschool" data-sub-html="<h4>Andorinha Clássica</h4><p>Andorinha em estilo tradicional americano.</p>">
-                    <img src="../images/oldschool2-thumb.jpg" alt="Tatuagem andorinha old school" class="portfolio-img">
+                <a href="../img/tatuagens/oldSchool2.jpg" class="portfolio-item" data-category="oldschool" data-sub-html="<h4>Andorinha Clássica</h4><p>Andorinha em estilo tradicional americano.</p>">
+                    <img src="../img/tatuagens/oldSchool2.jpg" alt="Tatuagem andorinha old school" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Old School</span>
                         <div class="portfolio-info">
-                            <h3>Andorinha</h3>
+                            <h3>Gato Pantera</h3>
                             <p>Estilo tradicional</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/neotradicional2.jpg" class="portfolio-item" data-category="neotradicional" data-sub-html="<h4>Retrato Neotradicional</h4><p>Retrato estilizado com elementos neotradicionais.</p>">
-                    <img src="../images/neotradicional2-thumb.jpg" alt="Tatuagem retrato neotradicional" class="portfolio-img">
+                <a href="../img/tatuagens/neotradiciona2.jpg" class="portfolio-item" data-category="neotradicional" data-sub-html="<h4>Retrato Neotradicional</h4><p>Retrato estilizado com elementos neotradicionais.</p>">
+                    <img src="../img/tatuagens/neotradiciona2.jpg" alt="Tatuagem retrato neotradicional" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Neotradicional</span>
                         <div class="portfolio-info">
-                            <h3>Retrato Estilizado</h3>
+                            <h3>Joelhos Old</h3>
                             <p>Elementos neotradicionais</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/oldschool3.jpg" class="portfolio-item" data-category="oldschool" data-sub-html="<h4>Coração e Punhal</h4><p>Tema clássico com cores vibrantes e traços fortes.</p>">
-                    <img src="../images/oldschool3-thumb.jpg" alt="Tatuagem coração e punhal old school" class="portfolio-img">
+                <a href="../img/tatuagens/oldSchool3.jpg" class="portfolio-item" data-category="oldschool" data-sub-html="<h4>Coração e Punhal</h4><p>Tema clássico com cores vibrantes e traços fortes.</p>">
+                    <img src="../img/tatuagens/oldSchool3.jpg" alt="Tatuagem coração e punhal old school" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Old School</span>
                         <div class="portfolio-info">
-                            <h3>Coração e Punhal</h3>
+                            <h3>Braço Fechado Old School</h3>
                             <p>Tema clássico</p>
                         </div>
                     </div>
                 </a>
-                <a href="../images/neotradicional3.jpg" class="portfolio-item" data-category="neotradicional" data-sub-html="<h4>Coruja Neotradicional</h4><p>Coruja detalhada com design contemporâneo.</p>">
-                    <img src="../images/neotradicional3-thumb.jpg" alt="Tatuagem coruja neotradicional" class="portfolio-img">
+                <a href="../img/tatuagens/neotradiciona3.jpg" class="portfolio-item" data-category="neotradicional" data-sub-html="<h4>Coruja Neotradicional</h4><p>Coruja detalhada com design contemporâneo.</p>">
+                    <img src="../img/tatuagens/neotradiciona3.jpg" alt="Tatuagem coruja neotradicional" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Neotradicional</span>
                         <div class="portfolio-info">
-                            <h3>Coruja Detalhada</h3>
+                            <h3>Pantera Oni</h3>
                             <p>Design contemporâneo</p>
                         </div>
                     </div>
@@ -977,39 +986,30 @@
         </div>
     </section>
 
-    <footer class="footer">
+   <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
                     <div class="brand-logo">
-                        <span class="brand-mascot">🐦‍⬛</span>
+                        <img src="/img/Logo.png" alt="Logo RAVEN" class="brand-logo" style="width: 50px; height: 50px;">
                         <h3>RAVEN STUDIO</h3>
                     </div>
                     <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
                     <div class="social-icons">
-                        <a href="#" class="social-icon" aria-label="Instagram do Raven Studio">
+                        <a href="https://www.instagram.com/raven_studio__" class="social-icon" aria-label="Instagram do Raven Studio">
                             <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="Facebook do Raven Studio">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="TikTok do Raven Studio">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="YouTube do Raven Studio">
-                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
                 <div class="footer-links">
                     <h4>LINKS RÁPIDOS</h4>
                     <ul>
-                        <li><a href="/">Início</a></li>
-                        <li><a href="/artists.html">Artistas</a></li>
-                        <li><a href="/portfolio.html">Portfólio</a></li>
-                        <li><a href="#testimonials">Depoimentos</a></li>
+                        <li><a href="/pages/artists.html">Artistas</a></li>
                         <li><a href="/pages/agendamento.html">Agendamento</a></li>
-                        <li><a href="#contact">Contato</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/blog.html">Blog</a></li>
+                        <li><a href="/pages/loja.html">Loja</a></li>
+                        <li><a href="/pages/contato.html">Contato</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -1031,12 +1031,13 @@
             <div class="footer-bottom">
                 <div class="footer-divider"></div>
                 <div class="footer-copyright">
-                    <p>&copy; 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p>© 2024 Raven Studio. Todos os direitos reservados.</p>
                     <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
                 </div>
             </div>
         </div>
     </footer>
+
 <button class="back-to-top" id="backToTop" title="Voltar ao topo">
         <i class="fas fa-arrow-up"></i>
     </button>
