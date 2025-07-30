@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Oliveira | Tatuador Especialista em Old School e Neotradicional | Ink Studio Tattoo</title>
+        <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+
+    <meta name="description" content="Marco Oliveira, mestre em tatuagem old school e neotradicional no Ink Studio Tattoo. Conheça seu portfólio, estilo único e agende sua tatuagem personalizada.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Bebas+Neue&family=Teko:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/perfilartistas.css">
+    <style>
+        /* Adicionar estilos específicos para o botão Agendar Consulta no perfil do artista */
+        .artist-visual .btn-schedule-artist {
+            margin-top: 20px; /* Espaço entre os badges e o botão */
+            padding: 12px 25px; /* Ajusta o padding */
+            font-size: 1rem; /* Ajusta o tamanho da fonte */
+            background: linear-gradient(135deg, #3b82f6 0%, #00f0ff 100%); /* Reutiliza o gradiente azul */
+            color: #000000; /* Cor do texto preta para contraste */
+            border-radius: 8px; /* Arredondamento dos cantos */
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+            font-family: 'Bebas Neue', cursive; /* Usa a fonte Bebas Neue */
+            letter-spacing: 1px;
+        }
+
+        .artist-visual .btn-schedule-artist:hover {
+            background: #3b82f6; /* Cor sólida no hover */
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* FIX para o layout das tabs e para o texto não 'quebrar' */
+        .creative-container {
+            display: flex; /* Makes it a flex container */
+            flex-wrap: wrap; /* Allows items to wrap to the next line on smaller screens */
+            gap: 40px; /* Provides space between the two columns */
+            align-items: flex-start; /* Aligns items to the start of the cross axis */
+            justify-content: center; /* Centers items horizontally */
+        }
+
+        .artist-visual {
+            flex: 1; /* Allows artist-visual to take up less space */
+            min-width: 250px; /* Ensures it doesn't get too small */
+            position: relative; /* Essential for containing absolutely positioned children */
+            z-index: 1; /* Ensure artist-visual is below the text content if they overlap */
+            /* New: Added to ensure it stays on the left when the order is changed */
+            order: 1; 
+        }
+
+        .artist-story {
+            flex: 2; /* Allows artist-story to take up more space */
+            min-width: 300px; /* Ensures it doesn't get too small */
+            max-width: 700px; /* Ensures the text area doesn't get excessively wide or squeezed */
+            width: 100%; /* Ensures it tries to take available width up to max-width */
+            position: relative; /* Ensure it establishes a stacking context */
+            z-index: 2; /* Ensure artist-story is above other content if overlapping occurs */
+            /* New: Added to ensure it stays on the right when the order is changed */
+            order: 2; 
+        }
+
+        .tab-content {
+            position: relative; /* Ensure these contents have their own stacking context */
+            z-index: 3; /* Ensure tab content is on top of everything else in this section */
+        }
+
+        /* Para telas menores, empilhe-os verticalmente */
+        @media (max-width: 768px) {
+            .creative-container {
+                flex-direction: column;
+                align-items: center; /* Center items when stacked */
+            }
+            .artist-story, .artist-visual {
+                width: 100%; /* Take full width on smaller screens */
+                flex: none; /* Remove flex sizing */
+                order: unset; /* Remove explicit order for stacked layout */
+            }
+        }
+    </style>
+</head>
+<body>
+<nav id="navbar" class="navbar" role="navigation" aria-label="Menu principal">
+    <div class="nav-container">
+        <div class="nav-brand">
+            <a href="/pages/home.html" class="brand-link">
+                <img src="/img/logo.png" alt="Logo RAVEN" class="brand-logo">
+                <span class="brand-text">RAVEN</span>
+            </a>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-menu" id="nav-menu" role="menubar">
+            <li role="none"><a href="/pages/home.html" role="menuitem" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
+            <li role="none"><a href="/pages/loja.html" role="menuitem" class="nav-link active"><i class="fas fa-store"></i> Loja</a></li>
+            <li role="none"><a href="/pages/artists.html" role="menuitem" class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+            <li role="none"><a href="/pages/contato.html" role="menuitem" class="nav-link"><i class="fas fa-envelope"></i> Contato</a></li>
+            <li role="none"><a href="/pages/blog.html" role="menuitem" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+            <li role="none"><a href="/pages/game.html" role="menuitem" class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+        </ul>
+        <div class="nav-icons">
+            <a href="/pages/login.html" class="nav-icon" aria-label="Login"><i class="fas fa-user"></i></a>
+            <a href="/pages/carrinho.html" class="nav-icon" aria-label="Carrinho de compras"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </div>
+</nav>
+
+
+    <section class="about-creative">
+        <div class="creative-container">
+            <div class="artist-visual">
+                <div class="polaroid-frame">
+                    <img src="/img/artistas/marcos.png" alt="Marco Oliveira no estúdio" class="polaroid-img">
+                    <div class="polaroid-caption">Marco Oliveira - Ink Studio</div>
+                </div>
+                <div class="badges-container">
+                    <div class="artist-badge">
+                        <div class="badge-icon"><i class="fas fa-medal"></i></div>
+                        <div class="badge-content">
+                            <span class="badge-number">6</span>
+                            <span class="badge-label">Prêmios Regionais</span>
+                        </div>
+                    </div>
+                    <div class="artist-badge">
+                        <div class="badge-icon"><i class="fas fa-globe-americas"></i></div>
+                        <div class="badge-content">
+                            <span class="badge-number">12</span>
+                            <span class="badge-label">Anos de Experiência</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="/pages/agendamento.html" class="btn btn-schedule-artist">Agendar Consulta</a>
+            </div>
+
+            <div class="artist-story">
+                <h2 class="creative-title">A <span>Força</span> da <span>Tradição</span></h2>
+                
+                <div class="story-tabs">
+                    <button class="tab-btn active" data-tab="journey">Jornada</button>
+                    <button class="tab-btn" data-tab="philosophy">Filosofia</button>
+                    <button class="tab-btn" data-tab="technique">Técnica</button>
+                </div>
+                
+                <div class="tab-content active" id="journey">
+                    <p>Marco iniciou sua paixão pela tatuagem inspirado pelos ícones da old school, buscando a autenticidade e a narrativa por trás de cada desenho. Sua jornada o levou a explorar as raízes do estilo, desenvolvendo uma identidade única com traços fortes e cores vibrantes.</p>
+                    <p>Em 2010, Marco ganhou seu primeiro reconhecimento em um festival de tatuagem local, impulsionando sua carreira. Desde então, tem participado ativamente da cena underground, sendo convidado para convenções e workshops que celebram a arte tradicional e neotradicional.</p>
+                    <div class="milestone">
+                        <i class="fas fa-map-pin"></i>
+                        <span>Referência em Old School e Neotradicional no Ink Studio</span>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="philosophy">
+                    <p>"Minha arte é um tributo à história da tatuagem, mas com um toque moderno. Acredito que cada flash, cada figura, carrega um significado e uma energia que transcende o tempo, conectando o presente ao legado dos grandes mestres."</p>
+                    <p>Busco criar obras que sejam icônicas e que contem histórias de forma bold e impactante, utilizando cores sólidas e linhas definidas que resistem ao teste do tempo.</p>
+                    
+                </div>
+                
+                <div class="tab-content" id="technique">
+                    <p>Minha abordagem técnica combina:</p>
+                    <ul class="technique-list">
+                        <li><i class="fas fa-circle-notch"></i> Traços grossos e definidos, característicos do old school</li>
+                        <li><i class="fas fa-circle-notch"></i> Paleta de cores vibrantes e duradouras</li>
+                        <li><i class="fas fa-circle-notch"></i> Elementos narrativos e simbólicos em cada design</li>
+                        <li><i class="fas fa-circle-notch"></i> Adaptação de temas clássicos com elementos modernos no neotradicional</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Meu <span>Portfólio</span></h2>
+                <p>Alguns dos meus trabalhos mais recentes</p>
+            </div>
+            <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="oldschool">Old School</button>
+                <button class="filter-btn" data-filter="neotradicional">Neotradicional</button>
+                <button class="filter-btn" data-filter="tradicional">Tradicional</button>
+                <button class="filter-btn" data-filter="coresvibrantes">Cores Vibrantes</button>
+            </div>
+            <div class="portfolio-grid" id="lightgallery">
+                <a href="../images/oldschool1.jpg" class="portfolio-item" data-category="oldschool" data-sub-html="<h4>Âncora Tradicional</h4><p>Clássica tatuagem old school com cores fortes.</p>">
+                    <img src="../images/oldschool1-thumb.jpg" alt="Tatuagem âncora old school" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Old School</span>
+                        <div class="portfolio-info">
+                            <h3>Âncora</h3>
+                            <p>Cores fortes</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/neotradicional1.jpg" class="portfolio-item" data-category="neotradicional" data-sub-html="<h4>Rosa Neotradicional</h4><p>Rosa vibrante com detalhes neotradicionais.</p>">
+                    <img src="../images/neotradicional1-thumb.jpg" alt="Tatuagem rosa neotradicional" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Neotradicional</span>
+                        <div class="portfolio-info">
+                            <h3>Rosa Vibrante</h3>
+                            <p>Detalhes neotradicionais</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/oldschool2.jpg" class="portfolio-item" data-category="oldschool" data-sub-html="<h4>Andorinha Clássica</h4><p>Andorinha em estilo tradicional americano.</p>">
+                    <img src="../images/oldschool2-thumb.jpg" alt="Tatuagem andorinha old school" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Old School</span>
+                        <div class="portfolio-info">
+                            <h3>Andorinha</h3>
+                            <p>Estilo tradicional</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/neotradicional2.jpg" class="portfolio-item" data-category="neotradicional" data-sub-html="<h4>Retrato Neotradicional</h4><p>Retrato estilizado com elementos neotradicionais.</p>">
+                    <img src="../images/neotradicional2-thumb.jpg" alt="Tatuagem retrato neotradicional" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Neotradicional</span>
+                        <div class="portfolio-info">
+                            <h3>Retrato Estilizado</h3>
+                            <p>Elementos neotradicionais</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/oldschool3.jpg" class="portfolio-item" data-category="oldschool" data-sub-html="<h4>Coração e Punhal</h4><p>Tema clássico com cores vibrantes e traços fortes.</p>">
+                    <img src="../images/oldschool3-thumb.jpg" alt="Tatuagem coração e punhal old school" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Old School</span>
+                        <div class="portfolio-info">
+                            <h3>Coração e Punhal</h3>
+                            <p>Tema clássico</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="../images/neotradicional3.jpg" class="portfolio-item" data-category="neotradicional" data-sub-html="<h4>Coruja Neotradicional</h4><p>Coruja detalhada com design contemporâneo.</p>">
+                    <img src="../images/neotradicional3-thumb.jpg" alt="Tatuagem coruja neotradicional" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">Neotradicional</span>
+                        <div class="portfolio-info">
+                            <h3>Coruja Detalhada</h3>
+                            <p>Design contemporâneo</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <span class="brand-mascot">🐦‍⬛</span>
+                        <h3>RAVEN STUDIO</h3>
+                    </div>
+                    <p>Transformando pele em arte desde 2016. Cada tatuagem conta uma história única.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Instagram do Raven Studio">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Facebook do Raven Studio">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="TikTok do Raven Studio">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="YouTube do Raven Studio">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>LINKS RÁPIDOS</h4>
+                    <ul>
+                        <li><a href="/">Início</a></li>
+                        <li><a href="/artists.html">Artistas</a></li>
+                        <li><a href="/portfolio.html">Portfólio</a></li>
+                        <li><a href="#testimonials">Depoimentos</a></li>
+                        <li><a href="/pages/agendamento.html">Agendamento</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>CONTATO</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Rua das Artes, 123<br>Vila Madalena - São Paulo, SP</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>(11) 99999-9999</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span>contato@ravenstudio.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-divider"></div>
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Raven Studio. Todos os direitos reservados.</p>
+                    <p class="footer-love">Feito com <i class="fas fa-heart" aria-hidden="true"></i> para amantes da arte corporal</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+<script src="/js/home.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tabs functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    button.classList.add('active');
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Portfolio filter functionality
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    portfolioItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Initialize LightGallery
+            lightGallery(document.getElementById('lightgallery'), {
+                selector: '.portfolio-item',
+                download: false,
+                zoom: true,
+                counter: false,
+                speed: 300,
+                mode: 'lg-fade',
+                cssEasing: 'cubic-bezier(0.25, 0, 0.25, 1)'
+            });
+
+            // Smooth scrolling for anchor links (if any remain that point to #id)
+            // Note: The "Agendar Consulta" button now points directly to /pages/agendamento.html
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // Adjust for fixed header
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
