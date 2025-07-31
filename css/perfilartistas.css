@@ -770,3 +770,134 @@
     box-shadow: var(--neon-glow-blue);
     border-color: var(--neon-blue);
 }
+/* Adicione estas regras no final do arquivo CSS */
+
+@media (max-width: 576px) {
+    /* Ajustes para o container principal */
+    .creative-container {
+        padding: 0 1rem;
+        gap: 2rem;
+    }
+    
+    /* Ajustes para a seção do artista */
+    .artist-visual {
+        min-width: 100%;
+        margin-bottom: 1.5rem;
+    }
+    
+    .polaroid-frame {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        transform: rotate(0deg);
+    }
+    
+    /* Badges lado a lado em mobile */
+    .badges-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    
+    .artist-badge {
+        padding: 1rem;
+        margin: 0;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .badge-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .badge-number {
+        font-size: 1.5rem;
+    }
+    
+    .badge-label {
+        font-size: 0.7rem;
+    }
+    
+    /* Título e tabs */
+    .creative-title {
+        font-size: 2rem;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .story-tabs {
+        justify-content: center;
+    }
+    
+    .tab-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Botão de agendar centralizado */
+    .btn-schedule-artist {
+        display: block;
+        margin: 2rem auto 0 auto !important;
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    /* Ajustes no portfólio */
+    .portfolio-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .portfolio-item {
+        aspect-ratio: 1/1;
+    }
+    
+    .portfolio-overlay {
+        padding: 1rem;
+    }
+    
+    .portfolio-info h3 {
+        font-size: 1.1rem;
+    }
+    
+    .portfolio-info p {
+        font-size: 0.8rem;
+    }
+    
+    .portfolio-category {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.8rem;
+    }
+    
+    /* Filtros do portfólio */
+    .portfolio-filter {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 400px) {
+    /* Ajustes adicionais para telas muito pequenas */
+    .badges-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .creative-title {
+        font-size: 1.8rem;
+    }
+    
+    .tab-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
