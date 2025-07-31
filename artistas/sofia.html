@@ -804,11 +804,33 @@
                 font-size: 0.65rem;
             }
         }
+           @media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 40%; /* Alterado de 100% para 50% */
+        height: calc(100vh - 70px);
+        background: rgba(0, 0, 0, 0.98);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 2rem 1rem;
+        transition: all 0.4s ease;
+        backdrop-filter: blur(20px);
+        overflow-y: auto;
+        z-index: 999;
+        align-items: flex-start;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+}
     </style>
 </head>
 <body>
 <header>
-    <a hreadf="#content" class="skip-link">Pular para o conteúdo principal</a>
+
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
@@ -869,7 +891,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/pages/agendamento.html" class="btn btn-schedule-artist">Agendar Consulta</a>
+             
             </div>
 
             <div class="artist-story">
@@ -905,7 +927,7 @@
                         <li><i class="fas fa-circle-notch"></i> Consultoria criativa para transformar ideias abstratas em arte</li>
                     </ul>
                 </div>
-                
+                  <a href="/pages/agendamento.html" class="btn btn-schedule-artist">Agendar Consulta</a>
             </div>
         </div>
     </section>
@@ -984,6 +1006,7 @@
                         </div>
                     </div>
                 </a>
+
             </div>
         </div>
     </section>
@@ -1146,7 +1169,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+
+     document.addEventListener('DOMContentLoaded', function() {
             // Tabs functionality
             const tabButtons = document.querySelectorAll('.tab-btn');
             
@@ -1186,7 +1210,26 @@
                 });
             });
 
-            
+          
+
+            // Smooth scrolling for anchor links (if any remain that point to #id)
+            // Note: The "Agendar Consulta" button now points directly to /pages/agendamento.html
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // Adjust for fixed header
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
         // Dados premium para o chatbot
     const ravenFaqData = {
         "precos": [

@@ -533,15 +533,11 @@
         html {
             box-sizing: border-box;
         }
-        *, *::before, *::after {
-            box-sizing: inherit;
-        }
+
 
         /* Ajustes gerais para mobile/tablet (até 768px) */
         @media (max-width: 768px) {
-            body {
-                font-size: 12px; /* Fonte base ainda mais menor para mobile */
-            }
+         
 
             /* Seções e Títulos */
             section {
@@ -804,11 +800,33 @@
                 font-size: 0.65rem;
             }
         }
+           @media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 40%; /* Alterado de 100% para 50% */
+        height: calc(100vh - 70px);
+        background: rgba(0, 0, 0, 0.98);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 2rem 1rem;
+        transition: all 0.4s ease;
+        backdrop-filter: blur(20px);
+        overflow-y: auto;
+        z-index: 999;
+        align-items: flex-start;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+}
     </style>
 </head>
 <body>
 <header>
-    <a hreadf="#content" class="skip-link">Pular para o conteúdo principal</a>
+
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
@@ -869,7 +887,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/pages/agendamento.html" class="btn btn-schedule-artist">Agendar Consulta</a>
+             
             </div>
 
             <div class="artist-story">
@@ -905,7 +923,7 @@
                         <li><i class="fas fa-circle-notch"></i> Uso de diferentes texturas para enriquecer a experiência visual</li>
                     </ul>
                 </div>
-                
+                   <a href="/pages/agendamento.html" class="btn btn-schedule-artist">Agendar Consulta</a>
             </div>
         </div>
     </section>

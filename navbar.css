@@ -1,0 +1,478 @@
+/* Navigation - Navbar otimizada e dinâmica */
+
+/* Variáveis (se não estiverem em um arquivo separado, mantenha aqui) */
+:root {
+    --soft-blue: #3b82f6; /* Exemplo, ajuste para suas cores */
+    --soft-green: #9cef00; /* Exemplo, ajuste para suas cores */
+    --text-light: #f0f0f0; /* Exemplo, ajuste para suas cores */
+    --font-primary: 'Teko', sans-serif; /* Exemplo, ajuste para suas fontes */
+    --font-secondary: 'Teko', sans-serif; /* Exemplo, ajuste para suas fontes */
+}
+/* Adicione isso ao seu CSS existente */
+.brand-text {
+    text-decoration: none !important;
+}
+
+/* Ou ainda mais específico para garantir */
+.nav-brand .brand-text,
+.nav-brand:hover .brand-text,
+.nav-brand:focus .brand-text {
+    text-decoration: none !important;
+}
+.nav-brand,
+.nav-brand:hover,
+.nav-brand:focus,
+.brand-link,
+.brand-link:hover,
+.brand-link:focus {
+    text-decoration: none !important;
+}
+/* Navbar - Estilo inicial (topo da página - PC padrão) */
+.navbar {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 0.8rem 2rem;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 40px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 5px 30px rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    min-width: 60%;
+    max-width: 800px;
+    transition: all 0.3s ease; /* Transição para suavizar mudanças */
+}
+
+/* Navbar - Estilo quando a página é rolada (scrolled - PC e o único estilo para Mobile) */
+.navbar.scrolled {
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 2px 20px rgba(59, 130, 246, 0.2);
+    border: none;
+    border-bottom: 1px solid var(--soft-blue);
+    padding: 0.6rem 2rem;
+    transition: all 0.3s ease;
+}
+
+/* Container interno */
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Estilos do logo/marca */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    flex-shrink: 0;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.brand-logo {
+    height: 40px;
+    margin-right: 10px;
+   
+}
+
+
+.navbar.scrolled .brand-logo {
+    height: 30px;
+}
+
+.brand-text {
+font-weight: bold;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    color: #3b82f6;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+
+}
+
+.navbar.scrolled .brand-text {
+    font-size: 1.3rem;
+}
+
+/* Menu de navegação */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ajuste do conteúdo principal para a navbar */
+.shop-main {
+    padding-top: 100px;
+}
+
+.nav-link {
+    color: var(--text-light);
+    text-decoration: none;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav-link.active {
+    color: var(--soft-blue);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.nav-link:hover {
+    color: var(--soft-green);
+    background: rgba(34, 197, 94, 0.1);
+}
+
+/* Efeito de sublinhado animado */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--soft-green);
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 70%;
+}
+
+/* Ícones de navegação */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+    z-index: 1001;
+    flex-shrink: 0;
+
+}
+
+.nav-icon {
+    color: var(--text-light);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+        text-decoration: none
+    ;
+}
+
+.nav-icon:hover {
+    color: var(--soft-blue);
+    transform: translateY(-2px);
+}
+
+/* Cart count specific styles */
+.cart-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+       text-decoration: none;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    font-family: var(--font-primary);
+    text-decoration: none;
+}
+
+/* Estilos para o Avatar do Usuário na Navbar */
+.nav-user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--soft-blue);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: none;
+}
+
+.navbar.scrolled .nav-user-avatar {
+    width: 30px;
+    height: 30px;
+}
+
+/* Botão mobile (Hamburger Icon) */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: relative;
+    width: 30px;
+    height: 24px;
+    z-index: 1001;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--soft-blue);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    position: absolute;
+    left: 0;
+}
+
+.nav-toggle span:nth-child(1) {
+    top: 0;
+}
+
+.nav-toggle span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-toggle span:nth-child(3) {
+    bottom: 0;
+}
+
+/* Animação para o ícone de fechar (X) */
+.nav-toggle.active span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+}
+
+/* ======================================================= */
+/* RESPONSIVIDADE OTIMIZADA */
+/* ======================================================= */
+
+/* Telas menores que 1024px (Tablets e alguns Laptops) */
+@media (max-width: 1024px) {
+    .navbar {
+        min-width: 70%;
+        max-width: 90%;
+        padding: 0.7rem 1.5rem;
+    }
+    .nav-menu {
+        gap: 1rem;
+    }
+    .nav-link {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.8rem;
+    }
+    .brand-logo {
+        height: 30px;
+    }
+    .brand-text {
+        font-size: 1.3rem;
+    }
+    .navbar.scrolled .brand-logo {
+        height: 28px;
+    }
+    .navbar.scrolled .brand-text {
+        font-size: 1.2rem;
+    }
+}
+
+/* Telas menores que 768px (Smartphones e Tablets Pequenos) */
+@media (max-width: 768px) {
+    .navbar {
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        min-width: 100%;
+        border-radius: 0;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 2px 20px rgba(59, 130, 246, 0.2);
+        border: none;
+        border-bottom: 1px solid var(--soft-blue);
+        padding: 0.6rem 0.4rem; /* Reduzi o padding lateral para 0.4rem para ambos os lados */
+        transition: none;
+    }
+
+    .navbar.scrolled {
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 2px 20px rgba(59, 130, 246, 0.2);
+        border: none;
+        border-bottom: 1px solid var(--soft-blue);
+        padding: 0.6rem 0.4rem; /* Consistente com a navbar base no mobile */
+    }
+
+    .nav-container {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 0.1rem; /* Reduzi o gap do container para 0.1rem */
+    }
+
+    .nav-brand {
+        gap: 0.1rem; /* Ajustei o gap entre logo e texto para 0.1rem */
+    }
+
+    .brand-logo {
+        height: 22px; /* Reduzi o tamanho do logo */
+    }
+
+    .brand-text {
+        font-size: 1rem; /* Reduzi o tamanho do texto do logo */
+    }
+
+    .navbar.scrolled .brand-logo {
+        height: 22px;
+    }
+    .navbar.scrolled .brand-text {
+        font-size: 1rem;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        width: 30%;
+        height: calc(100vh - 60px);
+        background: rgba(0, 0, 0, 0.98);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 2rem 1rem;
+        transition: all 0.4s ease;
+        backdrop-filter: blur(20px);
+        overflow-y: auto;
+        z-index: 999;
+        align-items: self-start;
+    }
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-link {
+        width: 90%;
+        justify-content: center;
+        padding: 1rem;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-toggle {
+        display: block;
+        padding: 0.1rem; /* Reduzi o padding do botão do toggle para 0.1rem */
+        width: 24px; /* Reduzi a largura do botão do toggle */
+        height: 18px; /* Reduzi a altura do botão do toggle */
+    }
+
+    .nav-icons {
+        gap: 0.1rem; /* Reduzi o espaçamento entre os ícones para 0.1rem */
+    }
+
+    .nav-icon {
+        font-size: 0.9rem; /* Reduzi o tamanho dos ícones */
+        padding: 0.1rem;
+    }
+}
+
+/* Telas muito pequenas (ex: iPhone SE, Galaxy Fold) */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.3rem; /* Padding lateral ainda menor para 0.3rem */
+    }
+    .nav-container {
+        gap: 0; /* Removi o gap completamente */
+    }
+    .nav-brand {
+        gap: 0; /* Removi o gap entre logo e texto */
+    }
+    .brand-logo {
+        height: 35px; /* Logo ainda menor */
+    }
+    .brand-text {
+        font-size: 1.7rem; /* Texto do logo ainda menor */
+    }
+    .nav-icons {
+        gap: 0; /* Removi o espaçamento entre ícones */
+    }
+    .nav-icon {
+        font-size: 1rem; /* Ícones ainda menores */
+        padding: 0.1rem;
+    }
+    .nav-toggle {
+        width: 20px; /* Toggle ainda menor */
+        height: 14px;
+        padding: 0.1rem; /* Padding do toggle */
+    }
+    .nav-menu {
+        top: 60px; /* Ajuste para navbar menor */
+        height: calc(100vh - 35px);
+        padding: 1rem 0.5rem;
+    }
+    .nav-link {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+
+    .navbar.scrolled .brand-logo {
+        height: 16px;
+    }
+    .navbar.scrolled .brand-text {
+        font-size: 0.7rem;
+    }
+}
+

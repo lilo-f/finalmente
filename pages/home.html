@@ -25,7 +25,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 </head>
 <style>
+/* Estilo para o container do artista recomendado */
+.artist-name {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #88d833;
+    border-radius: 15px;
+    border: 2px solid #ffffff;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgb(0 0 0);
+}
 
+/* Estilo para o link do nome do artista */
+.artist-name a {
+    color: #000000; /* Cor do texto */
+    text-decoration: none; /* Remove sublinhado */
+    font-weight: bold; /* Texto em negrito */
+     font-size: 1.6rem; /* Tamanho da fonte */
+}
+
+/* Efeito hover */
+.artist-name:hover {
+    background-color: #f0f0f0; /* Muda cor de fundo ao passar mouse */
+    border-color: #ccc; /* Muda cor da borda */
+}
+
+.artist-name a:hover {
+    color: #0066cc; /* Cor do texto ao passar mouse */
+}
  /* Botão para voltar ao topo */
         .back-to-top {
             position: fixed;
@@ -1012,7 +1039,7 @@
 </style>
 <body>
 <header>
-    <a href="#content" class="skip-link">Pular para o conteúdo principal</a>
+
     <nav class="navbar">
         <div class="nav-container">
             <a href="/pages/home.html" class="nav-brand">
