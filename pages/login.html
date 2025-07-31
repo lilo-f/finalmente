@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Raven Studio</title>
-        <link rel="icon" href="/img/raven.ico" type="image/x-icon">
-
+    <link rel="icon" href="/img/raven.ico" type="image/x-icon">
     <meta name="description" content="Entre na sua conta - Raven Studio">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -388,6 +387,7 @@
             <button type="submit" class="auth-button">
                 <i class="fas fa-sign-in-alt"></i> ENTRAR
             </button>
+            <div class="success-message" id="login-success"></div>
         </form>
 
         <!-- Register Form -->
@@ -449,6 +449,7 @@
             <button type="submit" class="auth-button">
                 <i class="fas fa-user-plus"></i> CRIAR CONTA
             </button>
+            <div class="success-message" id="register-success"></div>
         </form>
 
         <div class="divider">
@@ -464,10 +465,8 @@
             </svg>
             Continuar com Google
         </button>
-
-        <div class="success-message" id="success-message"></div>
     </div>
-<script src="/js/user-session.js"></script>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         // Inicializar partículas
@@ -491,10 +490,12 @@
         });
 
         class AuthSystem {
-            constructor() {
-                this.currentTab = 'login';
-                this.init();
-            }
+           constructor() {
+        this.currentTab = 'login';
+        // Ajuste este caminho conforme sua estrutura
+this.apiUrl = 'http://127.0.0.1:5501/api/auth.php'; // Se está na pasta /api
+        this.init();
+    }
 
             init() {
                 this.setupEventListeners();
@@ -649,14 +650,18 @@
                 });
             }
 
-            showSuccess(message) {
-                const successElement = document.getElementById('success-message');
-                successElement.textContent = message;
-                successElement.style.display = 'block';
+            showSuccess(elementId, message) {
+                const successElement = document.getElementById(elementId);
+                if (successElement) {
+                    successElement.textContent = message;
+                    successElement.style.display = 'block';
+                }
             }
 
             hideSuccess() {
-                document.getElementById('success-message').style.display = 'none';
+                document.querySelectorAll('.success-message').forEach(el => {
+                    el.style.display = 'none';
+                });
             }
 
             validateForm(formId) {
@@ -673,74 +678,90 @@
                 return isValid;
             }
 
-     handleLogin() {
-    if (!this.validateForm('login-form')) return;
+            async handleLogin() {
+                if (!this.validateForm('login-form')) return;
 
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
 
-    const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
-    const user = users.find(u => u.email === email && u.password === password);
+                try {
+                    const response = await fetch(this.apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            action: 'login',
+                            email: email,
+                            password: password
+                        })
+                    });
 
-    if (user) {
-        // Adicione um console.log para verificar os dados antes de salvar
-        console.log("Usuário encontrado:", user);
-        
-        // Salva o usuário completo no localStorage
-        localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(user));
-        
-        // Verifique se os dados foram salvos
-        console.log("Dados salvos no localStorage:", localStorage.getItem('ravenStudioCurrentUser'));
-        
-        if (window.userSession) {
-            window.userSession.login(user);
-        }
-        
-        // Redireciona após um breve delay
-        setTimeout(() => {
-            window.location.href = 'user.html';
-        }, 500);
-    } else {
-        this.showError(document.getElementById('login-email'), 'E-mail ou senha incorretos');
-        this.showError(document.getElementById('login-password'), 'E-mail ou senha incorretos');
-    }
-}
-handleRegister() {
+                    if (!response.ok) {
+                        throw new Error('Erro na requisição');
+                    }
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.showSuccess('login-success', 'Login realizado com sucesso!');
+                        localStorage.setItem('ravenStudioUser', JSON.stringify(data.user));
+                        
+                        setTimeout(() => {
+                            window.location.href = '../index.html';
+                        }, 1500);
+                    } else {
+                        this.showError(document.getElementById('login-email'), data.message);
+                        this.showError(document.getElementById('login-password'), data.message);
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    this.showError(document.getElementById('login-email'), 'Erro ao conectar com o servidor');
+                }
+            }
+
+          async handleRegister() {
     if (!this.validateForm('register-form')) return;
 
     const userData = {
-        id: Date.now().toString(),
-        name: document.getElementById('register-name').value + ' ' + 
-              document.getElementById('register-lastname').value,
-        email: document.getElementById('register-email').value,
+        action: 'register',
+        firstName: document.getElementById('register-name').value.trim(),
+        lastName: document.getElementById('register-lastname').value.trim(),
+        email: document.getElementById('register-email').value.trim(),
         phone: document.getElementById('register-phone').value.replace(/\D/g, ''),
-        password: document.getElementById('register-password').value,
-        joinDate: new Date().toISOString(),
-        avatar: null,
-        loyaltyPoints: 0,
-        orders: [], // Array vazio de pedidos
-        wishlist: [] // Array vazio de favoritos
+        cpf: document.getElementById('register-cpf').value.replace(/\D/g, ''),
+        password: document.getElementById('register-password').value
     };
 
-    const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
-    
-    if (users.some(u => u.email === userData.email)) {
-        this.showError(document.getElementById('register-email'), 'E-mail já cadastrado');
-        return;
-    }
+    try {
+        const response = await fetch(this.apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData)
+        });
 
-    users.push(userData);
-    localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
-    
-    // Faz login automaticamente
-    if (window.userSession) {
-        window.userSession.login(userData);
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            throw new Error(errorData?.message || `Erro HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        if (data.success) {
+            this.showSuccess('register-success', 'Cadastro realizado com sucesso!');
+            document.getElementById('register-form').reset();
+            setTimeout(() => this.switchTab('login'), 2000);
+        } else {
+            throw new Error(data.message || 'Erro desconhecido');
+        }
+    } catch (error) {
+        console.error('Erro completo:', error);
+        this.showError(document.getElementById('register-email'), error.message);
     }
-    
-    setTimeout(() => {
-        window.location.href = 'user.html';
-    }, 500);
-}}
+}
+}
 
         // Global functions
         function togglePassword(inputId) {
@@ -764,44 +785,13 @@ handleRegister() {
         }
 
         function loginWithGoogle() {
-            // Simulate Google login
-            const googleUser = {
-                id: 'google_' + Date.now(),
-                name: 'Usuário Google',
-                email: 'usuario@gmail.com',
-                phone: '(11)99999-9999',
-                cpf: '000.000.000-00',
-                loginMethod: 'google',
-                createdAt: new Date().toISOString()
-            };
-
-            localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(googleUser));
-            
-            const successElement = document.getElementById('success-message');
-            successElement.textContent = 'Login com Google realizado! Redirecionando...';
-            successElement.style.display = 'block';
-            
-            setTimeout(() => {
-                window.location.href = 'user.html';
-            }, 1500);
+            alert('Login com Google será implementado em breve!');
         }
 
         // Initialize auth system
         document.addEventListener('DOMContentLoaded', () => {
             new AuthSystem();
         });
-        // Após login bem-sucedido
-function handleLoginSuccess(user) {
-    // Verifica se há um parâmetro de redirecionamento
-    const urlParams = new URLSearchParams(window.location.search);
-    const redirect = urlParams.get('redirect');
-    
-    if (redirect === 'checkout') {
-        window.location.href = 'pagamento.html';
-    } else {
-        window.location.href = 'user.html';
-    }
-}
     </script>
 </body>
 </html>
