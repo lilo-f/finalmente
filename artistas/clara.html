@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/perfilartistas.css">
+    
     <style>
         /* Adicionar estilos específicos para o botão Agendar Consulta no perfil do artista */
         .artist-visual .btn-schedule-artist {
@@ -1143,7 +1144,6 @@
        <script src="/js/navbar.js"></script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Tabs functionality
@@ -1185,16 +1185,30 @@
                 });
             });
 
-            // Initialize LightGallery
-            lightGallery(document.getElementById('lightgallery'), {
-                selector: '.portfolio-item',
-                download: false,
-                zoom: true,
-                counter: false,
-                speed: 300,
-                mode: 'lg-fade',
-                cssEasing: 'cubic-bezier(0.25, 0, 0.25, 1)'
+            // No seu script atual, substitua a inicialização do LightGallery por:
+if (typeof lightGallery !== 'undefined') {
+    const gallery = lightGallery(document.getElementById('lightgallery'), {
+        selector: '.portfolio-item',
+        download: false,
+        zoom: true,
+        counter: false,
+        speed: 300,
+        mode: 'lg-fade',
+        cssEasing: 'cubic-bezier(0.25, 0, 0.25, 1)',
+        closable: true,
+        escKey: true,
+        closeOnTap: true
+    });
+
+    // Fechar o modal corretamente
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.lg-close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                gallery.destroy();
             });
+        });
+    });
+}
 
             // Smooth scrolling for anchor links (if any remain that point to #id)
             // Note: The "Agendar Consulta" button now points directly to /pages/agendamento.html

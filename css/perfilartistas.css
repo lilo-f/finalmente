@@ -703,3 +703,94 @@
     grid-template-columns: 1fr;
   }
 }
+/* Ajuste para o polaroid-frame */
+.polaroid-frame {
+    background: var(--gradient-dark);
+    padding: 5px 15px 40px;
+    box-shadow: var(--neon-glow-blue);
+    transform: rotate(-2deg);
+    position: relative;
+    z-index: 1;
+    border: 2px solid var(--neon-blue);
+    border-radius: 15px;
+    transition: var(--transition-smooth);
+    width: 300px;
+    /* Remova ou reduza a margem esquerda */
+    margin-left: 0; /* ou um valor menor, como 20px */
+}
+
+/* Ajuste para os badges */
+.artist-badge {
+    background: var(--gradient-dark);
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--soft-glow-blue);
+    border: 2px solid var(--medium-gray);
+    transition: var(--transition-smooth);
+    /* Remova ou reduza as margens */
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+}
+
+/* Garanta que o container flexível funcione corretamente */
+.creative-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    gap: 4rem;
+    align-items: flex-start;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha em telas menores */
+}
+
+.artist-visual {
+    flex: 1;
+    position: relative;
+    min-width: 350px;
+    max-width: 100%; /* Evita que o elemento ultrapasse o container */
+}
+
+.artist-story {
+    flex: 2;
+    min-width: 300px;
+    max-width: 100%; /* Evita que o elemento ultrapasse o container */
+}
+
+/* Adicione no final do perfilartistas.css */
+.lg-outer {
+    z-index: 9999 !important;
+    position: fixed !important;
+}
+
+.lg-outer .lg-img-wrap {
+    max-width: 90vw !important;
+    max-height: 90vh !important;
+}
+
+.lg-outer .lg-image {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Esconde elementos do LightGallery quando fechado */
+.lg-outer.lg-hide {
+    display: none !important;
+}
+
+/* Remove qualquer elemento residual */
+body > .lg-backdrop, 
+body > .lg-outer {
+    display: none;
+}
+
+body.lg-on .lg-backdrop,
+body.lg-on .lg-outer {
+    display: block;
+}
+
