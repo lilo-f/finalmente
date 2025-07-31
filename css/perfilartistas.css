@@ -760,37 +760,13 @@
     max-width: 100%; /* Evita que o elemento ultrapasse o container */
 }
 
-/* Adicione no final do perfilartistas.css */
-.lg-outer {
-    z-index: 9999 !important;
-    position: fixed !important;
+.portfolio-item {
+    cursor: default; /* Muda o cursor para padrão em vez de pointer */
 }
 
-.lg-outer .lg-img-wrap {
-    max-width: 90vw !important;
-    max-height: 90vh !important;
+/* Opcional: mantenha o efeito hover visual se quiser */
+.portfolio-item:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--neon-glow-blue);
+    border-color: var(--neon-blue);
 }
-
-.lg-outer .lg-image {
-    max-width: 100% !important;
-    max-height: 100% !important;
-    width: auto !important;
-    height: auto !important;
-}
-
-/* Esconde elementos do LightGallery quando fechado */
-.lg-outer.lg-hide {
-    display: none !important;
-}
-
-/* Remove qualquer elemento residual */
-body > .lg-backdrop, 
-body > .lg-outer {
-    display: none;
-}
-
-body.lg-on .lg-backdrop,
-body.lg-on .lg-outer {
-    display: block;
-}
-

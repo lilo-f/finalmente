@@ -908,7 +908,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/pages/agendamento.html" class="btn btn-schedule-artist">Agendar Consulta</a>
+                
             </div>
 
             <div class="artist-story">
@@ -944,7 +944,7 @@
                         <li><i class="fas fa-circle-notch"></i> Processo de consultoria personalizada para cada projeto</li>
                     </ul>
                 </div>
-                
+                <a href="/pages/agendamento.html" class="btn btn-schedule-artist">Agendar Consulta</a>
             </div>
         </div>
     </section>
@@ -965,7 +965,7 @@
             <!-- Na seção do portfólio, substitua os itens existentes por: -->
 <div class="portfolio-grid" id="lightgallery">
     <!-- Maori -->
-    <a href="../img/tatuagens/maori1.jpg" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Design Maori Tradicional</h4><p>Tatuagem Maori autêntica com padrões culturais</p>">
+    <a href="" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Design Maori Tradicional</h4><p>Tatuagem Maori autêntica com padrões culturais</p>">
         <img src="../img/tatuagens/maori1.jpg" alt="Tatuagem Maori" class="portfolio-img">
         <div class="portfolio-overlay">
             <span class="portfolio-category">Maori</span>
@@ -977,7 +977,7 @@
     </a>
     
     <!-- Tribal -->
-    <a href="../img/tatuagens/tribal1.jpg" class="portfolio-item" data-category="blackwork" data-sub-html="<h4>Tribal Moderno</h4><p>Design tribal com elementos contemporâneos</p>">
+    <a href="" class="portfolio-item" data-category="blackwork" data-sub-html="<h4>Tribal Moderno</h4><p>Design tribal com elementos contemporâneos</p>">
         <img src="../img/tatuagens/tribal1.jpg" alt="Tatuagem Tribal" class="portfolio-img">
         <div class="portfolio-overlay">
             <span class="portfolio-category">Tribal</span>
@@ -989,7 +989,7 @@
     </a>
     
     <!-- Realismo -->
-    <a href="../img/tatuagens/realismo3.jpg" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Realismo Animal</h4><p>Detalhes impressionantes em escala de cinza</p>">
+    <a href="" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Realismo Animal</h4><p>Detalhes impressionantes em escala de cinza</p>">
         <img src="../img/tatuagens/realismo3.jpg" alt="Tatuagem realista de animal" class="portfolio-img">
         <div class="portfolio-overlay">
             <span class="portfolio-category">Realismo</span>
@@ -1001,7 +1001,7 @@
     </a>
     
     <!-- Maori -->
-    <a href="../img/tatuagens/maori2.jpg" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Maori Braço Completo</h4><p>Sleeve Maori com padrões tradicionais</p>">
+    <a href="" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Maori Braço Completo</h4><p>Sleeve Maori com padrões tradicionais</p>">
         <img src="../img/tatuagens/maori2.jpg" alt="Sleeve Maori" class="portfolio-img">
         <div class="portfolio-overlay">
             <span class="portfolio-category">Maori</span>
@@ -1013,7 +1013,7 @@
     </a>
     
     <!-- Tribal -->
-    <a href="../img/tatuagens/tribal2.jpg" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Tribal Abstrato</h4><p>Design tribal com elementos geométricos</p>">
+    <a href="" class="portfolio-item" data-category="realismo" data-sub-html="<h4>Tribal Abstrato</h4><p>Design tribal com elementos geométricos</p>">
         <img src="../img/tatuagens/tribal2.jpg" alt="Tatuagem Tribal Abstrata" class="portfolio-img">
         <div class="portfolio-overlay">
             <span class="portfolio-category">Tribal</span>
@@ -1025,7 +1025,7 @@
     </a>
     
     <!-- Realismo -->
-    <a href="../img/tatuagens/realismo1.jpg" class="portfolio-item" data-category="retratos" data-sub-html="<h4>Retrato em Realismo</h4><p>Retrato detalhado em preto e cinza</p>">
+    <a href="" class="portfolio-item" data-category="retratos" data-sub-html="<h4>Retrato em Realismo</h4><p>Retrato detalhado em preto e cinza</p>">
         <img src="../img/tatuagens/realismo1.jpg" alt="Retrato Realista" class="portfolio-img">
         <div class="portfolio-overlay">
             <span class="portfolio-category">Realismo</span>
@@ -1196,10 +1196,9 @@
        <script src="/js/navbar.js"></script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Tabs functionality
+           // Tabs functionality
             const tabButtons = document.querySelectorAll('.tab-btn');
             
             tabButtons.forEach(button => {
@@ -1238,33 +1237,25 @@
                 });
             });
 
-            // Initialize LightGallery com configurações corrigidas
-        const lightGalleryInstance = lightGallery(document.getElementById('lightgallery'), {
-            selector: '.portfolio-item',
-            download: false,
-            zoom: true,
-            counter: false,
-            speed: 300,
-            mode: 'lg-fade',
-            cssEasing: 'cubic-bezier(0.25, 0, 0.25, 1)',
-            closable: true,
-            escKey: true,
-            keyPress: true,
-            controls: true,
-            hideBarsDelay: 2000,
-            // Configurações adicionais para prevenir problemas
-            addClass: 'lg-custom-container',
-            backdropDuration: 150,
-            hideControlOnEnd: false,
-            // Desativa o clique duplo para zoom
-            doubleTap: false
-        });
+           
 
-        // Garante que o lightbox seja destruído quando a página é desmontada
-        window.addEventListener('beforeunload', function() {
-            if (lightGalleryInstance) {
-                lightGalleryInstance.destroy();
-            }
+            // Smooth scrolling for anchor links (if any remain that point to #id)
+            // Note: The "Agendar Consulta" button now points directly to /pages/agendamento.html
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // Adjust for fixed header
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         });
         // Dados premium para o chatbot
     const ravenFaqData = {

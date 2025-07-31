@@ -924,7 +924,7 @@
                 <button class="filter-btn" data-filter="abstrato">Abstrato</button>
             </div>
             <div class="portfolio-grid" id="lightgallery">
-                <a href="../img/tatuagens/aquarela1.jpg" class="portfolio-item" data-category="aquarela" data-sub-html="<h4>Pássaro em Aquarela</h4><p>Tatuagem de pássaro com efeito de aquarela vibrante.</p>">
+                <a href="" class="portfolio-item" data-category="aquarela" data-sub-html="<h4>Pássaro em Aquarela</h4><p>Tatuagem de pássaro com efeito de aquarela vibrante.</p>">
                     <img src="../img/tatuagens/aquarela1.jpg" alt="Tatuagem pássaro aquarela" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Aquarela</span>
@@ -934,7 +934,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../img/tatuagens/floresta.jpg" class="portfolio-item" data-category="estilolivre" data-sub-html="<h4>Floresta Abstrata</h4><p>Composição de floresta com traços livres e cores mescladas.</p>">
+                <a href="" class="portfolio-item" data-category="estilolivre" data-sub-html="<h4>Floresta Abstrata</h4><p>Composição de floresta com traços livres e cores mescladas.</p>">
                     <img src="../img/tatuagens/floresta.jpg" alt="Tatuagem floresta abstrata" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Estilo Livre</span>
@@ -944,7 +944,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../img/tatuagens/aquarela2.jpg" class="portfolio-item" data-category="aquarela" data-sub-html="<h4>Flor de Cerejeira Aquarela</h4><p>Delicada flor de cerejeira com técnica de aquarela.</p>">
+                <a href="" class="portfolio-item" data-category="aquarela" data-sub-html="<h4>Flor de Cerejeira Aquarela</h4><p>Delicada flor de cerejeira com técnica de aquarela.</p>">
                     <img src="../img/tatuagens/aquarela2.jpg" alt="Tatuagem flor de cerejeira aquarela" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Aquarela</span>
@@ -954,7 +954,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../img/tatuagens/onda.jpg" class="portfolio-item" data-category="estilolivre" data-sub-html="<h4>Onda Marítima Abstrata</h4><p>Representação artística de uma onda com cores vibrantes.</p>">
+                <a href="" class="portfolio-item" data-category="estilolivre" data-sub-html="<h4>Onda Marítima Abstrata</h4><p>Representação artística de uma onda com cores vibrantes.</p>">
                     <img src="../img/tatuagens/onda.jpg" alt="Tatuagem onda marítima abstrata" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Estilo Livre</span>
@@ -964,7 +964,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../img/tatuagens/florais1.jpg" class="portfolio-item" data-category="floral" data-sub-html="<h4>Buquê Floral Abstrato</h4><p>Composição floral com elementos abstratos e cores suaves.</p>">
+                <a href="" class="portfolio-item" data-category="floral" data-sub-html="<h4>Buquê Floral Abstrato</h4><p>Composição floral com elementos abstratos e cores suaves.</p>">
                     <img src="../img/tatuagens/florais1.jpg" alt="Tatuagem buquê floral abstrato" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Floral</span>
@@ -974,7 +974,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="../img/tatuagens/abstrata.jpg" class="portfolio-item" data-category="abstrato" data-sub-html="<h4>Composição Geométrica Abstrata</h4><p>Design abstrato com formas geométricas e explosão de cores.</p>">
+                <a href="" class="portfolio-item" data-category="abstrato" data-sub-html="<h4>Composição Geométrica Abstrata</h4><p>Design abstrato com formas geométricas e explosão de cores.</p>">
                     <img src="../img/tatuagens/abstrata.jpg" alt="Tatuagem composição geométrica abstrata" class="portfolio-img">
                     <div class="portfolio-overlay">
                         <span class="portfolio-category">Abstrato</span>
@@ -1186,35 +1186,7 @@
                 });
             });
 
-            // Initialize LightGallery
-            lightGallery(document.getElementById('lightgallery'), {
-                selector: '.portfolio-item',
-                download: false,
-                zoom: true,
-                counter: false,
-                speed: 300,
-                mode: 'lg-fade',
-                cssEasing: 'cubic-bezier(0.25, 0, 0.25, 1)'
-            });
-
-            // Smooth scrolling for anchor links (if any remain that point to #id)
-            // Note: The "Agendar Consulta" button now points directly to /pages/agendamento.html
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80, // Adjust for fixed header
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        });
+            
         // Dados premium para o chatbot
     const ravenFaqData = {
         "precos": [
