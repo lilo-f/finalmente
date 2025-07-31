@@ -7,25 +7,29 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Por esta versão mais robusta:
-header("Access-Control-Allow-Origin: *"); // Em desenvolvimento, pode ser específico depois
+// Permite acesso do Live Server (desenvolvimento)
+header("Access-Control-Allow-Origin: http://127.0.0.1:5501");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
-header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 
-// Resposta para requisições OPTIONS (pré-voo CORS)
+// Função para enviar erros como JSON
+function sendError($message, $code = 400) {
+    http_response_code($code);
+    die(json_encode(['success' => false, 'message' => $message]));
+}
+
+// Responde imediatamente para requisições OPTIONS (pré-voo CORS)
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
     exit();
 }
-// Permitir apenas POST para a API
+
+// Verifica se é POST
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     http_response_code(405);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Método não permitido. Use POST.'
-    ]);
+    echo json_encode(['success' => false, 'message' => 'Método não permitido']);
     exit();
 }
 

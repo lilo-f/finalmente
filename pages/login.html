@@ -493,7 +493,8 @@
            constructor() {
         this.currentTab = 'login';
         // Ajuste este caminho conforme sua estrutura
-this.apiUrl = 'http://127.0.0.1:5501/api/auth.php'; // Se está na pasta /api
+this.apiUrl = 'http://localhost/trabalhofinal/finalmente/api/auth.php';    
+
         this.init();
     }
 
@@ -687,6 +688,7 @@ this.apiUrl = 'http://127.0.0.1:5501/api/auth.php'; // Se está na pasta /api
                 try {
                     const response = await fetch(this.apiUrl, {
                         method: 'POST',
+                        mode: 'cors', // Adicione esta linha
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -708,7 +710,7 @@ this.apiUrl = 'http://127.0.0.1:5501/api/auth.php'; // Se está na pasta /api
                         localStorage.setItem('ravenStudioUser', JSON.stringify(data.user));
                         
                         setTimeout(() => {
-                            window.location.href = '../index.html';
+                            window.location.href = '../pages/user.html';
                         }, 1500);
                     } else {
                         this.showError(document.getElementById('login-email'), data.message);
@@ -720,9 +722,14 @@ this.apiUrl = 'http://127.0.0.1:5501/api/auth.php'; // Se está na pasta /api
                 }
             }
 
-          async handleRegister() {
-    if (!this.validateForm('register-form')) return;
+async handleRegister() {
+    // 1. Validação do formulário
+    if (!this.validateForm('register-form')) {
+        console.log('Validação do formulário falhou');
+        return;
+    }
 
+    // 2. Coletar dados do formulário
     const userData = {
         action: 'register',
         firstName: document.getElementById('register-name').value.trim(),
@@ -733,36 +740,76 @@ this.apiUrl = 'http://127.0.0.1:5501/api/auth.php'; // Se está na pasta /api
         password: document.getElementById('register-password').value
     };
 
+    // 3. Validação adicional
+    if (userData.password.length < 6) {
+        this.showError(document.getElementById('register-password'), 'A senha deve ter pelo menos 6 caracteres');
+        return;
+    }
+
+    const confirmPassword = document.getElementById('register-confirm-password').value;
+    if (userData.password !== confirmPassword) {
+        this.showError(document.getElementById('register-confirm-password'), 'As senhas não coincidem');
+        return;
+    }
+
     try {
+        console.log('Enviando dados para o servidor:', userData);
+
+        // 4. Fazer a requisição
         const response = await fetch(this.apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify(userData),
+            credentials: 'include' // Para cookies, se necessário
         });
 
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => null);
-            throw new Error(errorData?.message || `Erro HTTP: ${response.status}`);
+        // 5. Verificar o tipo de conteúdo da resposta
+        const contentType = response.headers.get('content-type');
+        let data;
+
+        if (contentType && contentType.includes('application/json')) {
+            data = await response.json();
+        } else {
+            const text = await response.text();
+            console.error('Resposta não-JSON do servidor:', text);
+            throw new Error('Resposta inválida do servidor');
         }
 
-        const data = await response.json();
-        
+        // 6. Tratar a resposta
+        if (!response.ok) {
+            console.error('Erro na resposta:', data);
+            throw new Error(data.message || 'Erro ao registrar usuário');
+        }
+
         if (data.success) {
             this.showSuccess('register-success', 'Cadastro realizado com sucesso!');
+            console.log('Usuário registrado com ID:', data.userId);
+            
+            // Limpar formulário e mudar para a aba de login após 2 segundos
             document.getElementById('register-form').reset();
             setTimeout(() => this.switchTab('login'), 2000);
         } else {
             throw new Error(data.message || 'Erro desconhecido');
         }
-    } catch (error) {
-        console.error('Erro completo:', error);
-        this.showError(document.getElementById('register-email'), error.message);
-    }
-}
-}
 
+    } catch (error) {
+        console.error('Erro completo no registro:', error);
+        
+        // Mostrar mensagem de erro no campo de e-mail (ou outro campo apropriado)
+        const errorMessage = error.message.includes('E-mail') 
+            ? error.message 
+            : 'Erro ao conectar com o servidor. Tente novamente.';
+        
+        this.showError(document.getElementById('register-email'), errorMessage);
+        
+        // Mostrar erro no console para depuração
+        if (error.response) {
+            console.error('Resposta de erro:', error.response);
+        }
+    }
+}}
         // Global functions
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
