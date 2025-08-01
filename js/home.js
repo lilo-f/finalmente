@@ -300,114 +300,138 @@ document.addEventListener('DOMContentLoaded', function() {
             }, ]
         }, ],
         results: {
-            realismo: {
-                name: "Realismo",
-                description: "Seu estilo é o Realismo, ideal para quem busca reproduzir imagens com a máxima fidelidade e detalhes impressionantes. Perfeito para retratos, paisagens e elementos da natureza. Suas tatuagens serão verdadeiras obras de arte na pele.",
-                features: ["Fidelidade à imagem original", "Riqueza de detalhes e texturas", "Sombras e luzes precisas", "Sensação de profundidade"],
-                gallery: ["/img/tatuagens/realismo1.jpg", "/img/tatuagens/realismo2.jpg", "/img/tatuagens/realismo3.jpg"],
-                artist: "maria"
-            },
-            black_grey: {
-                name: "Blackwork / Black & Grey",
-                description: "Você se inclina para o Blackwork e Black & Grey, estilos que utilizam predominantemente o preto e suas nuances de cinza. Ideal para quem aprecia a profundidade, contraste e a atemporalidade que o preto pode oferecer, seja em padrões, figuras ou paisagens.",
-                features: ["Uso de tons de preto e cinza", "Contraste e profundidade", "Linhas fortes e marcantes", "Versatilidade em temas"],
-                gallery: ["/img/tatuagens/blackwork1.jpg", "/img/tatuagens/blackwork2.jpg", "/img/tatuagens/blackwork3.jpg"],
-                artist: "joao"
-            },
-            aquarela: {
-                name: "Aquarela",
-                description: "Seu estilo é a Aquarela, caracterizado por cores vibrantes, efeitos de 'mancha' e fluidez. Perfeito para quem busca uma tatuagem artística, leve e cheia de movimento, como se fosse pintada diretamente na pele.",
-                features: ["Cores vibrantes e translúcidas", "Efeitos de respingo e fluidez", "Ausência de contornos marcados", "Sensação de leveza e arte"],
-                gallery: ["/img/tatuagens/aquarela1.jpg", "/img/tatuagens/aquarela2.jpg", "/img/tatuagens/aquarela3.jpg"],
-                artist: "ana"
-            },
-            minimalista: {
-                name: "Minimalista",
-                description: "Você prefere o Minimalista, com linhas finas, formas simples e designs discretos. Ideal para quem busca elegância e sutileza, com um impacto visual significativo através da simplicidade. Pequenos símbolos, traços únicos e tipografias delicadas se encaixam aqui.",
-                features: ["Linhas finas e delicadas", "Designs simples e discretos", "Impacto através da sutileza", "Pequenos símbolos e tipografias"],
-                gallery: ["/img/tatuagens/minimalista1.jpg", "/img/tatuagens/minimalista2.jpg", "/img/tatuagens/minimalista3.jpg"],
-                artist: "pedro"
-            },
-            geometrica: {
-                name: "Geométrica",
-                description: "Seu estilo é o Geométrico, caracterizado por padrões, formas e linhas precisas. Perfeito para quem aprecia simetria, designs abstratos e a complexidade que pode ser criada a partir de elementos simples.",
-                features: ["Padrões e formas precisas", "Linhas limpas e simetria", "Designs abstratos e complexos", "Estruturas visuais marcantes"],
-                gallery: ["/img/tatuagens/geométrico1.jpg", "/img/tatuagens/geométrico2.jpg", "/img/tatuagens/geométrico3.jpg"],
-                artist: "maria"
-            },
-            tradicional: {
-                name: "Tradicional / Old School",
-                description: "Você gosta do estilo Tradicional ou Old School, com contornos grossos, cores sólidas e temas clássicos como âncoras, rosas e corações. Ideal para quem valoriza a história da tatuagem e designs atemporais com forte impacto visual.",
-                features: ["Contornos grossos e marcantes", "Cores sólidas e vibrantes", "Temas clássicos e simbólicos", "Estilo atemporal e icônico"],
-                gallery: ["/img/tatuagens/oldschool1.jpg", "/img/tatuagens/oldschool2.jpg", "/img/tatuagens/oldschool3.jpg"],
-                artist: "joao"
-            },
-            neotradicional: {
-                name: "Neotradicional",
-                description: "Seu estilo é o Neotradicional, uma evolução do tradicional com mais detalhes, cores vibrantes e profundidade. Combina a ousadia do Old School com técnicas modernas para criar peças ricas e expressivas.",
-                features: ["Contornos definidos", "Cores ricas e variadas", "Detalhes aprimorados e profundidade", "Temas clássicos e novos"],
-                gallery: ["/img/tatuagens/neotradicional1.jpg", "/img/tatuagens/neotradiciona2.jpg", "/img/tatuagens/neotradiciona3.jpg"],
-                artist: "ana"
-            },
-            pontilhismo: {
-    name: "Pontilhismo",
-    description: "Você se identifica com o Pontilhismo, uma técnica que usa milhares de pontos para criar sombras, texturas e formas. Ideal para designs detalhados, mandalas e arte que exige precisão e paciência.",
-    features: ["Criação de imagens por pontos", "Texturas únicas", "Sombras e profundidade sutis", "Ideal para mandalas e padrões"],
-    gallery: ["/img/pontilhismo1.jpg", "/img/pontilhismo2.jpg", "/img/pontilhismo3.jpg"],
-    artist: "pedro"
-},
-fineline: {
-    name: "Fineline",
-    description: "Seu estilo é o Fineline, caracterizado por linhas extremamente finas e delicadas. Perfeito para tatuagens discretas, minimalistas, escritas e designs que exigem alta precisão e sutileza.",
-    features: ["Linhas extremamente finas", "Detalhes minuciosos", "Elegância e sutileza", "Popular para escritas e símbolos"],
-    gallery: ["/img/fineline1.jpg", "/img/fineline2.jpg", "/img/fineline3.jpg"],
-    artist: "ana"
-},
-oriental: {
-    name: "Oriental",
-    description: "Você aprecia o estilo Oriental, com temas como dragões, carpas, flor de lótus e samurais. Caracterizado por designs grandes, fluidos e cheios de simbolismo, com cores vibrantes ou em preto e cinza.",
-    features: ["Temas e simbolismos japoneses", "Designs grandes e fluidos", "Cores vibrantes ou preto e cinza", "Rica em detalhes e significado"],
-    gallery: ["/img/oriental1.jpg", "/img/oriental2.jpg", "/img/oriental3.jpg"],
-    artist: "joao"
-},
-florais: {
-    name: "Florais",
-    description: "Seu estilo são os Florais, que engloba diversas técnicas para representar a beleza da natureza. Desde linhas delicadas até realismo detalhado, perfeito para quem busca designs orgânicos, elegantes e com significados pessoais.",
-    features: ["Variedade de flores e folhagens", "Adapta-se a diferentes estilos (fineline, realismo, aquarela)", "Designs orgânicos e elegantes", "Simbolismo e beleza natural"],
-    gallery: ["/img/florais1.jpg", "/img/florais2.jpg", "/img/florais3.jpg"],
-    artist: "maria"
-},
-blackwork: {
-    name: "Blackwork",
-    description: "Você se inclina para o Blackwork, um estilo impactante que utiliza grandes áreas de tinta preta, padrões geométricos, linhas densas e designs tribais. Ideal para quem busca uma tatuagem forte, dramática e com presença.",
-    features: ["Grandes áreas de preto sólido", "Padrões geométricos e abstratos", "Designs tribais e simbólicos", "Estilo dramático e marcante"],
-    gallery: ["/img/blackwork1.jpg", "/img/blackwork2.jpg", "/img/blackwork3.jpg"],
-    artist: "joao"
-}
+        realismo: {
+            name: "Realismo",
+            description: "Seu estilo é o Realismo, ideal para quem busca reproduzir imagens com a máxima fidelidade e detalhes impressionantes. Perfeito para retratos, paisagens e elementos da natureza. Suas tatuagens serão verdadeiras obras de arte na pele.",
+            features: ["Fidelidade à imagem original", "Riqueza de detalhes e texturas", "Sombras e luzes precisas", "Sensação de profundidade"],
+            gallery: ["/img/tatuagens/realismo1.jpg", "/img/tatuagens/realismo2.jpg", "/img/tatuagens/realismo3.jpg"],
+            artist: "augusto" // Augusto é especialista em Realismo
         },
-        artists: {
-            maria: {
-                name: "Augusto",
-                specialties: ["Realismo", "Geométrica", "Florais"],
-                profileUrl: "/artistas/augusto.html" // Exemplo de URL de perfil
-            },
-            joao: {
-                name: "Clara",
-                specialties: ["Blackwork", "Black & Grey", "Tradicional", "Oriental"],
-                profileUrl: "/artistas/clara.html" // Exemplo de URL de perfil
-            },
-            ana: {
-                name: "Isabella",
-                specialties: ["Aquarela", "Fineline", "Neotradicional"],
-                profileUrl: "/artistas/isabella.html" // Exemplo de URL de perfil
-            },
-            pedro: {
-                name: "Ricardo",
-                specialties: ["Minimalista", "Pontilhismo"],
-                profileUrl: "/artistas/ricardo.html" // Exemplo de URL de perfil
-            }
+        black_grey: {
+            name: "Blackwork / Black & Grey",
+            description: "Você se inclina para o Blackwork e Black & Grey, estilos que utilizam predominantemente o preto e suas nuances de cinza. Ideal para quem aprecia a profundidade, contraste e a atemporalidade que o preto pode oferecer, seja em padrões, figuras ou paisagens.",
+            features: ["Uso de tons de preto e cinza", "Contraste e profundidade", "Linhas fortes e marcantes", "Versatilidade em temas"],
+            gallery: ["/img/tatuagens/blackwork1.jpg", "/img/tatuagens/blackwork2.jpg", "/img/tatuagens/blackwork3.jpg"],
+            artist: "ricardo" // Ricardo é especialista em Blackwork
+        },
+        aquarela: {
+            name: "Aquarela",
+            description: "Seu estilo é a Aquarela, caracterizado por cores vibrantes, efeitos de 'mancha' e fluidez. Perfeito para quem busca uma tatuagem artística, leve e cheia de movimento, como se fosse pintada diretamente na pele.",
+            features: ["Cores vibrantes e translúcidas", "Efeitos de respingo e fluidez", "Ausência de contornos marcados", "Sensação de leveza e arte"],
+            gallery: ["/img/tatuagens/aquarela1.jpg", "/img/tatuagens/aquarela2.jpg", "/img/tatuagens/aquarela3.jpg"],
+            artist: "sofia" // Sofia é especialista em Aquarela
+        },
+        minimalista: {
+            name: "Minimalista",
+            description: "Você prefere o Minimalista, com linhas finas, formas simples e designs discretos. Ideal para quem busca elegância e sutileza, com um impacto visual significativo através da simplicidade. Pequenos símbolos, traços únicos e tipografias delicadas se encaixam aqui.",
+            features: ["Linhas finas e delicadas", "Designs simples e discretos", "Impacto através da sutileza", "Pequenos símbolos e tipografias"],
+            gallery: ["/img/tatuagens/minimalista1.jpg", "/img/tatuagens/minimalista2.jpg", "/img/tatuagens/minimalista3.jpg"],
+            artist: "isabella" // Isabella é especialista em Minimalista
+        },
+        geometrica: {
+            name: "Geométrica",
+            description: "Seu estilo é o Geométrico, caracterizado por padrões, formas e linhas precisas. Perfeito para quem aprecia simetria, designs abstratos e a complexidade que pode ser criada a partir de elementos simples.",
+            features: ["Padrões e formas precisas", "Linhas limpas e simetria", "Designs abstratos e complexos", "Estruturas visuais marcantes"],
+            gallery: ["/img/tatuagens/geométrico1.jpg", "/img/tatuagens/geométrico2.jpg", "/img/tatuagens/geométrico3.jpg"],
+            artist: "ricardo" // Ricardo também faz Geométrico
+        },
+        tradicional: {
+            name: "Tradicional / Old School",
+            description: "Você gosta do estilo Tradicional ou Old School, com contornos grossos, cores sólidas e temas clássicos como âncoras, rosas e corações. Ideal para quem valoriza a história da tatuagem e designs atemporais com forte impacto visual.",
+            features: ["Contornos grossos e marcantes", "Cores sólidas e vibrantes", "Temas clássicos e simbólicos", "Estilo atemporal e icônico"],
+            gallery: ["/img/tatuagens/oldschool1.jpg", "/img/tatuagens/oldschool2.jpg", "/img/tatuagens/oldschool3.jpg"],
+            artist: "marcos" // Marcos é especialista em Old School
+        },
+        neotradicional: {
+            name: "Neotradicional",
+            description: "Seu estilo é o Neotradicional, uma evolução do tradicional com mais detalhes, cores vibrantes e profundidade. Combina a ousadia do Old School com técnicas modernas para criar peças ricas e expressivas.",
+            features: ["Contornos definidos", "Cores ricas e variadas", "Detalhes aprimorados e profundidade", "Temas clássicos e novos"],
+            gallery: ["/img/tatuagens/neotradicional1.jpg", "/img/tatuagens/neotradiciona2.jpg", "/img/tatuagens/neotradiciona3.jpg"],
+            artist: "marcos" // Marcos também faz Neotradicional
+        },
+        pontilhismo: {
+            name: "Pontilhismo",
+            description: "Você se identifica com o Pontilhismo, uma técnica que usa milhares de pontos para criar sombras, texturas e formas. Ideal para designs detalhados, mandalas e arte que exige precisão e paciência.",
+            features: ["Criação de imagens por pontos", "Texturas únicas", "Sombras e profundidade sutis", "Ideal para mandalas e padrões"],
+            gallery: ["/img/pontilhismo1.jpg", "/img/pontilhismo2.jpg", "/img/pontilhismo3.jpg"],
+            artist: "isabella" // Isabella é especialista em Pontilhismo
+        },
+        fineline: {
+            name: "Fineline",
+            description: "Seu estilo é o Fineline, caracterizado por linhas extremamente finas e delicadas. Perfeito para tatuagens discretas, minimalistas, escritas e designs que exigem alta precisão e sutileza.",
+            features: ["Linhas extremamente finas", "Detalhes minuciosos", "Elegância e sutileza", "Popular para escritas e símbolos"],
+            gallery: ["/img/fineline1.jpg", "/img/fineline2.jpg", "/img/fineline3.jpg"],
+            artist: "isabella" // Isabella é especialista em Fineline
+        },
+        oriental: {
+            name: "Oriental",
+            description: "Você aprecia o estilo Oriental, com temas como dragões, carpas, flor de lótus e samurais. Caracterizado por designs grandes, fluidos e cheios de simbolismo, com cores vibrantes ou em preto e cinza.",
+            features: ["Temas e simbolismos japoneses", "Designs grandes e fluidos", "Cores vibrantes ou preto e cinza", "Rica em detalhes e significado"],
+            gallery: ["/img/oriental1.jpg", "/img/oriental2.jpg", "/img/oriental3.jpg"],
+            artist: "clara" // Clara faz estilos orientais/geek
+        },
+        florais: {
+            name: "Florais",
+            description: "Seu estilo são os Florais, que engloba diversas técnicas para representar a beleza da natureza. Desde linhas delicadas até realismo detalhado, perfeito para quem busca designs orgânicos, elegantes e com significados pessoais.",
+            features: ["Variedade de flores e folhagens", "Adapta-se a diferentes estilos (fineline, realismo, aquarela)", "Designs orgânicos e elegantes", "Simbolismo e beleza natural"],
+            gallery: ["/img/florais1.jpg", "/img/florais2.jpg", "/img/florais3.jpg"],
+            artist: "sofia" // Sofia é especialista em Florais
+        },
+        blackwork: {
+            name: "Blackwork",
+            description: "Você se inclina para o Blackwork, um estilo impactante que utiliza grandes áreas de tinta preta, padrões geométricos, linhas densas e designs tribais. Ideal para quem busca uma tatuagem forte, dramática e com presença.",
+            features: ["Grandes áreas de preto sólido", "Padrões geométricos e abstratos", "Designs tribais e simbólicos", "Estilo dramático e marcante"],
+            gallery: ["/img/blackwork1.jpg", "/img/blackwork2.jpg", "/img/blackwork3.jpg"],
+            artist: "ricardo" // Ricardo é especialista em Blackwork
+        },
+        geek: {
+            name: "Geek/Pop Culture",
+            description: "Seu estilo é Geek/Pop Culture, perfeito para fãs de filmes, séries, jogos e quadrinhos. Tatuagens que celebram seus personagens e universos favoritos com um toque artístico único.",
+            features: ["Referências a filmes, séries e jogos", "Estilo vibrante e expressivo", "Personagens icônicos", "Toque artístico personalizado"],
+            gallery: ["/img/geek1.jpg", "/img/geek2.jpg", "/img/geek3.jpg"],
+            artist: "clara" // Clara é especialista em Geek/Pop Culture
         }
-    };
+    },
+    
+    artists: {
+        augusto: {
+            name: "Augusto",
+            specialties: ["Realismo", "Maori", "Tribal"],
+            profileUrl: "/artistas/augusto.html",
+            image: "/img/artistas/augusto.png"
+        },
+        clara: {
+            name: "Clara",
+            specialties: ["Geek", "Pop Culture", "Anime", "Oriental"],
+            profileUrl: "/artistas/clara.html",
+            image: "/img/artistas/clara.png"
+        },
+        isabella: {
+            name: "Isabella",
+            specialties: ["Fineline", "Pontilhismo", "Botânico", "Minimalista"],
+            profileUrl: "/artistas/isabella.html",
+            image: "/img/artistas/isabella.png"
+        },
+        marcos: {
+            name: "Marcos",
+            specialties: ["Old School", "Neotradicional"],
+            profileUrl: "/artistas/marco.html",
+            image: "/img/artistas/marcos.png"
+        },
+        ricardo: {
+            name: "Ricardo",
+            specialties: ["Tribal", "Blackwork", "Geométrico", "Abstrato"],
+            profileUrl: "/artistas/ricardo.html",
+            image: "/img/artistas/ricardo.png"
+        },
+        sofia: {
+            name: "Sofia",
+            specialties: ["Aquarela", "Estilo Livre", "Floral", "Abstrato"],
+            profileUrl: "/artistas/sofia.html",
+            image: "/img/artistas/sofia.png"
+        }
+    }
+};
 
     // Initialize quiz
     function initQuiz() {
@@ -569,48 +593,42 @@ blackwork: {
         displayResult(sortedStyles[0][0], Array.from(recommendedArtists.values())); // Pass the top style and the array of unique artists
     }
 
-    // Display result
-    function displayResult(topStyleKey, artistsToRecommend) {
-        const result = tattooQuiz.results[topStyleKey];
-        if (!result) {
-            console.error("Estilo de tatuagem não encontrado:", topStyleKey);
-            return;
-        }
-
-        resultStyleElement.textContent = result.name;
-        resultDescriptionElement.textContent = result.description;
-
-        styleFeaturesElement.innerHTML = result.features.map(feature => `<li><i class="fas fa-check-circle"></i> ${feature}</li>`).join('');
-
-        resultGalleryElement.innerHTML = result.gallery.map(imgSrc => `
-            <div class="result-gallery-item">
-                <img src="${imgSrc}" alt="${result.name}">
-            </div>
-        `).join('');
-
-        // Gerar múltiplos cartões de artista
-        if (artistsToRecommend.length > 0) {
-            artistMatchElement.innerHTML = `
-                <h3 class="recommended-artists-title">Artistas Recomendados:</h3>
-                <div class="artist-cards-container">
-                    ${artistsToRecommend.map(artist => `
-                        <a href="${artist.profileUrl}" class="artist-card-link" aria-label="Visitar perfil de ${artist.name}">
-                            <div class="quiz-artist-card">
-                                <h4>${artist.name}</h4>
-                            </div>
-                        </a>
-                    `).join('')}
-                </div>
-            `;
-        } else {
-            artistMatchElement.innerHTML = '<p>Nenhum artista recomendado encontrado para este estilo.</p>';
-        }
-
-        quizQuestions.style.display = 'none';
-        quizResult.style.display = 'block';
+// Função para exibir o resultado com link no nome do artista
+function displayResult(topStyleKey, artistsToRecommend) {
+    const result = tattooQuiz.results[topStyleKey];
+    if (!result) {
+        console.error("Estilo de tatuagem não encontrado:", topStyleKey);
+        return;
     }
 
-    // Restart quiz
+    resultStyleElement.textContent = result.name;
+    resultDescriptionElement.textContent = result.description;
+
+    styleFeaturesElement.innerHTML = result.features.map(feature => 
+        `<li><i class="fas fa-check-circle"></i> ${feature}</li>`
+    ).join('');
+
+    resultGalleryElement.innerHTML = result.gallery.map(imgSrc => `
+        <div class="result-gallery-item">
+            <img src="${imgSrc}" alt="Exemplo de tatuagem no estilo ${result.name}">
+        </div>
+    `).join('');
+
+    // Mostrar apenas os nomes dos artistas como links
+    if (artistsToRecommend.length > 0) {
+        artistMatchElement.innerHTML = `
+            <h4>ARTISTA RECOMENDADO:</h4>
+            <div class="artist-name">
+                <a href="${artistsToRecommend[0].profileUrl}">${artistsToRecommend[0].name}</a>
+            </div>
+        `;
+    } else {
+        artistMatchElement.innerHTML = '<p>Nenhum artista recomendado para este estilo.</p>';
+    }
+
+    quizQuestions.style.display = 'none';
+    quizResult.style.display = 'block';
+}    // Restart quiz
     restartButton.addEventListener('click', initQuiz);
 
     // Initial load
