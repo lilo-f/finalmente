@@ -13,6 +13,64 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/navbar.css">
     <style>
+        /* Estilos para os status dos agendamentos */
+.appointment-status {
+    padding: 0.2rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-upcoming {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+    border: 1px solid #3b82f6;
+}
+
+.status-past {
+    background-color: rgba(156, 163, 175, 0.2);
+    color: #9ca3af;
+    border: 1px solid #9ca3af;
+}
+
+.status-cancelled {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+
+.status-completed {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 1px solid #22c55e;
+}
+
+/* Estilo para o container de detalhes do agendamento */
+.appointment-details {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+    align-items: center;
+}
+
+/* Estilo para a descrição do agendamento */
+.appointment-description {
+    background: rgba(30, 30, 30, 0.8);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Estilo para as ações do agendamento */
+.appointment-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
         /* Estilo para a imagem do artista nos agendamentos */
 .appointment-icon img {
     width: 100%;
@@ -1910,65 +1968,80 @@
         return productsData.find(p => p.id === productId);
     }
 
-    // Função para carregar detalhes do usuário
 function loadUserDetails() {
-    const user = window.userSession.currentUser;
+    const user = window.userSession?.currentUser;
+    if (!user) return;
+
+    // Atualizar avatar principal
     const userAvatarImg = document.getElementById('user-avatar');
-    const defaultAvatarIcon = document.getElementById('default-avatar-icon');
+    const defaultIcon = document.getElementById('default-avatar-icon');
+    
+    // Atualizar pontos
+    const pointsElement = document.getElementById('userPointsDisplay');
+    if (pointsElement) {
+        pointsElement.textContent = user.points || user.loyalty_points || 0;
+    }
 
-    if (user) {
-        // Exibir nome completo (firstName + lastName ou name)
-        const userName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Usuário Raven';
-        document.getElementById('user-name').textContent = userName;
-        
-        // Formatar dados de contato
-        const userEmail = user.email || 'N/A';
-        const userPhone = user.phone ? formatPhoneNumber(user.phone) : 'N/A';
-        
-        document.getElementById('user-email').innerHTML = `
-            <i class="fas fa-envelope"></i> ${userEmail}<br>
-            <i class="fas fa-phone"></i> ${userPhone}
-        `;
-        
-        // Formatar data de cadastro (usando created_at do banco ou joinDate)
-        const joinDate = user.joinDate || user.created_at;
-        const formattedDate = joinDate ? new Date(joinDate).toLocaleDateString('pt-BR') : 'N/A';
-        document.getElementById('join-date').textContent = `Membro desde: ${formattedDate}`;
-
-        // Atualizar contadores
-        document.getElementById('total-orders').textContent = user.orders ? user.orders.length : 0;
-        document.getElementById('appointments-count').textContent = user.appointments ? user.appointments.filter(a => a.status !== 'Cancelado' && a.status !== 'Concluído').length : 0;
-        document.getElementById('wishlist-count').textContent = user.wishlist ? user.wishlist.length : 0;
-        document.getElementById('userPointsDisplay').textContent = user.points || user.loyalty_points || 0;
-
-        // Atualizar avatar
+    // Verificar se os elementos existem antes de manipulá-los
+    if (userAvatarImg && defaultIcon) {
+        // Usar avatarUrl como fonte principal, com fallback para avatar
         const avatarUrl = user.avatar || user.avatarUrl;
-        if (avatarUrl) {
+        if (avatarUrl && avatarUrl.startsWith('data:image')) {
             userAvatarImg.src = avatarUrl;
             userAvatarImg.style.display = 'block';
-            defaultAvatarIcon.style.display = 'none';
+            defaultIcon.style.display = 'none';
         } else {
             userAvatarImg.style.display = 'none';
-            defaultAvatarIcon.style.display = 'block';
+            defaultIcon.style.display = 'flex';
         }
+    }
 
-        // Atualizar avatar na navbar
-        const navUserIcon = document.getElementById('nav-user-icon');
-        const navUserAvatar = document.getElementById('nav-user-avatar');
-        if (avatarUrl) {
-            navUserAvatar.src = avatarUrl;
+    // Atualizar avatar na navbar
+    const navUserIcon = document.getElementById('nav-user-icon');
+    const navUserAvatar = document.getElementById('nav-user-avatar');
+    if (navUserAvatar && navUserIcon) {
+        const navAvatarUrl = user.avatar || user.avatarUrl;
+        if (navAvatarUrl && navAvatarUrl.startsWith('data:image')) {
+            navUserAvatar.src = navAvatarUrl;
             navUserAvatar.style.display = 'block';
             navUserIcon.style.display = 'none';
         } else {
             navUserAvatar.style.display = 'none';
             navUserIcon.style.display = 'block';
         }
-    } else {
-        document.getElementById('user-name').textContent = 'Convidado';
-        document.getElementById('user-email').innerHTML = 'Faça login para ver detalhes';
-        document.getElementById('join-date').textContent = 'Membro desde: N/A';
-        userAvatarImg.style.display = 'none';
-        defaultAvatarIcon.style.display = 'block';
+    }
+
+    // Atualizar outras informações do usuário
+    const userNameElement = document.getElementById('user-name');
+    if (userNameElement) {
+        userNameElement.textContent = user.name || `${user.first_name} ${user.last_name}`;
+    }
+    
+    const userEmailElement = document.getElementById('user-email');
+    if (userEmailElement) {
+        const contactValue = userEmailElement.querySelector('.contact-value');
+        if (contactValue) {
+            contactValue.textContent = user.email || '';
+        }
+    }
+    
+    const joinDateElement = document.getElementById('join-date');
+    if (joinDateElement) {
+        const joinDate = user.joinDate || user.created_at;
+        if (joinDate) {
+            const date = new Date(joinDate);
+            joinDateElement.textContent = `Membro desde: ${date.toLocaleDateString('pt-BR')}`;
+        }
+    }
+    
+    // Atualizar contagem de agendamentos
+    const appointmentsCountElement = document.getElementById('appointments-count');
+    if (appointmentsCountElement) {
+        if (user.appointments && user.appointments.length > 0) {
+            appointmentsCountElement.textContent = user.appointments.length;
+        } else {
+            appointmentsCountElement.textContent = '0';
+        }
     }
 }
     function formatPhoneNumber(phone) {
@@ -2213,82 +2286,136 @@ function loadUserDetails() {
         }, 2500);
     }
 
-    // Função para renderizar agendamentos
-    function renderAppointments() {
-        const appointmentsContainer = document.getElementById('appointments-container');
-        appointmentsContainer.innerHTML = '';
-        const user = window.userSession.currentUser;
 
-        if (user && user.appointments && user.appointments.length > 0) {
-            // Filtrar apenas agendamentos ativos (não cancelados e não concluídos)
-            const activeAppointments = user.appointments.filter(app => 
-                app.status !== 'Cancelado' && app.status !== 'Concluído');
+async function loadUserAppointments() {
+    const user = window.userSession?.currentUser;
+    if (!user) return;
 
-            if (activeAppointments.length > 0) {
-                activeAppointments.forEach(appointment => {
-                    const appDate = appointment.preferredDate1 
-                        ? new Date(appointment.preferredDate1).toLocaleDateString('pt-BR')
-                        : 'Data não definida';
-                    
-                    const appTime = appointment.preferredTime1 || 'Horário não definido';
-                    const status = appointment.status || 'Pendente';
-                    const statusClass = status.toLowerCase();
-                    
-                    const artistImageHtml = appointment.artistImage 
-                        ? `<img src="${appointment.artistImage}" alt="${appointment.artistName || 'Artista'}">`
-                        : `<i class="fas fa-user-circle"></i>`;
+    try {
+        const response = await fetch('http://localhost/trabalhofinal/finalmente/api/appointments.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'get_user_appointments',
+                userId: user.id
+            })
+        });
 
-                    appointmentsContainer.innerHTML += `
-                        <div class="appointment-card" data-appointment-id="${appointment.id}">
-                            <div class="appointment-header">
-                                <span class="appointment-id">Agendamento #${appointment.id || 'N/A'}</span>
-                                <span class="appointment-status status-${statusClass}">${status}</span>
-                            </div>
-                            <div class="appointment-details">
-                                <div class="appointment-icon">
-                                    ${artistImageHtml}
-                                </div>
-                                <div class="appointment-info">
-                                    <p class="appointment-artist">Artista: ${appointment.artistName || 'N/A'}</p>
-                                    <p class="appointment-style">Estilo: ${appointment.tattooStyle || 'N/A'}</p>
-                                    <p class="appointment-budget">Orçamento: ${formatPrice((appointment.budget || 0) * 100)}</p>
-                                </div>
-                            </div>
-                            <p class="appointment-date"><i class="fas fa-calendar-alt"></i> ${appDate} às ${appTime}</p>
-                            <p class="appointment-description">${appointment.tattooDescription || 'Sem descrição fornecida.'}</p>
-                            ${status === 'Pendente' || status === 'Confirmado' ? `
-                                <div class="appointment-actions">
-                                    <button class="btn-cancel-appointment" onclick="showCancelConfirmation('${appointment.id}')">
-                                        <i class="fas fa-times"></i> Cancelar Agendamento
-                                    </button>
-                                </div>
-                            ` : ''}
-                        </div>
-                    `;
-                });
+        const data = await response.json();
+
+        if (data.success) {
+            // Atualizar os agendamentos do usuário
+            user.appointments = data.appointments;
+            window.userSession.currentUser = user;
+            localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(user));
+            
+            // Atualizar contador de agendamentos
+            document.getElementById('appointments-count').textContent = data.appointments.length;
+            
+            // Renderizar os agendamentos
+            renderAppointments();
+            
+            // Atualizar todos os detalhes do usuário (incluindo a contagem)
+            loadUserDetails();
+        }
+    } catch (error) {
+        console.error('Erro ao carregar agendamentos:', error);
+    }
+}
+
+
+function renderAppointments() {
+    const appointmentsContainer = document.getElementById('appointments-container');
+    if (!appointmentsContainer) {
+        console.error("Elemento appointments-container não encontrado");
+        return;
+    }
+    
+    appointmentsContainer.innerHTML = '';
+    const user = window.userSession.currentUser;
+
+    if (user && user.appointments && user.appointments.length > 0) {
+        // Ordenar agendamentos: primeiro os futuros, depois os passados
+        const sortedAppointments = [...user.appointments].sort((a, b) => {
+            const dateA = new Date(`${a.preferred_date1}T${a.preferred_time1}`);
+            const dateB = new Date(`${b.preferred_date1}T${b.preferred_time1}`);
+            return dateA - dateB;
+        });
+
+        sortedAppointments.forEach(appointment => {
+            const appointmentDate = new Date(`${appointment.preferred_date1}T${appointment.preferred_time1}`);
+            const now = new Date();
+            const isPastAppointment = appointmentDate < now;
+            const isCancelled = appointment.status === 'Cancelado';
+            const isCompleted = appointment.status === 'Concluído';
+            
+            // Formatar data e hora
+            const formattedDate = appointmentDate.toLocaleDateString('pt-BR');
+            const formattedTime = appointmentDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            
+            // Determinar classe de status
+            let statusClass = '';
+            if (isCancelled) {
+                statusClass = 'status-cancelled';
+            } else if (isCompleted) {
+                statusClass = 'status-completed';
+            } else if (isPastAppointment) {
+                statusClass = 'status-past';
             } else {
-                appointmentsContainer.innerHTML = `
-                    <div style="text-align: center; padding: 1.5rem; color: #d1d5db;">
-                        <i class="fas fa-calendar-check" style="font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
-                        <p>Você não possui agendamentos ativos no momento.</p>
-                        <a href="/pages/agendamento.html" class="btn-primary" style="display: inline-block; margin-top: 0.8rem;">
-                            <i class="fas fa-plus"></i> Agendar Nova Sessão
-                        </a>
-                    </div>
-                `;
+                statusClass = 'status-upcoming';
             }
-        } else {
-            appointmentsContainer.innerHTML = `
-                <div style="text-align: center; padding: 1.5rem; color: #d1d5db;">
-                    <i class="fas fa-calendar-times" style="font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
-                    <p>Você não possui nenhum agendamento.</p>
-                    <a href="/pages/agendamento.html" class="btn-primary" style="display: inline-block; margin-top: 0.8rem;">
-                        <i class="fas fa-plus"></i> Agendar Nova Sessão
-                    </a>
+
+            appointmentsContainer.innerHTML += `
+                <div class="appointment-card">
+                    <div class="appointment-header">
+                        <span class="appointment-id">Agendamento #${appointment.id}</span>
+                        <span class="appointment-status ${statusClass}">${appointment.status || 'Agendado'}</span>
+                    </div>
+                    <p class="appointment-date">Data: ${formattedDate} às ${formattedTime}</p>
+                    
+                    <div class="appointment-details">
+                        <div class="appointment-icon">
+                            ${appointment.artist_image ? 
+                                `<img src="${appointment.artist_image}" alt="${appointment.artist_name}">` : 
+                                `<i class="fas fa-user"></i>`}
+                        </div>
+                        
+                        <div class="appointment-info">
+                            <h3 class="appointment-artist">${appointment.artist_name}</h3>
+                            <p class="appointment-style">Estilo: ${appointment.tattoo_style}</p>
+                            <p class="appointment-budget">Orçamento: ${formatPrice(appointment.budget * 100)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="appointment-description">
+                        <strong>Descrição:</strong> ${appointment.tattoo_description || 'Nenhuma descrição fornecida.'}
+                    </div>
+                    
+                    ${!isCancelled && !isCompleted && !isPastAppointment ? `
+                    <div class="appointment-actions">
+                        <button class="btn-cancel-appointment" onclick="showCancelConfirmation('${appointment.id}')">
+                            <i class="fas fa-times"></i> Cancelar Agendamento
+                        </button>
+                    </div>
+                    ` : ''}
                 </div>
             `;
-        }
+        });
+    } else {
+        // Mostrar mensagem quando não há agendamentos
+        appointmentsContainer.innerHTML = `
+            <div style="text-align: center; padding: 1.5rem; color: #d1d5db;">
+                <i class="fas fa-calendar-times" style="font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
+                <p>Você não possui nenhum agendamento.</p>
+                <a href="/pages/agendamento.html" class="btn-primary" style="display: inline-block; margin-top: 0.8rem;">
+                    <i class="fas fa-plus"></i> Agendar Nova Sessão
+                </a>
+            </div>
+        `;
     }
+}
 
     // Variável para armazenar o ID do agendamento a ser cancelado
     let appointmentToCancel = null;
@@ -2316,48 +2443,45 @@ function loadUserDetails() {
         appointmentToCancel = null;
     }
 
-    // Função para cancelar o agendamento
-  function cancelAppointment(appointmentId) {
-        const user = window.userSession.currentUser;
-        
-        if (!user || !user.appointments) {
-            console.error('Usuário não logado ou sem agendamentos');
-            return;
-        }
+async function cancelAppointment(appointmentId) {
+    const user = window.userSession.currentUser;
+    if (!user) return;
 
-        // Encontra o índice do agendamento
-        const appointmentIndex = user.appointments.findIndex(a => a.id === appointmentId);
-        
-        if (appointmentIndex === -1) {
-            console.error('Agendamento não encontrado');
-            return;
-        }
+    try {
+        const response = await fetch('http://localhost/trabalhofinal/finalmente/api/appointments.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'cancel',
+                appointmentId: appointmentId,
+                userId: user.id
+            })
+        });
 
-        // Atualiza o status do agendamento para "Cancelado"
-        user.appointments[appointmentIndex].status = 'Cancelado';
-        
-        // Atualiza o usuário no localStorage
-        localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(user));
-        
-        // Atualiza também no array de usuários globais
-        const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
-        const userIndex = users.findIndex(u => u.email === user.email);
-        if (userIndex !== -1) {
-            const userAppointmentIndex = users[userIndex].appointments.findIndex(a => a.id === appointmentId);
-            if (userAppointmentIndex !== -1) {
-                users[userIndex].appointments[userAppointmentIndex].status = 'Cancelado';
-                localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
+        const data = await response.json();
+
+        if (data.success) {
+            // Atualizar a lista de agendamentos do usuário
+            const appointmentIndex = user.appointments.findIndex(a => a.id == appointmentId);
+            if (appointmentIndex !== -1) {
+                user.appointments[appointmentIndex].status = 'Cancelado';
+                window.userSession.currentUser = user;
+                localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(user));
             }
+
+            // Recarregar a lista de agendamentos
+            renderAppointments();
+            showCancelSuccessNotification();
+        } else {
+            throw new Error(data.message || 'Erro ao cancelar agendamento');
         }
-        
-        // Atualiza o usuário na sessão atual
-        window.userSession.currentUser = user;
-        
-        // Recarrega a lista de agendamentos e atualiza a contagem
-        renderAppointments();
-        loadUserDetails();
-        showCancelSuccessNotification();
+    } catch (error) {
+        console.error('Erro ao cancelar agendamento:', error);
+        alert('Erro ao cancelar agendamento: ' + error.message);
     }
+}
 
 
     // Função para mostrar notificação de sucesso
@@ -2404,7 +2528,7 @@ function loadUserDetails() {
     }
 
     // Inicialização
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded',async  function() {
         // Toggle do menu mobile
         const navbar = document.querySelector('.navbar');
         const navToggle = document.getElementById('navToggle');
@@ -2418,6 +2542,8 @@ function loadUserDetails() {
                 navbar.classList.remove('scrolled');
             }
         }
+
+
         
         // Adicionar evento de scroll
         window.addEventListener('scroll', handleScroll);
@@ -2533,10 +2659,16 @@ function loadUserDetails() {
             }
         }
 
+    if (window.userSession.isLoggedIn()) {
+        // Carregar agendamentos do usuário
+        await window.userSession.loadAppointments();
+        
+        // Carregar e renderizar os dados do usuário
         loadUserDetails();
         renderOrders();
         renderWishlist();
         renderAppointments();
+    }
         
         // Ativar a primeira seção por padrão (Meus Pedidos)
         showSection('orders');
@@ -2569,7 +2701,11 @@ function loadUserDetails() {
         }
         
         updateCartCounter();
+
+        
     });
+    
+    
 </script>
 </body>
 </html>
