@@ -1,0 +1,23 @@
+USE raven_studio;
+
+CREATE TABLE IF NOT EXISTS appointments (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    user_id INT(11) NOT NULL,
+    artist_id VARCHAR(50) NOT NULL,
+    artist_name VARCHAR(100) NOT NULL,
+    artist_image VARCHAR(255) DEFAULT NULL,
+    preferred_date1 DATE NOT NULL,
+    preferred_time1 TIME NOT NULL,
+    tattoo_style VARCHAR(50) NOT NULL,
+    tattoo_description TEXT NOT NULL,
+    budget DECIMAL(10,2) NOT NULL,
+    status ENUM('Pendente', 'Confirmado', 'Cancelado', 'Concluído') DEFAULT 'Pendente',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX (user_id),
+    INDEX (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE appointments ADD INDEX idx_artist_date_time (artist_id, preferred_date1, preferred_time1);
