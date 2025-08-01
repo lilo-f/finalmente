@@ -679,49 +679,52 @@ this.apiUrl = 'http://localhost/trabalhofinal/finalmente/api/auth.php';
                 return isValid;
             }
 
-            async handleLogin() {
-                if (!this.validateForm('login-form')) return;
+async handleLogin() {
+    if (!this.validateForm('login-form')) return;
 
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
 
-                try {
-                    const response = await fetch(this.apiUrl, {
-                        method: 'POST',
-                        mode: 'cors', // Adicione esta linha
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            action: 'login',
-                            email: email,
-                            password: password
-                        })
-                    });
+    try {
+        const response = await fetch(this.apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: 'login',
+                email: email,
+                password: password
+            })
+        });
 
-                    if (!response.ok) {
-                        throw new Error('Erro na requisição');
-                    }
+        const data = await response.json();
 
-                    const data = await response.json();
-
-                    if (data.success) {
-                        this.showSuccess('login-success', 'Login realizado com sucesso!');
-                        localStorage.setItem('ravenStudioUser', JSON.stringify(data.user));
-                        
-                        setTimeout(() => {
-                            window.location.href = '../pages/user.html';
-                        }, 1500);
-                    } else {
-                        this.showError(document.getElementById('login-email'), data.message);
-                        this.showError(document.getElementById('login-password'), data.message);
-                    }
-                } catch (error) {
-                    console.error('Login error:', error);
-                    this.showError(document.getElementById('login-email'), 'Erro ao conectar com o servidor');
-                }
+        if (data.success) {
+            this.showSuccess('login-success', 'Login realizado com sucesso!');
+            
+            // Armazena o usuário no localStorage
+            localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(data.user));
+            
+            // Atualiza a sessão do usuário
+            if (typeof window.userSession !== 'undefined') {
+                window.userSession.currentUser = data.user;
+                window.userSession.updateNavbar();
             }
-
+            
+            // Redireciona após 1 segundo
+            setTimeout(() => {
+                window.location.href = '/pages/user.html';
+            }, 1000);
+        } else {
+            this.showError(document.getElementById('login-email'), data.message || 'Credenciais inválidas');
+            this.showError(document.getElementById('login-password'), data.message || 'Credenciais inválidas');
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        this.showError(document.getElementById('login-email'), 'Erro ao conectar com o servidor');
+    }
+}
 async handleRegister() {
     // 1. Validação do formulário
     if (!this.validateForm('register-form')) {
