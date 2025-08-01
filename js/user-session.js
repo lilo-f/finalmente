@@ -7,17 +7,20 @@ class UserSession {
         this.updateNavbar();
         this.updateGameNavbar();
     }
-
 login(userData) {
     const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
     const completeUser = users.find(u => u.email === userData.email) || userData;
     
-    // Garante que todos os campos estejam presentes
+    // Garantir que todos os campos estejam presentes
     completeUser.orders = completeUser.orders || [];
     completeUser.wishlist = completeUser.wishlist || [];
     completeUser.phone = completeUser.phone || userData.phone || '';
     completeUser.joinDate = completeUser.joinDate || completeUser.created_at || new Date().toISOString();
     completeUser.name = completeUser.name || `${completeUser.first_name || ''} ${completeUser.last_name || ''}`.trim();
+    
+    // Padronizar o avatar - usar avatarUrl como fonte principal
+    completeUser.avatarUrl = completeUser.avatarUrl || completeUser.avatar || null;
+    completeUser.avatar = completeUser.avatarUrl; // Manter consistência
     
     this.currentUser = completeUser;
     localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(completeUser));
@@ -25,18 +28,16 @@ login(userData) {
     this.showNotification('Login realizado com sucesso!');
     return completeUser;
 }
-    
-    // Método para atualizar o avatar do usuário
+
 updateAvatar(newAvatarUrl) {
     if (!this.currentUser) {
         console.error("Nenhum usuário logado para atualizar o avatar.");
         return false;
     }
 
-    // Atualiza ambos para compatibilidade
+    // Atualiza no localStorage
     this.currentUser.avatar = newAvatarUrl;
     this.currentUser.avatarUrl = newAvatarUrl;
-    
     localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(this.currentUser));
 
     // Atualiza também no array de usuários globais
@@ -48,16 +49,53 @@ updateAvatar(newAvatarUrl) {
         localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
     }
 
-    this.updateNavbar(); // Atualiza a navbar
+    this.updateNavbar();
     this.updateGameNavbar();
+    
     if (typeof loadUserDetails === 'function') {
-        loadUserDetails(); // Atualiza a página de perfil
+        loadUserDetails();
     }
+    
     this.showNotification('Avatar atualizado com sucesso!');
     return true;
 }
+   
 
 
+async loadAppointments() {
+    if (!this.isLoggedIn()) return [];
+
+    try {
+        const response = await fetch('http://localhost/trabalhofinal/finalmente/api/appointments.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'get_user_appointments',
+                userId: this.currentUser.id
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.appointments) {
+            // Garantir que os budgets sejam números
+            const appointments = data.appointments.map(app => ({
+                ...app,
+                budget: parseFloat(app.budget) || 0
+            }));
+            
+            this.currentUser.appointments = appointments;
+            localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(this.currentUser));
+            return appointments;
+        }
+        return [];
+    } catch (error) {
+        console.error('Erro ao carregar agendamentos:', error);
+        return [];
+    }
+}
 
 
     updateGameNavbar() {
@@ -82,6 +120,27 @@ updateAvatar(newAvatarUrl) {
                 gameUserLink.href = '/pages/login.html';
             }
         }
+    }
+
+
+
+      
+    addPoints(points) {
+        if (!this.currentUser) return false;
+        
+        // Atualiza localmente
+        this.currentUser.points = (this.currentUser.points || 0) + points;
+        localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(this.currentUser));
+        
+        // Atualiza no array de usuários globais
+        const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
+        const userIndex = users.findIndex(u => u.email === this.currentUser.email);
+        if (userIndex !== -1) {
+            users[userIndex].points = (users[userIndex].points || 0) + points;
+            localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
+        }
+        
+        return true;
     }
 
     addToWishlist(productId) {
