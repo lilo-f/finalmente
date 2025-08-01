@@ -167,7 +167,8 @@ try {
             $response = [
                 'success' => true,
                 'message' => 'Usuário registrado com sucesso',
-                'userId' => $conn->lastInsertId()
+                'userId' => $conn->lastInsertId(),
+                 'user' => $user // Já inclui o avatar se existir
             ];
             break;
 
@@ -188,32 +189,32 @@ try {
                 throw new Exception("Credenciais inválidas");
             }
 
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            // Verificar senha
-            if (!password_verify($password, $user['password'])) {
-                throw new Exception("Credenciais inválidas");
-            }
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!password_verify($password, $user['password'])) {
+        throw new Exception("Credenciais inválidas");
+    }
 
-            // Preparar dados do usuário para retorno
-            unset($user['password']); // Remove a senha hash
-            
-            // Adiciona campos formatados para o frontend
-            $user['name'] = $user['first_name'] . ' ' . $user['last_name'];
-            $user['joinDate'] = $user['created_at'];
-            $user['points'] = $user['loyalty_points'] ?? 0;
-            
-            // Adiciona campos que podem ser usados no frontend
-            $user['avatar'] = $user['avatar'] ?? null;
-            $user['phone'] = $user['phone'] ?? '';
-            $user['email'] = $user['email'] ?? '';
-            
-            $response = [
-                'success' => true,
-                'message' => 'Login realizado com sucesso',
-                'user' => $user
-            ];
-            break;
+    // Preparar dados do usuário para retorno
+    unset($user['password']); // Remove a senha hash
+    
+    // Garantir que o avatar está incluído corretamente
+    if (!empty($user['avatar'])) {
+        $user['avatarUrl'] = $user['avatar']; // Criar avatarUrl se avatar existir
+    } else {
+        $user['avatar'] = null;
+        $user['avatarUrl'] = null;
+    }
+    
+    // Adicionar pontos se existirem
+    $user['points'] = $user['loyalty_points'] ?? 0;
+    
+    $response = [
+        'success' => true,
+        'message' => 'Login realizado com sucesso',
+        'user' => $user
+    ];
+    break;
 
         default:
             throw new Exception("Ação inválida");
@@ -229,6 +230,9 @@ try {
         'message' => $e->getMessage()
     ]);
 }
+
+
+
 
 // Fechar conexão
 $conn = null;
