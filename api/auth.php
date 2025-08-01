@@ -8,7 +8,18 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Permite acesso do Live Server (desenvolvimento)
-header("Access-Control-Allow-Origin: http://127.0.0.1:5501");
+$allowedOrigins = [
+    "http://127.0.0.1:5500",
+    "http://127.0.0.1:5501", 
+    "http://127.0.0.1:5502",
+    "http://localhost"
+];
+
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+if (in_array($origin, $allowedOrigins)) {
+    header("Access-Control-Allow-Origin: " . $origin);
+}
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Access-Control-Allow-Credentials: true");
@@ -184,8 +195,18 @@ try {
                 throw new Exception("Credenciais inválidas");
             }
 
-            // Remover senha do objeto de retorno
-            unset($user['password']);
+            // Preparar dados do usuário para retorno
+            unset($user['password']); // Remove a senha hash
+            
+            // Adiciona campos formatados para o frontend
+            $user['name'] = $user['first_name'] . ' ' . $user['last_name'];
+            $user['joinDate'] = $user['created_at'];
+            $user['points'] = $user['loyalty_points'] ?? 0;
+            
+            // Adiciona campos que podem ser usados no frontend
+            $user['avatar'] = $user['avatar'] ?? null;
+            $user['phone'] = $user['phone'] ?? '';
+            $user['email'] = $user['email'] ?? '';
             
             $response = [
                 'success' => true,
