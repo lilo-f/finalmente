@@ -726,13 +726,11 @@ async handleLogin() {
     }
 }
 async handleRegister() {
-    // 1. Validação do formulário
     if (!this.validateForm('register-form')) {
         console.log('Validação do formulário falhou');
         return;
     }
 
-    // 2. Coletar dados do formulário
     const userData = {
         action: 'register',
         firstName: document.getElementById('register-name').value.trim(),
@@ -743,7 +741,6 @@ async handleRegister() {
         password: document.getElementById('register-password').value
     };
 
-    // 3. Validação adicional
     if (userData.password.length < 6) {
         this.showError(document.getElementById('register-password'), 'A senha deve ter pelo menos 6 caracteres');
         return;
@@ -758,59 +755,57 @@ async handleRegister() {
     try {
         console.log('Enviando dados para o servidor:', userData);
 
-        // 4. Fazer a requisição
         const response = await fetch(this.apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userData),
-            credentials: 'include' // Para cookies, se necessário
+            body: JSON.stringify(userData)
         });
 
-        // 5. Verificar o tipo de conteúdo da resposta
-        const contentType = response.headers.get('content-type');
+        // Primeiro verifica se a resposta é JSON
         let data;
-
-        if (contentType && contentType.includes('application/json')) {
+        try {
             data = await response.json();
-        } else {
-            const text = await response.text();
-            console.error('Resposta não-JSON do servidor:', text);
-            throw new Error('Resposta inválida do servidor');
+        } catch (jsonError) {
+            // Se não for JSON, pega o texto para ver o que foi retornado
+            const textResponse = await response.text();
+            console.error('Resposta não-JSON:', textResponse);
+            throw new Error('O servidor retornou uma resposta inválida');
         }
 
-        // 6. Tratar a resposta
         if (!response.ok) {
-            console.error('Erro na resposta:', data);
-            throw new Error(data.message || 'Erro ao registrar usuário');
+            // Se a resposta tem status de erro mas é JSON
+            if (data && data.message) {
+                throw new Error(data.message);
+            } else {
+                throw new Error(`Erro no servidor: ${response.status}`);
+            }
         }
 
         if (data.success) {
             this.showSuccess('register-success', 'Cadastro realizado com sucesso!');
-            console.log('Usuário registrado com ID:', data.userId);
+            console.log('Usuário registrado com sucesso:', data);
             
-            // Limpar formulário e mudar para a aba de login após 2 segundos
+            // Limpar formulário e mudar para a aba de login
             document.getElementById('register-form').reset();
             setTimeout(() => this.switchTab('login'), 2000);
         } else {
-            throw new Error(data.message || 'Erro desconhecido');
+            throw new Error(data.message || 'Erro desconhecido durante o registro');
         }
 
     } catch (error) {
-        console.error('Erro completo no registro:', error);
+        console.error('Erro no registro:', error);
         
-        // Mostrar mensagem de erro no campo de e-mail (ou outro campo apropriado)
-        const errorMessage = error.message.includes('E-mail') 
-            ? error.message 
-            : 'Erro ao conectar com o servidor. Tente novamente.';
+        // Mostrar mensagem de erro genérica ou específica
+        let errorMessage = 'Erro ao registrar. Tente novamente.';
+        if (error.message.includes('E-mail já cadastrado')) {
+            errorMessage = 'Este e-mail já está cadastrado.';
+        } else if (error.message.includes('CPF inválido')) {
+            errorMessage = 'CPF inválido ou já cadastrado.';
+        }
         
         this.showError(document.getElementById('register-email'), errorMessage);
-        
-        // Mostrar erro no console para depuração
-        if (error.response) {
-            console.error('Resposta de erro:', error.response);
-        }
     }
 }}
         // Global functions

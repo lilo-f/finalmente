@@ -152,26 +152,30 @@ try {
                 VALUES (?, ?, ?, ?, ?, ?)");
             
             $success = $stmt->execute([
-                $firstName,
-                $lastName,
-                $email,
-                $phone,
-                $cpf,
-                $passwordHash
-            ]);
+        $firstName,
+        $lastName,
+        $email,
+        $phone,
+        $cpf,
+        $passwordHash
+    ]);
 
-            if (!$success) {
-                throw new Exception("Erro ao registrar usuário no banco de dados");
-            }
+    if (!$success || $stmt->rowCount() === 0) {
+        throw new Exception("Erro ao registrar usuário no banco de dados");
+    }
 
-            $response = [
-                'success' => true,
-                'message' => 'Usuário registrado com sucesso',
-                'userId' => $conn->lastInsertId(),
-                 'user' => $user // Já inclui o avatar se existir
-            ];
-            break;
-
+    $userId = $conn->lastInsertId();
+    
+    $response = [
+        'success' => true,
+        'message' => 'Usuário registrado com sucesso',
+        'userId' => $userId
+    ];
+    
+    http_response_code(201); // 201 Created é mais apropriado para registro
+    echo json_encode($response);
+    exit; // Termina a execução aqui
+    break;
         case 'login':
             // Validação dos campos
             if (empty($input['email']) || empty($input['password'])) {
