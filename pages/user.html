@@ -1911,60 +1911,66 @@
     }
 
     // Função para carregar detalhes do usuário
-    function loadUserDetails() {
-        const user = window.userSession.currentUser;
-        const userAvatarImg = document.getElementById('user-avatar');
-        const defaultAvatarIcon = document.getElementById('default-avatar-icon');
+function loadUserDetails() {
+    const user = window.userSession.currentUser;
+    const userAvatarImg = document.getElementById('user-avatar');
+    const defaultAvatarIcon = document.getElementById('default-avatar-icon');
 
-        if (user) {
-            document.getElementById('user-name').textContent = user.name || 'Usuário Raven';
-            
-            const userEmail = user.email || 'N/A';
-            const userPhone = user.phone ? formatPhoneNumber(user.phone) : 'N/A';
-            
-            document.getElementById('user-email').innerHTML = `
-                <i class="fas fa-envelope"></i> ${userEmail}<br>
-                <i class="fas fa-phone"></i> ${userPhone}
-            `;
-            
-            const joinDate = user.joinDate ? new Date(user.joinDate).toLocaleDateString('pt-BR') : 'N/A';
-            document.getElementById('join-date').textContent = `Membro desde: ${joinDate}`;
+    if (user) {
+        // Exibir nome completo (firstName + lastName ou name)
+        const userName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Usuário Raven';
+        document.getElementById('user-name').textContent = userName;
+        
+        // Formatar dados de contato
+        const userEmail = user.email || 'N/A';
+        const userPhone = user.phone ? formatPhoneNumber(user.phone) : 'N/A';
+        
+        document.getElementById('user-email').innerHTML = `
+            <i class="fas fa-envelope"></i> ${userEmail}<br>
+            <i class="fas fa-phone"></i> ${userPhone}
+        `;
+        
+        // Formatar data de cadastro (usando created_at do banco ou joinDate)
+        const joinDate = user.joinDate || user.created_at;
+        const formattedDate = joinDate ? new Date(joinDate).toLocaleDateString('pt-BR') : 'N/A';
+        document.getElementById('join-date').textContent = `Membro desde: ${formattedDate}`;
 
-            document.getElementById('total-orders').textContent = user.orders ? user.orders.length : 0;
-            document.getElementById('appointments-count').textContent = user.appointments ? user.appointments.filter(a => a.status !== 'Cancelado' && a.status !== 'Concluído').length : 0;
-            document.getElementById('wishlist-count').textContent = user.wishlist ? user.wishlist.length : 0;
-            document.getElementById('userPointsDisplay').textContent = user.points || 0;
+        // Atualizar contadores
+        document.getElementById('total-orders').textContent = user.orders ? user.orders.length : 0;
+        document.getElementById('appointments-count').textContent = user.appointments ? user.appointments.filter(a => a.status !== 'Cancelado' && a.status !== 'Concluído').length : 0;
+        document.getElementById('wishlist-count').textContent = user.wishlist ? user.wishlist.length : 0;
+        document.getElementById('userPointsDisplay').textContent = user.points || user.loyalty_points || 0;
 
-            const avatarUrl = user.avatar || user.avatarUrl;
-            if (avatarUrl) {
-                userAvatarImg.src = avatarUrl;
-                userAvatarImg.style.display = 'block';
-                defaultAvatarIcon.style.display = 'none';
-            } else {
-                userAvatarImg.style.display = 'none';
-                defaultAvatarIcon.style.display = 'block';
-            }
-
-            // Atualizar avatar na navbar
-            const navUserIcon = document.getElementById('nav-user-icon');
-            const navUserAvatar = document.getElementById('nav-user-avatar');
-            if (avatarUrl) {
-                navUserAvatar.src = avatarUrl;
-                navUserAvatar.style.display = 'block';
-                navUserIcon.style.display = 'none';
-            } else {
-                navUserAvatar.style.display = 'none';
-                navUserIcon.style.display = 'block';
-            }
+        // Atualizar avatar
+        const avatarUrl = user.avatar || user.avatarUrl;
+        if (avatarUrl) {
+            userAvatarImg.src = avatarUrl;
+            userAvatarImg.style.display = 'block';
+            defaultAvatarIcon.style.display = 'none';
         } else {
-            document.getElementById('user-name').textContent = 'Convidado';
-            document.getElementById('user-email').innerHTML = 'Faça login para ver detalhes';
-            document.getElementById('join-date').textContent = 'Membro desde: N/A';
             userAvatarImg.style.display = 'none';
             defaultAvatarIcon.style.display = 'block';
         }
-    }
 
+        // Atualizar avatar na navbar
+        const navUserIcon = document.getElementById('nav-user-icon');
+        const navUserAvatar = document.getElementById('nav-user-avatar');
+        if (avatarUrl) {
+            navUserAvatar.src = avatarUrl;
+            navUserAvatar.style.display = 'block';
+            navUserIcon.style.display = 'none';
+        } else {
+            navUserAvatar.style.display = 'none';
+            navUserIcon.style.display = 'block';
+        }
+    } else {
+        document.getElementById('user-name').textContent = 'Convidado';
+        document.getElementById('user-email').innerHTML = 'Faça login para ver detalhes';
+        document.getElementById('join-date').textContent = 'Membro desde: N/A';
+        userAvatarImg.style.display = 'none';
+        defaultAvatarIcon.style.display = 'block';
+    }
+}
     function formatPhoneNumber(phone) {
         const cleaned = ('' + phone).replace(/\D/g, '');
         const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
