@@ -1455,8 +1455,12 @@ levelComplete() {
     const currentUser = JSON.parse(localStorage.getItem('ravenStudioCurrentUser'));
     if (currentUser) {
         // Adiciona os pontos ao usuário atual
-        currentUser.points = (currentUser.points || 0) + this.score;
+        const newPoints = (currentUser.points || 0) + this.score;
+        currentUser.points = newPoints;
         localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(currentUser));
+        
+        // Enviar pontos para o servidor
+        this.updateServerPoints(currentUser.email, newPoints);
         
         // Se estiver usando uma sessão global também
         if (window.userSession && window.userSession.isLoggedIn()) {
@@ -1472,6 +1476,28 @@ levelComplete() {
     
     if (this.sounds.levelComplete) this.sounds.levelComplete();
     this.stopBackgroundMusic();
+}
+
+updateServerPoints(email, points) {
+    fetch('http://localhost/trabalhofinal/finalmente/api/update-points.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            points: points
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.success) {
+            console.error('Erro ao atualizar pontos no servidor:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao enviar pontos:', error);
+    });
 }
 
 nextLevel() {
