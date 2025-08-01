@@ -1448,7 +1448,10 @@ document.querySelectorAll('.artist-card').forEach(card => {
                                 }
                                 dayElement.classList.add('selected');
                                 appointmentData.preferredDate1 = dayElement.dataset.date;
-                                
+                                  populateAvailableTimes(appointmentData.artist, dayElement.dataset.date);
+
+
+
                                 // Show time selection and populate it
                                 populateTimeSlots();
                                 timeSelectionContainer.classList.add('show');
@@ -1516,56 +1519,103 @@ document.querySelectorAll('.artist-card').forEach(card => {
                 renderCalendar();
             });
 
+async function populateAvailableTimes(artistId, date) {
+    try {
+        const response = await fetch('http://localhost/trabalhofinal/finalmente/api/appointments.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'get_available_times',
+                artistId: artistId,
+                date: date
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            const timeSelect = document.getElementById('preferred-time-1');
+            timeSelect.innerHTML = '<option value="">Selecione um horário</option>';
+            
+            data.availableTimes.forEach(time => {
+                const option = document.createElement('option');
+                option.value = time;
+                option.textContent = time;
+                timeSelect.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Erro ao buscar horários disponíveis:', error);
+    }
+}
+
+
             // --- Step 4: Budget and Idea Description ---
             document.getElementById('prev-step-idea-budget').addEventListener('click', () => {
                 showStep(currentStep - 1);
             });
 
-            // Inside the appointment submit button event listener
-document.getElementById('submit-appointment-btn').addEventListener('click', (e) => {
+document.getElementById('submit-appointment-btn').addEventListener('click', async (e) => {
     e.preventDefault();
     if (validateStep(formSteps[currentStep])) {
-        // Add current date/time to appointment
-        appointmentData.createdAt = new Date().toISOString();
-        appointmentData.status = "Pendente"; // Initial status
-        appointmentData.id = 'APP-' + Math.random().toString(36).substr(2, 9); // Generate unique ID
-        
-        // Add selected artist's photo and specialty
-        const selectedArtistCard = document.querySelector('.artist-card.selected');
-        if (selectedArtistCard) {
-            const artistImg = selectedArtistCard.querySelector('img');
-            appointmentData.artistImage = artistImg.src;
-            appointmentData.artistSpecialty = selectedArtistCard.querySelector('p').textContent;
-        }
-        
-        // Save to localStorage
-        let appointments = JSON.parse(localStorage.getItem('ravenStudioAppointments')) || [];
-        appointments.push(appointmentData);
-        localStorage.setItem('ravenStudioAppointments', JSON.stringify(appointments));
-        
-        // Update user session
-        if (window.userSession && window.userSession.currentUser) {
-            const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
-            const userIndex = users.findIndex(u => u.email === window.userSession.currentUser.email);
-            
-            if (userIndex !== -1) {
-                if (!users[userIndex].appointments) {
-                    users[userIndex].appointments = [];
-                }
-                users[userIndex].appointments.push(appointmentData);
-                localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
-                
-                // Update current user
-                window.userSession.currentUser.appointments = users[userIndex].appointments;
-                localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(window.userSession.currentUser));
+        try {
+            const user = window.userSession?.currentUser;
+            if (!user) {
+                throw new Error("Usuário não logado");
             }
-        }
 
-        // Show confirmation message
-        document.querySelectorAll('.form-step').forEach(step => step.style.display = 'none');
-        document.getElementById('progressBar').style.display = 'none';
-        document.getElementById('confirmation-message').style.display = 'flex';
-        updateProgressBar();
+            const response = await fetch('http://localhost/trabalhofinal/finalmente/api/appointments.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'create',
+                    userId: user.id,
+                    artistId: appointmentData.artist,
+                    artistName: appointmentData.artistName,
+                    artistImage: appointmentData.artistImage,
+                    preferredDate1: appointmentData.preferredDate1,
+                    preferredTime1: appointmentData.preferredTime1,
+                    tattooStyle: appointmentData.tattooStyle,
+                    tattooDescription: appointmentData.tattooDescription,
+                    budget: appointmentData.budget
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Sucesso - mostrar mensagem de confirmação
+                document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+                document.getElementById('confirmation-message').style.display = 'flex';
+                
+                // Atualizar progress bar para 100%
+                document.getElementById('progressBar').style.width = '100%';
+                
+                // Atualizar a lista de agendamentos do usuário
+                if (window.userSession) {
+                    await window.userSession.loadAppointments();
+                }
+            } else {
+                // Verificar se é erro de horário indisponível
+                if (data.message.includes('já possui um agendamento')) {
+                    // Mostrar mensagem de erro na seção de data/hora
+                    document.getElementById('selectedDateDisplay').textContent = data.message;
+                    document.getElementById('selectedDateDisplay').classList.add('error-border');
+                    
+                    // Voltar para a etapa de seleção de data/hora
+                    showStep(2); // Índice da etapa de data/hora
+                } else {
+                    throw new Error(data.message || 'Erro ao criar agendamento');
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao enviar agendamento:', error);
+            alert('Erro ao enviar agendamento: ' + error.message);
+        }
     }
 });
 
