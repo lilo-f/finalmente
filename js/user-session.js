@@ -16,7 +16,8 @@ login(userData) {
     completeUser.orders = completeUser.orders || [];
     completeUser.wishlist = completeUser.wishlist || [];
     completeUser.phone = completeUser.phone || userData.phone || '';
-    completeUser.joinDate = completeUser.joinDate || new Date().toISOString();
+    completeUser.joinDate = completeUser.joinDate || completeUser.created_at || new Date().toISOString();
+    completeUser.name = completeUser.name || `${completeUser.first_name || ''} ${completeUser.last_name || ''}`.trim();
     
     this.currentUser = completeUser;
     localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(completeUser));
