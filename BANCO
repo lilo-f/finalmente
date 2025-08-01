@@ -21,3 +21,33 @@ CREATE TABLE IF NOT EXISTS appointments (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 ALTER TABLE appointments ADD INDEX idx_artist_date_time (artist_id, preferred_date1, preferred_time1);
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `category` enum('machines','inks','needles','accessories') NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `old_price` decimal(10,2) DEFAULT NULL,
+  `description` text NOT NULL,
+  `image_url` varchar(255) NOT NULL,
+  `badge` varchar(50) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `category` (`category`),
+  KEY `price` (`price`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `products` (`id`, `name`, `category`, `price`, `old_price`, `description`, `image_url`, `badge`) VALUES
+(1, 'Máquina Rotativa Pro', 'machines', 750.00, 900.00, 'Máquina rotativa de alta performance para traço e pintura.', '/img/products/maquina1.png', 'Oferta'),
+(2, 'Tinta Preto Absoluto', 'inks', 120.00, NULL, 'Tinta preta de alta qualidade para sombreamento e preenchimento.', '/img/products/tinta1.png', NULL),
+(3, 'Kit Agulhas Variadas', 'needles', 80.00, NULL, 'Conjunto de agulhas descartáveis para diversas técnicas.', '/img/products/agulhas1.png', NULL),
+(4, 'Fonte de Alimentação Digital', 'accessories', 300.00, NULL, 'Fonte digital com display LCD e controle preciso de voltagem.', '/img/products/fonte1.png', NULL),
+(5, 'Máquina Bobina Clássica', 'machines', 600.00, NULL, 'Máquina de bobina tradicional, perfeita para contornos firmes.', '/img/products/bobina1.png', NULL),
+(6, 'Tinta Vermelho Escarlate', 'inks', 100.00, NULL, 'Tinta vibrante para realçar suas tatuagens coloridas.', '/img/products/tintasumi2.png', NULL),
+(7, 'Agulha Magnum Soft Edge', 'needles', 15.00, NULL, 'Agulha Magnum para preenchimentos suaves e uniformes.', '/img/products/agulhasoft1.png', NULL),
+(8, 'Creme Pós-Tatuagem', 'accessories', 50.00, NULL, 'Creme hidratante e reparador para cicatrização da tatuagem.', '/img/products/creme2.png', NULL),
+(9, 'Máquina Pen Híbrida', 'machines', 950.00, NULL, 'Máquina estilo caneta, leve e versátil, para todos os estilos.', '/img/products/maquinapen1.png', 'Novo'),
+(10, 'Tinta Azul Oceano', 'inks', 110.00, NULL, 'Tinta azul intensa, ideal para trabalhos aquáticos e celestiais.', '/img/products/tintaazul1.png', NULL),
+(11, 'Agulha Round Liner Fina', 'needles', 12.00, NULL, 'Agulha Round Liner para traços finos e detalhes precisos.', '/img/products/agulhafina1.png', NULL),
+(12, 'Bancada de Trabalho Portátil', 'accessories', 400.00, NULL, 'Bancada dobrável e portátil, ideal para estúdios e convenções.', '/img/products/bancada1.png', NULL);
