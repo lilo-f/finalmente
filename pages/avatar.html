@@ -347,9 +347,9 @@
                     <div class="control-item">
                         <label>Formato do Rosto</label>
                         <select id="faceShape">
-                            <option value="oval">Oval</option>
+                            <option value="oval">Normal</option>
                             <option value="round">Redondo</option>
-                            <option value="square">Quadrado</option>
+                            <option value="square">Oval</option>
                         </select>
                     </div>
                     <div class="control-item">
@@ -369,23 +369,21 @@
                         <label>Estilo do Cabelo</label>
                         <select id="hairStyle">
                             <option value="short">Curto Clássico</option>
-                            <option value="medium">Médio</option>
-                            <option value="long">Longo</option>
+
+                          
                             <option value="curly">Cacheado</option>
-                            <option value="wavy">Ondulado</option>
-                            <option value="fringe">Franja</option>
+                        
                             <option value="mohawk">Moicano</option>
                             <option value="pixie">Pixie</option>
                             <option value="bob">Bob</option>
-                            <option value="braids">Tranças</option>
+                          
                             <option value="undercut">Undercut</option>
                             <option value="fade">Fade</option>
-                            <option value="pompadour">Pompadour</option>
-                            <option value="shag">Shag</option>
+                           
                             <option value="layered">Em Camadas</option>
-                            <option value="straight">Liso Longo</option>
-                            <option value="afro">Afro</option>
-                            <option value="dreadlocks">Dreadlocks</option>
+                            <option value="straight">Liso </option>
+                          
+                       
                             <option value="topknot">Coque Alto</option>
                             <option value="bald">Careca</option>
                         </select>
@@ -695,37 +693,37 @@
         }
 
         // Update avatar appearance
-        function updateAvatar() {
-            // Update background
-            const avatarContainer = document.querySelector('.avatar-container');
-            const background = document.querySelector('#avatar-svg circle');
-            
-            switch(avatarConfig.backgroundType) {
-                case 'solid':
-                    background.setAttribute('fill', avatarConfig.backgroundColor);
-                    avatarContainer.style.background = 'none';
-                    break;
-                case 'gradient':
-                    avatarContainer.style.background = avatarConfig.backgroundColor;
-                    background.setAttribute('fill', 'transparent');
-                    break;
-                case 'nature':
-                    avatarContainer.style.background = 'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%)';
-                    background.setAttribute('fill', 'transparent');
-                    break;
-                case 'urban':
-                    avatarContainer.style.background = 'linear-gradient(135deg, #636e72 0%, #2d3436 100%)';
-                    background.setAttribute('fill', 'transparent');
-                    break;
-                case 'space':
-                    avatarContainer.style.background = 'linear-gradient(135deg, #2d3436 0%, #636e72 50%, #6c5ce7 100%)';
-                    background.setAttribute('fill', 'transparent');
-                    break;
-                case 'abstract':
-                    avatarContainer.style.background = 'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #6c5ce7 100%)';
-                    background.setAttribute('fill', 'transparent');
-                    break;
-            }
+function updateAvatar() {
+    // Update background
+    const avatarContainer = document.querySelector('.avatar-container');
+    const background = document.querySelector('#avatar-svg circle');
+    
+    switch(avatarConfig.backgroundType) {
+        case 'solid':
+            background.setAttribute('fill', avatarConfig.backgroundColor);
+            avatarContainer.style.background = 'none';
+            break;
+        case 'gradient':
+            avatarContainer.style.background = avatarConfig.backgroundColor;
+            background.setAttribute('fill', 'transparent');
+            break;
+        case 'nature':
+            avatarContainer.style.background = 'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%)';
+            background.setAttribute('fill', 'transparent');
+            break;
+        case 'urban':
+            avatarContainer.style.background = 'linear-gradient(135deg, #636e72 0%, #2d3436 100%)';
+            background.setAttribute('fill', 'transparent');
+            break;
+        case 'space':
+            avatarContainer.style.background = 'linear-gradient(135deg, #2d3436 0%, #636e72 50%, #6c5ce7 100%)';
+            background.setAttribute('fill', 'transparent');
+            break;
+        case 'abstract':
+            avatarContainer.style.background = 'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #6c5ce7 100%)';
+            background.setAttribute('fill', 'transparent');
+            break;
+    }
 
             // Update face
             const face = document.getElementById('face');
@@ -1008,7 +1006,7 @@
         }
 
         // Save avatar and return to profile
-   function saveAndReturn() {
+function saveAndReturn() {
     // Clonar o SVG para não modificar o original na página
     const svg = document.getElementById('avatar-svg').cloneNode(true);
     const avatarContainer = document.querySelector('.avatar-container');
@@ -1076,7 +1074,7 @@
         const bgCircle = svg.querySelector('circle');
         bgCircle.setAttribute('fill', 'url(#exportGradient)');
     } else if (avatarConfig.backgroundType === 'solid') {
-        // Para fundo sólido, apenas atualizar a cor
+        // Para fundo sólido, apenas definir a cor
         const bgCircle = svg.querySelector('circle');
         bgCircle.setAttribute('fill', avatarConfig.backgroundColor);
     }
@@ -1094,14 +1092,61 @@
         ctx.drawImage(img, 0, 0);
         
         const dataURL = canvas.toDataURL('image/png');
-        
-        // Salvar no usuário atual
         const currentUser = JSON.parse(localStorage.getItem('ravenStudioCurrentUser')) || {};
-        currentUser.avatar = dataURL;
-        localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(currentUser));
         
-        // Redirecionar
-        window.location.href = '/pages/user.html';
+        // Verifique se o usuário tem email
+        if (!currentUser.email) {
+            alert('Usuário não está logado corretamente');
+            return;
+        }
+        
+        // Exibir feedback visual
+        const saveButton = document.querySelector('.btn-primary');
+        saveButton.disabled = true;
+        saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+        
+      fetch('http://localhost/trabalhofinal/finalmente/api/upload-avatar.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        email: currentUser.email,
+        avatar: dataURL // Imagem em base64
+    })
+})
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na resposta do servidor: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                currentUser.avatar = data.avatarUrl;
+currentUser.avatarUrl = data.avatarUrl;
+localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(currentUser));
+                
+                if (typeof window.userSession !== 'undefined') {
+                    window.userSession.currentUser = currentUser;
+                    window.userSession.updateNavbar();
+                }
+                
+                window.location.href = localStorage.getItem('lastVisitedPage') || '/pages/user.html';
+            } else {
+                throw new Error(data.message || 'Erro desconhecido ao salvar avatar');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Erro ao salvar avatar: ' + error.message);
+            saveButton.disabled = false;
+            saveButton.innerHTML = '<i class="fas fa-camera"></i> Salvar';
+        });
+    };
+    
+    img.onerror = function() {
+        alert('Erro ao processar a imagem do avatar');
     };
     
     img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
