@@ -30,7 +30,7 @@ if (empty($input['email']) || !isset($input['points'])) {
 }
 
 $email = $input['email'];
-$points = (int)$input['points'];
+$points = (int)$input['points']; // Forçar conversão para inteiro
 
 try {
     // Verificar se o usuário existe

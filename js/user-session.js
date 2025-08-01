@@ -125,23 +125,27 @@ async loadAppointments() {
 
 
       
-    addPoints(points) {
-        if (!this.currentUser) return false;
-        
-        // Atualiza localmente
-        this.currentUser.points = (this.currentUser.points || 0) + points;
-        localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(this.currentUser));
-        
-        // Atualiza no array de usuários globais
-        const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
-        const userIndex = users.findIndex(u => u.email === this.currentUser.email);
-        if (userIndex !== -1) {
-            users[userIndex].points = (users[userIndex].points || 0) + points;
-            localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
-        }
-        
-        return true;
+addPoints(points) {
+    if (!this.currentUser) return false;
+    
+    // Converter pontos para número
+    points = parseInt(points) || 0;
+    const currentPoints = parseInt(this.currentUser.points) || 0;
+    
+    // Atualiza localmente
+    this.currentUser.points = currentPoints + points;
+    localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(this.currentUser));
+    
+    // Atualiza no array de usuários globais
+    const users = JSON.parse(localStorage.getItem('ravenStudioUsers')) || [];
+    const userIndex = users.findIndex(u => u.email === this.currentUser.email);
+    if (userIndex !== -1) {
+        users[userIndex].points = (parseInt(users[userIndex].points) || 0) + points;
+        localStorage.setItem('ravenStudioUsers', JSON.stringify(users));
     }
+    
+    return true;
+}
 
     addToWishlist(productId) {
         if (!this.currentUser) return false;

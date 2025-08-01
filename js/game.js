@@ -1454,8 +1454,10 @@ levelComplete() {
     // Atualiza os pontos do usuário no localStorage e na sessão
     const currentUser = JSON.parse(localStorage.getItem('ravenStudioCurrentUser'));
     if (currentUser) {
-        // Adiciona os pontos ao usuário atual
-        const newPoints = (currentUser.points || 0) + this.score;
+        // Converter os pontos atuais para número e somar com os novos pontos
+        const currentPoints = parseInt(currentUser.points) || 0;
+        const newPoints = currentPoints + parseInt(this.score);
+        
         currentUser.points = newPoints;
         localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(currentUser));
         
@@ -1464,7 +1466,7 @@ levelComplete() {
         
         // Se estiver usando uma sessão global também
         if (window.userSession && window.userSession.isLoggedIn()) {
-            window.userSession.addPoints(this.score);
+            window.userSession.addPoints(parseInt(this.score));
         }
     }
     
@@ -1477,7 +1479,6 @@ levelComplete() {
     if (this.sounds.levelComplete) this.sounds.levelComplete();
     this.stopBackgroundMusic();
 }
-
 updateServerPoints(email, points) {
     fetch('http://localhost/trabalhofinal/finalmente/api/update-points.php', {
         method: 'POST',

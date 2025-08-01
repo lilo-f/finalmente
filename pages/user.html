@@ -1969,17 +1969,17 @@
     }
 
 function loadUserDetails() {
-    const user = window.userSession?.currentUser;
+ const user = window.userSession?.currentUser;
     if (!user) return;
 
     // Atualizar avatar principal
     const userAvatarImg = document.getElementById('user-avatar');
     const defaultIcon = document.getElementById('default-avatar-icon');
     
-    // Atualizar pontos
+    // Atualizar pontos - garantir que é tratado como número
     const pointsElement = document.getElementById('userPointsDisplay');
     if (pointsElement) {
-        pointsElement.textContent = user.points || user.loyalty_points || 0;
+        pointsElement.textContent = parseInt(user.points || user.loyalty_points || 0);
     }
 
     // Verificar se os elementos existem antes de manipulá-los
