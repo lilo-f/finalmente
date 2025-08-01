@@ -18,3 +18,7 @@ CREATE TABLE IF NOT EXISTS users (
   UNIQUE KEY email (email),
   UNIQUE KEY cpf (cpf)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+ALTER TABLE users MODIFY avatar LONGTEXT DEFAULT NULL;
+ALTER TABLE users MODIFY loyalty_points INT(11) DEFAULT 0 NOT NULL;
