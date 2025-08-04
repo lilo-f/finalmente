@@ -22,3 +22,9 @@ CREATE TABLE IF NOT EXISTS users (
 
 ALTER TABLE users MODIFY avatar LONGTEXT DEFAULT NULL;
 ALTER TABLE users MODIFY loyalty_points INT(11) DEFAULT 0 NOT NULL;
+
+ use raven_studio
+ALTER TABLE users ADD COLUMN isAdmin BOOLEAN DEFAULT FALSE;
+
+INSERT INTO users (first_name, last_name, email, phone, cpf, password, isAdmin)
+VALUES ('Admin', 'Raven', 'ravenstudio@gmail.com', '11999999999', '12345678901', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', TRUE);
