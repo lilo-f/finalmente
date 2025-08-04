@@ -1135,10 +1135,11 @@
             <div class="nav-icons">
                
                
-                <a href="/pages/user.html" class="nav-icon user-icon" aria-label="Perfil do Usuário">
-                    <i class="fas fa-user-circle" id="nav-user-icon"></i>
-                    <img src="" alt="Avatar do Usuário" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
-                </a>
+               <a href="/pages/user.html" id="user-nav-link" class="nav-icon user-icon">
+    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+    <img src="" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
+</a>
+      
             </div>
 
             <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
@@ -1714,15 +1715,57 @@
                 }
             }
         });
+// Verifica se o userSession está disponível
+if (typeof userSession === 'undefined' && typeof window.userSession !== 'undefined') {
+    var userSession = window.userSession;
+}
 
+// Função para verificar o login de forma robusta
+function checkUserLoggedIn() {
+    try {
+        // Tenta múltiplas formas de verificar o login
+        if (typeof userSession !== 'undefined' && userSession.isLoggedIn()) {
+            return true;
+        }
+        if (typeof window.userSession !== 'undefined' && window.userSession.isLoggedIn()) {
+            return true;
+        }
+        if (localStorage.getItem('ravenStudioCurrentUser')) {
+            return true;
+        }
+        return false;
+    } catch (e) {
+        console.error("Erro ao verificar login:", e);
+        return false;
+    }
+}
       class RavenBlog {
+        
     constructor() {
         this.posts = JSON.parse(localStorage.getItem('ravenStudioPosts')) || this.getDefaultPosts();
-        this.currentUser = JSON.parse(localStorage.getItem('ravenStudioCurrentUser')) || null;
+        this.loadUserData(); // Método novo para carregar dados do usuário
         this.isAdmin = false;
         this.selectedImage = null;
         this.init();
     }
+
+        loadUserData() {
+        try {
+            // Tenta múltiplas fontes para obter dados do usuário
+            if (typeof userSession !== 'undefined' && userSession.currentUser) {
+                this.currentUser = userSession.currentUser;
+            } else if (typeof window.userSession !== 'undefined' && window.userSession.currentUser) {
+                this.currentUser = window.userSession.currentUser;
+            } else {
+                const userData = localStorage.getItem('ravenStudioCurrentUser');
+                this.currentUser = userData ? JSON.parse(userData) : { name: 'Usuário', avatar: null };
+            }
+        } catch (e) {
+            console.error("Erro ao carregar dados do usuário:", e);
+            this.currentUser = { name: 'Usuário', avatar: null };
+        }
+    }
+
 
             init() {
                 this.loadCurrentUser();
@@ -1730,18 +1773,32 @@
                 this.setupEventListeners();
             }
 
-            loadCurrentUser() {
-                const userAvatar = document.getElementById('current-user-avatar');
-                const userName = document.getElementById('current-user-name');
-                
-                if (this.currentUser.avatar) {
-                    userAvatar.innerHTML = `<img src="${this.currentUser.avatar}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
-                } else {
-                    userAvatar.textContent = this.currentUser.name.charAt(0).toUpperCase();
-                }
-                
-                userName.textContent = this.currentUser.name;
-            }
+// Atualize o método loadCurrentUser na classe RavenBlog:
+loadCurrentUser() {
+    if (!this.currentUser) return;
+    
+    const userAvatar = document.getElementById('current-user-avatar');
+    const userName = document.getElementById('current-user-name');
+    
+    // Limpa o conteúdo do avatar antes de atualizar
+    userAvatar.innerHTML = '';
+    
+    if (this.currentUser.avatar) {
+        userAvatar.innerHTML = `<img src="${this.currentUser.avatar}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+    } else {
+        // Mostra a primeira letra do nome se não houver avatar
+        const initial = this.currentUser.name ? this.currentUser.name.charAt(0).toUpperCase() : 'U';
+        userAvatar.textContent = initial;
+        userAvatar.style.display = 'flex';
+        userAvatar.style.alignItems = 'center';
+        userAvatar.style.justifyContent = 'center';
+        userAvatar.style.background = 'linear-gradient(135deg, #3b82f6 0%, #22c55e 100%)';
+        userAvatar.style.color = '#000';
+        userAvatar.style.fontWeight = 'bold';
+    }
+    
+    userName.textContent = this.currentUser.name || 'Usuário';
+}
 
             getDefaultPosts() {
     return [
@@ -1838,15 +1895,17 @@
                 document.getElementById('image-modal').style.display = 'none';
             }
 
-            getUserAvatar(user, avatar) {
-                if (avatar) {
-                    return `<img src="${avatar}" alt="${user}">`;
-                } else if (user === 'Raven Studio') {
-                    return '<div class="post-avatar default">RS</div>';
-                } else {
-                    return `<div class="comment-avatar default">${user.charAt(0).toUpperCase()}</div>`;
-                }
-            }
+getUserAvatar(user, avatar) {
+    try {
+        if (avatar && typeof avatar === 'string' && avatar.trim() !== '') {
+            return `<div class="post-avatar"><img src="${avatar}" alt="${user}" onerror="this.onerror=null;this.parentElement.className='post-avatar default';this.parentElement.innerHTML='${user.charAt(0).toUpperCase()}'"></div>`;
+        }
+        return `<div class="post-avatar default">${user ? user.charAt(0).toUpperCase() : 'U'}</div>`;
+    } catch (e) {
+        console.error("Erro ao renderizar avatar:", e);
+        return `<div class="post-avatar default">U</div>`;
+    }
+}
   toggleLike(postId) {
         if (!window.userSession || !window.userSession.isLoggedIn()) {
             alert('Por favor, faça login para curtir posts.');
@@ -1902,10 +1961,26 @@
         this.showNotification('Comentário adicionado!');
     }
 }
-    // Modifique o método renderPosts para usar os dados do usuário logado
-   renderPosts() {
+  
+renderPosts() {
     const container = document.getElementById('posts-feed');
+    if (!container) return;
+
+    // Verifica se há posts ou se o usuário está logado
+    const isLoggedIn = checkUserLoggedIn();
     
+    if (!isLoggedIn) {
+        container.innerHTML = `
+            <div class="empty-feed">
+                <i class="fas fa-lock"></i>
+                <h3>Conteúdo Bloqueado</h3>
+                <p>Faça login para visualizar os posts</p>
+                <a href="/pages/login.html" class="login-btn">Fazer Login</a>
+            </div>
+        `;
+        return;
+    }
+
     if (this.posts.length === 0) {
         container.innerHTML = `
             <div class="empty-feed">
@@ -1916,6 +1991,8 @@
         `;
         return;
     }
+
+
 
     const postsHtml = this.posts.map(post => {
         const timeAgo = this.getTimeAgo(post.timestamp);
@@ -2077,20 +2154,46 @@
         document.head.appendChild(style);
 
 
-        document.addEventListener('DOMContentLoaded', function() {
+// Substitua o evento DOMContentLoaded atual por este:
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializa o blog
+    window.blog = new RavenBlog();
+    
+    // Verifica o status de login de forma robusta
+    const isLoggedIn = checkUserLoggedIn();
     const blogHeader = document.querySelector('.blog-header');
-const isLoggedIn = window.userSession && window.userSession.isLoggedIn();    
+    const postsFeed = document.getElementById('posts-feed');
+    const userInfo = document.querySelector('.user-info');
+    const newPostForm = document.getElementById('new-post-form');
+
     if (!isLoggedIn) {
         blogHeader.innerHTML = `
             <h1>ACESSO RESTRITO</h1>
             <p>Faça login para visualizar o conteúdo do blog</p>
             <a href="/pages/login.html" class="login-btn">Fazer Login</a>
         `;
+        if (postsFeed) postsFeed.style.display = 'none';
+        if (userInfo) userInfo.style.display = 'none';
+        if (newPostForm) newPostForm.style.display = 'none';
+    } else {
+        // Mostra conteúdo para usuários logados
+        blogHeader.innerHTML = `
+            <h1>RAVEN STUDIO BLOG</h1>
+            <p>Arte, técnicas e novidades do mundo da tatuagem</p>
+        `;
+        if (postsFeed) postsFeed.style.display = 'block';
+        if (userInfo) userInfo.style.display = 'flex';
         
-        // Opcional: esconder o feed de posts se não estiver logado
-        document.getElementById('posts-feed').style.display = 'none';
+        // Renderiza os posts
+        blog.renderPosts();
+        
+        // Verifica se é admin (opcional)
+        if (blog.currentUser && blog.currentUser.isAdmin) {
+            if (newPostForm) newPostForm.style.display = 'block';
+        }
     }
 });
+
 
 
         // Inicializar blog

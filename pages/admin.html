@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Agendamentos | Raven Studio</title>
+    <link rel="icon" href="/img/raven.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Teko:wght@400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+
+    <style>
+        
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --light-gray: #d1d5db;
+            --soft-blue: #3b82f6;
+            --neon-blue: #00f0ff;
+            --soft-green: #22c55e;
+            --soft-red: #ef4444;
+            --soft-yellow: #f59e0b;
+            --font-display: 'Bebas Neue', cursive;
+            --font-body: 'Orbitron', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: radial-gradient(ellipse at bottom, #0a0a0a 0%, #000000 100%);
+            color: white;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .admin-header h1 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--soft-blue);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .admin-header p {
+            color: var(--light-gray);
+            font-size: 1rem;
+        }
+
+        .appointments-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background: rgba(15, 15, 15, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .appointments-table th {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--soft-blue);
+            padding: 1rem;
+            text-align: left;
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .appointments-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+            vertical-align: middle;
+        }
+
+        .appointments-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .appointments-table tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .appointment-id {
+            font-family: var(--font-display);
+            color: var(--soft-blue);
+            font-size: 1.1rem;
+        }
+
+        .appointment-client {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .appointment-client-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--soft-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-black);
+            font-weight: bold;
+        }
+
+        .appointment-client-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .appointment-client-name {
+            font-weight: bold;
+        }
+
+        .appointment-client-contact {
+            font-size: 0.8rem;
+            color: var(--light-gray);
+        }
+
+        .appointment-artist {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .appointment-artist-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .appointment-artist-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .appointment-datetime {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .appointment-date {
+            font-weight: bold;
+        }
+
+        .appointment-time {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+
+        .appointment-style {
+            font-size: 0.9rem;
+        }
+
+        .appointment-budget {
+            font-family: var(--font-display);
+            color: var(--soft-blue);
+            font-size: 1.1rem;
+        }
+
+        .appointment-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .status-pendente {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--soft-yellow);
+            border: 1px solid var(--soft-yellow);
+        }
+
+        .status-confirmado {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--soft-blue);
+            border: 1px solid var(--soft-blue);
+        }
+
+        .status-cancelado {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: var(--soft-red);
+            border: 1px solid var(--soft-red);
+        }
+
+        .status-concluido {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: var(--soft-green);
+            border: 1px solid var(--soft-green);
+        }
+
+        .status-select {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 5px;
+            color: white;
+            padding: 0.3rem;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .status-select:focus {
+            outline: none;
+            border-color: var(--soft-blue);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+
+        .update-status-btn {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: var(--soft-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+        }
+
+        .update-status-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .appointment-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--light-gray);
+            font-size: 1.2rem;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: var(--soft-red);
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+        }
+
+        /* Modal de confirmação */
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirmation-modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 10px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+        }
+
+        .confirmation-modal-icon {
+            font-size: 2.5rem;
+            color: var(--soft-blue);
+            margin-bottom: 1rem;
+        }
+
+        .confirmation-modal-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--soft-blue);
+            margin-bottom: 1rem;
+        }
+
+        .confirmation-modal-message {
+            color: var(--light-gray);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .confirmation-modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .confirmation-modal-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-family: var(--font-body);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .confirmation-modal-btn-confirm {
+            background: var(--soft-blue);
+            color: var(--primary-black);
+        }
+
+        .confirmation-modal-btn-confirm:hover {
+            background: #2563eb;
+        }
+
+        .confirmation-modal-btn-cancel {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--soft-red);
+            border: 1px solid var(--soft-red);
+        }
+
+        .confirmation-modal-btn-cancel:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .appointments-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .appointments-table th, 
+            .appointments-table td {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .appointment-client, 
+            .appointment-artist {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+
+            .appointment-actions {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .admin-container {
+                padding: 1rem;
+            }
+
+            .admin-header h1 {
+                font-size: 2rem;
+            }
+
+            .appointments-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/pages/home.html" class="nav-brand">
+                <img src="/img/Logo.png" alt="Raven Studio Logo" class="brand-logo">
+                <span class="brand-text">RAVEN     </span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="/pages/home.html" class="nav-link active"><i class="fas fa-home "></i> Início</a></li>
+                <li><a href="/pages/loja.html"  class="nav-link "><i class="fas fa-store"></i> Loja</a></li>
+                <li><a href="/pages/artists.html"  class="nav-link"><i class="fas fa-star"></i> Artistas</a></li>
+                <li ><a href="/pages/contato.html" class="nav-link "><i class="fas fa-envelope"></i> Contato</a></li>
+                <li ><a href="/pages/blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                <li ><a href="/pages/game.html"  class="nav-link"><i class="fas fa-gamepad"></i>Game</a></li>
+                <li > <a href="/pages/carrinho.html" class="nav-icon cart-icon" aria-label="Carrinho de Compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a></li>
+            </ul>
+
+            <div class="nav-icons">
+               
+               
+<a href="/pages/user.html" id="user-nav-link" class="nav-icon user-icon">
+    <i class="fas fa-user-circle" id="nav-user-icon"></i>
+    <img src="" class="nav-user-avatar" id="nav-user-avatar" style="display: none;">
+</a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu de Navegação">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+</header>
+
+
+    <main class="admin-container">
+        <div class="admin-header">
+            <h1>Gerenciamento de Agendamentos</h1>
+            <p>Visualize e gerencie todos os agendamentos do studio</p>
+        </div>
+
+        <div id="appointments-container">
+            <div class="loading">
+                <i class="fas fa-spinner"></i> Carregando agendamentos...
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de confirmação -->
+    <div class="confirmation-modal" id="confirmationModal">
+        <div class="confirmation-modal-content">
+            <div class="confirmation-modal-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3 class="confirmation-modal-title">Confirmar Alteração</h3>
+            <p class="confirmation-modal-message" id="confirmationMessage">Tem certeza que deseja alterar o status deste agendamento?</p>
+            <div class="confirmation-modal-buttons">
+                <button class="confirmation-modal-btn confirmation-modal-btn-cancel" id="cancelUpdateBtn">Cancelar</button>
+                <button class="confirmation-modal-btn confirmation-modal-btn-confirm" id="confirmUpdateBtn">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/js/navbar.js"></script>
+    <script>
+        // No início do script da página admin.html
+document.addEventListener('DOMContentLoaded', () => {
+    const userData = localStorage.getItem('ravenStudioCurrentUser');
+    
+    if (!userData) {
+        window.location.href = '/pages/login.html';
+        return;
+    }
+    
+    const user = JSON.parse(userData);
+    
+    if (!user.isAdmin) {
+        window.location.href = '/pages/login.html';
+        return;
+    }
+    
+    // Se chegou aqui, é admin - pode carregar o conteúdo
+    loadAppointments();
+});
+        // Token de autenticação do admin (em produção, isso deve vir de um login seguro)
+        const ADMIN_TOKEN = 'admin_raven_studio_token';
+        
+        // Variáveis para armazenar o agendamento sendo modificado
+        let currentAppointmentId = null;
+        let newStatus = null;
+
+        // Função para carregar os agendamentos
+     async function loadAppointments() {
+    const container = document.getElementById('appointments-container');
+    
+    try {
+        container.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Carregando agendamentos...</div>';
+        
+        const response = await fetch('http://localhost/trabalhofinal/finalmente/api/admin-appointments.php', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${ADMIN_TOKEN}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const data = await response.json();
+        console.log(data); // Adicione esta linha para depuração
+        
+        if (data.success) {
+            renderAppointments(data.appointments);
+        } else {
+            throw new Error(data.message || 'Erro ao carregar agendamentos');
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        container.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> ${error.message}</div>`;
+        console.log('Resposta da API:', await response?.text()); // Adicione esta linha
+    }
+}
+
+        // Função para renderizar os agendamentos na tabela
+        function renderAppointments(appointments) {
+            const container = document.getElementById('appointments-container');
+            
+            if (appointments.length === 0) {
+                container.innerHTML = '<div class="error-message">Nenhum agendamento encontrado.</div>';
+                return;
+            }
+            
+            let html = `
+                <table class="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Artista</th>
+                            <th>Data/Horário</th>
+                            <th>Estilo</th>
+                            <th>Orçamento</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            appointments.forEach(appointment => {
+                // Formatar data
+                const dateObj = new Date(appointment.preferred_date1 + 'T' + appointment.preferred_time1);
+                const formattedDate = dateObj.toLocaleDateString('pt-BR');
+                const formattedTime = appointment.preferred_time1.substring(0, 5);
+                
+                // Determinar classe de status
+                let statusClass = '';
+                switch (appointment.status.toLowerCase()) {
+                    case 'pendente':
+                        statusClass = 'status-pendente';
+                        break;
+                    case 'confirmado':
+                        statusClass = 'status-confirmado';
+                        break;
+                    case 'cancelado':
+                        statusClass = 'status-cancelado';
+                        break;
+                    case 'concluído':
+                        statusClass = 'status-concluido';
+                        break;
+                    default:
+                        statusClass = 'status-pendente';
+                }
+                
+                // Gerar iniciais do cliente
+                const firstName = appointment.first_name || '';
+                const lastName = appointment.last_name || '';
+                const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+                
+                html += `
+                    <tr>
+                        <td><span class="appointment-id">#${appointment.id}</span></td>
+                        <td>
+                            <div class="appointment-client">
+                                <div class="appointment-client-avatar">${initials}</div>
+                                <div class="appointment-client-info">
+                                    <span class="appointment-client-name">${firstName} ${lastName}</span>
+                                    <span class="appointment-client-contact">${appointment.email}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="appointment-artist">
+                                ${appointment.artist_image ? 
+                                    `<div class="appointment-artist-avatar">
+                                        <img src="${appointment.artist_image}" alt="${appointment.artist_name}">
+                                    </div>` : 
+                                    `<div class="appointment-artist-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>`
+                                }
+                                <span>${appointment.artist_name}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="appointment-datetime">
+                                <span class="appointment-date">${formattedDate}</span>
+                                <span class="appointment-time">${formattedTime}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="appointment-style">${appointment.tattoo_style}</span>
+                        </td>
+                        <td>
+                            <span class="appointment-budget">R$ ${parseFloat(appointment.budget).toFixed(2)}</span>
+                        </td>
+                        <td>
+                            <span class="appointment-status ${statusClass}">${appointment.status}</span>
+                        </td>
+                        <td>
+                            <div class="appointment-actions">
+                                <select class="status-select" data-appointment-id="${appointment.id}">
+                                    <option value="Pendente" ${appointment.status === 'Pendente' ? 'selected' : ''}>Pendente</option>
+                                    <option value="Confirmado" ${appointment.status === 'Confirmado' ? 'selected' : ''}>Confirmado</option>
+                                    <option value="Cancelado" ${appointment.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                                    <option value="Concluído" ${appointment.status === 'Concluído' ? 'selected' : ''}>Concluído</option>
+                                </select>
+                                <button class="update-status-btn" data-appointment-id="${appointment.id}">
+                                    <i class="fas fa-save"></i> Atualizar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Adicionar event listeners aos botões de atualização
+            document.querySelectorAll('.update-status-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const appointmentId = this.getAttribute('data-appointment-id');
+                    const select = document.querySelector(`.status-select[data-appointment-id="${appointmentId}"]`);
+                    const selectedStatus = select.value;
+                    
+                    showConfirmationModal(appointmentId, selectedStatus);
+                });
+            });
+        }
+
+        // Função para mostrar o modal de confirmação
+        function showConfirmationModal(appointmentId, status) {
+            currentAppointmentId = appointmentId;
+            newStatus = status;
+            
+            const modal = document.getElementById('confirmationModal');
+            const message = document.getElementById('confirmationMessage');
+            
+            message.textContent = `Tem certeza que deseja alterar o status do agendamento #${appointmentId} para "${status}"?`;
+            
+            modal.style.display = 'flex';
+        }
+
+        // Função para esconder o modal de confirmação
+        function hideConfirmationModal() {
+            const modal = document.getElementById('confirmationModal');
+            modal.style.display = 'none';
+        }
+
+        // Função para atualizar o status de um agendamento
+        async function updateAppointmentStatus(appointmentId, status) {
+            try {
+                const response = await fetch('http://localhost/trabalhofinal/finalmente/api/admin-appointments.php', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${ADMIN_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'update_status',
+                        appointmentId: appointmentId,
+                        status: status
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Recarregar a lista de agendamentos
+                    loadAppointments();
+                    
+                    // Mostrar notificação de sucesso
+                    showNotification('Status atualizado com sucesso!', 'success');
+                } else {
+                    throw new Error(data.message || 'Erro ao atualizar status');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                showNotification(`Erro: ${error.message}`, 'error');
+            }
+        }
+
+        // Função para mostrar notificações
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? 'rgba(239, 68, 68, 0.9)' : 'rgba(34, 197, 94, 0.9)'};
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                font-family: 'Bebas Neue', cursive;
+                font-size: 1.2rem;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Event listeners
+        document.getElementById('confirmUpdateBtn').addEventListener('click', () => {
+            hideConfirmationModal();
+            updateAppointmentStatus(currentAppointmentId, newStatus);
+        });
+
+        document.getElementById('cancelUpdateBtn').addEventListener('click', hideConfirmationModal);
+
+
+        // Carregar os agendamentos quando a página é carregada
+        document.addEventListener('DOMContentLoaded', loadAppointments);
+    </script>
+</body>
+</html>

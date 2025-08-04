@@ -706,16 +706,18 @@ async handleLogin() {
             // Armazena o usuário no localStorage
             localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(data.user));
             
-            // Atualiza a sessão do usuário
-            if (typeof window.userSession !== 'undefined') {
-                window.userSession.currentUser = data.user;
-                window.userSession.updateNavbar();
+            // Redirecionamento baseado no tipo de usuário
+            if (data.user.isAdmin) {
+                // Redireciona para admin.html após 1 segundo
+                setTimeout(() => {
+                    window.location.href = '/pages/admin.html';
+                }, 1000);
+            } else {
+                // Redireciona para user.html após 1 segundo (comportamento normal)
+                setTimeout(() => {
+                    window.location.href = '/pages/user.html';
+                }, 1000);
             }
-            
-            // Redireciona após 1 segundo
-            setTimeout(() => {
-                window.location.href = '/pages/user.html';
-            }, 1000);
         } else {
             this.showError(document.getElementById('login-email'), data.message || 'Credenciais inválidas');
             this.showError(document.getElementById('login-password'), data.message || 'Credenciais inválidas');

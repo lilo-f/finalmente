@@ -176,24 +176,24 @@ try {
     echo json_encode($response);
     exit; // Termina a execução aqui
     break;
-        case 'login':
-            // Validação dos campos
-            if (empty($input['email']) || empty($input['password'])) {
-                throw new Exception("E-mail e senha são obrigatórios");
-            }
+       case 'login':
+    // Validação dos campos
+    if (empty($input['email']) || empty($input['password'])) {
+        throw new Exception("E-mail e senha são obrigatórios");
+    }
 
-            $email = sanitizeInput($input['email']);
-            $password = $input['password'];
+    $email = sanitizeInput($input['email']);
+    $password = $input['password'];
 
-            // Buscar usuário
-            $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-            $stmt->execute([$email]);
-            
-            if ($stmt->rowCount() === 0) {
-                throw new Exception("Credenciais inválidas");
-            }
+    // Buscar usuário
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    
+    if ($stmt->rowCount() === 0) {
+        throw new Exception("Credenciais inválidas");
+    }
 
-  $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!password_verify($password, $user['password'])) {
         throw new Exception("Credenciais inválidas");
@@ -213,10 +213,22 @@ try {
     // Adicionar pontos se existirem
     $user['points'] = $user['loyalty_points'] ?? 0;
     
+    // Adicionar informação de admin
+    $user['isAdmin'] = (bool)($user['isAdmin'] ?? false);
+    
     $response = [
         'success' => true,
         'message' => 'Login realizado com sucesso',
-        'user' => $user
+        'user' =>[
+            'id' => $user['id'],
+            'first_name' => $user['first_name'],
+            'last_name' => $user['last_name'],
+            'email' => $user['email'],
+            'phone' => $user['phone'],
+            'avatar' => $user['avatar'],
+            'isAdmin' => (bool)$user['isAdmin'], // Garanta que isso está vindo como true para o admin
+            // ... outros campos
+        ]
     ];
     break;
 
