@@ -44,35 +44,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
 
-        function updateNavbarForAdmin() {
-    const userData = localStorage.getItem('ravenStudioCurrentUser');
-    if (!userData) return;
-
-    const user = JSON.parse(userData);
-    const navUserLink = document.getElementById('user-nav-link');
-    const navUserIcon = document.getElementById('nav-user-icon');
-    const navUserAvatar = document.getElementById('nav-user-avatar');
-
-    if (user.isAdmin) {
-        // Configurações para admin
-        navUserLink.href = '/pages/admin.html';
-        navUserAvatar.src = '/img/Logo.png';
-        navUserAvatar.alt = 'Admin Raven Studio';
-        navUserAvatar.style.display = 'block';
+// Verificar se é admin e atualizar a navbar
+function updateNavbarForAdmin() {
+    const userData = JSON.parse(localStorage.getItem('ravenStudioCurrentUser'));
+    
+    if (userData && userData.isAdmin) {
+        // Atualizar o ícone do usuário para mostrar o logo
+        const navUserIcon = document.getElementById('nav-user-icon');
+        const navUserAvatar = document.getElementById('nav-user-avatar');
+        
         navUserIcon.style.display = 'none';
-    } else {
-        // Configurações para usuário normal
-        navUserLink.href = '/pages/user.html';
-        if (user.avatar || user.avatarUrl) {
-            navUserAvatar.src = user.avatar || user.avatarUrl;
-            navUserAvatar.style.display = 'block';
-            navUserIcon.style.display = 'none';
-        } else {
-            navUserAvatar.style.display = 'none';
-            navUserIcon.style.display = 'block';
-        }
+        navUserAvatar.src = '/img/Logo.png';
+        navUserAvatar.alt = 'Raven Studio Admin';
+        navUserAvatar.style.display = 'block';
+        
+        // Opcional: Atualizar o link para voltar para a página admin
+        document.getElementById('user-nav-link').href = '/pages/admin.html';
     }
 }
+
+// Chamar a função quando a página carregar
+document.addEventListener('DOMContentLoaded', updateNavbarForAdmin);
 
         // Fechar o menu quando um link é clicado (útil para mobile)
         document.querySelectorAll('.nav-menu .nav-link').forEach(link => {

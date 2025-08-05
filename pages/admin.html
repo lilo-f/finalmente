@@ -357,6 +357,27 @@
             background: rgba(239, 68, 68, 0.2);
         }
 
+        .admin-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.admin-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
         /* Responsividade */
         @media (max-width: 1024px) {
             .appointments-table {
@@ -443,7 +464,13 @@
     </nav>
 </header>
 
-
+<div class="admin-header">
+    <div class="admin-brand">
+        <img src="/img/Logo.png" alt="Raven Studio" class="admin-logo">
+        <h1>Painel de Administração</h1>
+    </div>
+    <p>Bem-vindo, Raven Studio</p>
+</div>
     <main class="admin-container">
         <div class="admin-header">
             <h1>Gerenciamento de Agendamentos</h1>

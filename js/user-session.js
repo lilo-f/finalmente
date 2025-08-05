@@ -181,42 +181,41 @@ addPoints(points) {
         window.location.href = '/pages/login.html';
     }
 
- updateNavbar() {
-        const navUserLink = document.getElementById('user-nav-link');
-        const navUserIcon = document.getElementById('nav-user-icon');
-        const navUserAvatar = document.getElementById('nav-user-avatar');
+updateNavbar() {
+    const navUserLink = document.getElementById('user-nav-link');
+    const navUserIcon = document.getElementById('nav-user-icon');
+    const navUserAvatar = document.getElementById('nav-user-avatar');
 
-        if (!navUserLink || !navUserIcon || !navUserAvatar) return;
+    if (!navUserLink || !navUserIcon || !navUserAvatar) return;
 
-        if (this.isLoggedIn()) {
-            if (this.isAdmin()) {
-                // Comportamento para admin
-                navUserLink.href = '/pages/admin.html';
-                navUserAvatar.src = '/img/Logo.png';
-                navUserAvatar.alt = 'Admin Raven Studio';
+    if (this.isLoggedIn()) {
+        if (this.isAdmin()) {
+            // Comportamento para admin
+            navUserLink.href = '/pages/admin.html';
+            navUserAvatar.src = '/img/Logo.png';
+            navUserAvatar.alt = 'Raven Studio Admin';
+            navUserAvatar.style.display = 'block';
+            navUserIcon.style.display = 'none';
+        } else {
+            // Comportamento para usuário normal
+            navUserLink.href = '/pages/user.html';
+            const avatarUrl = this.currentUser.avatar || this.currentUser.avatarUrl;
+            if (avatarUrl) {
+                navUserAvatar.src = avatarUrl;
                 navUserAvatar.style.display = 'block';
                 navUserIcon.style.display = 'none';
             } else {
-                // Comportamento para usuário normal
-                navUserLink.href = '/pages/user.html';
-                const avatarUrl = this.currentUser.avatar || this.currentUser.avatarUrl;
-                if (avatarUrl) {
-                    navUserAvatar.src = avatarUrl;
-                    navUserAvatar.style.display = 'block';
-                    navUserIcon.style.display = 'none';
-                } else {
-                    navUserAvatar.style.display = 'none';
-                    navUserIcon.style.display = 'block';
-                }
+                navUserAvatar.style.display = 'none';
+                navUserIcon.style.display = 'block';
             }
-        } else {
-            // Usuário não logado
-            navUserLink.href = '/pages/login.html';
-            navUserAvatar.style.display = 'none';
-            navUserIcon.style.display = 'block';
         }
-        updateCartCounter();
+    } else {
+        // Usuário não logado
+        navUserLink.href = '/pages/login.html';
+        navUserAvatar.style.display = 'none';
+        navUserIcon.style.display = 'block';
     }
+}
 
     loadUserData() {
         if (!this.currentUser) return;

@@ -14,6 +14,73 @@
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/navbar.css">
     <style>
+        .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    background: rgba(15, 15, 15, 0.9);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 100;
+}
+        .admin-toggle {
+    display: none; /* Inicialmente escondido */
+    align-items: center;
+    gap: 5px;
+    padding: 0.5rem 1rem;
+    background: none;
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    border-radius: 20px;
+    color: #3b82f6;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+
+    transition: all 0.3s ease;
+}
+
+.admin-toggle.active {
+    display: flex; /* Mostra apenas quando ativo (admin) */
+    background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+    color: #000;
+    font-weight: bold;
+}
+
+.user-name.admin {
+    color: #8a2be2;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(138, 43, 226, 0.3);
+}
+        .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    background: rgba(15, 15, 15, 0.9);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.user-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: #d1d5db;
+}
         /* Estilos Premium para o Chatbot - INÍCIO */
        .raven-chat-widget {
     /* Keep position and z-index as is */
@@ -580,7 +647,7 @@
             color: #3b82f6;
             font-family: 'Orbitron', sans-serif;
             font-size: 0.8rem;
-            cursor: pointer;
+         
             padding: 0.5rem 1rem;
             transition: all 0.3s ease;
         }
@@ -1151,14 +1218,15 @@
     <div class="blog-bg"></div>
     <div class="blog-particles" id="particles-js"></div>
     
-    <div class="user-info">
-        <div class="user-avatar" id="current-user-avatar">U</div>
-        <div class="user-name" id="current-user-name">Usuário</div>
-        <button class="admin-toggle" id="admin-toggle">
-            <i class="fas fa-user-shield"></i> Admin: OFF
-        </button>
+<div class="user-info" id="user-info-container">
+    <div class="user-avatar" id="current-user-avatar">
+        <!-- Avatar será preenchido pelo JavaScript -->
     </div>
-    
+    <div class="user-name" id="current-user-name">Carregando...</div>
+    <button class="admin-toggle" id="admin-toggle">
+        <i class="fas fa-user-shield"></i> Admin: ON
+    </button>
+</div>
     <main class="blog-main">
         <header class="blog-header">
             <h1>RAVEN STUDIO BLOG</h1>
@@ -1378,13 +1446,14 @@
     new window.VLibras.Widget('https://vlibras.gov.br/app');
   </script>
 
-      <script src="/js/home.js"></script>
+
          <script src="/js/navbar.js"></script>
      <script src="/js/user-session.js"></script>
       
   
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script >
+        
             // Dados premium para o chatbot
     const ravenFaqData = {
         "precos": [
@@ -1715,6 +1784,26 @@
                 }
             }
         });
+        // Exemplo de como salvar após login bem-sucedido
+function onLoginSuccess(userData) {
+    // Salva no localStorage
+    localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(userData));
+    
+    // Atualiza a sessão
+    if (typeof userSession !== 'undefined') {
+        userSession.currentUser = userData;
+    }
+    
+    // Atualiza no blog
+    if (typeof blog !== 'undefined') {
+        blog.currentUser = userData;
+        blog.loadCurrentUser();
+        blog.renderPosts();
+    }
+    
+    // Atualiza a navegação
+    updateNavUserDisplay();
+}
 // Verifica se o userSession está disponível
 if (typeof userSession === 'undefined' && typeof window.userSession !== 'undefined') {
     var userSession = window.userSession;
@@ -1723,7 +1812,7 @@ if (typeof userSession === 'undefined' && typeof window.userSession !== 'undefin
 // Função para verificar o login de forma robusta
 function checkUserLoggedIn() {
     try {
-        // Tenta múltiplas formas de verificar o login
+        // Verifica múltiplas fontes possíveis
         if (typeof userSession !== 'undefined' && userSession.isLoggedIn()) {
             return true;
         }
@@ -1741,53 +1830,90 @@ function checkUserLoggedIn() {
 }
       class RavenBlog {
         
-    constructor() {
+       constructor() {
         this.posts = JSON.parse(localStorage.getItem('ravenStudioPosts')) || this.getDefaultPosts();
-        this.loadUserData(); // Método novo para carregar dados do usuário
+        this.loadUserData();
         this.isAdmin = false;
         this.selectedImage = null;
         this.init();
     }
 
-        loadUserData() {
-        try {
-            // Tenta múltiplas fontes para obter dados do usuário
-            if (typeof userSession !== 'undefined' && userSession.currentUser) {
-                this.currentUser = userSession.currentUser;
-            } else if (typeof window.userSession !== 'undefined' && window.userSession.currentUser) {
-                this.currentUser = window.userSession.currentUser;
-            } else {
-                const userData = localStorage.getItem('ravenStudioCurrentUser');
-                this.currentUser = userData ? JSON.parse(userData) : { name: 'Usuário', avatar: null };
-            }
-        } catch (e) {
-            console.error("Erro ao carregar dados do usuário:", e);
-            this.currentUser = { name: 'Usuário', avatar: null };
+   loadUserData() {
+    try {
+        // Verifica se o usuário está logado
+        const isLoggedIn = checkUserLoggedIn();
+        const userInfoSection = document.getElementById('user-info-section');
+        
+        if (!isLoggedIn) {
+            // Esconde a seção de informações do usuário
+            if (userInfoSection) userInfoSection.style.display = 'none';
+            return;
+        } else {
+            // Mostra a seção de informações do usuário
+            if (userInfoSection) userInfoSection.style.display = 'flex';
         }
+
+        // Tenta pegar os dados do usuário do localStorage
+        const userBasicInfo = JSON.parse(localStorage.getItem('ravenStudioUserBasicInfo'));
+        
+        this.currentUser = {
+            name: (userBasicInfo && userBasicInfo.name) ? userBasicInfo.name : 'Usuário',
+            avatar: (userBasicInfo && userBasicInfo.avatar) || null,
+            isAdmin: (userBasicInfo && userBasicInfo.isAdmin) || false
+        };
+        
+        this.loadCurrentUser();
+    } catch (e) {
+        console.error("Erro ao carregar dados do usuário:", e);
+        this.currentUser = { 
+            name: 'Usuário', 
+            avatar: null,
+            isAdmin: false
+        };
+        this.loadCurrentUser();
     }
-
-
+}
             init() {
                 this.loadCurrentUser();
                 this.renderPosts();
                 this.setupEventListeners();
             }
 
-// Atualize o método loadCurrentUser na classe RavenBlog:
 loadCurrentUser() {
-    if (!this.currentUser) return;
-    
+    const userContainer = document.getElementById('user-info-container');
     const userAvatar = document.getElementById('current-user-avatar');
     const userName = document.getElementById('current-user-name');
+    const adminToggle = document.getElementById('admin-toggle');
     
-    // Limpa o conteúdo do avatar antes de atualizar
+    // Verifica se o usuário está logado
+    if (!window.userSession || !window.userSession.isLoggedIn()) {
+        userContainer.style.display = 'none'; // Oculta completamente o container
+        return;
+    }
+    
+    // Se chegou aqui, o usuário está logado
+    userContainer.style.display = 'flex'; // Garante que está visível
+    
+    // Limpa o conteúdo do avatar
     userAvatar.innerHTML = '';
     
-    if (this.currentUser.avatar) {
-        userAvatar.innerHTML = `<img src="${this.currentUser.avatar}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+    // Verifica se é admin
+    const isAdmin = window.userSession.isAdmin();
+    const displayName = isAdmin ? 'Raven Studio' : (this.currentUser?.name || 'Usuário');
+    
+    // Configura o avatar
+    if (isAdmin) {
+        userAvatar.innerHTML = `
+            <img src="/img/Logo.png" alt="Raven Studio" 
+                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+        `;
+    } else if (this.currentUser?.avatar) {
+        userAvatar.innerHTML = `
+            <img src="${this.currentUser.avatar}" alt="${displayName}" 
+                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+        `;
     } else {
-        // Mostra a primeira letra do nome se não houver avatar
-        const initial = this.currentUser.name ? this.currentUser.name.charAt(0).toUpperCase() : 'U';
+        const initial = displayName ? displayName.charAt(0).toUpperCase() : 'U';
         userAvatar.textContent = initial;
         userAvatar.style.display = 'flex';
         userAvatar.style.alignItems = 'center';
@@ -1797,9 +1923,23 @@ loadCurrentUser() {
         userAvatar.style.fontWeight = 'bold';
     }
     
-    userName.textContent = this.currentUser.name || 'Usuário';
+    // Define o nome do usuário
+    userName.textContent = displayName;
+    
+    // Configura o botão de admin
+    if (isAdmin) {
+        adminToggle.innerHTML = '<i class="fas fa-user-shield"></i> Admin: ON';
+        adminToggle.classList.add('active');
+        adminToggle.style.display = 'flex';
+        document.getElementById('new-post-form').classList.add('show');
+        userName.classList.add('admin');
+    } else {
+        adminToggle.style.display = 'none';
+        adminToggle.classList.remove('active');
+        document.getElementById('new-post-form').classList.remove('show');
+        userName.classList.remove('admin');
+    }
 }
-
             getDefaultPosts() {
     return [
         {
@@ -1897,10 +2037,14 @@ loadCurrentUser() {
 
 getUserAvatar(user, avatar) {
     try {
+        // Verifica se user existe e é uma string não vazia
+        const userName = (user && typeof user === 'string') ? user : 'Usuário';
+        const userInitial = userName.charAt(0).toUpperCase();
+        
         if (avatar && typeof avatar === 'string' && avatar.trim() !== '') {
-            return `<div class="post-avatar"><img src="${avatar}" alt="${user}" onerror="this.onerror=null;this.parentElement.className='post-avatar default';this.parentElement.innerHTML='${user.charAt(0).toUpperCase()}'"></div>`;
+            return `<div class="post-avatar"><img src="${avatar}" alt="${userName}" onerror="this.onerror=null;this.parentElement.className='post-avatar default';this.parentElement.innerHTML='${userInitial}'"></div>`;
         }
-        return `<div class="post-avatar default">${user ? user.charAt(0).toUpperCase() : 'U'}</div>`;
+        return `<div class="post-avatar default">${userInitial}</div>`;
     } catch (e) {
         console.error("Erro ao renderizar avatar:", e);
         return `<div class="post-avatar default">U</div>`;
@@ -1966,7 +2110,7 @@ renderPosts() {
     const container = document.getElementById('posts-feed');
     if (!container) return;
 
-    // Verifica se há posts ou se o usuário está logado
+    // Verificação robusta de login
     const isLoggedIn = checkUserLoggedIn();
     
     if (!isLoggedIn) {
@@ -1992,66 +2136,68 @@ renderPosts() {
         return;
     }
 
-
-
     const postsHtml = this.posts.map(post => {
-        const timeAgo = this.getTimeAgo(post.timestamp);
+        // Garante que post.user existe
+        const postUser = post.user || 'Raven Studio';
+        const timeAgo = this.getTimeAgo(post.timestamp || Date.now());
         
-        // HTML dos comentários
-        const commentsHtml = post.comments.map(comment => {
+        // HTML dos comentários com proteção contra undefined
+        const commentsHtml = (post.comments || []).map(comment => {
+            const commentUser = comment.user || 'Usuário';
             const avatarHtml = comment.avatar 
-                ? `<div class="comment-avatar"><img src="${comment.avatar}" alt="${comment.user}"></div>`
-                : `<div class="comment-avatar default">${comment.user.charAt(0).toUpperCase()}</div>`;
+                ? `<div class="comment-avatar"><img src="${comment.avatar}" alt="${commentUser}"></div>`
+                : `<div class="comment-avatar default">${commentUser.charAt(0).toUpperCase()}</div>`;
             
             return `
                 <div class="comment">
                     ${avatarHtml}
                     <div class="comment-content">
-                        <div class="comment-user">${comment.user}</div>
-                        <div class="comment-text">${comment.content}</div>
-                        <div class="comment-time">${this.getTimeAgo(comment.timestamp)}</div>
+                        <div class="comment-user">${commentUser}</div>
+                        <div class="comment-text">${comment.content || ''}</div>
+                        <div class="comment-time">${this.getTimeAgo(comment.timestamp || Date.now())}</div>
                     </div>
                 </div>
             `;
         }).join('');
 
-        // HTML do formulário de comentário
-        const currentUser = this.currentUser;
-        const commentFormHtml = `
-            <div class="comment-form">
-                ${currentUser && currentUser.avatar 
-                    ? `<div class="comment-avatar"><img src="${currentUser.avatar}" alt="${currentUser.name}"></div>`
-                    : `<div class="comment-avatar default">${currentUser ? currentUser.name.charAt(0).toUpperCase() : 'U'}</div>`}
-                <input type="text" class="comment-input" id="comment-input-${post.id}" 
-                       placeholder="Escreva um comentário..." 
-                       onkeypress="if(event.key === 'Enter') blog.addComment('${post.id}')">
-            </div>
-        `;
+        // HTML do formulário de comentário com proteção
+        const currentUser = this.currentUser || { name: 'Usuário', avatar: null };
+       // No formulário de comentário
+const commentFormHtml = `
+    <div class="comment-form">
+        ${currentUser.avatar 
+            ? `<div class="comment-avatar"><img src="${currentUser.avatar}" alt="${currentUser.name}"></div>`
+            : `<div class="comment-avatar default">${currentUser.name.charAt(0).toUpperCase()}</div>`}
+        <input type="text" class="comment-input" id="comment-input-${post.id}" 
+               placeholder="Escreva um comentário..." 
+               onkeypress="if(event.key === 'Enter') blog.addComment('${post.id}')">
+    </div>
+`;
 
-        // HTML completo do post
+        // HTML completo do post com proteção
         return `
             <article class="post-card">
                 <header class="post-header">
                     ${post.avatar 
-                        ? `<div class="post-avatar"><img src="${post.avatar}" alt="${post.user}"></div>`
-                        : `<div class="post-avatar default">${post.user.charAt(0).toUpperCase()}</div>`}
+                        ? `<div class="post-avatar"><img src="${post.avatar}" alt="${postUser}"></div>`
+                        : `<div class="post-avatar default">${postUser.charAt(0).toUpperCase()}</div>`}
                     <div class="post-user-info">
-                        <div class="post-username">${post.user}</div>
+                        <div class="post-username">${postUser}</div>
                         <div class="post-time">${timeAgo}</div>
                     </div>
                 </header>
                 
                 <div class="post-content">
-                    <p class="post-text">${post.content}</p>
+                    <p class="post-text">${post.content || ''}</p>
                     ${post.image ? `<img src="${post.image}" class="post-image" onclick="blog.openImageModal('${post.image}')">` : ''}
                 </div>
                 
                 <footer class="post-footer">
                     <button class="post-action ${post.liked ? 'liked' : ''}" onclick="blog.toggleLike('${post.id}')">
-                        <i class="fas fa-heart"></i> ${post.likes}
+                        <i class="fas fa-heart"></i> ${post.likes || 0}
                     </button>
                     <button class="post-action" onclick="blog.toggleComments('${post.id}')">
-                        <i class="fas fa-comment"></i> ${post.comments.length}
+                        <i class="fas fa-comment"></i> ${(post.comments || []).length}
                     </button>
                     <button class="post-action">
                         <i class="fas fa-share"></i> Compartilhar
@@ -2078,7 +2224,7 @@ renderPosts() {
         const input = document.getElementById(`comment-input-${postId}`);
         setTimeout(() => input.focus(), 100);
     }
-}
+   }
             getTimeAgo(timestamp) {
                 const now = Date.now();
                 const diff = now - timestamp;
@@ -2156,25 +2302,26 @@ renderPosts() {
 
 // Substitua o evento DOMContentLoaded atual por este:
 document.addEventListener('DOMContentLoaded', function() {
+
+
+
     // Inicializa o blog
     window.blog = new RavenBlog();
     
     // Verifica o status de login de forma robusta
-    const isLoggedIn = checkUserLoggedIn();
+   
     const blogHeader = document.querySelector('.blog-header');
     const postsFeed = document.getElementById('posts-feed');
     const userInfo = document.querySelector('.user-info');
     const newPostForm = document.getElementById('new-post-form');
-
+    
+  // Verifica se o usuário está logado
+    const isLoggedIn = checkUserLoggedIn() || localStorage.getItem('ravenStudioUserBasicInfo');
+    
     if (!isLoggedIn) {
-        blogHeader.innerHTML = `
-            <h1>ACESSO RESTRITO</h1>
-            <p>Faça login para visualizar o conteúdo do blog</p>
-            <a href="/pages/login.html" class="login-btn">Fazer Login</a>
-        `;
-        if (postsFeed) postsFeed.style.display = 'none';
-        if (userInfo) userInfo.style.display = 'none';
-        if (newPostForm) newPostForm.style.display = 'none';
+        // Redireciona para login ou mostra mensagem
+        window.location.href = '/pages/login.html';
+        return;
     } else {
         // Mostra conteúdo para usuários logados
         blogHeader.innerHTML = `
@@ -2193,7 +2340,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-
 
 
         // Inicializar blog

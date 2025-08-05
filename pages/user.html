@@ -1407,15 +1407,18 @@
         
         <div class="profile-info">
             <h1 id="user-name">Carregando...</h1>
-            <div class="user-contact-info">
-                <p id="user-email">
-                    <i class="fas fa-envelope"></i> <span class="contact-value">Carregando...</span>
-                </p>
-               
-                <p class="join-date">
-                    <i class="fas fa-calendar-star"></i> <span id="join-date">Membro desde: carregando...</span>
-                </p>
-            </div>
+          <div class="user-contact-info">
+    <p id="user-email">
+        <i class="fas fa-envelope"></i> <span class="contact-value">Carregando...</span>
+    </p>
+    <p id="user-phone">
+        <i class="fas fa-phone"></i> <span class="contact-value">Carregando...</span>
+    </p>
+   
+    <p class="join-date">
+        <i class="fas fa-calendar-star"></i> <span id="join-date">Membro desde: carregando...</span>
+    </p>
+</div>
         </div>
         
         <div class="profile-stats-container">
@@ -1596,395 +1599,78 @@
 <script src="/js/user-session.js"></script>
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-   // Dados premium para o chatbot
-    const ravenFaqData = {
-        "precos": [
-            {
-                question: "Qual é o valor mínimo para uma tatuagem?",
-                answer: "Nosso valor mínimo é de R$ 300 para tatuagens pequenas (até 10cm).<br><br>" +
-                       "Tabela de referência:<br>" +
-                       "• Pequenas (até 10cm): R$ 300-600<br>" +
-                       "• Médias (10-20cm): R$ 600-1200<br>" +
-                       "• Grandes (acima de 20cm): A partir de R$ 1200<br><br>" +
-                       "Valores exatos são definidos após avaliação do desenho."
-            },
-            {
-                question: "Como é calculado o preço da tatuagem?",
-                answer: "Consideramos vários fatores:<br><br>" +
-                       "1. <strong>Tamanho</strong>: Área a ser tatuada<br>" +
-                       "2. <strong>Complexidade</strong>: Nível de detalhes e cores<br>" +
-                       "3. <strong>Tempo estimado</strong>: Horas de trabalho necessárias<br>" +
-                       "4. <strong>Local no corpo</strong>: Áreas mais difíceis podem ter ajuste<br>" +
-                       "5. <strong>Experiência do artista</strong>: Artistas sênior possuem valores diferenciados<br><br>" +
-                       "Oferecemos avaliação gratuita para orçamento preciso."
-            }
-        ],
-        "dor": [
-            {
-                question: "Quanto dói fazer uma tatuagem?",
-                answer: "A dor varia conforme a região do corpo:<br><br>" +
-                       "<strong>Baixa dor (1-3/10)</strong>:<br>" +
-                       "• Braços (parte externa)<br>" +
-                       "• Coxas<br>" +
-                       "• Costas<br><br>" +
-                       "<strong>Média dor (4-6/10)</strong>:<br>" +
-                       "• Panturrilhas<br>" +
-                       "• Peito<br>" +
-                       "• Ombros<br><br>" +
-                       "<strong>Alta dor (7-9/10)</strong>:<br>" +
-                       "• Costelas<br>" +
-                       "• Pés e mãos<br>" +
-                       "• Pescoço/Clavícula<br><br>" +
-                       "A maioria dos clientes descreve como uma queimadura constante."
-            },
-            {
-                question: "Qual a parte mais dolorosa para tatuar?",
-                answer: "As áreas mais dolorosas geralmente são:<br><br>" +
-                       "1. <strong>Costelas</strong>: Pele fina sobre osso<br>" +
-                       "2. <strong>Pés e mãos</strong>: Muitas terminações nervosas<br>" +
-                       "3. <strong>Axilas</strong>: Pele sensível e móvel<br>" +
-                       "4. <strong>Cotovelos e joelhos</strong>: Pele dura e articulações<br><br>" +
-                       "Dica: Sessões mais curtas ajudam nas áreas mais dolorosas."
-            }
-        ],
-        "procedimento": [
-            {
-                question: "Como é o processo de fazer uma tatuagem?",
-                answer: "Nosso processo premium:<br><br>" +
-                       "1. <strong>Consulta</strong>: Discussão do conceito e referências<br>" +
-                       "2. <strong>Agendamento</strong>: Reserva com sinal de 30%<br>" +
-                       "3. <strong>Desenho</strong>: Criação personalizada 48h antes<br>" +
-                       "4. <strong>Aprovação</strong>: Ajustes finais no studio<br>" +
-                       "5. <strong>Aplicação</strong>: Sessão com materiais esterilizados<br>" +
-                       "6. <strong>Cuidados</strong>: Orientações pós-tatuagem<br><br>" +
-                       "Todo material é descartável e de qualidade profissional."
-            },
-            {
-                question: "Preciso usar anestésico?",
-                answer: "Não recomendamos anestésicos tópicos porque:<br><br>" +
-                       "• Podem alterar a textura da pele<br>" +
-                       "• Afetam a absorção da tinta<br>" +
-                       "• O resultado final pode ser comprometido<br><br>" +
-                       "A dor é parte do processo, mas garantimos suporte durante toda a sessão."
-            }
-        ],
-        "cuidados": [
-            {
-                question: "Quais os cuidados após fazer a tatuagem?",
-                answer: "<strong>Primeiras 48 horas</strong>:<br>" +
-                       "• Manter o plástico por 2-4 horas<br>" +
-                       "• Lavar com sabonete antisséptico<br>" +
-                       "• Aplicar pomada específica<br><br>" +
-                       "<strong>Primeiras 2 semanas</strong>:<br>" +
-                       "• Lavar 3x ao dia<br>" +
-                       "• Manter hidratada<br>" +
-                       "• Evitar sol, piscina e mar<br>" +
-                       "• Não arrancar casquinhas<br><br>" +
-                       "<strong>Após cicatrização</strong>:<br>" +
-                       "• Usar protetor solar sempre"
-            },
-            {
-                question: "Quanto tempo leva para cicatrizar completamente?",
-                answer: "Cronograma de cicatrização:<br><br>" +
-                       "<strong>1-3 dias</strong>: Vermelhidão e inchaço<br>" +
-                       "<strong>3-7 dias</strong>: Pele começa a descamar<br>" +
-                       "<strong>2-3 semanas</strong>: Cicatrização superficial completa<br>" +
-                       "<strong>4-6 semanas</strong>: Cicatrização total das camadas profundas<br><br>" +
-                       "Tatuagens maiores podem levar mais tempo para cicatrizar completamente."
-            }
-        ],
-        "estilos": [
-            {
-                question: "Quais estilos de tatuagem vocês oferecem?",
-                answer: "Especialidades do nosso studio:<br><br>" +
-                       "• <strong>Tradicional/Old School</strong>: Cores vivas, traços grossos<br>" +
-                       "• <strong>Realismo</strong>: Retratos, animais, paisagens<br>" +
-                       "• <strong>Blackwork</strong>: Preenchimentos sólidos em preto<br>" +
-                       "• <strong>Aquarela</strong>: Efeito pintura com cores fluidas<br>" +
-                       "• <strong>Geométrico</strong>: Padrões simétricos e precisos<br>" +
-                       "• <strong>Pontilhismo</strong>: Imagens formadas por pontos<br>" +
-                       "• <strong>Minimalista</strong>: Traços finos e simplificados<br><br>" +
-                       "Cada artista tem seu estilo predominante."
-            },
-            {
-                question: "Qual estilo de tatuagem dura mais tempo?",
-                answer: "Durabilidade por estilo:<br><br>" +
-                       "<strong>Melhor duração</strong>:<br>" +
-                       "• Tradicional (traços grossos e cores sólidas)<br>" +
-                       "• Blackwork (grandes áreas de tinta preta)<br><br>" +
-                       "<strong>Requer mais manutenção</strong>:<br>" +
-                       "• Aquarela (cores claras e degradês)<br>" +
-                       "• Fine Line (traços muito finos)<br><br>" +
-                       "Independente do estilo, cuidados adequados prolongam a vida da tatuagem."
-            }
-        ],
-        "agendamento": [
-            {
-                question: "Como faço para agendar minha tatuagem?",
-                answer: "Processo de agendamento:<br><br>" +
-                       "1. Acesse nosso sistema online<br>" +
-                       "2. Selecione o artista desejado<br>" +
-                       "3. Escolha data/horário disponível<br>" +
-                       "4. Descreva sua ideia em detalhes<br>" +
-                       "5. Efetue o pagamento do sinal (30%)<br>" +
-                       "6. Receba confirmação por e-mail<br><br>" +
-                       "Cancelamentos devem ser feitos com 48h de antecedência."
-            },
-            {
-                question: "Preciso ter o desenho pronto antes de agendar?",
-                answer: "Não é necessário! Nossos artistas oferecem:<br><br>" +
-                       "• <strong>Consultoria criativa</strong>: Ajudamos a desenvolver sua ideia<br>" +
-                       "• <strong>Design personalizado</strong>: Criamos a arte exclusiva para você<br>" +
-                       "• <strong>Revisões gratuitas</strong>: Ajustes até você aprovar<br><br>" +
-                       "Basta trazer referências ou descrever sua visão que cuidamos do resto."
-            }
-        ]
-    };
-
-    // Variáveis de estado
-    let currentRavenCategory = null; // Armazena a categoria atualmente selecionada para o botão "Voltar"
-
-    // Função para formatar a hora (ex: 10:30 PM)
-    function formatTime(date) {
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // The hour '0' should be '12'
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        return hours + ':' + minutes + ' ' + ampm;
+    // Adicione esta função para formatar números de telefone
+function formatPhoneNumber(phone) {
+    if (!phone) return 'Não informado';
+    // Remove tudo que não é dígito
+    const cleaned = ('' + phone).replace(/\D/g, '');
+    // Verifica se tem o tamanho de um celular com DDD (11 dígitos)
+    const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
     }
+    return phone; // Retorna o original se não conseguir formatar
+}
+  // Função para formatar a hora (ex: 10:30 PM)
+function formatTime(date) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // The hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    return hours + ':' + minutes + ' ' + ampm;
+}
 
-    // Funções do Chatbot
-    function showRavenCategories() {
-        document.getElementById('ravenChatCategories').style.display = 'block';
-        document.getElementById('ravenChatQuestions').style.display = 'none';
-        document.getElementById('ravenChatAnswers').style.display = 'none';
-        currentRavenCategory = null; // Reseta a categoria atual
-
-        // Adiciona animação às categorias
-        const categories = document.querySelectorAll('.category-card');
-        categories.forEach((card, index) => {
-            card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
-            card.style.opacity = '0'; // Garante que começa invisível para a animação
-        });
-        // Rola para o topo do conteúdo do chat
-        document.getElementById('ravenChatContent').scrollTop = 0;
-    }
-
-    function showRavenCategory(category) {
-        currentRavenCategory = category;
-
-        const questionsContainer = document.getElementById('ravenQuestionsList');
-        const categoryData = ravenFaqData[category] || [];
-
-        questionsContainer.innerHTML = ''; // Limpa as perguntas anteriores
-
-        if (categoryData.length > 0) {
-            categoryData.forEach((faq, index) => {
-                const questionCard = document.createElement('button'); // Usar button para melhor acessibilidade
-                questionCard.className = 'question-card';
-                questionCard.setAttribute('role', 'listitem'); // Para leitores de tela
-                questionCard.setAttribute('aria-label', `Pergunta: ${faq.question}`);
-                questionCard.innerHTML = `<p>${faq.question}</p>`;
-                // Ao clicar, exibe a resposta para a pergunta específica
-                questionCard.onclick = () => showRavenAnswer(category, index);
-                questionCard.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
-                questionCard.style.opacity = '0';
-                questionsContainer.appendChild(questionCard);
-            });
-        } else {
-            questionsContainer.innerHTML = '<p style="color:#ddd; text-align:center;">Nenhuma pergunta disponível para esta categoria.</p>';
-        }
-
-        document.getElementById('ravenChatCategories').style.display = 'none';
-        document.getElementById('ravenChatQuestions').style.display = 'block';
-        document.getElementById('ravenChatAnswers').style.display = 'none';
-        // Rola para o topo do conteúdo do chat
-        document.getElementById('ravenChatContent').scrollTop = 0;
-    }
-
-    function showRavenAnswer(category, questionIndex) {
-        const faq = ravenFaqData[category][questionIndex];
-        const answerContent = document.getElementById('ravenAnswerContent');
-
-        answerContent.innerHTML = `
-            <div class="answer-container">
-                <h5>${faq.question}</h5>
-                <p>${faq.answer}</p>
-            </div>
-        `;
-
-        document.getElementById('ravenChatCategories').style.display = 'none';
-        document.getElementById('ravenChatQuestions').style.display = 'none';
-        document.getElementById('ravenChatAnswers').style.display = 'block';
-        // Rola para o topo do conteúdo do chat
-        document.getElementById('ravenChatContent').scrollTop = 0;
-    }
-
-    function showRavenQuestions() {
-        if (currentRavenCategory) {
-            showRavenCategory(currentRavenCategory); // Retorna para a categoria específica
-        } else {
-            showRavenCategories(); // Padrão: volta para as categorias
-        }
-        document.getElementById('ravenChatAnswers').style.display = 'none';
-        document.getElementById('ravenChatQuestions').style.display = 'block'; // Garante que a seção de perguntas esteja visível
-        // Rola para o topo do conteúdo do chat
-        document.getElementById('ravenChatContent').scrollTop = 0;
-    }
-
-
-    // Inicialização do Chatbot
-    document.addEventListener('DOMContentLoaded', function() {
-        const chatToggle = document.getElementById('ravenChatToggle');
-        const chatContainer = document.getElementById('ravenChatContainer');
-        const chatClose = document.getElementById('ravenChatClose');
-        const welcomeMessageTime = document.getElementById('welcomeMessageTime');
-        
-        // Botão de voltar ao topo
-        const backToTopButton = document.getElementById('backToTop');
-            
-        // Mostrar/ocultar botão de voltar ao topo
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-            
-        // Voltar ao topo
-        backToTopButton.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Atualiza a hora da mensagem de boas-vindas
-        welcomeMessageTime.textContent = formatTime(new Date());
-
-        // Abrir/fechar chat
-        chatToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const isActive = chatContainer.classList.toggle('active');
-            chatToggle.setAttribute('aria-expanded', isActive); // Acessibilidade: atualiza estado do botão
-            if (isActive) {
-                showRavenCategories(); // Garante que as categorias são mostradas ao abrir
-                chatContainer.focus(); // Foca no container para acessibilidade
-            }
-        });
-
-        chatClose.addEventListener('click', function() {
-            chatContainer.classList.remove('active');
-            chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
-            chatToggle.focus(); // Retorna o foco ao botão de toggle
-        });
-
-        // Fechar chat ao clicar fora
-        document.addEventListener('click', function(e) {
-            if (!chatContainer.contains(e.target) && !chatToggle.contains(e.target)) {
-                chatContainer.classList.remove('active');
-                chatToggle.setAttribute('aria-expanded', 'false'); // Acessibilidade
-            }
-        });
-
-        // Evitar fechar ao clicar dentro do chat
-        chatContainer.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        // Adiciona funcionalidade para fechar com a tecla ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && chatContainer.classList.contains('active')) {
-                chatContainer.classList.remove('active');
-                chatToggle.setAttribute('aria-expanded', 'false');
-                chatToggle.focus();
-            }
-        });
-
+// Função para formatar preço (de centavos para real)
+function formatPrice(priceInCents) {
+    return (priceInCents / 100).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2
     });
-      
-    // Função para redirecionar para o criador de avatar
-    function goToAvatarCreator() {
-        localStorage.setItem('lastVisitedPage', window.location.pathname);
-        window.location.href = 'avatar.html';
-    }
+}
 
-    // Inicializar partículas
-    particlesJS('particles-js', {
-        particles: {
-            number: { value: 40, density: { enable: true, value_area: 800 } },
-            color: { value: "#3b82f6" },
-            shape: { type: "circle" },
-            opacity: { value: 0.2, random: true },
-            size: { value: 2, random: true },
-            line_linked: { enable: true, distance: 120, color: "#3b82f6", opacity: 0.3, width: 1 },
-            move: { enable: true, speed: 1.5, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
-        },
-        interactivity: {
-            detect_on: "canvas",
-            events: {
-                onhover: { enable: true, mode: "repulse" },
-                onclick: { enable: false },
-                resize: true
-            },
-            modes: {
-                repulse: { distance: 80, duration: 0.3 }
-            }
-        },
-        retina_detect: true
-    });
+// Função para obter detalhes do produto pelo ID
+function getProductDetails(productId) {
+    productId = typeof productId === 'string' ? parseInt(productId) : productId;
+    
+    const productsData = [
+        { id: 1, name: 'Máquina Rotativa Pro', price: 750, image: '/img/products/maquina1.png' },
+        { id: 2, name: 'Tinta Preto Absoluto', price: 120, image: '/img/products/tinta1.png' },
+        { id: 3, name: 'Kit Agulhas Variadas', price: 80, image: '/img/products/agulhas1.png' },
+        { id: 4, name: 'Fonte de Alimentação Digital', price: 300, image: '/img/products/fonte1.png' },
+        { id: 5, name: 'Máquina Bobina Clássica', price: 600, image: '/img/products/bobina1.png'},
+        { id: 6, name: 'Tinta Vermelho Escarlate', price: 100, image: '/img/products/tintasumi2.png' },
+        { id: 7, name: 'Agulha Magnum Soft Edge', price: 15, image: '/img/products/agulhasoft1.png' },
+        { id: 8, name: 'Creme Pós-Tatuagem', price: 50, image: '/img/products/creme2.png' },
+        { id: 9, name: 'Máquina Pen Híbrida', price: 950, image: '/img/products/maquinapen1.png' },
+        { id: 10, name: 'Tinta Azul Oceano', price: 110, image: '/img/products/tintaazul1.png' },
+        { id: 11, name: 'Agulha Round Liner Fina', price: 12, image: '/img/products/agulhafina1.png' },
+        { id: 12, name: 'Bancada de Trabalho Portátil', price: 400, image: '/img/products/bancada1.png' }
+    ];
+    
+    return productsData.find(p => p.id === productId);
+}
 
-    // Função para formatar preço (de centavos para real)
-    function formatPrice(priceInCents) {
-        return (priceInCents / 100).toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-            minimumFractionDigits: 2
-        });
-    }
-
-    // Função para obter detalhes do produto pelo ID
-    function getProductDetails(productId) {
-        productId = typeof productId === 'string' ? parseInt(productId) : productId;
-        
-        const productsData = [
-            { id: 1, name: 'Máquina Rotativa Pro', price: 750, image: '/img/products/maquina1.png' },
-            { id: 2, name: 'Tinta Preto Absoluto', price: 120, image: '/img/products/tinta1.png' },
-            { id: 3, name: 'Kit Agulhas Variadas', price: 80, image: '/img/products/agulhas1.png' },
-            { id: 4, name: 'Fonte de Alimentação Digital', price: 300, image: '/img/products/fonte1.png' },
-            { id: 5, name: 'Máquina Bobina Clássica', price: 600, image: '/img/products/bobina1.png'},
-            { id: 6, name: 'Tinta Vermelho Escarlate', price: 100, image: '/img/products/tintasumi2.png' },
-            { id: 7, name: 'Agulha Magnum Soft Edge', price: 15, image: '/img/products/agulhasoft1.png' },
-            { id: 8, name: 'Creme Pós-Tatuagem', price: 50, image: '/img/products/creme2.png' },
-            { id: 9, name: 'Máquina Pen Híbrida', price: 950, image: '/img/products/maquinapen1.png' },
-            { id: 10, name: 'Tinta Azul Oceano', price: 110, image: '/img/products/tintaazul1.png' },
-            { id: 11, name: 'Agulha Round Liner Fina', price: 12, image: '/img/products/agulhafina1.png' },
-            { id: 12, name: 'Bancada de Trabalho Portátil', price: 400, image: '/img/products/bancada1.png' }
-        ];
-        
-        return productsData.find(p => p.id === productId);
-    }
-
+// Função para carregar os detalhes do usuário
 function loadUserDetails() {
- const user = window.userSession?.currentUser;
+   const user = window.userSession?.currentUser;
     if (!user) return;
+
+    // Salva os dados básicos do usuário em localStorage para acesso global
+    const userBasicInfo = {
+        name: user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim(),
+        avatar: user.avatar || user.avatarUrl || null,
+        isAdmin: user.isAdmin || false
+    };
+    localStorage.setItem('ravenStudioUserBasicInfo', JSON.stringify(userBasicInfo));
 
     // Atualizar avatar principal
     const userAvatarImg = document.getElementById('user-avatar');
     const defaultIcon = document.getElementById('default-avatar-icon');
     
-    // Atualizar pontos - garantir que é tratado como número
-    const pointsElement = document.getElementById('userPointsDisplay');
-    if (pointsElement) {
-        pointsElement.textContent = parseInt(user.points || user.loyalty_points || 0);
-    }
-
-    // Verificar se os elementos existem antes de manipulá-los
     if (userAvatarImg && defaultIcon) {
-        // Usar avatarUrl como fonte principal, com fallback para avatar
         const avatarUrl = user.avatar || user.avatarUrl;
         if (avatarUrl && avatarUrl.startsWith('data:image')) {
             userAvatarImg.src = avatarUrl;
@@ -1994,6 +1680,12 @@ function loadUserDetails() {
             userAvatarImg.style.display = 'none';
             defaultIcon.style.display = 'flex';
         }
+    }
+
+    // Atualizar pontos
+    const pointsElement = document.getElementById('userPointsDisplay');
+    if (pointsElement) {
+        pointsElement.textContent = parseInt(user.points || user.loyalty_points || 0);
     }
 
     // Atualizar avatar na navbar
@@ -2011,12 +1703,13 @@ function loadUserDetails() {
         }
     }
 
-    // Atualizar outras informações do usuário
+    // Atualizar nome do usuário
     const userNameElement = document.getElementById('user-name');
     if (userNameElement) {
         userNameElement.textContent = user.name || `${user.first_name} ${user.last_name}`;
     }
     
+    // Atualizar email do usuário
     const userEmailElement = document.getElementById('user-email');
     if (userEmailElement) {
         const contactValue = userEmailElement.querySelector('.contact-value');
@@ -2024,7 +1717,15 @@ function loadUserDetails() {
             contactValue.textContent = user.email || '';
         }
     }
-    
+        // Atualizar telefone do usuário
+    const userPhoneElement = document.getElementById('user-phone');
+    if (userPhoneElement) {
+        const contactValue = userPhoneElement.querySelector('.contact-value');
+        if (contactValue) {
+            contactValue.textContent = user.phone ? formatPhoneNumber(user.phone) : 'Não informado';
+        }
+    }
+    // Atualizar data de cadastro
     const joinDateElement = document.getElementById('join-date');
     if (joinDateElement) {
         const joinDate = user.joinDate || user.created_at;
@@ -2037,256 +1738,252 @@ function loadUserDetails() {
     // Atualizar contagem de agendamentos
     const appointmentsCountElement = document.getElementById('appointments-count');
     if (appointmentsCountElement) {
-        if (user.appointments && user.appointments.length > 0) {
-            appointmentsCountElement.textContent = user.appointments.length;
-        } else {
-            appointmentsCountElement.textContent = '0';
-        }
+        appointmentsCountElement.textContent = user.appointments ? user.appointments.length : 0;
     }
 }
-    function formatPhoneNumber(phone) {
-        const cleaned = ('' + phone).replace(/\D/g, '');
-        const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
-        if (match) {
-            return '(' + match[1] + ') ' + match[2] + '-' + match[3];
-        }
-        return phone;
-    }
 
-    // Função para renderizar pedidos
-    function renderOrders() {
-        const ordersContainer = document.getElementById('orders-container');
-        ordersContainer.innerHTML = '';
-        const user = window.userSession.currentUser;
+// Função para renderizar pedidos
+function renderOrders() {
+    const ordersContainer = document.getElementById('orders-container');
+    if (!ordersContainer) return;
+    
+    ordersContainer.innerHTML = '';
+    const user = window.userSession.currentUser;
 
-        if (user && user.orders && user.orders.length > 0) {
-            user.orders.forEach(order => {
-                const orderDate = new Date(order.date).toLocaleDateString('pt-BR');
-                const orderTotal = formatPrice(order.total); 
-                let itemsHtml = '';
-                order.items.forEach(item => {
-                    const product = getProductDetails(item.productId);
-                    if (product) {
-                        itemsHtml += `
-                            <div class="order-item">
-                                <img src="${product.image}" alt="${product.name}">
-                                <div class="order-item-info">
-                                    <p class="order-item-name">${product.name}</p>
-                                    <p class="order-item-quantity">Quantidade: ${item.quantity}</p>
-                                    <p class="order-item-price">${formatPrice(product.price * 100)} cada</p>
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-
-                ordersContainer.innerHTML += `
-                    <div class="order-card">
-                        <div class="order-header">
-                            <span class="order-id">Pedido #${order.id}</span>
-                            <span class="order-status status-${order.status.toLowerCase()}">${order.status}</span>
-                        </div>
-                        <p class="order-date">Data: ${orderDate}</p>
-                        <div class="order-items">
-                            ${itemsHtml}
-                        </div>
-                        <div class="order-total">Total: ${orderTotal}</div>
-                        <div style="text-align: right; margin-top: 0.5rem;">
-                            <button class="btn-primary" onclick="showOrderDetails('${order.id}')">Ver Detalhes</button>
-                        </div>
-                    </div>
-                `;
-            });
-        } else {
-            ordersContainer.innerHTML = '<p style="text-align: center; color: #d1d5db;">Você não possui nenhum pedido.</p>';
-        }
-    }
-
-    // Função para exibir detalhes de um pedido específico
-    function showOrderDetails(orderId) {
-        const ordersContainer = document.getElementById('orders-container');
-        const orderDetailsSection = document.getElementById('order-details-section');
-        const orderDetailTitle = document.getElementById('order-detail-title');
-        const orderDetailsContent = document.getElementById('order-details-content');
-        const user = window.userSession.currentUser;
-
-        const order = user?.orders?.find(o => o.id === orderId);
-
-        if (order) {
-            orderDetailTitle.textContent = `Detalhes do Pedido #${order.id}`;
-            
-            const paymentMethod = order.payment?.method || 'N/A';
-            const shippingAddress = order.address ? 
-                `${order.address.street}, ${order.address.number}${order.address.complement ? ', ' + order.address.complement : ''}, 
-                 ${order.address.neighborhood}, ${order.address.city} - ${order.address.state}, 
-                 CEP: ${order.address.cep}` : 'N/A';
-            const shippingCost = order.shipping || 0;
-            const discount = order.discount || 0;
-            const coupon = order.coupon ? ` (Cupom: ${order.coupon})` : '';
-
-            let itemsDetailHtml = `
-                <p><strong>Status:</strong> <span class="order-status status-${order.status.toLowerCase()}">${order.status}</span></p>
-                <p><strong>Data do Pedido:</strong> ${new Date(order.date).toLocaleDateString('pt-BR')}</p>
-                <p><strong>Forma de Pagamento:</strong> ${paymentMethod}</p>
-                <p><strong>Endereço de Entrega:</strong> ${shippingAddress}</p>
-                <p><strong>Frete:</strong> ${formatPrice(shippingCost)}</p>
-                <p><strong>Desconto:</strong> ${formatPrice(discount)}${coupon}</p>
-                <h4>Itens do Pedido:</h4>
-            `;
-
-            if (order.items && order.items.length > 0) {
-                order.items.forEach(item => {
-                    const product = getProductDetails(item.id || item.productId);
-                    if (product) {
-                        itemsDetailHtml += `
-                            <div class="order-detail-item">
-                                <img src="${product.image}" alt="${product.name}">
-                                <div class="order-detail-item-info">
-                                    <p class="order-detail-item-name">${product.name}</p>
-                                    <p class="order-detail-item-quantity">Quantidade: ${item.quantity}</p>
-                                    <p class="order-detail-item-price">Preço Unitário: ${formatPrice(item.price || product.price * 100)}</p>
-                                    <p class="order-detail-item-price">Subtotal: ${formatPrice((item.price || product.price * 100) * item.quantity)}</p>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        itemsDetailHtml += `
-                            <div class="order-detail-item">
-                                <div class="order-detail-item-info">
-                                    <p style="color: #d1d5db;">Produto com ID ${item.id || item.productId} não encontrado.</p>
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-            } else {
-                itemsDetailHtml += `<p style="color: #d1d5db;">Nenhum item encontrado para este pedido.</p>`;
-            }
-
-            itemsDetailHtml += `<p class="order-detail-total">Total do Pedido: ${formatPrice(order.total)}</p>`;
-            orderDetailsContent.innerHTML = itemsDetailHtml;
-
-            ordersContainer.style.display = 'none';
-            orderDetailsSection.classList.add('active');
-        } else {
-            alert('Detalhes do pedido não encontrados ou usuário não logado.');
-        }
-    }
-
-    // Função para esconder detalhes do pedido e voltar à lista
-    function hideOrderDetails() {
-        document.getElementById('orders-container').style.display = 'block';
-        document.getElementById('order-details-section').classList.remove('active');
-    }
-
-    // Função para renderizar lista de desejos
-    function renderWishlist() {
-        const wishlistContainer = document.getElementById('wishlist-container');
-        wishlistContainer.innerHTML = '';
-        const user = window.userSession.currentUser;
-
-        if (user && user.wishlist && user.wishlist.length > 0) {
-            user.wishlist.forEach(productId => {
-                const product = getProductDetails(productId);
+    if (user && user.orders && user.orders.length > 0) {
+        user.orders.forEach(order => {
+            const orderDate = new Date(order.date).toLocaleDateString('pt-BR');
+            const orderTotal = formatPrice(order.total); 
+            let itemsHtml = '';
+            order.items.forEach(item => {
+                const product = getProductDetails(item.productId);
                 if (product) {
-                    wishlistContainer.innerHTML += `
-                        <div class="wishlist-item">
+                    itemsHtml += `
+                        <div class="order-item">
                             <img src="${product.image}" alt="${product.name}">
-                            <div class="wishlist-item-info">
-                                <h3 class="wishlist-item-name">${product.name}</h3>
-                                <p class="wishlist-item-price">${formatPrice(product.price * 100)}</p>
-                                <button class="btn-small" onclick="window.userSession.removeFromWishlist(${product.id}); renderWishlist();">
-                                    <i class="fas fa-trash"></i> Remover
-                                </button>
-                                <button class="btn-small btn-primary" style="margin-top: 0.3rem;" 
-                                        onclick="addToCartFromWishlist(${product.id})">
-                                    <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
-                                </button>
+                            <div class="order-item-info">
+                                <p class="order-item-name">${product.name}</p>
+                                <p class="order-item-quantity">Quantidade: ${item.quantity}</p>
+                                <p class="order-item-price">${formatPrice(product.price * 100)} cada</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            ordersContainer.innerHTML += `
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Pedido #${order.id}</span>
+                        <span class="order-status status-${order.status.toLowerCase()}">${order.status}</span>
+                    </div>
+                    <p class="order-date">Data: ${orderDate}</p>
+                    <div class="order-items">
+                        ${itemsHtml}
+                    </div>
+                    <div class="order-total">Total: ${orderTotal}</div>
+                    <div style="text-align: right; margin-top: 0.5rem;">
+                        <button class="btn-primary" onclick="showOrderDetails('${order.id}')">Ver Detalhes</button>
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        ordersContainer.innerHTML = '<p style="text-align: center; color: #d1d5db;">Você não possui nenhum pedido.</p>';
+    }
+}
+// No user.html, na função de logout
+function logout() {
+    localStorage.removeItem('ravenStudioUserBasicInfo');
+    window.userSession.logout();
+}
+// Função para exibir detalhes de um pedido específico
+function showOrderDetails(orderId) {
+    const ordersContainer = document.getElementById('orders-container');
+    const orderDetailsSection = document.getElementById('order-details-section');
+    const orderDetailTitle = document.getElementById('order-detail-title');
+    const orderDetailsContent = document.getElementById('order-details-content');
+    const user = window.userSession.currentUser;
+
+    const order = user?.orders?.find(o => o.id === orderId);
+
+    if (order) {
+        orderDetailTitle.textContent = `Detalhes do Pedido #${order.id}`;
+        
+        const paymentMethod = order.payment?.method || 'N/A';
+        const shippingAddress = order.address ? 
+            `${order.address.street}, ${order.address.number}${order.address.complement ? ', ' + order.address.complement : ''}, 
+             ${order.address.neighborhood}, ${order.address.city} - ${order.address.state}, 
+             CEP: ${order.address.cep}` : 'N/A';
+        const shippingCost = order.shipping || 0;
+        const discount = order.discount || 0;
+        const coupon = order.coupon ? ` (Cupom: ${order.coupon})` : '';
+
+        let itemsDetailHtml = `
+            <p><strong>Status:</strong> <span class="order-status status-${order.status.toLowerCase()}">${order.status}</span></p>
+            <p><strong>Data do Pedido:</strong> ${new Date(order.date).toLocaleDateString('pt-BR')}</p>
+            <p><strong>Forma de Pagamento:</strong> ${paymentMethod}</p>
+            <p><strong>Endereço de Entrega:</strong> ${shippingAddress}</p>
+            <p><strong>Frete:</strong> ${formatPrice(shippingCost)}</p>
+            <p><strong>Desconto:</strong> ${formatPrice(discount)}${coupon}</p>
+            <h4>Itens do Pedido:</h4>
+        `;
+
+        if (order.items && order.items.length > 0) {
+            order.items.forEach(item => {
+                const product = getProductDetails(item.id || item.productId);
+                if (product) {
+                    itemsDetailHtml += `
+                        <div class="order-detail-item">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div class="order-detail-item-info">
+                                <p class="order-detail-item-name">${product.name}</p>
+                                <p class="order-detail-item-quantity">Quantidade: ${item.quantity}</p>
+                                <p class="order-detail-item-price">Preço Unitário: ${formatPrice(item.price || product.price * 100)}</p>
+                                <p class="order-detail-item-price">Subtotal: ${formatPrice((item.price || product.price * 100) * item.quantity)}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    itemsDetailHtml += `
+                        <div class="order-detail-item">
+                            <div class="order-detail-item-info">
+                                <p style="color: #d1d5db;">Produto com ID ${item.id || item.productId} não encontrado.</p>
                             </div>
                         </div>
                     `;
                 }
             });
         } else {
-            wishlistContainer.innerHTML = `
-                <div style="text-align: center; padding: 1.5rem; color: #d1d5db; grid-column: 1 / -1;">
-                    <i class="fas fa-heart" style="font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
-                    <p>Sua lista de desejos está vazia.</p>
-                    <a href="/pages/loja.html" class="btn-primary" style="display: inline-block; margin-top: 0.8rem;">
-                        <i class="fas fa-store"></i> Explorar Loja
-                    </a>
-                </div>
-            `;
+            itemsDetailHtml += `<p style="color: #d1d5db;">Nenhum item encontrado para este pedido.</p>`;
         }
+
+        itemsDetailHtml += `<p class="order-detail-total">Total do Pedido: ${formatPrice(order.total)}</p>`;
+        orderDetailsContent.innerHTML = itemsDetailHtml;
+
+        ordersContainer.style.display = 'none';
+        orderDetailsSection.classList.add('active');
+    } else {
+        alert('Detalhes do pedido não encontrados ou usuário não logado.');
     }
+}
 
-    // Função para adicionar um produto ao carrinho a partir da lista de desejos
-    function addToCartFromWishlist(productId) {
-        const product = getProductDetails(productId);
-        if (!product) {
-            showNotification('Produto não encontrado!', 'error');
-            return;
-        }
+// Função para esconder detalhes do pedido e voltar à lista
+function hideOrderDetails() {
+    document.getElementById('orders-container').style.display = 'block';
+    document.getElementById('order-details-section').classList.remove('active');
+}
 
-        let cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
-        const existingItem = cart.find(item => item.id === productId);
-        
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({
-                id: product.id,
-                name: product.name,
-                price: product.price * 100,
-                image: product.image,
-                quantity: 1
-            });
-        }
-        
-        localStorage.setItem('ravenStudioCart', JSON.stringify(cart));
-        updateCartCounter();
-        showNotification(`${product.name} adicionado ao carrinho!`);
-        
-        const cartIcon = document.querySelector('.cart-icon');
-        if (cartIcon) {
-            cartIcon.classList.add('added');
-            setTimeout(() => cartIcon.classList.remove('added'), 500);
-        }
-    }
+// Função para renderizar lista de desejos
+function renderWishlist() {
+    const wishlistContainer = document.getElementById('wishlist-container');
+    if (!wishlistContainer) return;
+    
+    wishlistContainer.innerHTML = '';
+    const user = window.userSession.currentUser;
 
-    // Função auxiliar para mostrar notificações
-    function showNotification(message, type = 'success') {
-        const notification = document.createElement('div');
-        notification.style.cssText = `
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: ${type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'linear-gradient(135deg, #3b82f6, #22c55e)'};
-            color: ${type === 'error' ? 'white' : 'black'};
-            padding: 0.8rem 1.2rem;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            font-family: 'Bebas Neue', cursive;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            animation: slideIn 0.2s ease-out;
-            max-width: calc(100% - 30px);
+    if (user && user.wishlist && user.wishlist.length > 0) {
+        user.wishlist.forEach(productId => {
+            const product = getProductDetails(productId);
+            if (product) {
+                wishlistContainer.innerHTML += `
+                    <div class="wishlist-item">
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="wishlist-item-info">
+                            <h3 class="wishlist-item-name">${product.name}</h3>
+                            <p class="wishlist-item-price">${formatPrice(product.price * 100)}</p>
+                            <button class="btn-small" onclick="window.userSession.removeFromWishlist(${product.id}); renderWishlist();">
+                                <i class="fas fa-trash"></i> Remover
+                            </button>
+                            <button class="btn-small btn-primary" style="margin-top: 0.3rem;" 
+                                    onclick="addToCartFromWishlist(${product.id})">
+                                <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+    } else {
+        wishlistContainer.innerHTML = `
+            <div style="text-align: center; padding: 1.5rem; color: #d1d5db; grid-column: 1 / -1;">
+                <i class="fas fa-heart" style="font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
+                <p>Sua lista de desejos está vazia.</p>
+                <a href="/pages/loja.html" class="btn-primary" style="display: inline-block; margin-top: 0.8rem;">
+                    <i class="fas fa-store"></i> Explorar Loja
+                </a>
+            </div>
         `;
-        notification.innerHTML = `
-            <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${message}
-        `;
-        document.body.appendChild(notification);
+    }
+}
 
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.2s ease-out';
-            setTimeout(() => notification.remove(), 200);
-        }, 2500);
+// Função para adicionar um produto ao carrinho a partir da lista de desejos
+function addToCartFromWishlist(productId) {
+    const product = getProductDetails(productId);
+    if (!product) {
+        showNotification('Produto não encontrado!', 'error');
+        return;
     }
 
+    let cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price * 100,
+            image: product.image,
+            quantity: 1
+        });
+    }
+    
+    localStorage.setItem('ravenStudioCart', JSON.stringify(cart));
+    updateCartCounter();
+    showNotification(`${product.name} adicionado ao carrinho!`);
+    
+    const cartIcon = document.querySelector('.cart-icon');
+    if (cartIcon) {
+        cartIcon.classList.add('added');
+        setTimeout(() => cartIcon.classList.remove('added'), 500);
+    }
+}
 
+// Função para mostrar notificações
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        background: ${type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'linear-gradient(135deg, #3b82f6, #22c55e)'};
+        color: ${type === 'error' ? 'white' : 'black'};
+        padding: 0.8rem 1.2rem;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        animation: slideIn 0.2s ease-out;
+        max-width: calc(100% - 30px);
+    `;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${message}
+    `;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.2s ease-out';
+        setTimeout(() => notification.remove(), 200);
+    }, 2500);
+}
+
+// Função para carregar agendamentos do usuário
 async function loadUserAppointments() {
     const user = window.userSession?.currentUser;
     if (!user) return;
@@ -2312,7 +2009,10 @@ async function loadUserAppointments() {
             localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(user));
             
             // Atualizar contador de agendamentos
-            document.getElementById('appointments-count').textContent = data.appointments.length;
+            const appointmentsCountElement = document.getElementById('appointments-count');
+            if (appointmentsCountElement) {
+                appointmentsCountElement.textContent = data.appointments.length;
+            }
             
             // Renderizar os agendamentos
             renderAppointments();
@@ -2325,7 +2025,7 @@ async function loadUserAppointments() {
     }
 }
 
-
+// Função para renderizar agendamentos
 function renderAppointments() {
     const appointmentsContainer = document.getElementById('appointments-container');
     if (!appointmentsContainer) {
@@ -2334,77 +2034,9 @@ function renderAppointments() {
     }
     
     appointmentsContainer.innerHTML = '';
-    const user = window.userSession.currentUser;
+    const user = window.userSession?.currentUser;
 
-    if (user && user.appointments && user.appointments.length > 0) {
-        // Ordenar agendamentos: primeiro os futuros, depois os passados
-        const sortedAppointments = [...user.appointments].sort((a, b) => {
-            const dateA = new Date(`${a.preferred_date1}T${a.preferred_time1}`);
-            const dateB = new Date(`${b.preferred_date1}T${b.preferred_time1}`);
-            return dateA - dateB;
-        });
-
-        sortedAppointments.forEach(appointment => {
-            const appointmentDate = new Date(`${appointment.preferred_date1}T${appointment.preferred_time1}`);
-            const now = new Date();
-            const isPastAppointment = appointmentDate < now;
-            const isCancelled = appointment.status === 'Cancelado';
-            const isCompleted = appointment.status === 'Concluído';
-            
-            // Formatar data e hora
-            const formattedDate = appointmentDate.toLocaleDateString('pt-BR');
-            const formattedTime = appointmentDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-            
-            // Determinar classe de status
-            let statusClass = '';
-            if (isCancelled) {
-                statusClass = 'status-cancelled';
-            } else if (isCompleted) {
-                statusClass = 'status-completed';
-            } else if (isPastAppointment) {
-                statusClass = 'status-past';
-            } else {
-                statusClass = 'status-upcoming';
-            }
-
-            appointmentsContainer.innerHTML += `
-                <div class="appointment-card">
-                    <div class="appointment-header">
-                        <span class="appointment-id">Agendamento #${appointment.id}</span>
-                        <span class="appointment-status ${statusClass}">${appointment.status || 'Agendado'}</span>
-                    </div>
-                    <p class="appointment-date">Data: ${formattedDate} às ${formattedTime}</p>
-                    
-                    <div class="appointment-details">
-                        <div class="appointment-icon">
-                            ${appointment.artist_image ? 
-                                `<img src="${appointment.artist_image}" alt="${appointment.artist_name}">` : 
-                                `<i class="fas fa-user"></i>`}
-                        </div>
-                        
-                        <div class="appointment-info">
-                            <h3 class="appointment-artist">${appointment.artist_name}</h3>
-                            <p class="appointment-style">Estilo: ${appointment.tattoo_style}</p>
-                            <p class="appointment-budget">Orçamento: ${formatPrice(appointment.budget * 100)}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="appointment-description">
-                        <strong>Descrição:</strong> ${appointment.tattoo_description || 'Nenhuma descrição fornecida.'}
-                    </div>
-                    
-                    ${!isCancelled && !isCompleted && !isPastAppointment ? `
-                    <div class="appointment-actions">
-                        <button class="btn-cancel-appointment" onclick="showCancelConfirmation('${appointment.id}')">
-                            <i class="fas fa-times"></i> Cancelar Agendamento
-                        </button>
-                    </div>
-                    ` : ''}
-                </div>
-            `;
-        });
-    } else {
-        // Mostrar mensagem quando não há agendamentos
+    if (!user || !user.appointments || user.appointments.length === 0) {
         appointmentsContainer.innerHTML = `
             <div style="text-align: center; padding: 1.5rem; color: #d1d5db;">
                 <i class="fas fa-calendar-times" style="font-size: 1.5rem; margin-bottom: 0.8rem;"></i>
@@ -2414,35 +2046,108 @@ function renderAppointments() {
                 </a>
             </div>
         `;
+        return;
     }
+
+    // Ordenar agendamentos: primeiro os futuros, depois os passados
+    const sortedAppointments = [...user.appointments].sort((a, b) => {
+        const dateA = new Date(`${a.preferred_date1}T${a.preferred_time1}`);
+        const dateB = new Date(`${b.preferred_date1}T${b.preferred_time1}`);
+        return dateA - dateB;
+    });
+
+    sortedAppointments.forEach(appointment => {
+        const appointmentDate = new Date(`${appointment.preferred_date1}T${appointment.preferred_time1}`);
+        const now = new Date();
+        const isPastAppointment = appointmentDate < now;
+        const isCancelled = appointment.status === 'Cancelado';
+        const isCompleted = appointment.status === 'Concluído';
+        
+        // Formatar data e hora
+        const formattedDate = appointmentDate.toLocaleDateString('pt-BR');
+        const formattedTime = appointmentDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        
+        // Determinar classe de status
+        let statusClass = '';
+        if (isCancelled) {
+            statusClass = 'status-cancelled';
+        } else if (isCompleted) {
+            statusClass = 'status-completed';
+        } else if (isPastAppointment) {
+            statusClass = 'status-past';
+        } else {
+            statusClass = 'status-upcoming';
+        }
+
+        appointmentsContainer.innerHTML += `
+            <div class="appointment-card">
+                <div class="appointment-header">
+                    <span class="appointment-id">Agendamento #${appointment.id}</span>
+                    <span class="appointment-status ${statusClass}">${appointment.status || 'Agendado'}</span>
+                </div>
+                <p class="appointment-date">Data: ${formattedDate} às ${formattedTime}</p>
+                
+                <div class="appointment-details">
+                    <div class="appointment-icon">
+                        ${appointment.artist_image ? 
+                            `<img src="${appointment.artist_image}" alt="${appointment.artist_name}">` : 
+                            `<i class="fas fa-user"></i>`}
+                    </div>
+                    
+                    <div class="appointment-info">
+                        <h3 class="appointment-artist">${appointment.artist_name}</h3>
+                        <p class="appointment-style">Estilo: ${appointment.tattoo_style}</p>
+                        <p class="appointment-budget">Orçamento: ${formatPrice(appointment.budget * 100)}</p>
+                    </div>
+                </div>
+                
+                <div class="appointment-description">
+                    <strong>Descrição:</strong> ${appointment.tattoo_description || 'Nenhuma descrição fornecida.'}
+                </div>
+                
+                ${!isCancelled && !isCompleted && !isPastAppointment ? `
+                <div class="appointment-actions">
+                    <button class="btn-cancel-appointment" onclick="showCancelConfirmation('${appointment.id}')">
+                        <i class="fas fa-times"></i> Cancelar Agendamento
+                    </button>
+                </div>
+                ` : ''}
+            </div>
+        `;
+    });
 }
 
-    // Variável para armazenar o ID do agendamento a ser cancelado
-    let appointmentToCancel = null;
+// Variável para armazenar o ID do agendamento a ser cancelado
+let appointmentToCancel = null;
 
-    // Função para mostrar o modal de confirmação
-    function showCancelConfirmation(appointmentId) {
-        appointmentToCancel = appointmentId;
-        const modal = document.getElementById('cancelAppointmentModal');
+// Função para mostrar o modal de confirmação
+function showCancelConfirmation(appointmentId) {
+    appointmentToCancel = appointmentId;
+    const modal = document.getElementById('cancelAppointmentModal');
+    if (modal) {
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
+}
 
-    // Função para esconder o modal
-    function hideCancelConfirmation() {
-        const modal = document.getElementById('cancelAppointmentModal');
+// Função para esconder o modal
+function hideCancelConfirmation() {
+    const modal = document.getElementById('cancelAppointmentModal');
+    if (modal) {
         modal.classList.remove('active');
         document.body.style.overflow = 'auto';
     }
+}
 
-    // Função para cancelar o agendamento (confirmado)
-    function confirmCancelAppointment() {
-        if (!appointmentToCancel) return;
-        hideCancelConfirmation();
-        cancelAppointment(appointmentToCancel);
-        appointmentToCancel = null;
-    }
+// Função para cancelar o agendamento (confirmado)
+function confirmCancelAppointment() {
+    if (!appointmentToCancel) return;
+    hideCancelConfirmation();
+    cancelAppointment(appointmentToCancel);
+    appointmentToCancel = null;
+}
 
+// Função para cancelar agendamento via API
 async function cancelAppointment(appointmentId) {
     const user = window.userSession.currentUser;
     if (!user) return;
@@ -2483,185 +2188,124 @@ async function cancelAppointment(appointmentId) {
     }
 }
 
+// Função para mostrar notificação de sucesso
+function showCancelSuccessNotification() {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        padding: 0.8rem 1.2rem;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        font-family: 'Bebas Neue', cursive;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        animation: slideIn 0.2s ease-out;
+        max-width: calc(100% - 30px);
+    `;
+    notification.innerHTML = `<i class="fas fa-check-circle"></i> Agendamento cancelado com sucesso!`;
+    document.body.appendChild(notification);
 
-    // Função para mostrar notificação de sucesso
-    function showCancelSuccessNotification() {
-        const notification = document.createElement('div');
-        notification.style.cssText = `
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-            padding: 0.8rem 1.2rem;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            font-family: 'Bebas Neue', cursive;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            animation: slideIn 0.2s ease-out;
-            max-width: calc(100% - 30px);
-        `;
-        notification.innerHTML = `<i class="fas fa-check-circle"></i> Agendamento cancelado com sucesso!`;
-        document.body.appendChild(notification);
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.2s ease-out';
+        setTimeout(() => notification.remove(), 200);
+    }, 2500);
+}
 
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.2s ease-out';
-            setTimeout(() => notification.remove(), 200);
-        }, 2500);
+// Função para mostrar a seção correta e atualizar o menu
+function showSection(sectionName) {
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    const sectionElement = document.getElementById(sectionName + '-section');
+    if (sectionElement) {
+        sectionElement.classList.add('active');
     }
 
-    // Função para mostrar a seção correta e atualizar o menu
-    function showSection(sectionName) {
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.remove('active');
-        });
-        document.getElementById(sectionName + '-section').classList.add('active');
-
-        document.querySelectorAll('.menu-link').forEach(link => {
-            link.classList.remove('active');
-        });
-        document.querySelector(`.menu-link[data-section="${sectionName}"]`).classList.add('active');
+    document.querySelectorAll('.menu-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    const activeLink = document.querySelector(`.menu-link[data-section="${sectionName}"]`);
+    if (activeLink) {
+        activeLink.classList.add('active');
     }
+}
 
-    // Inicialização
-    document.addEventListener('DOMContentLoaded',async  function() {
-        // Toggle do menu mobile
-        const navbar = document.querySelector('.navbar');
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
-        
-        // Função para verificar scroll e adicionar classe scrolled
-        function handleScroll() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+// Função para atualizar contador do carrinho
+function updateCartCounter() {
+    const cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+    const cartCountElement = document.getElementById('cart-count');
+    
+    if (cartCountElement) {
+        cartCountElement.textContent = totalItems;
+    }
+}
+
+// Função para redirecionar para o criador de avatar
+function goToAvatarCreator() {
+    localStorage.setItem('lastVisitedPage', window.location.pathname);
+    window.location.href = 'avatar.html';
+}
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', async function() {
+    // Toggle do menu mobile
+    const navbar = document.querySelector('.navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    // Função para verificar scroll e adicionar classe scrolled
+    function handleScroll() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
+    }
 
+    // Adicionar evento de scroll
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Verificar estado inicial
 
-        
-        // Adicionar evento de scroll
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Verificar estado inicial
-
-        // Event listener para o toggle do menu mobile
+    // Event listener para o toggle do menu mobile
+    if (navToggle && navMenu) {
         navToggle.addEventListener('click', function() {
             navMenu.classList.toggle('active');
             this.classList.toggle('active');
             this.setAttribute('aria-expanded', navMenu.classList.contains('active'));
         });
+    }
 
-        // Garante que UserSession é inicializado
-        if (typeof UserSession === 'undefined') {
-            console.error("UserSession class not found.");
-            return; 
-        }
+    // Verificar se UserSession está definido
+    if (typeof UserSession === 'undefined') {
+        console.error("UserSession class not found.");
+        return; 
+    }
+
+    // Inicializar userSession se não existir
+    if (!window.userSession) {
         window.userSession = new UserSession();
-        
-        // Add dummy data for demonstration if user has no existing data
-        if (window.userSession.currentUser) {
-            if (!window.userSession.currentUser.orders || window.userSession.currentUser.orders.length === 0) {
-                const calculateOrderSubtotalInCents = (items) => {
-                    let subtotal = 0;
-                    items.forEach(item => {
-                        const product = getProductDetails(item.productId);
-                        if (product) {
-                            subtotal += Math.round(product.price * 100) * item.quantity;
-                        }
-                    });
-                    return subtotal;
-                };
+    }
 
-                const order1Items = [
-                    { productId: 1, quantity: 1 },
-                    { productId: 9, quantity: 1 }
-                ];
-                const order1SubtotalInCents = calculateOrderSubtotalInCents(order1Items);
-                const order1ShippingCostInCents = Math.round(20.00 * 100);
-                const order1DiscountInCents = Math.round(0.00 * 100);
-                const order1TotalInCents = order1SubtotalInCents + order1ShippingCostInCents - order1DiscountInCents;
+    // Verificar se usuário está logado
+    if (!window.userSession.currentUser) {
+        console.log("Nenhum usuário logado");
+        return;
+    }
 
-                const order2Items = [
-                    { productId: 2, quantity: 1 }
-                ];
-                const order2SubtotalInCents = calculateOrderSubtotalInCents(order2Items);
-                const order2ShippingCostInCents = Math.round(0.00 * 100);
-                const order2DiscountInCents = Math.round(10.00 * 100);
-                const order2TotalInCents = order2SubtotalInCents + order2ShippingCostInCents - order2DiscountInCents;
-
-                window.userSession.currentUser.orders = [
-                    {
-                        id: '20240723-001',
-                        date: '2024-07-20T10:00:00Z',
-                        total: order1TotalInCents,
-                        status: 'Entregue',
-                        paymentMethod: 'Cartão de Crédito',
-                        shippingAddress: 'Rua das Flores, 123, Bairro Jardim, Cidade Nova - SP',
-                        items: order1Items,
-                        shippingCost: order1ShippingCostInCents,
-                        discount: order1DiscountInCents
-                    },
-                    {
-                        id: '20240723-002',
-                        date: '2024-07-22T14:30:00Z',
-                        total: order2TotalInCents,
-                        status: 'Processando',
-                        paymentMethod: 'Boleto Bancário',
-                        shippingAddress: 'Avenida do Sol, 456, Centro, Metrópolis - RJ',
-                        items: order2Items,
-                        shippingCost: order2ShippingCostInCents,
-                        discount: order2DiscountInCents
-                    }
-                ];
-            }
-
-            if (!window.userSession.currentUser.wishlist || window.userSession.currentUser.wishlist.length === 0) {
-                window.userSession.currentUser.wishlist = [5, 8];
-            }
-
-            if (!window.userSession.currentUser.appointments || window.userSession.currentUser.appointments.length === 0) {
-                window.userSession.currentUser.appointments = [
-                    {
-                        id: 'APP-001',
-                        preferredDate1: '2024-08-10',
-                        preferredTime1: '14:00',
-                        artistName: 'Augustos',
-                        artistImage: '/img/artistas/augusto.png',
-                        tattooStyle: 'Realismo Preto e Cinza',
-                        budget: 1500,
-                        status: 'Confirmado',
-                        tattooDescription: 'Tatuagem de leão no antebraço.',
-                        clientName: window.userSession.currentUser.name,
-                        clientEmail: window.userSession.currentUser.email,
-                        clientPhone: window.userSession.currentUser.phone
-                    },
-                    {
-                        id: 'APP-002',
-                        preferredDate1: '2024-08-25',
-                        preferredTime1: '10:30',
-                        artistName: 'Clara',
-                        artistImage: '/img/artistas/clara.png',
-                        tattooStyle: 'Geométrico',
-                        budget: 800,
-                        status: 'Pendente',
-                        tattooDescription: 'Design abstrato na coxa.',
-                        clientName: window.userSession.currentUser.name,
-                        clientEmail: window.userSession.currentUser.email,
-                        clientPhone: window.userSession.currentUser.phone
-                    }
-                ];
-                localStorage.setItem('ravenStudioCurrentUser', JSON.stringify(window.userSession.currentUser));
-            }
-        }
-
+    // Carregar dados do usuário
     if (window.userSession.isLoggedIn()) {
         // Carregar agendamentos do usuário
-        await window.userSession.loadAppointments();
+        await loadUserAppointments();
         
         // Carregar e renderizar os dados do usuário
         loadUserDetails();
@@ -2669,42 +2313,76 @@ async function cancelAppointment(appointmentId) {
         renderWishlist();
         renderAppointments();
     }
-        
-        // Ativar a primeira seção por padrão (Meus Pedidos)
-        showSection('orders');
+    
+    // Ativar a primeira seção por padrão (Meus Pedidos)
+    showSection('orders');
 
-        // Adicionar event listeners para os links do menu lateral
-        document.querySelectorAll('.sidebar-menu .menu-link').forEach(link => {
-            if (link.dataset.section) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    showSection(this.dataset.section);
-                });
-            }
-        });
+    // Adicionar event listeners para os links do menu lateral
+    document.querySelectorAll('.sidebar-menu .menu-link').forEach(link => {
+        if (link.dataset.section) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                showSection(this.dataset.section);
+            });
+        }
+    });
 
-        // Event listeners para o modal de cancelamento
-        document.getElementById('cancelModalCancelBtn').addEventListener('click', hideCancelConfirmation);
-        document.getElementById('cancelModalConfirmBtn').addEventListener('click', confirmCancelAppointment);
-        
-        document.getElementById('cancelAppointmentModal').addEventListener('click', function(e) {
+    // Event listeners para o modal de cancelamento
+    const cancelModalCancelBtn = document.getElementById('cancelModalCancelBtn');
+    const cancelModalConfirmBtn = document.getElementById('cancelModalConfirmBtn');
+    const cancelModal = document.getElementById('cancelAppointmentModal');
+    
+    if (cancelModalCancelBtn) {
+        cancelModalCancelBtn.addEventListener('click', hideCancelConfirmation);
+    }
+    
+    if (cancelModalConfirmBtn) {
+        cancelModalConfirmBtn.addEventListener('click', confirmCancelAppointment);
+    }
+    
+    if (cancelModal) {
+        cancelModal.addEventListener('click', function(e) {
             if (e.target === this) {
                 hideCancelConfirmation();
             }
         });
+    }
 
-        // Atualizar contador do carrinho
-        function updateCartCounter() {
-            const cart = JSON.parse(localStorage.getItem('ravenStudioCart')) || [];
-            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-            document.getElementById('cart-count').textContent = totalItems;
-        }
-        
-        updateCartCounter();
+    // Atualizar contador do carrinho
+    updateCartCounter();
 
-        
-    });
-    
+    // Inicializar partículas
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 40, density: { enable: true, value_area: 800 } },
+                color: { value: "#3b82f6" },
+                shape: { type: "circle" },
+                opacity: { value: 0.2, random: true },
+                size: { value: 2, random: true },
+                line_linked: { enable: true, distance: 120, color: "#3b82f6", opacity: 0.3, width: 1 },
+                move: { enable: true, speed: 1.5, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: false },
+                    resize: true
+                },
+                modes: {
+                    repulse: { distance: 80, duration: 0.3 }
+                }
+            },
+            retina_detect: true
+        });
+    }
+});
+
+// Inicializar VLibras
+if (typeof window.VLibras !== 'undefined') {
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+}
     
 </script>
 </body>
