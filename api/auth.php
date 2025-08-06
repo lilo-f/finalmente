@@ -5,7 +5,11 @@
 
 // Habilitar relatório de erros (apenas para desenvolvimento)
 ini_set('display_errors', 1);
-error_reporting(E_ALL);
+error_reporting(0);
+
+
+// Garantir que não haja saída antes dos headers
+if (ob_get_length()) ob_clean();
 
 // Permite acesso do Live Server (desenvolvimento)
 $allowedOrigins = [
@@ -20,21 +24,28 @@ $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 if (in_array($origin, $allowedOrigins)) {
     header("Access-Control-Allow-Origin: " . $origin);
 }
+header("Access-Control-Allow-Origin: " . ($_SERVER['HTTP_ORIGIN'] ?? '*')); 
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
+
 header("Content-Type: application/json; charset=UTF-8");
+
+
+// Responder imediatamente para requisições OPTIONS (pré-voo CORS)
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+
+
+session_start();
 
 // Função para enviar erros como JSON
 function sendError($message, $code = 400) {
     http_response_code($code);
     die(json_encode(['success' => false, 'message' => $message]));
-}
-
-// Responde imediatamente para requisições OPTIONS (pré-voo CORS)
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
-    exit();
 }
 
 // Verifica se é POST
@@ -229,7 +240,12 @@ try {
             'isAdmin' => (bool)$user['isAdmin'], // Garanta que isso está vindo como true para o admin
             // ... outros campos
         ]
+
+
     ];
+    // E no caso de login bem-sucedido:
+$_SESSION['user_id'] = $user['id'];
+$_SESSION['is_admin'] = $user['isAdmin'];
     break;
 
         default:
@@ -239,12 +255,13 @@ try {
     http_response_code(200);
     echo json_encode($response);
 
+// E no catch:
 } catch (Exception $e) {
     http_response_code(400);
-    echo json_encode([
+    die(json_encode([
         'success' => false,
         'message' => $e->getMessage()
-    ]);
+    ]));
 }
 
 

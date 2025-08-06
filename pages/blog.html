@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,7 +14,145 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/navbar.css">
+
+
     <style>
+        
+        .form-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(59, 130, 246, 0.5);
+    background: rgba(15, 15, 15, 0.8);
+}
+
+.form-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 5px; /* Ajuste conforme necessário */
+}
+
+/* Mantenha o estilo existente para o nome */
+.form-username {
+    font-family: 'Teko', sans-serif;
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+}
+/* Estilo para o emoji picker */
+emoji-picker {
+    --background: rgba(15, 15, 15, 0.95);
+    --border-color: rgba(59, 130, 246, 0.5);
+    --input-border-color: rgba(59, 130, 246, 0.3);
+    --input-font-color: #fff;
+    --category-emoji-padding: 0.5rem;
+    --font-family: 'Orbitron', sans-serif;
+    width: 350px;
+    height: 400px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+}
+
+@media (max-width: 480px) {
+    emoji-picker {
+        width: 280px;
+        height: 350px;
+        right: 10px !important;
+    }
+}
+
+/* Estilo para o botão de emoji quando ativo */
+.option-btn.active {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+    color: #3b82f6;
+}
+/* Container de comentários */
+.comments-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+/* Estilo individual do comentário */
+.comment {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.comment-content {
+    flex: 1;
+    background: rgba(30, 30, 30, 0.5);
+    padding: 1rem;
+    border-radius: 12px;
+    border-left: 3px solid #3b82f6;
+}
+
+.comment-user {
+    font-weight: bold;
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.comment-text {
+    color: #d1d5db;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.comment-time {
+    color: #6b7280;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    text-align: right;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+        .debug-info {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.8);
+    color: #3b82f6;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    z-index: 1000;
+}
+        .post-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.post-avatar.default {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+    color: #000;
+    font-weight: bold;
+}
         .user-info {
     display: flex;
     align-items: center;
@@ -266,6 +405,57 @@
         .welcome-message {
             margin-bottom: 20px;
         }
+
+        .image-upload-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(30, 30, 30, 0.8);
+    border: 2px dashed rgba(59, 130, 246, 0.5);
+    border-radius: 12px;
+    color: #3b82f6;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.image-upload-btn:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+#image-preview {
+    display: none;
+    margin-top: 1rem;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    max-height: 300px;
+}
+
+#preview-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+}
+
+#remove-image-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(239, 68, 68, 0.8);
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
         .bot-message {
             background: rgba(138, 43, 226, 0.15);
@@ -531,18 +721,37 @@
     transition: all 0.3s ease;
 }
 
+/* Estilo para a barra de scroll */
+.comments-section::-webkit-scrollbar {
+    width: 6px;
+}
+
+.comments-section::-webkit-scrollbar-track {
+    background: rgba(30, 30, 30, 0.5);
+}
+
+.comments-section::-webkit-scrollbar-thumb {
+    background-color: #3b82f6;
+    border-radius: 3px;
+}
+
+
 .comment-input:focus {
     border-color: #3b82f6;
     outline: none;
     box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
 }
-
 .comments-section {
     max-height: 0;
-    overflow: hidden;
+    overflow-y: auto; /* Adiciona scroll quando necessário */
     transition: max-height 0.3s ease;
+    padding: 0 1.5rem;
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
 }
-
+.comments-section.show {
+    max-height: 500px; /* Altura máxima expandida */
+    padding: 1rem 1.5rem;
+}
 .comments-section.show {
     max-height: 500px;
     padding: 1rem 1.5rem;
@@ -609,7 +818,7 @@
       top: 4.5rem; 
     
     position: fixed;
-    top: 70px; /* Aumentei de 20px para 70px */
+    top: 120px; /* Aumentei de 20px para 70px */
     right: 20px;
     display: flex;
     align-items: center;
@@ -870,6 +1079,7 @@
             border: 1px solid rgba(59, 130, 246, 0.3);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            margin-bottom: 25px;
         }
 
         .post-card:hover {
@@ -1172,7 +1382,37 @@
         .back-to-top.show {
             display: flex;
         }
+.image-preview {
+    display: none;
+    margin-top: 1rem;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    max-height: 300px;
+}
 
+#preview-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.remove-image {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(239, 68, 68, 0.8);
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
     
     </style>
 </head>
@@ -1235,48 +1475,43 @@
         
         <!-- Formulário para novos posts (apenas admin) -->
         <div class="new-post-form" id="new-post-form">
-            <div class="post-form-header">
-                <div class="form-avatar">RS</div>
-                <div class="form-user-info">
-                    <div class="form-username">Raven Studio</div>
-                    <div class="form-time">Agora</div>
-                </div>
-            </div>
+<div class="post-form-header">
+    <div class="form-avatar">
+        <img src="/img/Logo.png" alt="Raven Studio Logo" class="form-avatar-img">
+    </div>
+    <div class="form-user-info">
+        <div class="form-username">Raven Studio</div>
+        <div class="form-time">Agora</div>
+    </div>
+</div>
             
             <div class="form-group">
                 <textarea id="post-content" placeholder="Compartilhe algo interessante sobre tatuagem..."></textarea>
             </div>
+<div class="image-upload">
+    <input type="file" id="image-input" accept="image/*">
+    <label for="image-input" class="image-upload-btn">
+        <i class="fas fa-image"></i>
+        Adicionar Foto
+    </label>
+    <div class="image-preview" id="image-preview">
+        <img id="preview-image" src="#" alt="Preview da imagem">
+        <button class="remove-image" id="remove-image-btn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
             
-            <div class="image-upload">
-                <input type="file" id="image-input" accept="image/*">
-                <label for="image-input" class="image-upload-btn">
-                    <i class="fas fa-image"></i>
-                    Adicionar Foto
-                </label>
-                <div class="image-preview" id="image-preview">
-                    <img id="preview-image" src="" alt="Preview">
-                    <button class="remove-image" onclick="blog.removeImage()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="post-actions">
-                <div class="post-options">
-                    <button class="option-btn" title="Adicionar vídeo">
-                        <i class="fas fa-video"></i>
-                    </button>
-                    <button class="option-btn" title="Adicionar localização">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </button>
-                    <button class="option-btn" title="Adicionar emoji">
-                        <i class="fas fa-smile"></i>
-                    </button>
-                </div>
-                <button class="post-btn" onclick="blog.createPost()">
-                    PUBLICAR
-                </button>
-            </div>
+<div class="post-actions">
+    <div class="post-options">
+        <button class="option-btn" id="emoji-btn" title="Adicionar emoji">
+            <i class="fas fa-smile"></i>
+        </button>
+    </div>
+    <button class="post-btn" onclick="blog.createPost()">
+        PUBLICAR
+    </button>
+</div>
         </div>
         
         <!-- Feed de Posts -->
@@ -1441,6 +1676,8 @@
       <div class="vw-plugin-top-wrapper"></div>
     </div>
   </div>
+
+  <emoji-picker id="emoji-picker" style="display: none;"></emoji-picker>
   <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
   <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
@@ -1450,7 +1687,7 @@
          <script src="/js/navbar.js"></script>
      <script src="/js/user-session.js"></script>
       
-  
+  <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script >
         
@@ -1830,13 +2067,113 @@ function checkUserLoggedIn() {
 }
       class RavenBlog {
         
-       constructor() {
+    constructor() {
+        this.MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
         this.posts = JSON.parse(localStorage.getItem('ravenStudioPosts')) || this.getDefaultPosts();
         this.loadUserData();
         this.isAdmin = false;
         this.selectedImage = null;
         this.init();
+          this.apiUrl = 'http://localhost/trabalhofinal/finalmente/api/blog_api.php';;
+ 
     }
+
+    initImageUpload() {
+        const imageInput = document.getElementById('image-input');
+        const removeBtn = document.getElementById('remove-image-btn');
+        
+        imageInput.addEventListener('change', (e) => this.handleImageUpload(e));
+        removeBtn.addEventListener('click', () => this.removeImage());
+    }
+  // Modifique a função handleImageUpload
+    handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Verificações de imagem
+        if (!file.type.match('image.*')) {
+            this.showNotification('Por favor, selecione um arquivo de imagem válido', 'error');
+            return;
+        }
+
+        if (file.size > this.MAX_IMAGE_SIZE) {
+            this.showNotification(`A imagem deve ter menos de ${this.MAX_IMAGE_SIZE/1024/1024}MB`, 'error');
+            return;
+        }
+
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+            // Comprimir a imagem antes de armazenar
+            this.compressImage(e.target.result, 0.7).then(compressedImage => {
+                this.selectedImage = compressedImage;
+                document.getElementById('preview-image').src = this.selectedImage;
+                document.getElementById('image-preview').style.display = 'block';
+            });
+        };
+        
+        reader.onerror = () => {
+            this.showNotification('Erro ao ler a imagem', 'error');
+        };
+        
+        reader.readAsDataURL(file);
+    }
+
+
+      // Função para comprimir imagens
+    compressImage(src, quality = 0.7) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = src;
+            
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Redimensionar se for muito grande
+                const MAX_WIDTH = 800;
+                const MAX_HEIGHT = 800;
+                let width = img.width;
+                let height = img.height;
+                
+                if (width > height) {
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                } else {
+                    if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                    }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                resolve(canvas.toDataURL('image/jpeg', quality));
+            };
+            
+            img.onerror = reject;
+        });
+    }
+
+editPost(postId, newContent, newImage) {
+    if (!this.isAdmin) return false;
+    
+    const post = this.posts.find(p => p.id === postId);
+    if (post) {
+        post.content = newContent || post.content;
+        post.image = newImage !== undefined ? newImage : post.image;
+        post.edited = true;
+        post.lastEdited = Date.now();
+        this.savePosts();
+        this.renderPosts();
+        return true;
+    }
+    return false;
+}
 
    loadUserData() {
     try {
@@ -1873,11 +2210,17 @@ function checkUserLoggedIn() {
         this.loadCurrentUser();
     }
 }
-            init() {
-                this.loadCurrentUser();
-                this.renderPosts();
-                this.setupEventListeners();
-            }
+init() {
+    this.loadCurrentUser();
+    this.setupEventListeners();  // Certifique-se que esta linha está presente
+    this.renderPosts();
+    
+    // Mostra o formulário se for admin
+    if (this.isAdmin) {
+        document.getElementById('new-post-form').classList.add('show');
+    }
+}
+
 
 loadCurrentUser() {
     const userContainer = document.getElementById('user-info-container');
@@ -1887,60 +2230,69 @@ loadCurrentUser() {
     
     // Verifica se o usuário está logado
     if (!window.userSession || !window.userSession.isLoggedIn()) {
-        userContainer.style.display = 'none'; // Oculta completamente o container
+        userContainer.style.display = 'none';
         return;
     }
     
-    // Se chegou aqui, o usuário está logado
-    userContainer.style.display = 'flex'; // Garante que está visível
+    // Carrega os dados do usuário
+    const userData = JSON.parse(localStorage.getItem('ravenStudioUserBasicInfo')) || {};
     
-    // Limpa o conteúdo do avatar
-    userAvatar.innerHTML = '';
+    // Configurações para admin
+    this.isAdmin = window.userSession.isAdmin();
     
-    // Verifica se é admin
-    const isAdmin = window.userSession.isAdmin();
-    const displayName = isAdmin ? 'Raven Studio' : (this.currentUser?.name || 'Usuário');
-    
-    // Configura o avatar
-    if (isAdmin) {
+    if (this.isAdmin) {
+        // Configura o avatar do admin (Raven Studio)
         userAvatar.innerHTML = `
             <img src="/img/Logo.png" alt="Raven Studio" 
                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
         `;
-    } else if (this.currentUser?.avatar) {
-        userAvatar.innerHTML = `
-            <img src="${this.currentUser.avatar}" alt="${displayName}" 
-                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-        `;
-    } else {
-        const initial = displayName ? displayName.charAt(0).toUpperCase() : 'U';
-        userAvatar.textContent = initial;
-        userAvatar.style.display = 'flex';
-        userAvatar.style.alignItems = 'center';
-        userAvatar.style.justifyContent = 'center';
-        userAvatar.style.background = 'linear-gradient(135deg, #3b82f6 0%, #22c55e 100%)';
-        userAvatar.style.color = '#000';
-        userAvatar.style.fontWeight = 'bold';
-    }
-    
-    // Define o nome do usuário
-    userName.textContent = displayName;
-    
-    // Configura o botão de admin
-    if (isAdmin) {
+        
+        // Configura o nome
+        userName.textContent = 'Raven Studio';
+        userName.classList.add('admin');
+        
+        // Configura o botão de admin
         adminToggle.innerHTML = '<i class="fas fa-user-shield"></i> Admin: ON';
         adminToggle.classList.add('active');
         adminToggle.style.display = 'flex';
+        
+        // Mostra o formulário de posts
         document.getElementById('new-post-form').classList.add('show');
-        userName.classList.add('admin');
     } else {
-        adminToggle.style.display = 'none';
-        adminToggle.classList.remove('active');
-        document.getElementById('new-post-form').classList.remove('show');
+        // Configurações para usuários normais
+        const user = window.userSession.currentUser;
+        const userInitial = userData.name ? userData.name.charAt(0).toUpperCase() : 'U';
+        
+        if (userData.avatar && userData.avatar.startsWith('data:image')) {
+            userAvatar.innerHTML = `
+                <img src="${userData.avatar}" alt="${userData.name || 'Usuário'}" 
+                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            `;
+        } else {
+            userAvatar.innerHTML = `
+                <div style="width: 100%; height: 100%; 
+                            background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%); 
+                            border-radius: 50%; 
+                            display: flex; 
+                            align-items: center; 
+                            justify-content: center;
+                            color: #000;
+                            font-weight: bold;">
+                    ${userInitial}
+                </div>
+            `;
+        }
+        
+        userName.textContent = userData.name || 'Usuário';
         userName.classList.remove('admin');
+        adminToggle.style.display = 'none';
     }
+    
+    userContainer.style.display = 'flex';
 }
-            getDefaultPosts() {
+
+
+           getDefaultPosts() {
     return [
         {
             id: 'post1',
@@ -1957,12 +2309,10 @@ loadCurrentUser() {
                     avatar: null,
                     content: 'Ficou incrível! Quando posso agendar uma sessão?',
                     timestamp: Date.now() - 3000000
-                },
-                // ... outros comentários
+                }
             ],
             liked: false
-        },
-        // ... outros posts
+        }
     ];
 }
             toggleAdmin() {
@@ -1981,51 +2331,198 @@ loadCurrentUser() {
                 }
             }
 
-            createPost() {
-                const content = document.getElementById('post-content').value.trim();
-                if (!content || !this.isAdmin) return;
 
-                const newPost = {
-                    id: 'post' + Date.now(),
-                    user: 'Raven Studio',
-                    avatar: null,
-                    content: content,
-                    image: this.selectedImage,
-                    timestamp: Date.now(),
-                    likes: 0,
-                    comments: [],
-                    liked: false
-                };
 
-                this.posts.unshift(newPost);
-                this.savePosts();
-                this.renderPosts();
-                
-                // Limpar formulário
-                document.getElementById('post-content').value = '';
-                this.removeImage();
-                this.showNotification('Post publicado com sucesso!');
-            }
+// Adicione estas funções à sua classe RavenBlog
+handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
 
-            handleImageUpload(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        this.selectedImage = e.target.result;
-                        document.getElementById('preview-image').src = this.selectedImage;
-                        document.getElementById('image-preview').style.display = 'block';
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
+    // Verificações mais robustas
+    if (!file.type.match('image.*')) {
+        this.showNotification('Por favor, selecione um arquivo de imagem válido (JPEG, PNG, etc.)', 'error');
+        return;
+    }
 
-            removeImage() {
-                this.selectedImage = null;
-                document.getElementById('image-preview').style.display = 'none';
-                document.getElementById('image-input').value = '';
-            }
+    if (file.size > this.MAX_IMAGE_SIZE) {
+        this.showNotification(`A imagem deve ter menos de ${this.MAX_IMAGE_SIZE/1024/1024}MB`, 'error');
+        return;
+    }
 
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+        // Verifica se o resultado é válido
+        if (e.target.result && typeof e.target.result === 'string') {
+            this.selectedImage = e.target.result;
+            document.getElementById('preview-image').src = this.selectedImage;
+            document.getElementById('image-preview').style.display = 'block';
+            console.log("Imagem carregada com sucesso:", this.selectedImage.substring(0, 50) + "...");
+        } else {
+            this.showNotification('Erro ao processar a imagem', 'error');
+        }
+    };
+    
+    reader.onerror = () => {
+        this.showNotification('Erro ao ler o arquivo de imagem', 'error');
+    };
+    
+    reader.readAsDataURL(file);
+}
+
+debugAdminStatus() {
+    console.group("Debug de Status de Admin");
+    console.log("Usuário atual:", window.userSession?.currentUser);
+    console.log("É admin?", window.userSession?.isAdmin());
+    console.log("Token de admin válido?", localStorage.getItem('adminToken'));
+    console.groupEnd();
+}
+
+verifyImageUpload() {
+    console.group("Verificação de Upload de Imagem");
+    console.log("Imagem selecionada:", this.selectedImage ? 
+        this.selectedImage.substring(0, 50) + "..." : "Nenhuma");
+    console.log("Tipo da imagem:", typeof this.selectedImage);
+    console.groupEnd();
+}
+
+
+
+    removeImage() {
+        this.selectedImage = null;
+        document.getElementById('preview-image').src = '#';
+        document.getElementById('image-preview').style.display = 'none';
+        document.getElementById('image-input').value = '';
+        console.log('Imagem removida');
+    }
+   // Atualize a função createPost
+async createPost() {
+    try {
+        const content = document.getElementById('post-content').value.trim();
+        const image = this.selectedImage;
+        
+        if (!content && !image) {
+            throw new Error("O post precisa conter texto ou imagem");
+        }
+
+        const response = await fetch(this.apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                action: 'create_post',
+                content: content,
+                image: image
+            })
+        });
+
+        // Verificar se a resposta está vazia
+        const responseText = await response.text();
+        if (!responseText) {
+            throw new Error("Resposta vazia do servidor");
+        }
+
+        // Tentar parsear o JSON
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (e) {
+            console.error("Resposta não é JSON válido:", responseText);
+            throw new Error(`Resposta inválida do servidor: ${responseText.substring(0, 100)}...`);
+        }
+
+        // Verificar erros da API
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || 'Erro ao criar post');
+        }
+
+        // Limpar formulário
+        document.getElementById('post-content').value = '';
+        this.removeImage();
+        
+        // Adicionar o novo post
+        if (data.post) {
+            this.posts.unshift(data.post);
+            this.renderPosts();
+        }
+        
+        this.showNotification('Post publicado com sucesso!');
+        
+    } catch (error) {
+        console.error('Erro detalhado:', error);
+        
+        // Mensagem amigável para o usuário
+        let userMessage = error.message;
+        if (error.message.includes('Unexpected token') || 
+            error.message.includes('Resposta inválida') ||
+            error.message.includes('vazia')) {
+            userMessage = 'Erro no servidor. Por favor, tente novamente mais tarde.';
+        }
+        
+        this.showNotification(userMessage, 'error');
+    }
+}
+async loadPosts() {
+    try {
+        const response = await fetch(`${this.apiUrl}?action=get_posts`, {
+            headers: {
+                'Accept': 'application/json'
+            },
+            credentials: 'include'
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Erro HTTP: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            throw new Error(data.message || 'Erro ao carregar posts');
+        }
+        
+        this.posts = data.posts;
+        this.renderPosts();
+    } catch (error) {
+        console.error('Erro ao carregar posts:', error);
+        this.showNotification(error.message, 'error');
+    }
+}
+   
+
+
+clearOldPosts() {
+    try {
+        // Manter apenas os 20 posts mais recentes
+        if (this.posts.length > 20) {
+            this.posts = this.posts.slice(0, 20);
+            this.savePosts();
+        }
+    } catch (e) {
+        console.error("Erro ao limpar posts antigos:", e);
+    }
+}
+debugAdminStatus() {
+    console.group("Debug de Status de Admin");
+    console.log("Usuário atual:", window.userSession?.currentUser);
+    console.log("É admin?", window.userSession?.isAdmin());
+    console.log("Token de admin válido?", localStorage.getItem('adminToken'));
+    console.groupEnd();
+}
+
+verifyImageUpload() {
+    console.group("Verificação de Upload de Imagem");
+    console.log("Imagem selecionada:", this.selectedImage ? 
+        this.selectedImage.substring(0, 50) + "..." : "Nenhuma");
+    console.log("Tipo da imagem:", typeof this.selectedImage);
+    console.groupEnd();
+}
+
+
+  
             openImageModal(imageSrc) {
                 document.getElementById('modal-image').src = imageSrc;
                 document.getElementById('image-modal').style.display = 'block';
@@ -2050,23 +2547,23 @@ getUserAvatar(user, avatar) {
         return `<div class="post-avatar default">U</div>`;
     }
 }
-  toggleLike(postId) {
-        if (!window.userSession || !window.userSession.isLoggedIn()) {
-            alert('Por favor, faça login para curtir posts.');
-            window.location.href = '/pages/login.html';
-            return;
-        }
-
-        const post = this.posts.find(p => p.id === postId);
-        if (post) {
-            post.liked = !post.liked;
-            post.likes = post.liked ? post.likes + 1 : post.likes - 1;
-            this.savePosts();
-            this.renderPosts();
-        }
+toggleLike(postId) {
+    if (!window.userSession || !window.userSession.isLoggedIn()) {
+        alert('Por favor, faça login para curtir posts.');
+        window.location.href = '/pages/login.html';
+        return;
     }
 
- addComment(postId) {
+    const post = this.posts.find(p => p.id === postId);
+    if (post) {
+        post.liked = !post.liked;
+        post.likes = post.liked ? post.likes + 1 : post.likes - 1;
+        this.savePosts();
+        this.renderPosts();
+    }
+}
+
+addComment(postId) {
     const input = document.getElementById(`comment-input-${postId}`);
     const content = input.value.trim();
     
@@ -2085,10 +2582,13 @@ getUserAvatar(user, avatar) {
 
     const post = this.posts.find(p => p.id === postId);
     if (post) {
+        const currentUser = window.userSession.currentUser;
+        const userName = currentUser.name || `${currentUser.first_name || ''} ${currentUser.last_name || ''}`.trim();
+        
         const newComment = {
             id: 'comment' + Date.now(),
-            user: window.userSession.currentUser.name,
-            avatar: window.userSession.currentUser.avatar,
+            user: userName,
+            avatar: currentUser.avatar || currentUser.avatarUrl || null,
             content: content,
             timestamp: Date.now()
         };
@@ -2102,10 +2602,15 @@ getUserAvatar(user, avatar) {
         const commentsSection = document.getElementById(`comments-${postId}`);
         commentsSection.classList.add('show');
         
+
+            setTimeout(() => {
+        commentsSection.scrollTop = commentsSection.scrollHeight;
+    }, 100);
+    
+
         this.showNotification('Comentário adicionado!');
     }
 }
-  
 renderPosts() {
     const container = document.getElementById('posts-feed');
     if (!container) return;
@@ -2141,9 +2646,12 @@ renderPosts() {
         const postUser = post.user || 'Raven Studio';
         const timeAgo = this.getTimeAgo(post.timestamp || Date.now());
         
-        // HTML dos comentários com proteção contra undefined
+        // HTML dos comentários
         const commentsHtml = (post.comments || []).map(comment => {
-            const commentUser = comment.user || 'Usuário';
+            // Obter o nome do usuário corretamente
+            const commentUser = comment.user || window.userSession?.currentUser?.name || 'Usuário';
+            
+            // HTML do avatar do comentário
             const avatarHtml = comment.avatar 
                 ? `<div class="comment-avatar"><img src="${comment.avatar}" alt="${commentUser}"></div>`
                 : `<div class="comment-avatar default">${commentUser.charAt(0).toUpperCase()}</div>`;
@@ -2160,21 +2668,22 @@ renderPosts() {
             `;
         }).join('');
 
-        // HTML do formulário de comentário com proteção
-        const currentUser = this.currentUser || { name: 'Usuário', avatar: null };
-       // No formulário de comentário
-const commentFormHtml = `
-    <div class="comment-form">
-        ${currentUser.avatar 
-            ? `<div class="comment-avatar"><img src="${currentUser.avatar}" alt="${currentUser.name}"></div>`
-            : `<div class="comment-avatar default">${currentUser.name.charAt(0).toUpperCase()}</div>`}
-        <input type="text" class="comment-input" id="comment-input-${post.id}" 
-               placeholder="Escreva um comentário..." 
-               onkeypress="if(event.key === 'Enter') blog.addComment('${post.id}')">
-    </div>
-`;
+        // HTML do formulário de comentário
+        const currentUser = window.userSession?.currentUser || { name: 'Usuário', avatar: null };
+        const currentUserName = currentUser.name || `${currentUser.first_name || ''} ${currentUser.last_name || ''}`.trim() || 'Usuário';
+        
+        const commentFormHtml = `
+            <div class="comment-form">
+                ${currentUser.avatar 
+                    ? `<div class="comment-avatar"><img src="${currentUser.avatar}" alt="${currentUserName}"></div>`
+                    : `<div class="comment-avatar default">${currentUserName.charAt(0).toUpperCase()}</div>`}
+                <input type="text" class="comment-input" id="comment-input-${post.id}" 
+                       placeholder="Escreva um comentário..." 
+                       onkeypress="if(event.key === 'Enter') blog.addComment('${post.id}')">
+            </div>
+        `;
 
-        // HTML completo do post com proteção
+        // HTML completo do post
         return `
             <article class="post-card">
                 <header class="post-header">
@@ -2189,7 +2698,11 @@ const commentFormHtml = `
                 
                 <div class="post-content">
                     <p class="post-text">${post.content || ''}</p>
-                    ${post.image ? `<img src="${post.image}" class="post-image" onclick="blog.openImageModal('${post.image}')">` : ''}
+                    ${post.image ? `
+                        <img src="${post.image}" class="post-image" 
+                             onclick="blog.openImageModal('${post.image}')"
+                             onerror="this.style.display='none'">
+                    ` : ''}
                 </div>
                 
                 <footer class="post-footer">
@@ -2210,21 +2723,63 @@ const commentFormHtml = `
                 </div>
             </article>
         `;
+// HTML dos comentários - agora com container específico
+        const commentsContainerHtml = `
+            <div class="comments-container" id="comments-container-${post.id}">
+                ${(post.comments || []).map(comment => {
+                    const commentUser = comment.user || window.userSession?.currentUser?.name || 'Usuário';
+                    const avatarHtml = comment.avatar 
+                        ? `<div class="comment-avatar"><img src="${comment.avatar}" alt="${commentUser}"></div>`
+                        : `<div class="comment-avatar default">${commentUser.charAt(0).toUpperCase()}</div>`;
+                    
+                    return `
+                        <div class="comment">
+                            ${avatarHtml}
+                            <div class="comment-content">
+                                <div class="comment-user">${commentUser}</div>
+                                <div class="comment-text">${comment.content || ''}</div>
+                                <div class="comment-time">${this.getTimeAgo(comment.timestamp || Date.now())}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+
+        // HTML completo do post
+        return `
+            <article class="post-card">
+                <!-- ... (cabeçalho e conteúdo do post mantidos) ... -->
+                
+                <div class="comments-section" id="comments-${post.id}">
+                    ${commentsContainerHtml}
+                    ${commentFormHtml}
+                </div>
+            </article>
+        `;
     }).join('');
 
     container.innerHTML = postsHtml;
 }
 
-                  toggleComments(postId) {
+toggleComments(postId) {
     const commentsSection = document.getElementById(`comments-${postId}`);
+    if (!commentsSection) return;
+    
+    // Alternar a classe 'show' para expandir/recolher
     commentsSection.classList.toggle('show');
     
-    // Foca no campo de comentário quando aberto
+    // Se estiver sendo mostrado, focar no campo de comentário
     if (commentsSection.classList.contains('show')) {
-        const input = document.getElementById(`comment-input-${postId}`);
-        setTimeout(() => input.focus(), 100);
+        setTimeout(() => {
+            const input = document.getElementById(`comment-input-${postId}`);
+            if (input) input.focus();
+            
+            // Rolagem automática para o final dos comentários
+            commentsSection.scrollTop = commentsSection.scrollHeight;
+        }, 100);
     }
-   }
+}
             getTimeAgo(timestamp) {
                 const now = Date.now();
                 const diff = now - timestamp;
@@ -2238,10 +2793,27 @@ const commentFormHtml = `
                 return 'agora';
             }
 
-            savePosts() {
-                localStorage.setItem('ravenStudioPosts', JSON.stringify(this.posts));
+        
+  // Modifique a função savePosts para limpar posts antigos
+    savePosts() {
+        try {
+            // Limitar o número de posts armazenados
+            if (this.posts.length > 50) {
+                this.posts = this.posts.slice(0, 50);
             }
-
+            
+            localStorage.setItem('ravenStudioPosts', JSON.stringify(this.posts));
+        } catch (e) {
+            console.error('Erro ao salvar posts:', e);
+            this.showNotification('Erro ao salvar posts. O navegador pode estar sem espaço.', 'error');
+            
+            // Tentativa de recuperação - remover posts mais antigos
+            if (e.name === 'QuotaExceededError') {
+                this.posts = this.posts.slice(0, Math.floor(this.posts.length * 0.7));
+                this.savePosts();
+            }
+        }
+    }
             showNotification(message) {
                 const notification = document.createElement('div');
                 notification.style.cssText = `
@@ -2267,22 +2839,74 @@ const commentFormHtml = `
                 }, 3000);
             }
 
-            setupEventListeners() {
-                document.getElementById('admin-toggle').addEventListener('click', () => {
-                    this.toggleAdmin();
-                });
+setupEventListeners() {
+    document.getElementById('admin-toggle').addEventListener('click', () => {
+        this.toggleAdmin();
+    });
 
-                document.getElementById('image-input').addEventListener('change', (e) => {
-                    this.handleImageUpload(e);
-                });
+    document.getElementById('image-input').addEventListener('change', (e) => {
+        this.handleImageUpload(e);
+    });
+    
+    document.querySelector('.post-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        this.createPost();
+    });
 
-                // Close modal when clicking outside
-                document.getElementById('image-modal').addEventListener('click', (e) => {
-                    if (e.target.id === 'image-modal') {
-                        this.closeImageModal();
-                    }
-                });
+    // Configuração do emoji picker
+    const emojiButton = document.getElementById('emoji-btn');
+    const emojiPicker = document.querySelector('emoji-picker');
+    const postContent = document.getElementById('post-content');
+
+    if (emojiButton && emojiPicker && postContent) {
+        // Posicionamento inicial do picker (fora da tela)
+        emojiPicker.style.position = 'absolute';
+        emojiPicker.style.display = 'none';
+        emojiPicker.style.zIndex = '1000';
+        
+        // Mostrar/ocultar o picker de emojis
+        emojiButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            // Posicionar o picker perto do botão
+            const rect = emojiButton.getBoundingClientRect();
+            emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
+            emojiPicker.style.top = `${rect.bottom + window.scrollY + 5}px`;
+            emojiPicker.style.left = `${rect.left + window.scrollX - 300}px`; // Ajuste para não cortar na lateral
+            
+            // Adicionar classe ativa ao botão
+            emojiButton.classList.toggle('active');
+        });
+
+        // Inserir emoji no texto quando selecionado
+        emojiPicker.addEventListener('emoji-click', (event) => {
+            const emoji = event.detail.unicode;
+            const cursorPos = postContent.selectionStart;
+            const textBefore = postContent.value.substring(0, cursorPos);
+            const textAfter = postContent.value.substring(cursorPos);
+            
+            postContent.value = textBefore + emoji + textAfter;
+            
+            // Reposicionar o cursor
+            postContent.selectionStart = cursorPos + emoji.length;
+            postContent.selectionEnd = cursorPos + emoji.length;
+            postContent.focus();
+            
+            // Fechar o picker após seleção
+            emojiPicker.style.display = 'none';
+            emojiButton.classList.remove('active');
+        });
+
+        // Fechar o picker ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!emojiPicker.contains(e.target)) {
+                emojiPicker.style.display = 'none';
+                emojiButton.classList.remove('active');
             }
+        });
+    }
+}
+
         }
 
         // Adicionar estilos de animação
@@ -2345,5 +2969,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Inicializar blog
         const blog = new RavenBlog();
     </script>
+
+    <!-- Adicionar o picker de emojis (no final do body) -->
+<emoji-picker id="emoji-picker" style="display: none; position: absolute; z-index: 1000;"></emoji-picker>
 </body>
 </html>
